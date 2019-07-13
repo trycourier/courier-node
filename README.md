@@ -28,7 +28,7 @@ async function run () {
 
   // Example: replace a recipient's profile
   const replaceRes = await courier.replaceProfile({
-    profileId: "<PROFILE_ID>",
+    recipientId: "<PROFILE_ID>",
     profile: {
       email: "example@example.com"
     }
@@ -37,7 +37,7 @@ async function run () {
 
   // Example: merge into a recipient's profile
   const mergeRes = await courier.mergeProfile({
-    profileId: "<PROFILE_ID>",
+    recipientId: "<PROFILE_ID>",
     profile: {
       "sms": "555-555-5555"
     }
@@ -46,7 +46,7 @@ async function run () {
 
   // Example: get a recipient's profile
   const { profile } = await courier.getProfile({
-    profileId: "<PROFILE_ID>"
+    recipientId: "<PROFILE_ID>"
   });
   console.log(profile);
 

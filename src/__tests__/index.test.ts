@@ -61,7 +61,7 @@ describe("CourierClient", () => {
 
     await expect(
       replaceProfile({
-        profileId: "PROFILE_ID",
+        recipientId: "PROFILE_ID",
         profile: {
           foo: "bar"
         }
@@ -76,7 +76,7 @@ describe("CourierClient", () => {
 
     await expect(
       mergeProfile({
-        profileId: "PROFILE_ID",
+        recipientId: "PROFILE_ID",
         profile: {
           foo: "bar"
         }
@@ -91,7 +91,7 @@ describe("CourierClient", () => {
 
     await expect(
       getProfile({
-        profileId: "PROFILE_ID"
+        recipientId: "PROFILE_ID"
       })
     ).resolves.toMatchObject(mockGetProfileResponse);
   });

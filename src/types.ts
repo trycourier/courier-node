@@ -35,7 +35,7 @@ export interface ICourierSendResponse {
 // PUT /profiles/{id}
 
 export interface ICourierProfilePutParameters {
-  profileId: string;
+  recipientId: string;
   profile: object;
 }
 
@@ -46,7 +46,7 @@ export interface ICourierProfilePutResponse {
 // POST /profiles/{id}
 
 export interface ICourierProfilePostParameters {
-  profileId: string;
+  recipientId: string;
   profile: object;
 }
 
@@ -57,7 +57,7 @@ export interface ICourierProfilePostResponse {
 // GET /profiles/{id}
 
 export interface ICourierProfileGetParameters {
-  profileId: string;
+  recipientId: string;
 }
 
 export interface ICourierProfileGetResponse {

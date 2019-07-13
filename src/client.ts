@@ -29,7 +29,7 @@ const replaceProfile = (options: ICourierClientConfiguration) => {
     params: ICourierProfilePutParameters
   ): Promise<ICourierProfilePutResponse> => {
     const res = await options.httpClient.put<ICourierProfilePutResponse>(
-      `/profiles/${params.profileId}`,
+      `/profiles/${params.recipientId}`,
       {
         profile: params.profile
       }
@@ -43,7 +43,7 @@ const mergeProfile = (options: ICourierClientConfiguration) => {
     params: ICourierProfilePostParameters
   ): Promise<ICourierProfilePostResponse> => {
     const res = await options.httpClient.post<ICourierProfilePostResponse>(
-      `/profiles/${params.profileId}`,
+      `/profiles/${params.recipientId}`,
       {
         profile: params.profile
       }
@@ -57,7 +57,7 @@ const getProfile = (options: ICourierClientConfiguration) => {
     params: ICourierProfileGetParameters
   ): Promise<ICourierProfileGetResponse> => {
     const res = await options.httpClient.get<ICourierProfileGetResponse>(
-      `/profiles/${params.profileId}`
+      `/profiles/${params.recipientId}`
     );
     return res.data;
   };
