@@ -23,5 +23,5 @@ https://www.npmjs.com/package/@trycourier/courier
 ```bash
 git commit -m <COMMIT_MESSAGE>
 git tag -a v<VERSION>
-git push
+git push origin v<VERSION>
 ```
