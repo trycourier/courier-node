@@ -1,4 +1,5 @@
 import {
+  ICourierClient,
   ICourierClientConfiguration,
   ICourierProfileGetParameters,
   ICourierProfileGetResponse,
@@ -63,7 +64,9 @@ const getProfile = (options: ICourierClientConfiguration) => {
   };
 };
 
-export const client = (options: ICourierClientConfiguration) => {
+export const client = (
+  options: ICourierClientConfiguration
+): ICourierClient => {
   return {
     getProfile: getProfile(options),
     mergeProfile: mergeProfile(options),

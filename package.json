@@ -1,16 +1,16 @@
 {
   "name": "@trycourier/courier",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A node.js module for communicating with the Courier REST API.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
+  "homepage": "https://github.com/trycourier/courier-node",
   "repository": "git@github.com:trycourier/courier-node.git",
   "author": "Courier <support@trycourier.com>",
   "license": "MIT",
-  "private": false,
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "@types/node": "^12.6.2",

@@ -11,9 +11,8 @@ npm install @trycourier/courier
 ## Usage
 
 ```javascript
-import CourierClient from "@trycourier/courier";
-// or, if not using import syntax (IMPORTANT: note the .default!):
-// const CourierClient = require("@trycourier/courier).default;
+import { CourierClient } from "@trycourier/courier";
+// const { CourierClient } = require("@trycourier/courier);
 
 const courier = CourierClient({ authorizationToken: "<AUTH_TOKEN>" });
 

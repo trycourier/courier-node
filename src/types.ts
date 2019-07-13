@@ -63,3 +63,16 @@ export interface ICourierProfileGetParameters {
 export interface ICourierProfileGetResponse {
   profile: object;
 }
+
+export interface ICourierClient {
+  send: (params: ICourierSendParameters) => Promise<ICourierSendResponse>;
+  replaceProfile: (
+    params: ICourierProfilePutParameters
+  ) => Promise<ICourierProfilePutResponse>;
+  mergeProfile: (
+    params: ICourierProfilePostParameters
+  ) => Promise<ICourierProfilePostResponse>;
+  getProfile: (
+    params: ICourierProfileGetParameters
+  ) => Promise<ICourierProfileGetResponse>;
+}

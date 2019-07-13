@@ -6,7 +6,7 @@ const DEFAULTS = {
   BASE_URL: "https://api.trycourier.app"
 };
 
-export default (options: ICourierClientOptions) => {
+export const CourierClient = (options: ICourierClientOptions) => {
   const axiosInstance = axios.create({
     baseURL: options.baseUrl || DEFAULTS.BASE_URL,
     headers: {
