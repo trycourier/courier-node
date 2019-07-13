@@ -1,32 +1,73 @@
-type HttpPostClient = <T>(url: string, body?: object) => Promise<{ data: T }>;
+import {
+  ICourierClientConfiguration,
+  ICourierProfileGetParameters,
+  ICourierProfileGetResponse,
+  ICourierProfilePostParameters,
+  ICourierProfilePostResponse,
+  ICourierProfilePutParameters,
+  ICourierProfilePutResponse,
+  ICourierSendParameters,
+  ICourierSendResponse
+} from "./types";
 
-export interface ICourierClientConfiguration {
-  httpPostClient: HttpPostClient;
-}
+const send = (options: ICourierClientConfiguration) => {
+  return async (
+    params: ICourierSendParameters
+  ): Promise<ICourierSendResponse> => {
+    const res = await options.httpClient.post<ICourierSendResponse>("/send", {
+      data: params.data,
+      event: params.eventId,
+      profile: params.profile,
+      recipient: params.recipientId
+    });
+    return res.data;
+  };
+};
 
-export interface ICourierSendParameters {
-  eventId: string;
-  recipientId: string;
-  data?: object;
-  profile?: object;
-}
+const replaceProfile = (options: ICourierClientConfiguration) => {
+  return async (
+    params: ICourierProfilePutParameters
+  ): Promise<ICourierProfilePutResponse> => {
+    const res = await options.httpClient.put<ICourierProfilePutResponse>(
+      `/profiles/${params.profileId}`,
+      {
+        profile: params.profile
+      }
+    );
+    return res.data;
+  };
+};
 
-export interface ICourierSendResponse {
-  messageId: string;
-}
+const mergeProfile = (options: ICourierClientConfiguration) => {
+  return async (
+    params: ICourierProfilePostParameters
+  ): Promise<ICourierProfilePostResponse> => {
+    const res = await options.httpClient.post<ICourierProfilePostResponse>(
+      `/profiles/${params.profileId}`,
+      {
+        profile: params.profile
+      }
+    );
+    return res.data;
+  };
+};
+
+const getProfile = (options: ICourierClientConfiguration) => {
+  return async (
+    params: ICourierProfileGetParameters
+  ): Promise<ICourierProfileGetResponse> => {
+    const res = await options.httpClient.get<ICourierProfileGetResponse>(
+      `/profiles/${params.profileId}`
+    );
+    return res.data;
+  };
+};
 
 export const client = (options: ICourierClientConfiguration) => {
   return {
-    send: async (
-      params: ICourierSendParameters
-    ): Promise<ICourierSendResponse> => {
-      const res = await options.httpPostClient<ICourierSendResponse>("/send", {
-        data: params.data,
-        event: params.eventId,
-        profile: params.profile,
-        recipient: params.recipientId
-      });
-      return res.data;
-    }
+    getProfile: getProfile(options),
+    mergeProfile: mergeProfile(options),
+    replaceProfile: replaceProfile(options),
+    send: send(options)
   };
 };

@@ -1,14 +1,10 @@
 import axios from "axios";
 import { client } from "./client";
+import { ICourierClientOptions } from "./types";
 
 const DEFAULTS = {
   BASE_URL: "https://api.trycourier.app"
 };
-
-export interface ICourierClientOptions {
-  baseUrl?: string;
-  authenticationCode: string;
-}
 
 export default (options: ICourierClientOptions) => {
   const axiosInstance = axios.create({
@@ -19,7 +15,7 @@ export default (options: ICourierClientOptions) => {
   });
 
   const courier = client({
-    httpPostClient: axiosInstance.post
+    httpClient: axiosInstance
   });
 
   return courier;

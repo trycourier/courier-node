@@ -1,18 +1,41 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import CourierClient from "../index";
+import {
+  ICourierSendResponse,
+  ICourierProfilePutResponse,
+  ICourierProfilePostResponse,
+  ICourierProfileGetResponse
+} from "../types";
 
-const mockSendResponse = {
+const mockSendResponse: ICourierSendResponse = {
   messageId: "1234"
 };
 
-describe("send", () => {
+const mockReplaceProfileResponse: ICourierProfilePutResponse = {
+  status: "SUCCESS"
+};
+
+const mockMergeProfileResponse: ICourierProfilePostResponse = {
+  status: "SUCCESS"
+};
+
+const mockGetProfileResponse: ICourierProfileGetResponse = {
+  profile: {
+    name: "Troy"
+  }
+};
+
+describe("CourierClient", () => {
   beforeEach(() => {
     const mock = new MockAdapter(axios);
     mock.onPost("/send").reply(200, mockSendResponse);
+    mock.onPut(/\/profiles\/.*/).reply(200, mockReplaceProfileResponse);
+    mock.onPost(/\/profiles\/.*/).reply(200, mockMergeProfileResponse);
+    mock.onGet(/\/profiles\/.*/).reply(200, mockGetProfileResponse);
   });
 
-  test("works", async () => {
+  test(".send", async () => {
     const { send } = CourierClient({
       authenticationCode: "AUTH_TOKEN"
     });
@@ -29,5 +52,47 @@ describe("send", () => {
         }
       })
     ).resolves.toMatchObject(mockSendResponse);
+  });
+
+  test(".replaceProfile", async () => {
+    const { replaceProfile } = CourierClient({
+      authenticationCode: "AUTH_TOKEN"
+    });
+
+    await expect(
+      replaceProfile({
+        profileId: "PROFILE_ID",
+        profile: {
+          foo: "bar"
+        }
+      })
+    ).resolves.toMatchObject(mockReplaceProfileResponse);
+  });
+
+  test(".mergeProfile", async () => {
+    const { mergeProfile } = CourierClient({
+      authenticationCode: "AUTH_TOKEN"
+    });
+
+    await expect(
+      mergeProfile({
+        profileId: "PROFILE_ID",
+        profile: {
+          foo: "bar"
+        }
+      })
+    ).resolves.toMatchObject(mockMergeProfileResponse);
+  });
+
+  test(".getProfile", async () => {
+    const { getProfile } = CourierClient({
+      authenticationCode: "AUTH_TOKEN"
+    });
+
+    await expect(
+      getProfile({
+        profileId: "PROFILE_ID"
+      })
+    ).resolves.toMatchObject(mockGetProfileResponse);
   });
 });

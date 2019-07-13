@@ -13,18 +13,42 @@ npm install @trycourier/courier
 ```javascript
 import CourierClient from "@trycourier/courier";
 
-const { send } = CourierClient({ authenticationCode: "<AUTH_CODE>" });
+const courier = CourierClient({ authenticationCode: "<AUTH_CODE>" });
 
 async function run () {
 
-  const { messageId } = await send({
+  // Example: send a message
+  const { messageId } = await courier.send({
     eventId: "<EVENT_ID>",
     recipientId: "<RECIPIENT_ID>",
     profile: {}, // optional
     data: {} // optional
   });
-
   console.log(messageId);
+
+  // Example: replace a recipient's profile
+  const replaceRes = await courier.replaceProfile({
+    profileId: "<PROFILE_ID>",
+    profile: {
+      email: "example@example.com"
+    }
+  });
+  console.log(replaceRes.status);
+
+  // Example: merge into a recipient's profile
+  const mergeRes = await courier.mergeProfile({
+    profileId: "<PROFILE_ID>",
+    profile: {
+      "sms": "555-555-5555"
+    }
+  });
+  console.log(mergeRes.status);
+
+  // Example: get a recipient's profile
+  const { profile } = await courier.getProfile({
+    profileId: "<PROFILE_ID>"
+  });
+  console.log(profile);
 
 };
 
