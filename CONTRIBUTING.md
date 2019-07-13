@@ -21,7 +21,6 @@ yarn format
 https://www.npmjs.com/package/@trycourier/courier
 
 ```bash
-git commit -m <COMMIT_MESSAGE>
 git tag -a v<VERSION> -m v<VERSION>
 git push origin v<VERSION>
 ```
