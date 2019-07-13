@@ -37,7 +37,7 @@ describe("CourierClient", () => {
 
   test(".send", async () => {
     const { send } = CourierClient({
-      authenticationCode: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -56,7 +56,7 @@ describe("CourierClient", () => {
 
   test(".replaceProfile", async () => {
     const { replaceProfile } = CourierClient({
-      authenticationCode: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -71,7 +71,7 @@ describe("CourierClient", () => {
 
   test(".mergeProfile", async () => {
     const { mergeProfile } = CourierClient({
-      authenticationCode: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -86,7 +86,7 @@ describe("CourierClient", () => {
 
   test(".getProfile", async () => {
     const { getProfile } = CourierClient({
-      authenticationCode: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(

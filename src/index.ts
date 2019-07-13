@@ -10,7 +10,7 @@ export default (options: ICourierClientOptions) => {
   const axiosInstance = axios.create({
     baseURL: options.baseUrl || DEFAULTS.BASE_URL,
     headers: {
-      Authorization: `Bearer ${options.authenticationCode}`
+      Authorization: `Bearer ${options.authorizationToken}`
     }
   });
 

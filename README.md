@@ -13,7 +13,7 @@ npm install @trycourier/courier
 ```javascript
 import CourierClient from "@trycourier/courier";
 
-const courier = CourierClient({ authenticationCode: "<AUTH_CODE>" });
+const courier = CourierClient({ authorizationToken: "<AUTH_TOKEN>" });
 
 async function run () {
 
