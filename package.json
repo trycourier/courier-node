@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "output/**/*"
+    "lib/**/*"
   ],
   "repository": "git@github.com:trycourier/courier-node.git",
   "author": "Courier <support@trycourier.com>",
