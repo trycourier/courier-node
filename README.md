@@ -16,6 +16,7 @@ import CourierClient from "@trycourier/courier";
 const { send } = CourierClient({ authenticationCode: "<YOUR_AUTH_CODE>" })
 
 function run () {
+
   const { messageId } = await send({
     eventId: "<YOUR_EVENT_ID>",
     recipientId: "<RECIPIENT_ID>",
@@ -24,6 +25,7 @@ function run () {
   });
 
   console.log(messageId);
+
 };
 
 run();
