@@ -2,7 +2,7 @@
 
 A node.js module for communicating with the Courier REST API.
 
-## Installation (via [npm](https://www.npmjs.org))
+## Installation (via [npm](https://www.npmjs.com/package/@trycourier/courier))
 
 ```bash
 npm install @trycourier/courier
