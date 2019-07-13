@@ -13,12 +13,12 @@ npm install @trycourier/courier
 ```javascript
 import CourierClient from "@trycourier/courier";
 
-const { send } = CourierClient({ authenticationCode: "<YOUR_AUTH_CODE>" })
+const { send } = CourierClient({ authenticationCode: "<AUTH_CODE>" });
 
-function run () {
+async function run () {
 
   const { messageId } = await send({
-    eventId: "<YOUR_EVENT_ID>",
+    eventId: "<EVENT_ID>",
     recipientId: "<RECIPIENT_ID>",
     profile: {}, // optional
     data: {} // optional
