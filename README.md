@@ -27,26 +27,26 @@ async function run () {
   console.log(messageId);
 
   // Example: replace a recipient's profile
-  const replaceRes = await courier.replaceProfile({
-    recipientId: "<PROFILE_ID>",
+  const { status: replaceStatus } = await courier.replaceProfile({
+    recipientId: "<RECIPIENT_ID>",
     profile: {
-      email: "example@example.com"
+      "email": "example@example.com"
     }
   });
-  console.log(replaceRes.status);
+  console.log(replaceStatus);
 
   // Example: merge into a recipient's profile
-  const mergeRes = await courier.mergeProfile({
-    recipientId: "<PROFILE_ID>",
+  const { status: mergeStatus } = await courier.mergeProfile({
+    recipientId: "<RECIPIENT_ID>",
     profile: {
       "sms": "555-555-5555"
     }
   });
-  console.log(mergeRes.status);
+  console.log(mergeStatus);
 
   // Example: get a recipient's profile
   const { profile } = await courier.getProfile({
-    recipientId: "<PROFILE_ID>"
+    recipientId: "<RECIPIENT_ID>"
   });
   console.log(profile);
 
