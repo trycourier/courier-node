@@ -1,0 +1,36 @@
+{
+  "name": "@trycourier/courier",
+  "version": "1.0.0",
+  "description": "A node.js module for communicating with the Courier REST API.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "output/**/*"
+  ],
+  "repository": "git@github.com:trycourier/courier-node.git",
+  "author": "Courier <support@trycourier.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.2",
+    "axios-mock-adapter": "^1.17.0",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.3"
+  },
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "lint": "tslint -p tsconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "prepare": "yarn build",
+    "prepublishOnly": "yarn lint && yarn test"
+  },
+  "dependencies": {
+    "axios": "^0.19.0"
+  }
+}
