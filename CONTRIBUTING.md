@@ -20,6 +20,8 @@ yarn format
 
 https://www.npmjs.com/package/@trycourier/courier
 
+Make sure you have incremented the version string in `package.json` to your new version string, hereafter referred to as `<VERSION>` and merged that commit. Then:
+
 ```bash
 git tag -a v<VERSION> -m v<VERSION>
 git push origin v<VERSION>
