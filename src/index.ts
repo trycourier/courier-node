@@ -1,7 +1,9 @@
 import axios from "axios";
-import { name, version } from "../package.json";
 import { client } from "./client";
 import { ICourierClientOptions } from "./types";
+
+// Cannot be `import` as it's not under TS root dir
+const { name, version } = require("../package.json");
 
 const DEFAULTS = {
   BASE_URL: "https://api.trycourier.app"
