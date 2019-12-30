@@ -2,7 +2,8 @@ import axios from "axios";
 import { client } from "./client";
 import { ICourierClientOptions } from "./types";
 
-// Cannot be `import` as it's not under TS root dir
+// cannot be `import` as it's not under TS root dir
+// tslint:disable-next-line:no-var-requires
 const { name, version } = require("../package.json");
 
 const DEFAULTS = {
