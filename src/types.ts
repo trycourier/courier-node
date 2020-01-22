@@ -12,7 +12,7 @@ export interface IHttpClient {
 
 export interface ICourierClientOptions {
   baseUrl?: string;
-  authorizationToken: string;
+  authorizationToken?: string;
 }
 
 export interface ICourierClientConfiguration {
