@@ -18,8 +18,11 @@ export const CourierClient = (options: ICourierClientOptions = {}) => {
     throw new Error("Courier Auth Token is required.");
   }
 
+  const baseURL =
+    options.baseUrl || process.env.COURIER_BASE_URL || DEFAULTS.BASE_URL;
+
   const axiosInstance = axios.create({
-    baseURL: options.baseUrl || DEFAULTS.BASE_URL,
+    baseURL,
     headers: {
       Authorization: `Bearer ${authorizationToken}`,
       "User-Agent": `${name}/${version}`
