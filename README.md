@@ -27,6 +27,10 @@ const { messageId } = await courier.send({
 });
 ```
 
+## Environment Variables
+
+`courier-node` supports credential storage in environment variables. If no `authorizationToken` is provided when instantiating the Courier client (e.g., `const courier = CourierClient();`), the value in the `COURIER_AUTH_TOKEN` env var will be used.
+
 ## Advanced Usage
 
 ```javascript
@@ -35,8 +39,7 @@ import { CourierClient } from "@trycourier/courier";
 
 const courier = CourierClient({ authorizationToken: "<AUTH_TOKEN>" });
 
-async function run () {
-
+async function run() {
   // Example: send a message
   const { messageId } = await courier.send({
     eventId: "<EVENT_ID>",
@@ -50,7 +53,7 @@ async function run () {
   const { status: replaceStatus } = await courier.replaceProfile({
     recipientId: "<RECIPIENT_ID>",
     profile: {
-      "email": "example@example.com"
+      email: "example@example.com"
     }
   });
   console.log(replaceStatus);
@@ -59,7 +62,7 @@ async function run () {
   const { status: mergeStatus } = await courier.mergeProfile({
     recipientId: "<RECIPIENT_ID>",
     profile: {
-      "sms": "555-555-5555"
+      sms: "555-555-5555"
     }
   });
   console.log(mergeStatus);
@@ -69,8 +72,7 @@ async function run () {
     recipientId: "<RECIPIENT_ID>"
   });
   console.log(profile);
-
-};
+}
 
 run();
 ```

@@ -10,11 +10,18 @@ const DEFAULTS = {
   BASE_URL: "https://api.trycourier.app"
 };
 
-export const CourierClient = (options: ICourierClientOptions) => {
+export const CourierClient = (options: ICourierClientOptions = {}) => {
+  const authorizationToken =
+    options.authorizationToken || process.env.COURIER_AUTH_TOKEN;
+
+  if (!authorizationToken) {
+    throw new Error("Courier Auth Token is required.");
+  }
+
   const axiosInstance = axios.create({
     baseURL: options.baseUrl || DEFAULTS.BASE_URL,
     headers: {
-      Authorization: `Bearer ${options.authorizationToken}`,
+      Authorization: `Bearer ${authorizationToken}`,
       "User-Agent": `${name}/${version}`
     }
   });
