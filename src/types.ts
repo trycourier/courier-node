@@ -25,7 +25,9 @@ export interface ICourierSendParameters {
   eventId: string;
   recipientId: string;
   data?: object;
+  preferences?: ICourierProfilePreferences;
   profile?: object;
+  override?: object;
 }
 
 export interface ICourierSendResponse {
@@ -62,6 +64,16 @@ export interface ICourierProfileGetParameters {
 
 export interface ICourierProfileGetResponse {
   profile: object;
+}
+
+export type ICourierChannelClassification =
+  | "direct_message"
+  | "email"
+  | "push"
+  | "webhook";
+
+export interface ICourierProfilePreferences {
+  preferred_channel?: ICourierChannelClassification;
 }
 
 export interface ICourierClient {
