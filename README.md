@@ -1,5 +1,7 @@
 # `@trycourier/courier`
 
+[![npm version](https://badge.fury.io/js/%40trycourier%2Fcourier.svg)](https://badge.fury.io/js/%40trycourier%2Fcourier)
+
 A node.js module for communicating with the Courier REST API.
 
 ## Installation (via [npm](https://www.npmjs.com/package/@trycourier/courier))
@@ -47,7 +49,9 @@ async function run() {
     eventId: "<EVENT_ID>",
     recipientId: "<RECIPIENT_ID>",
     profile: {}, // optional
-    data: {} // optional
+    data: {}, // optional
+    preferences: {}, // optional
+    override: {} // optional
   });
   console.log(messageId);
 

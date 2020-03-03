@@ -18,6 +18,8 @@ const send = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.post<ICourierSendResponse>("/send", {
       data: params.data,
       event: params.eventId,
+      override: params.override,
+      preferences: params.preferences,
       profile: params.profile,
       recipient: params.recipientId
     });
