@@ -12,6 +12,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Support preferences and override in send method by @aydrian
 - Create GitHub Issue and Pull Request templates by @rileylnapier
 
+### Changed
+
+- Updated user agent string to match new standard by @aydrian
+
 ## [v1.2.1] - 2019-12-30
 
 ### Fixed
