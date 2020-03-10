@@ -4,7 +4,7 @@ import { ICourierClientOptions } from "./types";
 
 // cannot be `import` as it's not under TS root dir
 // tslint:disable-next-line:no-var-requires
-const { name, version } = require("../package.json");
+const { version } = require("../package.json");
 
 const DEFAULTS = {
   BASE_URL: "https://api.trycourier.app"
@@ -25,7 +25,7 @@ export const CourierClient = (options: ICourierClientOptions = {}) => {
     baseURL,
     headers: {
       Authorization: `Bearer ${authorizationToken}`,
-      "User-Agent": `${name}/${version}`
+      "User-Agent": `courier-node/${version}`
     }
   });
 
