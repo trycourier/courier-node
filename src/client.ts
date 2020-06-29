@@ -1,6 +1,7 @@
 import {
   ICourierClient,
   ICourierClientConfiguration,
+  ICourierMessageGetResponse,
   ICourierProfileGetParameters,
   ICourierProfileGetResponse,
   ICourierProfilePostParameters,
@@ -23,6 +24,17 @@ const send = (options: ICourierClientConfiguration) => {
       profile: params.profile,
       recipient: params.recipientId
     });
+    return res.data;
+  };
+};
+
+const getMessage = (options: ICourierClientConfiguration) => {
+  return async (
+    messageId: string
+  ): Promise<ICourierMessageGetResponse> => {
+    const res = await options.httpClient.get<ICourierMessageGetResponse>(
+      `/messages/${messageId}`
+    );
     return res.data;
   };
 };
@@ -70,6 +82,7 @@ export const client = (
   options: ICourierClientConfiguration
 ): ICourierClient => {
   return {
+    getMessage: getMessage(options),
     getProfile: getProfile(options),
     mergeProfile: mergeProfile(options),
     replaceProfile: replaceProfile(options),

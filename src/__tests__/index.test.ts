@@ -5,7 +5,8 @@ import {
   ICourierSendResponse,
   ICourierProfilePutResponse,
   ICourierProfilePostResponse,
-  ICourierProfileGetResponse
+  ICourierProfileGetResponse,
+  ICourierMessageGetResponse
 } from "../types";
 
 const mockSendResponse: ICourierSendResponse = {
@@ -26,6 +27,12 @@ const mockGetProfileResponse: ICourierProfileGetResponse = {
   }
 };
 
+const mockGetMessageResponse: ICourierMessageGetResponse = {
+  id: "mockMessageId",
+  recipient: "mockRecipient",
+  status: "mockStatus"
+};
+
 describe("CourierClient", () => {
   beforeEach(() => {
     const mock = new MockAdapter(axios);
@@ -33,6 +40,7 @@ describe("CourierClient", () => {
     mock.onPut(/\/profiles\/.*/).reply(200, mockReplaceProfileResponse);
     mock.onPost(/\/profiles\/.*/).reply(200, mockMergeProfileResponse);
     mock.onGet(/\/profiles\/.*/).reply(200, mockGetProfileResponse);
+    mock.onGet(/\/messages\/.*/).reply(200, mockGetMessageResponse);
   });
 
   test(".send", async () => {
@@ -52,6 +60,16 @@ describe("CourierClient", () => {
         }
       })
     ).resolves.toMatchObject(mockSendResponse);
+  });
+
+  test(".getMessage", async () => {
+    const { getMessage } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      getMessage(mockGetMessageResponse.id)
+    ).resolves.toMatchObject(mockGetMessageResponse);
   });
 
   test(".replaceProfile", async () => {
