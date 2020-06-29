@@ -67,20 +67,20 @@ export interface ICourierProfileGetResponse {
 }
 
 export interface ICourierMessageGetResponse {
-  enqueued?: number,
-  event?: string,
-  id: string,
-  notification?: string,
+  enqueued?: number;
+  event?: string;
+  id: string;
+  notification?: string;
   providers?: Array<{
     channel: {
       name: string;
       template: string;
-    },
+    };
     provider: string;
     reference: {
       "x-message-id": string;
-    },
-    sent: number,
+    };
+    sent: number;
     status: string;
   }>;
   recipient: string;

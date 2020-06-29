@@ -25,7 +25,7 @@ const { messageId } = await courier.send({
     email: "example@example.com",
     phone_number: "555-228-3890",
   },
-  data: {}, // optional variables for merging into templates
+  data: {} // optional variables for merging into templates
 });
 ```
 
@@ -51,7 +51,7 @@ async function run() {
     profile: {}, // optional
     data: {}, // optional
     preferences: {}, // optional
-    override: {}, // optional
+    override: {} // optional
   });
   console.log(messageId);
 
@@ -64,7 +64,7 @@ async function run() {
     recipientId: "<RECIPIENT_ID>",
     profile: {
       email: "example@example.com",
-    },
+    }
   });
   console.log(replaceStatus);
 
@@ -73,13 +73,13 @@ async function run() {
     recipientId: "<RECIPIENT_ID>",
     profile: {
       sms: "555-555-5555",
-    },
+    }
   });
   console.log(mergeStatus);
 
   // Example: get a recipient's profile
   const { profile } = await courier.getProfile({
-    recipientId: "<RECIPIENT_ID>",
+    recipientId: "<RECIPIENT_ID>"
   });
   console.log(profile);
 }
