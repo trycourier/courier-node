@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.4.0] - 2020-06-29
+
+### Added
+
+- Support /messages/:messageId via client.getMessage(:messageId) @rileylnapier
+
 ## [v1.3.0] - 2020-03-10
 
 ### Added
