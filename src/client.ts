@@ -9,7 +9,7 @@ import {
   ICourierProfilePutParameters,
   ICourierProfilePutResponse,
   ICourierSendParameters,
-  ICourierSendResponse,
+  ICourierSendResponse
 } from "./types";
 
 const send = (options: ICourierClientConfiguration) => {

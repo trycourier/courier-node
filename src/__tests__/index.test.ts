@@ -6,7 +6,7 @@ import {
   ICourierProfilePutResponse,
   ICourierProfilePostResponse,
   ICourierProfileGetResponse,
-  ICourierMessageGetResponse,
+  ICourierMessageGetResponse
 } from "../types";
 
 const mockSendResponse: ICourierSendResponse = {
