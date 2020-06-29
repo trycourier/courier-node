@@ -66,6 +66,28 @@ export interface ICourierProfileGetResponse {
   profile: object;
 }
 
+export interface ICourierMessageGetResponse {
+  enqueued?: number,
+  event?: string,
+  id: string,
+  notification?: string,
+  providers?: Array<{
+    channel: {
+      name: string;
+      template: string;
+    },
+    provider: string;
+    reference: {
+      "x-message-id": string;
+    },
+    sent: number,
+    status: string;
+  }>;
+  recipient: string;
+  sent?: number;
+  status: string;
+}
+
 export type ICourierChannelClassification =
   | "direct_message"
   | "email"
@@ -78,6 +100,9 @@ export interface ICourierProfilePreferences {
 
 export interface ICourierClient {
   send: (params: ICourierSendParameters) => Promise<ICourierSendResponse>;
+  getMessage: (
+    messageId: string
+  ) => Promise<ICourierMessageGetResponse>;
   replaceProfile: (
     params: ICourierProfilePutParameters
   ) => Promise<ICourierProfilePutResponse>;
