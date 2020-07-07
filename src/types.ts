@@ -8,6 +8,7 @@ export interface IHttpClient {
   patch: HttpMethodClient;
   put: HttpMethodClient;
   get: HttpMethodClient;
+  delete: HttpMethodClient
 }
 
 export interface ICourierClientOptions {
@@ -25,6 +26,7 @@ export interface ICourierSendParameters {
   eventId: string;
   recipientId: string;
   data?: object;
+  brand?: string;
   preferences?: ICourierProfilePreferences;
   profile?: object;
   override?: object;
@@ -88,6 +90,61 @@ export interface ICourierMessageGetResponse {
   status: string;
 }
 
+interface ICourierBrandSettings {
+  colors?: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+  };
+  email?: {
+    footer: object;
+    header: object;
+  };
+}
+
+interface ICourierBrandSnippets {
+  items: Array<{
+    format: string;
+    name: string;
+    value: string;
+  }>;
+}
+
+export interface ICourierBrand {
+  created: number;
+  id?: string;
+  name: string;
+  published: number;
+  settings: ICourierBrandSettings;
+  updated: number;
+  snippets?: ICourierBrandSnippets;
+  version: string;
+}
+
+export interface ICourierPaging {
+  cursor?: string;
+  more: boolean;
+}
+
+export interface ICourierBrandPostParameters {
+  id?: string;
+  name: string;
+  settings: ICourierBrandSettings;
+  snippets?: ICourierBrandSnippets;
+}
+
+export interface ICourierBrandPutParameters {
+  id: string;
+  name: string;
+  settings: ICourierBrandSettings;
+  snippets?: ICourierBrandSnippets;
+}
+
+export interface ICourierBrandGetAllResponse {
+  paging: ICourierPaging;
+  results: ICourierBrand[];
+}
+
 export type ICourierChannelClassification =
   | "direct_message"
   | "email"
@@ -112,4 +169,21 @@ export interface ICourierClient {
   getProfile: (
     params: ICourierProfileGetParameters
   ) => Promise<ICourierProfileGetResponse>;
+  getBrands: (
+    params?: {
+      cursor: string
+    }
+  ) => Promise<ICourierBrandGetAllResponse>;
+  getBrand: (
+    brandId: string
+  ) => Promise<ICourierBrand>;
+  createBrand: (
+    params: ICourierBrandParameters
+  ) => Promise<ICourierBrand>;
+  replaceBrand: (
+    params: ICourierBrandParameters
+  ) => Promise<ICourierBrand>;
+  deleteBrand: (
+    brandId: string
+  ) => Promise<any>;
 }
