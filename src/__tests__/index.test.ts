@@ -71,7 +71,7 @@ describe("CourierClient", () => {
     mock.onGet(/\/brands\/.*/).reply(200, mockBrandResponse);
     mock.onPost("/brands").reply(200, mockBrandResponse);
     mock.onPut(/\/brands\/.*/).reply(200, mockBrandResponse);
-    mock.onDelete(/\/brands\/.*/).reply(204, {});
+    mock.onDelete(/\/brands\/.*/).reply(204);
   });
 
   test(".send", async () => {
@@ -212,6 +212,6 @@ describe("CourierClient", () => {
 
     await expect(
       deleteBrand("VHEGJ8NQEB4T3JM3SZJ8TWD27JPG")
-    ).resolves.toMatchObject({});
+    ).resolves.toBeUndefined();
   });
 });

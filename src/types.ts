@@ -126,18 +126,15 @@ export interface ICourierPaging {
   more: boolean;
 }
 
-export interface ICourierBrandPostParameters {
+export interface ICourierBrandParameters {
   id?: string;
   name: string;
   settings: ICourierBrandSettings;
   snippets?: ICourierBrandSnippets;
 }
 
-export interface ICourierBrandPutParameters {
+export interface ICourierBrandPutParameters extends ICourierBrandParameters {
   id: string;
-  name: string;
-  settings: ICourierBrandSettings;
-  snippets?: ICourierBrandSnippets;
 }
 
 export interface ICourierBrandGetAllResponse {
@@ -178,12 +175,12 @@ export interface ICourierClient {
     brandId: string
   ) => Promise<ICourierBrand>;
   createBrand: (
-    params: ICourierBrandPostParameters
+    params: ICourierBrandParameters
   ) => Promise<ICourierBrand>;
   replaceBrand: (
     params: ICourierBrandPutParameters
   ) => Promise<ICourierBrand>;
   deleteBrand: (
     brandId: string
-  ) => Promise<any>;
+  ) => Promise<void>;
 }

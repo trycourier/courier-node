@@ -1,7 +1,7 @@
 import { 
   ICourierBrand, 
   ICourierBrandGetAllResponse,
-  ICourierBrandPostParameters,
+  ICourierBrandParameters,
   ICourierBrandPutParameters,
   ICourierClientConfiguration
 } from "./types";
@@ -32,7 +32,7 @@ export const getBrand = (options: ICourierClientConfiguration) => {
 
 export const createBrand = (options: ICourierClientConfiguration) => {
   return async (
-    params: ICourierBrandPostParameters
+    params: ICourierBrandParameters
   ): Promise<ICourierBrand> => {
     const res = await options.httpClient.post<ICourierBrand>(
       `/brands`,
@@ -56,8 +56,7 @@ export const replaceBrand = (options: ICourierClientConfiguration) => {
 };
 
 export const deleteBrand = (options: ICourierClientConfiguration) => {
-  return async (brandId: string): Promise<object> => {
-    const res = await options.httpClient.delete<object>(`/brands/${brandId}`);
-    return res.data;
+  return async (brandId: string): Promise<void> => {
+    await options.httpClient.delete<void>(`/brands/${brandId}`);
   }
 };
