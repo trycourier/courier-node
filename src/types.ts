@@ -178,10 +178,10 @@ export interface ICourierClient {
     brandId: string
   ) => Promise<ICourierBrand>;
   createBrand: (
-    params: ICourierBrandParameters
+    params: ICourierBrandPostParameters
   ) => Promise<ICourierBrand>;
   replaceBrand: (
-    params: ICourierBrandParameters
+    params: ICourierBrandPutParameters
   ) => Promise<ICourierBrand>;
   deleteBrand: (
     brandId: string
