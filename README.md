@@ -50,6 +50,7 @@ async function run() {
     recipientId: "<RECIPIENT_ID>",
     profile: {}, // optional
     data: {}, // optional
+    brand: "<BRAND_ID>", //optional
     preferences: {}, // optional
     override: {} // optional
   });
@@ -82,6 +83,46 @@ async function run() {
     recipientId: "<RECIPIENT_ID>"
   });
   console.log(profile);
+
+  // Example: get all brands
+  const {paging, results} = await courier.getBrands({
+    cursor: "<CURSOR>" // optional
+  });
+  console.log(results);
+
+  // Example: get a specific brand
+  const brand = await courier.getBrand("<BRAND_ID>");
+  console.log(brand);
+
+  // Example: create a brand
+  const newBrand = await courier.createBrand({
+    name: "My Brand",
+    settings: {
+      color: {
+        primary: "#0000FF",
+        secondary: "#FF0000",
+        tertiary: "#00FF00"
+      }
+    }
+  });
+  console.log(newBrand);
+
+  // Example: replace a brand
+  const replacedBrand = await courier.replaceBrand({
+    id: "<BRAND_ID>",
+    name: "My New Brand",
+    settings: {
+      color: {
+        primary: "#FF0000",
+        secondary: "#00FF00",
+        tertiary: "#0000FF"
+      }
+    }
+  });
+  console.log(replacedBrand);
+
+  // Example: delete a brand
+  await courier.deleteBrand("<BRAND_ID>");
 }
 
 run();

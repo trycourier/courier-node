@@ -12,11 +12,20 @@ import {
   ICourierSendResponse
 } from "./types";
 
+import {
+  createBrand,
+  deleteBrand,
+  getBrand,
+  getBrands,
+  replaceBrand
+} from "./brands"
+
 const send = (options: ICourierClientConfiguration) => {
   return async (
     params: ICourierSendParameters
   ): Promise<ICourierSendResponse> => {
     const res = await options.httpClient.post<ICourierSendResponse>("/send", {
+      brand: params.brand,
       data: params.data,
       event: params.eventId,
       override: params.override,
@@ -82,9 +91,14 @@ export const client = (
   options: ICourierClientConfiguration
 ): ICourierClient => {
   return {
+    createBrand: createBrand(options),
+    deleteBrand: deleteBrand(options),
+    getBrand: getBrand(options),
+    getBrands: getBrands(options),
     getMessage: getMessage(options),
     getProfile: getProfile(options),
     mergeProfile: mergeProfile(options),
+    replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
     send: send(options)
   };
