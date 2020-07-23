@@ -98,7 +98,7 @@ async function run() {
   const newBrand = await courier.createBrand({
     name: "My Brand",
     settings: {
-      color: {
+      colors: {
         primary: "#0000FF",
         secondary: "#FF0000",
         tertiary: "#00FF00"
