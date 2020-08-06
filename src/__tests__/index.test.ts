@@ -8,31 +8,31 @@ import {
   ICourierProfileGetResponse,
   ICourierProfilePostResponse,
   ICourierProfilePutResponse,
-  ICourierSendResponse,
+  ICourierSendResponse
 } from "../types";
 
 const mockSendResponse: ICourierSendResponse = {
-  messageId: "1234",
+  messageId: "1234"
 };
 
 const mockReplaceProfileResponse: ICourierProfilePutResponse = {
-  status: "SUCCESS",
+  status: "SUCCESS"
 };
 
 const mockMergeProfileResponse: ICourierProfilePostResponse = {
-  status: "SUCCESS",
+  status: "SUCCESS"
 };
 
 const mockGetProfileResponse: ICourierProfileGetResponse = {
   profile: {
-    name: "Troy",
-  },
+    name: "Troy"
+  }
 };
 
 const mockGetMessageResponse: ICourierMessageGetResponse = {
   id: "mockMessageId",
   recipient: "mockRecipient",
-  status: "mockStatus",
+  status: "mockStatus"
 };
 
 const mockBrandResponse: ICourierBrand = {
@@ -44,19 +44,19 @@ const mockBrandResponse: ICourierBrand = {
     email: {
       footer: {},
       header: {
-        barColor: "#9D3789",
-      },
-    },
+        barColor: "#9D3789"
+      }
+    }
   },
   updated: 1591814489143,
-  version: "2020-06-10T18:41:29.093Z",
+  version: "2020-06-10T18:41:29.093Z"
 };
 
 const mockGetBrandsResponse: ICourierBrandGetAllResponse = {
   paging: {
-    more: false,
+    more: false
   },
-  results: [mockBrandResponse],
+  results: [mockBrandResponse]
 };
 
 describe("CourierClient", () => {
@@ -77,26 +77,26 @@ describe("CourierClient", () => {
 
   test(".send", async () => {
     const { send } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
       send({
         data: {
-          example: "EXAMPLE_DATA",
+          example: "EXAMPLE_DATA"
         },
         eventId: "EVENT_ID",
         profile: {
-          sms: "PHONE_NUMBER",
+          sms: "PHONE_NUMBER"
         },
-        recipientId: "RECIPIENT_ID",
+        recipientId: "RECIPIENT_ID"
       })
     ).resolves.toMatchObject(mockSendResponse);
   });
 
   test(".send with Idempotency Key", async () => {
     const { send } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     mock.onPost("/send").reply(async (config) => {
@@ -107,23 +107,23 @@ describe("CourierClient", () => {
     await send(
       {
         data: {
-          example: "EXAMPLE_DATA",
+          example: "EXAMPLE_DATA"
         },
         eventId: "EVENT_ID",
         profile: {
-          sms: "PHONE_NUMBER",
+          sms: "PHONE_NUMBER"
         },
-        recipientId: "RECIPIENT_ID",
+        recipientId: "RECIPIENT_ID"
       },
       {
-        idempotencyKey: "IDEMPOTENCY_KEY_UUID",
+        idempotencyKey: "IDEMPOTENCY_KEY_UUID"
       }
     );
   });
 
   test(".getMessage", async () => {
     const { getMessage } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(getMessage(mockGetMessageResponse.id)).resolves.toMatchObject(
@@ -133,37 +133,37 @@ describe("CourierClient", () => {
 
   test(".replaceProfile", async () => {
     const { replaceProfile } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
       replaceProfile({
         profile: {
-          foo: "bar",
+          foo: "bar"
         },
-        recipientId: "RECIPIENT_ID",
+        recipientId: "RECIPIENT_ID"
       })
     ).resolves.toMatchObject(mockReplaceProfileResponse);
   });
 
   test(".mergeProfile", async () => {
     const { mergeProfile } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
       mergeProfile({
         profile: {
-          foo: "bar",
+          foo: "bar"
         },
-        recipientId: "RECIPIENT_ID",
+        recipientId: "RECIPIENT_ID"
       })
     ).resolves.toMatchObject(mockMergeProfileResponse);
   });
 
   test(".mergeProfile with Idempotency Key", async () => {
     const { mergeProfile } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     mock.onPost(/\/profiles\/.*/).reply(async (config) => {
@@ -174,31 +174,31 @@ describe("CourierClient", () => {
     await mergeProfile(
       {
         profile: {
-          foo: "bar",
+          foo: "bar"
         },
-        recipientId: "RECIPIENT_ID",
+        recipientId: "RECIPIENT_ID"
       },
       {
-        idempotencyKey: "IDEMPOTENCY_KEY_UUID",
+        idempotencyKey: "IDEMPOTENCY_KEY_UUID"
       }
     );
   });
 
   test(".getProfile", async () => {
     const { getProfile } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
       getProfile({
-        recipientId: "RECIPIENT_ID",
+        recipientId: "RECIPIENT_ID"
       })
     ).resolves.toMatchObject(mockGetProfileResponse);
   });
 
   test(".getBrands", async () => {
     const { getBrands } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(getBrands()).resolves.toMatchObject(mockGetBrandsResponse);
@@ -206,7 +206,7 @@ describe("CourierClient", () => {
 
   test(".getBrand", async () => {
     const { getBrand } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -216,7 +216,7 @@ describe("CourierClient", () => {
 
   test(".createBrand", async () => {
     const { createBrand } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -227,17 +227,17 @@ describe("CourierClient", () => {
           email: {
             footer: {},
             header: {
-              barColor: "#9D3789",
-            },
-          },
-        },
+              barColor: "#9D3789"
+            }
+          }
+        }
       })
     ).resolves.toMatchObject(mockBrandResponse);
   });
 
   test(".createBrand with Idempotency Key", async () => {
     const { createBrand } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     mock.onPost("/brands").reply(async (config) => {
@@ -253,20 +253,20 @@ describe("CourierClient", () => {
           email: {
             footer: {},
             header: {
-              barColor: "#9D3789",
-            },
-          },
-        },
+              barColor: "#9D3789"
+            }
+          }
+        }
       },
       {
-        idempotencyKey: "IDEMPOTENCY_KEY_UUID",
+        idempotencyKey: "IDEMPOTENCY_KEY_UUID"
       }
     );
   });
 
   test(".replaceBrand", async () => {
     const { replaceBrand } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -277,17 +277,17 @@ describe("CourierClient", () => {
           email: {
             footer: {},
             header: {
-              barColor: "#9D3789",
-            },
-          },
-        },
+              barColor: "#9D3789"
+            }
+          }
+        }
       })
     ).resolves.toMatchObject(mockBrandResponse);
   });
 
   test(".deleteBrand", async () => {
     const { deleteBrand } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
