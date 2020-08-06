@@ -5,7 +5,7 @@ import {
   ICourierBrandParameters,
   ICourierBrandPostConfig,
   ICourierBrandPutParameters,
-  ICourierClientConfiguration,
+  ICourierClientConfiguration
 } from "./types";
 
 export const getBrands = (options: ICourierClientConfiguration) => {
@@ -35,7 +35,7 @@ export const createBrand = (options: ICourierClientConfiguration) => {
     config?: ICourierBrandPostConfig
   ): Promise<ICourierBrand> => {
     const axiosConfig: AxiosRequestConfig = {
-      headers: {},
+      headers: {}
     };
 
     if (config && config.idempotencyKey) {

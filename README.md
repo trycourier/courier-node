@@ -23,9 +23,9 @@ const { messageId } = await courier.send({
   recipientId: "<RECIPIENT_ID>", // usually your system's User ID
   profile: {
     email: "example@example.com",
-    phone_number: "555-228-3890",
+    phone_number: "555-228-3890"
   },
-  data: {}, // optional variables for merging into templates
+  data: {} // optional variables for merging into templates
 });
 ```
 
@@ -52,7 +52,7 @@ async function run() {
     data: {}, // optional
     brand: "<BRAND_ID>", //optional
     preferences: {}, // optional
-    override: {}, // optional
+    override: {} // optional
   });
   console.log(messageId);
 
@@ -64,8 +64,8 @@ async function run() {
   const { status: replaceStatus } = await courier.replaceProfile({
     recipientId: "<RECIPIENT_ID>",
     profile: {
-      email: "example@example.com",
-    },
+      email: "example@example.com"
+    }
   });
   console.log(replaceStatus);
 
@@ -73,20 +73,20 @@ async function run() {
   const { status: mergeStatus } = await courier.mergeProfile({
     recipientId: "<RECIPIENT_ID>",
     profile: {
-      sms: "555-555-5555",
-    },
+      sms: "555-555-5555"
+    }
   });
   console.log(mergeStatus);
 
   // Example: get a recipient's profile
   const { profile } = await courier.getProfile({
-    recipientId: "<RECIPIENT_ID>",
+    recipientId: "<RECIPIENT_ID>"
   });
   console.log(profile);
 
   // Example: get all brands
   const { paging, results } = await courier.getBrands({
-    cursor: "<CURSOR>", // optional
+    cursor: "<CURSOR>" // optional
   });
   console.log(results);
 
@@ -101,9 +101,9 @@ async function run() {
       color: {
         primary: "#0000FF",
         secondary: "#FF0000",
-        tertiary: "#00FF00",
-      },
-    },
+        tertiary: "#00FF00"
+      }
+    }
   });
   console.log(newBrand);
 
@@ -115,9 +115,9 @@ async function run() {
       color: {
         primary: "#FF0000",
         secondary: "#00FF00",
-        tertiary: "#0000FF",
-      },
-    },
+        tertiary: "#0000FF"
+      }
+    }
   });
   console.log(replacedBrand);
 
@@ -146,14 +146,14 @@ async function run() {
       recipientId: "<RECIPIENT_ID>",
       profile: {
         email: "example@example.com",
-        phone_number: "555-867-5309",
+        phone_number: "555-867-5309"
       },
       data: {
-        world: "JavaScript!",
-      },
+        world: "JavaScript!"
+      }
     },
     {
-      idempotencyKey,
+      idempotencyKey
     }
   );
   console.log(messageId);

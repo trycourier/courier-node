@@ -12,7 +12,7 @@ import {
   ICourierProfilePutResponse,
   ICourierSendConfig,
   ICourierSendParameters,
-  ICourierSendResponse,
+  ICourierSendResponse
 } from "./types";
 
 import {
@@ -20,7 +20,7 @@ import {
   deleteBrand,
   getBrand,
   getBrands,
-  replaceBrand,
+  replaceBrand
 } from "./brands";
 
 const send = (options: ICourierClientConfiguration) => {
@@ -29,7 +29,7 @@ const send = (options: ICourierClientConfiguration) => {
     config?: ICourierSendConfig
   ): Promise<ICourierSendResponse> => {
     const axiosConfig: AxiosRequestConfig = {
-      headers: {},
+      headers: {}
     };
 
     if (config && config.idempotencyKey) {
@@ -45,7 +45,7 @@ const send = (options: ICourierClientConfiguration) => {
         override: params.override,
         preferences: params.preferences,
         profile: params.profile,
-        recipient: params.recipientId,
+        recipient: params.recipientId
       },
       axiosConfig
     );
@@ -69,7 +69,7 @@ const replaceProfile = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.put<ICourierProfilePutResponse>(
       `/profiles/${params.recipientId}`,
       {
-        profile: params.profile,
+        profile: params.profile
       }
     );
     return res.data;
@@ -82,7 +82,7 @@ const mergeProfile = (options: ICourierClientConfiguration) => {
     config?: ICourierProfilePostConfig
   ): Promise<ICourierProfilePostResponse> => {
     const axiosConfig: AxiosRequestConfig = {
-      headers: {},
+      headers: {}
     };
 
     if (config && config.idempotencyKey) {
@@ -91,7 +91,7 @@ const mergeProfile = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.post<ICourierProfilePostResponse>(
       `/profiles/${params.recipientId}`,
       {
-        profile: params.profile,
+        profile: params.profile
       },
       axiosConfig
     );
@@ -123,6 +123,6 @@ export const client = (
     mergeProfile: mergeProfile(options),
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
-    send: send(options),
+    send: send(options)
   };
 };
