@@ -1,28 +1,27 @@
-import { 
-  ICourierBrand, 
+import { AxiosRequestConfig } from "axios";
+import {
+  ICourierBrand,
   ICourierBrandGetAllResponse,
   ICourierBrandParameters,
+  ICourierBrandPostConfig,
   ICourierBrandPutParameters,
-  ICourierClientConfiguration
+  ICourierClientConfiguration,
 } from "./types";
 
 export const getBrands = (options: ICourierClientConfiguration) => {
-  return async (
-    params?: {
-      cursor: string;
-    }
-  ): Promise<ICourierBrandGetAllResponse> => {
+  return async (params?: {
+    cursor: string;
+  }): Promise<ICourierBrandGetAllResponse> => {
     const res = await options.httpClient.get<ICourierBrandGetAllResponse>(
-      `/brands`, params
+      `/brands`,
+      params
     );
     return res.data;
   };
 };
 
 export const getBrand = (options: ICourierClientConfiguration) => {
-  return async (
-    brandId: string
-  ): Promise<ICourierBrand> => {
+  return async (brandId: string): Promise<ICourierBrand> => {
     const res = await options.httpClient.get<ICourierBrand>(
       `/brands/${brandId}`
     );
@@ -32,21 +31,28 @@ export const getBrand = (options: ICourierClientConfiguration) => {
 
 export const createBrand = (options: ICourierClientConfiguration) => {
   return async (
-    params: ICourierBrandParameters
+    params: ICourierBrandParameters,
+    config?: ICourierBrandPostConfig
   ): Promise<ICourierBrand> => {
+    const axiosConfig: AxiosRequestConfig = {
+      headers: {},
+    };
+
+    if (config && config.idempotencyKey) {
+      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
+    }
     const res = await options.httpClient.post<ICourierBrand>(
       `/brands`,
-      params
+      params,
+      axiosConfig
     );
     return res.data;
   };
 };
 
 export const replaceBrand = (options: ICourierClientConfiguration) => {
-  return async (
-    params: ICourierBrandPutParameters
-  ): Promise<ICourierBrand> => {
-    const {id, ...rest} = params;
+  return async (params: ICourierBrandPutParameters): Promise<ICourierBrand> => {
+    const { id, ...rest } = params;
     const res = await options.httpClient.put<ICourierBrand>(
       `/brands/${id}`,
       rest
@@ -58,5 +64,5 @@ export const replaceBrand = (options: ICourierClientConfiguration) => {
 export const deleteBrand = (options: ICourierClientConfiguration) => {
   return async (brandId: string): Promise<void> => {
     await options.httpClient.delete<void>(`/brands/${brandId}`);
-  }
+  };
 };

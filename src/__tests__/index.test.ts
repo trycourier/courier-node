@@ -60,8 +60,9 @@ const mockGetBrandsResponse: ICourierBrandGetAllResponse = {
 };
 
 describe("CourierClient", () => {
+  let mock: MockAdapter;
   beforeEach(() => {
-    const mock = new MockAdapter(axios);
+    mock = new MockAdapter(axios);
     mock.onPost("/send").reply(200, mockSendResponse);
     mock.onPut(/\/profiles\/.*/).reply(200, mockReplaceProfileResponse);
     mock.onPost(/\/profiles\/.*/).reply(200, mockMergeProfileResponse);
@@ -91,6 +92,33 @@ describe("CourierClient", () => {
         recipientId: "RECIPIENT_ID",
       })
     ).resolves.toMatchObject(mockSendResponse);
+  });
+
+  test(".send with Idempotency Key", async () => {
+    const { send } = CourierClient({
+      authorizationToken: "AUTH_TOKEN",
+    });
+
+    mock.onPost("/send").reply(async (config) => {
+      expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
+      return [200];
+    });
+
+    await send(
+      {
+        data: {
+          example: "EXAMPLE_DATA",
+        },
+        eventId: "EVENT_ID",
+        profile: {
+          sms: "PHONE_NUMBER",
+        },
+        recipientId: "RECIPIENT_ID",
+      },
+      {
+        idempotencyKey: "IDEMPOTENCY_KEY_UUID",
+      }
+    );
   });
 
   test(".getMessage", async () => {
@@ -133,6 +161,29 @@ describe("CourierClient", () => {
     ).resolves.toMatchObject(mockMergeProfileResponse);
   });
 
+  test(".mergeProfile with Idempotency Key", async () => {
+    const { mergeProfile } = CourierClient({
+      authorizationToken: "AUTH_TOKEN",
+    });
+
+    mock.onPost(/\/profiles\/.*/).reply(async (config) => {
+      expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
+      return [200];
+    });
+
+    await mergeProfile(
+      {
+        profile: {
+          foo: "bar",
+        },
+        recipientId: "RECIPIENT_ID",
+      },
+      {
+        idempotencyKey: "IDEMPOTENCY_KEY_UUID",
+      }
+    );
+  });
+
   test(".getProfile", async () => {
     const { getProfile } = CourierClient({
       authorizationToken: "AUTH_TOKEN",
@@ -163,7 +214,7 @@ describe("CourierClient", () => {
     ).resolves.toMatchObject(mockBrandResponse);
   });
 
-  test(".createBrand", async() => {
+  test(".createBrand", async () => {
     const { createBrand } = CourierClient({
       authorizationToken: "AUTH_TOKEN",
     });
@@ -179,12 +230,41 @@ describe("CourierClient", () => {
               barColor: "#9D3789",
             },
           },
-        }
+        },
       })
     ).resolves.toMatchObject(mockBrandResponse);
   });
 
-  test(".replaceBrand", async() => {
+  test(".createBrand with Idempotency Key", async () => {
+    const { createBrand } = CourierClient({
+      authorizationToken: "AUTH_TOKEN",
+    });
+
+    mock.onPost("/brands").reply(async (config) => {
+      expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
+      return [200];
+    });
+
+    await createBrand(
+      {
+        id: "VHEGJ8NQEB4T3JM3SZJ8TWD27JPG",
+        name: "Default Brand",
+        settings: {
+          email: {
+            footer: {},
+            header: {
+              barColor: "#9D3789",
+            },
+          },
+        },
+      },
+      {
+        idempotencyKey: "IDEMPOTENCY_KEY_UUID",
+      }
+    );
+  });
+
+  test(".replaceBrand", async () => {
     const { replaceBrand } = CourierClient({
       authorizationToken: "AUTH_TOKEN",
     });
@@ -200,12 +280,12 @@ describe("CourierClient", () => {
               barColor: "#9D3789",
             },
           },
-        }
+        },
       })
     ).resolves.toMatchObject(mockBrandResponse);
   });
 
-  test(".deleteBrand", async() => {
+  test(".deleteBrand", async () => {
     const { deleteBrand } = CourierClient({
       authorizationToken: "AUTH_TOKEN",
     });

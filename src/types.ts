@@ -1,6 +1,9 @@
+import { AxiosRequestConfig } from "axios";
+
 export type HttpMethodClient = <T>(
   url: string,
-  body?: object
+  body?: object,
+  config?: AxiosRequestConfig
 ) => Promise<{ data: T }>;
 
 export interface IHttpClient {
@@ -8,7 +11,7 @@ export interface IHttpClient {
   patch: HttpMethodClient;
   put: HttpMethodClient;
   get: HttpMethodClient;
-  delete: HttpMethodClient
+  delete: HttpMethodClient;
 }
 
 export interface ICourierClientOptions {
@@ -32,6 +35,10 @@ export interface ICourierSendParameters {
   override?: object;
 }
 
+export interface ICourierSendConfig {
+  idempotencyKey?: string;
+}
+
 export interface ICourierSendResponse {
   messageId: string;
 }
@@ -52,6 +59,10 @@ export interface ICourierProfilePutResponse {
 export interface ICourierProfilePostParameters {
   recipientId: string;
   profile: object;
+}
+
+export interface ICourierProfilePostConfig {
+  idempotencyKey?: string;
 }
 
 export interface ICourierProfilePostResponse {
@@ -133,6 +144,10 @@ export interface ICourierBrandParameters {
   snippets?: ICourierBrandSnippets;
 }
 
+export interface ICourierBrandPostConfig {
+  idempotencyKey?: string;
+}
+
 export interface ICourierBrandPutParameters extends ICourierBrandParameters {
   id: string;
 }
@@ -153,34 +168,29 @@ export interface ICourierProfilePreferences {
 }
 
 export interface ICourierClient {
-  send: (params: ICourierSendParameters) => Promise<ICourierSendResponse>;
-  getMessage: (
-    messageId: string
-  ) => Promise<ICourierMessageGetResponse>;
+  send: (
+    params: ICourierSendParameters,
+    config?: ICourierSendConfig
+  ) => Promise<ICourierSendResponse>;
+  getMessage: (messageId: string) => Promise<ICourierMessageGetResponse>;
   replaceProfile: (
     params: ICourierProfilePutParameters
   ) => Promise<ICourierProfilePutResponse>;
   mergeProfile: (
-    params: ICourierProfilePostParameters
+    params: ICourierProfilePostParameters,
+    config?: ICourierProfilePostConfig
   ) => Promise<ICourierProfilePostResponse>;
   getProfile: (
     params: ICourierProfileGetParameters
   ) => Promise<ICourierProfileGetResponse>;
-  getBrands: (
-    params?: {
-      cursor: string
-    }
-  ) => Promise<ICourierBrandGetAllResponse>;
-  getBrand: (
-    brandId: string
-  ) => Promise<ICourierBrand>;
+  getBrands: (params?: {
+    cursor: string;
+  }) => Promise<ICourierBrandGetAllResponse>;
+  getBrand: (brandId: string) => Promise<ICourierBrand>;
   createBrand: (
-    params: ICourierBrandParameters
+    params: ICourierBrandParameters,
+    config?: ICourierBrandPostConfig
   ) => Promise<ICourierBrand>;
-  replaceBrand: (
-    params: ICourierBrandPutParameters
-  ) => Promise<ICourierBrand>;
-  deleteBrand: (
-    brandId: string
-  ) => Promise<void>;
+  replaceBrand: (params: ICourierBrandPutParameters) => Promise<ICourierBrand>;
+  deleteBrand: (brandId: string) => Promise<void>;
 }
