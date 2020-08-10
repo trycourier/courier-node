@@ -85,7 +85,7 @@ async function run() {
   console.log(profile);
 
   // Example: get all brands
-  const {paging, results} = await courier.getBrands({
+  const { paging, results } = await courier.getBrands({
     cursor: "<CURSOR>" // optional
   });
   console.log(results);
@@ -123,6 +123,40 @@ async function run() {
 
   // Example: delete a brand
   await courier.deleteBrand("<BRAND_ID>");
+}
+
+run();
+```
+
+### Idempotency
+
+For `POST` methods, you can supply an `idempotencyKey` in the config parameter to ensure the idempotency of the API Call. We recommend that you use a `V4 UUID` for the key. Keys are eligible to be removed from the system after they're at least 24 hours old, and a new request is generated if a key is reused after the original has been removed. For more info, see [Idempotent Requests](https://docs.trycourier.com/reference/idempotent-requests) in the Courier Documentation.
+
+```javascript
+import { CourierClient } from "@trycourier/courier";
+import uuid4 from "uuid4";
+
+const courier = CourierClient();
+const idempotencyKey = uuid4();
+
+async function run() {
+  const { messageId } = await courier.send(
+    {
+      eventId: "<EVENT_ID>",
+      recipientId: "<RECIPIENT_ID>",
+      profile: {
+        email: "example@example.com",
+        phone_number: "555-867-5309"
+      },
+      data: {
+        world: "JavaScript!"
+      }
+    },
+    {
+      idempotencyKey
+    }
+  );
+  console.log(messageId);
 }
 
 run();

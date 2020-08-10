@@ -3,9 +3,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased][unreleased]
+
+### Added
+
+- Support for `idempotencyKey` for `POST` methods by @aydrian & @rileylnapier
+
 ## [v1.5.0] - 2020-07-08
 
 ### Added
+
 - Support for [Brands API](https://docs.trycourier.com/reference/brands-api) by @aydrian
   - `GET /brands` via `client.getBrands(params)`
   - `GET /brands/:brand_id` via `client.getBrand(brandId)`
@@ -67,6 +74,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
+[unreleased]: https://github.com/trycourier/courier-python/compare/v1.5.0...HEAD
 [v1.5.0]: https://github.com/trycourier/courier-python/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/trycourier/courier-python/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/trycourier/courier-python/compare/v1.2.1...v1.3.0
