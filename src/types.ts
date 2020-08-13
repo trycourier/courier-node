@@ -1,4 +1,5 @@
 import { AxiosRequestConfig } from "axios";
+import { ICourierClientTopics } from "./topics/types";
 
 export type HttpMethodClient = <T>(
   url: string,
@@ -193,4 +194,5 @@ export interface ICourierClient {
   ) => Promise<ICourierBrand>;
   replaceBrand: (params: ICourierBrandPutParameters) => Promise<ICourierBrand>;
   deleteBrand: (brandId: string) => Promise<void>;
+  topics: ICourierClientTopics;
 }
