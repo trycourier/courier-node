@@ -1,15 +1,15 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { CourierClient } from "../index";
+
+import { ICourierBrand, ICourierBrandGetAllResponse } from "../brands/types";
+import { ICourierMessageGetResponse } from "../messages/types";
 import {
-  ICourierBrand,
-  ICourierBrandGetAllResponse,
-  ICourierMessageGetResponse,
   ICourierProfileGetResponse,
   ICourierProfilePostResponse,
-  ICourierProfilePutResponse,
-  ICourierSendResponse
-} from "../types";
+  ICourierProfilePutResponse
+} from "../profiles/types";
+import { ICourierSendResponse } from "../types";
 
 const mockSendResponse: ICourierSendResponse = {
   messageId: "1234"
