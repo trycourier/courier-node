@@ -1,4 +1,26 @@
 import { AxiosRequestConfig } from "axios";
+import {
+  ICourierBrand,
+  ICourierBrandGetAllResponse,
+  ICourierBrandParameters,
+  ICourierBrandPostConfig,
+  ICourierBrandPutParameters,
+  ICourierClientBrands
+} from "./brands/types";
+import {
+  ICourierClientMessages,
+  ICourierMessageGetResponse
+} from "./messages/types";
+import {
+  ICourierClientProfiles,
+  ICourierProfileGetParameters,
+  ICourierProfileGetResponse,
+  ICourierProfilePostConfig,
+  ICourierProfilePostParameters,
+  ICourierProfilePostResponse,
+  ICourierProfilePutParameters,
+  ICourierProfilePutResponse
+} from "./profiles/types";
 import { ICourierClientTopics } from "./topics/types";
 
 export type HttpMethodClient = <T>(
@@ -44,118 +66,26 @@ export interface ICourierSendResponse {
   messageId: string;
 }
 
-// PUT /profiles/{id}
-
-export interface ICourierProfilePutParameters {
-  recipientId: string;
-  profile: object;
+export interface ICourierSendTopicOrPatternParams {
+  eventId: string;
+  data?: object;
+  brand?: string;
+  override?: object;
 }
 
-export interface ICourierProfilePutResponse {
-  status: "SUCCESS";
+export interface ICourierSendTopicParams
+  extends ICourierSendTopicOrPatternParams {
+  topic: string;
 }
 
-// POST /profiles/{id}
-
-export interface ICourierProfilePostParameters {
-  recipientId: string;
-  profile: object;
-}
-
-export interface ICourierProfilePostConfig {
-  idempotencyKey?: string;
-}
-
-export interface ICourierProfilePostResponse {
-  status: "SUCCESS";
-}
-
-// GET /profiles/{id}
-
-export interface ICourierProfileGetParameters {
-  recipientId: string;
-}
-
-export interface ICourierProfileGetResponse {
-  profile: object;
-}
-
-export interface ICourierMessageGetResponse {
-  enqueued?: number;
-  event?: string;
-  id: string;
-  notification?: string;
-  providers?: Array<{
-    channel: {
-      name: string;
-      template: string;
-    };
-    provider: string;
-    reference: {
-      "x-message-id": string;
-    };
-    sent: number;
-    status: string;
-  }>;
-  recipient: string;
-  sent?: number;
-  status: string;
-}
-
-interface ICourierBrandSettings {
-  colors?: {
-    primary: string;
-    secondary: string;
-    tertiary: string;
-  };
-  email?: {
-    footer: object;
-    header: object;
-  };
-}
-
-interface ICourierBrandSnippets {
-  items: Array<{
-    format: string;
-    name: string;
-    value: string;
-  }>;
-}
-
-export interface ICourierBrand {
-  created: number;
-  id?: string;
-  name: string;
-  published: number;
-  settings: ICourierBrandSettings;
-  updated: number;
-  snippets?: ICourierBrandSnippets;
-  version: string;
+export interface ICourierSendPatternParams
+  extends ICourierSendTopicOrPatternParams {
+  pattern: string;
 }
 
 export interface ICourierPaging {
   cursor?: string;
   more: boolean;
-}
-
-export interface ICourierBrandParameters {
-  id?: string;
-  name: string;
-  settings: ICourierBrandSettings;
-  snippets?: ICourierBrandSnippets;
-}
-
-export interface ICourierBrandPostConfig {
-  idempotencyKey?: string;
-}
-
-export interface ICourierBrandPutParameters extends ICourierBrandParameters {
-  id: string;
-}
-
-export interface ICourierBrandGetAllResponse {
-  paging: ICourierPaging;
-  results: ICourierBrand[];
 }
 
 export type ICourierChannelClassification =
@@ -171,6 +101,10 @@ export interface ICourierProfilePreferences {
 export interface ICourierClient {
   send: (
     params: ICourierSendParameters,
+    config?: ICourierSendConfig
+  ) => Promise<ICourierSendResponse>;
+  sendTopicOrPattern: (
+    params: ICourierSendTopicOrPatternParams,
     config?: ICourierSendConfig
   ) => Promise<ICourierSendResponse>;
   getMessage: (messageId: string) => Promise<ICourierMessageGetResponse>;
@@ -194,5 +128,8 @@ export interface ICourierClient {
   ) => Promise<ICourierBrand>;
   replaceBrand: (params: ICourierBrandPutParameters) => Promise<ICourierBrand>;
   deleteBrand: (brandId: string) => Promise<void>;
+  brands: ICourierClientBrands;
+  messages: ICourierClientMessages;
+  profiles: ICourierClientProfiles;
   topics: ICourierClientTopics;
 }

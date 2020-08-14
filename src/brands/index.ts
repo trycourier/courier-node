@@ -1,11 +1,12 @@
 import { AxiosRequestConfig } from "axios";
+import { ICourierClientConfiguration } from "../types";
 import {
   ICourierBrand,
   ICourierBrandGetAllResponse,
   ICourierBrandParameters,
   ICourierBrandPostConfig,
   ICourierBrandPutParameters,
-  ICourierClientConfiguration
+  ICourierClientBrands
 } from "./types";
 
 export const getBrands = (options: ICourierClientConfiguration) => {
@@ -64,5 +65,17 @@ export const replaceBrand = (options: ICourierClientConfiguration) => {
 export const deleteBrand = (options: ICourierClientConfiguration) => {
   return async (brandId: string): Promise<void> => {
     await options.httpClient.delete<void>(`/brands/${brandId}`);
+  };
+};
+
+export const brands = (
+  options: ICourierClientConfiguration
+): ICourierClientBrands => {
+  return {
+    createBrand: createBrand(options),
+    deleteBrand: deleteBrand(options),
+    getBrand: getBrand(options),
+    getBrands: getBrands(options),
+    replaceBrand: replaceBrand(options)
   };
 };
