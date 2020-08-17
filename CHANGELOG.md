@@ -8,6 +8,25 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Support for `idempotencyKey` for `POST` methods by @aydrian & @rileylnapier
+- Support for [Topics API](https://docs.trycourier.com/reference/topics-api) by @aydrian
+  - `POST /send/topic` via `client.sendTopicOrPattern(params, config)`
+  - `GET /profiles/{recipient_id}/topics` via `client.profiles.getRecipientTopics(recipientId)`
+  - `GET /topics` via `client.topics.getTopics(params)`
+  - `GET /topics/{topic_id}` via `client.topics.etTopic(topicId)`
+  - `PUT /topics/{topic_id}` via `client.topics.replaceTopic(topicId, {...})`
+  - `DELETE /topics/{topic_id}` via `client.topics.deleteTopic(topicId)`
+  - `GET /topics/{topic_id}/subscribers` via `client.topics.getTopicSubscribers(topicId)`
+  - `POST /topics/{topic_id}/subscribers` via `client.topics.bulkSubscribeToTopic(topicId, [recipientId], config)`
+  - `PUT /topics/{topic_id}/subscribers/{recipient_id}` via `client.topics.subscribeToTopic(topicId, recipientId)`
+  - `DELETE /topics/{topic_id}/subscribers/{recipient_id}` via `client.topics.unsubscribeFromTopic(topicId, recipientId)`
+
+### Changed
+
+- Code Refactor
+  - Moved endpoint functions and types to folders
+  - Using endpoint objects to separate functions e.g. `client.brands.createBrand(…)`
+  - Allowed existing functions to hang off client for backwards compatibility
+  - Split Test files in separate files based on endpoint
 
 ## [v1.5.0] - 2020-07-08
 

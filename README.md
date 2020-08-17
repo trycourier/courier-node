@@ -27,6 +27,20 @@ const { messageId } = await courier.send({
   },
   data: {} // optional variables for merging into templates
 });
+
+// Example: send a message to a topic
+const { messageId } = await courier.sendTopicOrPattern({
+  eventId: "<EVENT_ID>", // get from the Courier UI
+  topicId: "<TOPIC_ID>", // e.g. example.topic.id
+  data: {} // optional variables for merging into templates
+});
+
+// Example: send a message to a pattern
+const { messageId } = await courier.sendTopicOrPattern({
+  eventId: "<EVENT_ID>", // get from the Courier UI
+  topicId: "<PATTERN>", // e.g. example.topic.*
+  data: {} // optional variables for merging into templates
+});
 ```
 
 ## Environment Variables
@@ -57,7 +71,7 @@ async function run() {
   console.log(messageId);
 
   // Example: get a message status
-  const messageStatus = await courier.getMessage(messageId);
+  const messageStatus = await courier.messages.getMessage(messageId);
   console.log(messageStatus);
 
   // Example: replace a recipient's profile
@@ -70,7 +84,7 @@ async function run() {
   console.log(replaceStatus);
 
   // Example: merge into a recipient's profile
-  const { status: mergeStatus } = await courier.mergeProfile({
+  const { status: mergeStatus } = await courier.profiles.mergeProfile({
     recipientId: "<RECIPIENT_ID>",
     profile: {
       sms: "555-555-5555"
@@ -79,23 +93,29 @@ async function run() {
   console.log(mergeStatus);
 
   // Example: get a recipient's profile
-  const { profile } = await courier.getProfile({
+  const { profile } = await courier.profiles.getProfile({
     recipientId: "<RECIPIENT_ID>"
   });
   console.log(profile);
 
+  // Example: get a recipient's subscribed topics
+  const { paging, results } = await courier.profiles.getRecipientTopics(
+    "<RECIPIENT_ID>"
+  );
+  console.log(results);
+
   // Example: get all brands
-  const { paging, results } = await courier.getBrands({
+  const { paging, results } = await courier.brands.getBrands({
     cursor: "<CURSOR>" // optional
   });
   console.log(results);
 
   // Example: get a specific brand
-  const brand = await courier.getBrand("<BRAND_ID>");
+  const brand = await courier.brands.getBrand("<BRAND_ID>");
   console.log(brand);
 
   // Example: create a brand
-  const newBrand = await courier.createBrand({
+  const newBrand = await courier.brands.createBrand({
     name: "My Brand",
     settings: {
       colors: {
@@ -108,7 +128,7 @@ async function run() {
   console.log(newBrand);
 
   // Example: replace a brand
-  const replacedBrand = await courier.replaceBrand({
+  const replacedBrand = await courier.brands.replaceBrand({
     id: "<BRAND_ID>",
     name: "My New Brand",
     settings: {
@@ -122,7 +142,48 @@ async function run() {
   console.log(replacedBrand);
 
   // Example: delete a brand
-  await courier.deleteBrand("<BRAND_ID>");
+  await courier.brands.deleteBrand("<BRAND_ID>");
+
+  // Example: get all topics
+  const { paging, results } = await courier.topics.getTopics({
+    cursor: "<CURSOR>" // optional
+  });
+  console.log(results);
+
+  // Example: get a specific topic
+  const topic = await courier.topics.getTopic("<TOPIC_ID>");
+  console.log(topic);
+
+  // Example: create or replace a topic
+  const replacedTopic = await courier.topics.replaceTopic("<TOPIC_ID>", {
+    name: "My New Topic"
+  });
+  console.log(replacedTopic);
+
+  // Example: delete a topic
+  await courier.topics.deleteTopic("<TOPIC_ID>");
+
+  // Example: get a topic's subscribers
+  const { paging, results } = await courier.topics.getTopicSubscribers(
+    "<TOPIC_ID>"
+  );
+  console.log(results);
+
+  // Example: subscribe many recipients to a topic
+  await courier.topics.bulkSubscribeToTopic("<TOPIC_ID>", [
+    "RECIPIENT_ID_1",
+    "RECIPIENT_ID_2"
+  ]);
+
+  // Example: subscribe single recipient to topic
+  const { recipient } = courier.topics.subscribeToTopic(
+    "<TOPIC_ID>",
+    "<RECIPIENT_ID>"
+  );
+  console.log(recipient);
+
+  // Example: unsubscribe recipient from topic
+  await courier.topics.unsubscribeFromTopic("<TOPIC_ID>", "<RECIPIENT_ID>");
 }
 
 run();
