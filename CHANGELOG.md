@@ -27,6 +27,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - Using endpoint objects to separate functions e.g. `client.brands.createBrand(…)`
   - Allowed existing functions to hang off client for backwards compatibility
   - Split Test files in separate files based on endpoint
+- Default `base_url` is now `api.courier.com`
 
 ## [v1.5.0] - 2020-07-08
 
