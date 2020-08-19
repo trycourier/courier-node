@@ -47,7 +47,7 @@ const { messageId } = await courier.sendTopicOrPattern({
 
 `courier-node` supports credential storage in environment variables. If no `authorizationToken` is provided when instantiating the Courier client (e.g., `const courier = CourierClient();`), the value in the `COURIER_AUTH_TOKEN` env var will be used.
 
-If you need to use a base url other than the default https://api.trycourier.app, you can set it using the `COURIER_BASE_URL` env var.
+If you need to use a base url other than the default https://api.courier.com, you can set it using the `COURIER_BASE_URL` env var.
 
 ## Advanced Usage
 
