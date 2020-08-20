@@ -7,10 +7,7 @@ import {
   ICourierBrandPutParameters,
   ICourierClientBrands
 } from "./brands/types";
-import {
-  ICourierClientMessages,
-  ICourierMessageGetResponse
-} from "./messages/types";
+import { ICourierClientMessages, ICourierMessage } from "./messages/types";
 import {
   ICourierClientProfiles,
   ICourierProfileGetParameters,
@@ -107,7 +104,7 @@ export interface ICourierClient {
     params: ICourierSendTopicOrPatternParams,
     config?: ICourierSendConfig
   ) => Promise<ICourierSendResponse>;
-  getMessage: (messageId: string) => Promise<ICourierMessageGetResponse>;
+  getMessage: (messageId: string) => Promise<ICourierMessage>;
   replaceProfile: (
     params: ICourierProfilePutParameters
   ) => Promise<ICourierProfilePutResponse>;
