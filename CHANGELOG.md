@@ -19,6 +19,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - `POST /topics/{topic_id}/subscribers` via `client.topics.bulkSubscribeToTopic(topicId, [recipientId], config)`
   - `PUT /topics/{topic_id}/subscribers/{recipient_id}` via `client.topics.subscribeToTopic(topicId, recipientId)`
   - `DELETE /topics/{topic_id}/subscribers/{recipient_id}` via `client.topics.unsubscribeFromTopic(topicId, recipientId)`
+- Support for `GET /messages` via `client.messages.getMessages()` by @aydrian
+- Support for `GET /messages/{message_id}/history` via `client.messages.getMessageHistory(messageId)` by @aydrian
 
 ### Changed
 
