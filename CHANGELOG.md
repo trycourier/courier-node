@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Support for `idempotencyKey` for `POST` methods by @aydrian & @rileylnapier
-- Support for [Topics API](https://docs.trycourier.com/reference/topics-api) by @aydrian
+- Support for [Topics API](https://docs.courier.com/reference/topics-api) by @aydrian
   - `POST /send/topic` via `client.sendTopicOrPattern(params, config)`
   - `GET /profiles/{recipient_id}/topics` via `client.profiles.getRecipientTopics(recipientId)`
   - `GET /topics` via `client.topics.getTopics(params)`
@@ -35,13 +35,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Support for [Brands API](https://docs.trycourier.com/reference/brands-api) by @aydrian
+- Support for [Brands API](https://docs.courier.com/reference/brands-api) by @aydrian
   - `GET /brands` via `client.getBrands(params)`
   - `GET /brands/:brand_id` via `client.getBrand(brandId)`
   - `POST /brands` via `client.createBrand({…})`
   - `PUT /brands/:brand_id` via `client.replaceBrand({…})`
   - `DELETE /brands/:brand_id` via `client.deleteBrand(brandId)`
-- Support for specifying notification brand during [send](https://docs.trycourier.com/reference/send-api#sendmessage) by @aydrian
+- Support for specifying notification brand during [send](https://docs.courier.com/reference/send-api#sendmessage) by @aydrian
 
 ## [v1.4.0] - 2020-06-29
 
