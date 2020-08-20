@@ -70,9 +70,17 @@ async function run() {
   });
   console.log(messageId);
 
+  // Example: get all message statuses
+  const { results } = await courier.messages.getMessages();
+  console.log(results);
+
   // Example: get a message status
   const messageStatus = await courier.messages.getMessage(messageId);
   console.log(messageStatus);
+
+  // Example: get a message history
+  const { results } = await courier.messages.getMessageHistory(messageId);
+  console.log(results);
 
   // Example: replace a recipient's profile
   const { status: replaceStatus } = await courier.replaceProfile({
