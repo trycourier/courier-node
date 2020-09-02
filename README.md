@@ -19,8 +19,8 @@ const courier = CourierClient({ authorizationToken: "<AUTH_TOKEN>" }); // get fr
 
 // Example: send a message supporting email & SMS
 const { messageId } = await courier.send({
-  eventId: "<EVENT_ID>", // get from the Courier UI
-  recipientId: "<RECIPIENT_ID>", // usually your system's User ID
+  event: "<EVENT_ID>", // get from the Courier UI
+  recipient: "<RECIPIENT_ID>", // usually your system's User ID
   profile: {
     email: "example@example.com",
     phone_number: "555-228-3890"
@@ -46,8 +46,8 @@ const courier = CourierClient({ authorizationToken: "<AUTH_TOKEN>" });
 async function run() {
   // Example: send a message
   const { messageId } = await courier.send({
-    eventId: "<EVENT_ID>",
-    recipientId: "<RECIPIENT_ID>",
+    event: "<EVENT_ID>",
+    recipient: "<RECIPIENT_ID>",
     profile: {}, // optional
     data: {}, // optional
     brand: "<BRAND_ID>", //optional
@@ -143,7 +143,7 @@ async function run() {
   const { messageId } = await courier.send(
     {
       eventId: "<EVENT_ID>",
-      recipientId: "<RECIPIENT_ID>",
+      recipient: "<RECIPIENT_ID>",
       profile: {
         email: "example@example.com",
         phone_number: "555-867-5309"

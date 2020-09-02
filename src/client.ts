@@ -41,11 +41,12 @@ const send = (options: ICourierClientConfiguration) => {
       {
         brand: params.brand,
         data: params.data,
-        event: params.eventId,
+        event: "eventId" in params ? params.eventId : params.event,
         override: params.override,
         preferences: params.preferences,
         profile: params.profile,
-        recipient: params.recipientId
+        recipient:
+          "recipientId" in params ? params.recipientId : params.recipient
       },
       axiosConfig
     );
