@@ -85,6 +85,25 @@ describe("CourierClient", () => {
         data: {
           example: "EXAMPLE_DATA"
         },
+        event: "EVENT_ID",
+        profile: {
+          sms: "PHONE_NUMBER"
+        },
+        recipient: "RECIPIENT_ID"
+      })
+    ).resolves.toMatchObject(mockSendResponse);
+  });
+
+  test(".send with old params", async () => {
+    const { send } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      send({
+        data: {
+          example: "EXAMPLE_DATA"
+        },
         eventId: "EVENT_ID",
         profile: {
           sms: "PHONE_NUMBER"
