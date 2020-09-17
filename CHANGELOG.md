@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Support for `idempotencyKey` for `POST` methods by @aydrian & @rileylnapier
 - Support for [Lists API](https://docs.courier.com/reference/lists-api) by @aydrian
-  - `POST /send/list` via `client.sendListOrPattern(params, config)`
+  - `POST /send/list` via `client.sendList(params, config)`
   - `GET /profiles/{recipient_id}/lists` via `client.profiles.getRecipientLists(recipientId)`
   - `GET /lists` via `client.lists.getLists(params)`
   - `GET /lists/{list_id}` via `client.lists.getList(listId)`
