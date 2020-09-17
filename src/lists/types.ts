@@ -32,7 +32,7 @@ export interface ICourierListPostConfig {
 
 export interface ICourierListGetSubscriptionsResponse {
   paging: ICourierPaging;
-  results: ICourierListRecipient[];
+  items: ICourierListRecipient[];
 }
 
 export interface ICourierClientLists {

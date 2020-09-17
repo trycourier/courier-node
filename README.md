@@ -153,10 +153,10 @@ async function run() {
   await courier.brands.deleteBrand("<BRAND_ID>");
 
   // Example: get all lists
-  const { paging, results } = await courier.lists.getLists({
+  const { paging, items } = await courier.lists.getLists({
     cursor: "<CURSOR>" // optional
   });
-  console.log(results);
+  console.log(items);
 
   // Example: get a specific list
   const list = await courier.lists.getList("<LIST_ID>");
@@ -175,10 +175,10 @@ async function run() {
   await courier.lists.restoreList("<LIST_ID>");
 
   // Example: get a list's subscriptions
-  const { paging, results } = await courier.lists.getListSubscriptions(
+  const { paging, items } = await courier.lists.getListSubscriptions(
     "<LIST_ID>"
   );
-  console.log(results);
+  console.log(items);
 
   // Example: subscribe many recipients to a list
   await courier.lists.bulkSubscribeToList("<LIST_ID>", [

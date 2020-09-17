@@ -28,10 +28,10 @@ const mockRecipientResponse: ICourierListRecipient = {
 };
 
 const mockGetListSubscribersResponse: ICourierListGetSubscriptionsResponse = {
+  items: [mockRecipientResponse],
   paging: {
     more: false
-  },
-  results: [mockRecipientResponse]
+  }
 };
 
 describe("CourierLists", () => {
