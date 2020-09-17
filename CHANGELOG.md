@@ -8,17 +8,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Support for `idempotencyKey` for `POST` methods by @aydrian & @rileylnapier
-- Support for [Topics API](https://docs.courier.com/reference/topics-api) by @aydrian
-  - `POST /send/topic` via `client.sendTopicOrPattern(params, config)`
-  - `GET /profiles/{recipient_id}/topics` via `client.profiles.getRecipientTopics(recipientId)`
-  - `GET /topics` via `client.topics.getTopics(params)`
-  - `GET /topics/{topic_id}` via `client.topics.etTopic(topicId)`
-  - `PUT /topics/{topic_id}` via `client.topics.replaceTopic(topicId, {...})`
-  - `DELETE /topics/{topic_id}` via `client.topics.deleteTopic(topicId)`
-  - `GET /topics/{topic_id}/subscribers` via `client.topics.getTopicSubscribers(topicId)`
-  - `POST /topics/{topic_id}/subscribers` via `client.topics.bulkSubscribeToTopic(topicId, [recipientId], config)`
-  - `PUT /topics/{topic_id}/subscribers/{recipient_id}` via `client.topics.subscribeToTopic(topicId, recipientId)`
-  - `DELETE /topics/{topic_id}/subscribers/{recipient_id}` via `client.topics.unsubscribeFromTopic(topicId, recipientId)`
+- Support for [Lists API](https://docs.courier.com/reference/lists-api) by @aydrian
+  - `POST /send/list` via `client.sendListOrPattern(params, config)`
+  - `GET /profiles/{recipient_id}/lists` via `client.profiles.getRecipientLists(recipientId)`
+  - `GET /lists` via `client.lists.getLists(params)`
+  - `GET /lists/{list_id}` via `client.lists.getList(listId)`
+  - `PUT /lists/{list_id}` via `client.lists.replaceList(listId, {...})`
+  - `DELETE /lists/{list_id}` via `client.lists.deleteList(listId)`
+  - `PUT /lists/{list_id}/restore` via `client.lists.restoreList(listId)`
+  - `GET /lists/{list_id}/subscriptions` via `client.lists.getListSubscriptions(listId)`
+  - `POST /lists/{list_id}/subscriptions` via `client.lists.bulkSubscribeToList(listId, [recipientId], config)`
+  - `PUT /lists/{list_id}/subscriptions/{recipient_id}` via `client.lists.subscribeToList(listId, recipientId)`
+  - `DELETE /lists/{list_id}/subscriptions/{recipient_id}` via `client.lists.unsubscribeFromList(listId, recipientId)`
 - Support for `GET /messages` via `client.messages.getMessages()` by @aydrian
 - Support for `GET /messages/{message_id}/history` via `client.messages.getMessageHistory(messageId)` by @aydrian
 

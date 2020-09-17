@@ -7,6 +7,7 @@ import {
   ICourierBrandPutParameters,
   ICourierClientBrands
 } from "./brands/types";
+import { ICourierClientLists } from "./lists/types";
 import { ICourierClientMessages, ICourierMessage } from "./messages/types";
 import {
   ICourierClientProfiles,
@@ -18,7 +19,6 @@ import {
   ICourierProfilePutParameters,
   ICourierProfilePutResponse
 } from "./profiles/types";
-import { ICourierClientTopics } from "./topics/types";
 
 export type HttpMethodClient = <T>(
   url: string,
@@ -63,20 +63,20 @@ export interface ICourierSendResponse {
   messageId: string;
 }
 
-export interface ICourierSendTopicOrPatternParams {
+export interface ICourierSendListOrPatternParams {
   eventId: string;
   data?: object;
   brand?: string;
   override?: object;
 }
 
-export interface ICourierSendTopicParams
-  extends ICourierSendTopicOrPatternParams {
-  topic: string;
+export interface ICourierSendListParams
+  extends ICourierSendListOrPatternParams {
+  list: string;
 }
 
 export interface ICourierSendPatternParams
-  extends ICourierSendTopicOrPatternParams {
+  extends ICourierSendListOrPatternParams {
   pattern: string;
 }
 
@@ -100,8 +100,8 @@ export interface ICourierClient {
     params: ICourierSendParameters,
     config?: ICourierSendConfig
   ) => Promise<ICourierSendResponse>;
-  sendTopicOrPattern: (
-    params: ICourierSendTopicOrPatternParams,
+  sendList: (
+    params: ICourierSendListOrPatternParams,
     config?: ICourierSendConfig
   ) => Promise<ICourierSendResponse>;
   getMessage: (messageId: string) => Promise<ICourierMessage>;
@@ -126,7 +126,7 @@ export interface ICourierClient {
   replaceBrand: (params: ICourierBrandPutParameters) => Promise<ICourierBrand>;
   deleteBrand: (brandId: string) => Promise<void>;
   brands: ICourierClientBrands;
+  lists: ICourierClientLists;
   messages: ICourierClientMessages;
   profiles: ICourierClientProfiles;
-  topics: ICourierClientTopics;
 }

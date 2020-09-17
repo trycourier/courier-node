@@ -3,9 +3,9 @@ import {
   ICourierClient,
   ICourierClientConfiguration,
   ICourierSendConfig,
+  ICourierSendListOrPatternParams,
   ICourierSendParameters,
-  ICourierSendResponse,
-  ICourierSendTopicOrPatternParams
+  ICourierSendResponse
 } from "./types";
 
 import {
@@ -16,9 +16,9 @@ import {
   getBrands,
   replaceBrand
 } from "./brands";
+import { lists } from "./lists";
 import { getMessage, messages } from "./messages";
 import { getProfile, mergeProfile, profiles, replaceProfile } from "./profiles";
-import { topics } from "./topics";
 
 const send = (options: ICourierClientConfiguration) => {
   return async (
@@ -50,9 +50,9 @@ const send = (options: ICourierClientConfiguration) => {
   };
 };
 
-const sendTopicOrPattern = (options: ICourierClientConfiguration) => {
+const sendList = (options: ICourierClientConfiguration) => {
   return async (
-    params: ICourierSendTopicOrPatternParams,
+    params: ICourierSendListOrPatternParams,
     config?: ICourierSendConfig
   ): Promise<ICourierSendResponse> => {
     const axiosConfig: AxiosRequestConfig = {
@@ -64,7 +64,7 @@ const sendTopicOrPattern = (options: ICourierClientConfiguration) => {
     }
 
     const res = await options.httpClient.post<ICourierSendResponse>(
-      `/send/topic`,
+      `/send/list`,
       params,
       axiosConfig
     );
@@ -83,13 +83,13 @@ export const client = (
     getBrands: getBrands(options),
     getMessage: getMessage(options),
     getProfile: getProfile(options),
+    lists: lists(options),
     mergeProfile: mergeProfile(options),
     messages: messages(options),
     profiles: profiles(options),
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
     send: send(options),
-    sendTopicOrPattern: sendTopicOrPattern(options),
-    topics: topics(options)
+    sendList: sendList(options)
   };
 };

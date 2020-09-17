@@ -3,7 +3,7 @@ import MockAdapter from "axios-mock-adapter";
 import { CourierClient } from "../index";
 
 import {
-  ICourierProfileGetRecipientTopicsResponse,
+  ICourierProfileGetRecipientListsResponse,
   ICourierProfileGetResponse,
   ICourierProfilePostResponse,
   ICourierProfilePutResponse
@@ -23,16 +23,16 @@ const mockGetProfileResponse: ICourierProfileGetResponse = {
   }
 };
 
-const mockGetRecipientTopicsResponse: ICourierProfileGetRecipientTopicsResponse = {
-  paging: { more: false },
-  results: [
+const mockGetRecipientListsResponse: ICourierProfileGetRecipientListsResponse = {
+  items: [
     {
       created: 1591814489093,
-      id: "example.topic.id",
-      name: "Example Topic",
+      id: "example.list.id",
+      name: "Example List",
       updated: 1591814489143
     }
-  ]
+  ],
+  paging: { more: false }
 };
 
 describe("CourierProfiles", () => {
@@ -42,8 +42,8 @@ describe("CourierProfiles", () => {
     mock.onPut(/\/profiles\/.*/).reply(200, mockReplaceProfileResponse);
     mock.onPost(/\/profiles\/.*/).reply(200, mockMergeProfileResponse);
     mock
-      .onGet(/\/profiles\/.*\/topics/)
-      .reply(200, mockGetRecipientTopicsResponse);
+      .onGet(/\/profiles\/.*\/lists/)
+      .reply(200, mockGetRecipientListsResponse);
     mock.onGet(/\/profiles\/.*/).reply(200, mockGetProfileResponse);
   });
 
@@ -112,13 +112,13 @@ describe("CourierProfiles", () => {
     ).resolves.toMatchObject(mockGetProfileResponse);
   });
 
-  test(".getRecipientTopics", async () => {
+  test(".getRecipientLists", async () => {
     const { profiles } = CourierClient({
       authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
-      profiles.getRecipientTopics("RECIPIENT_ID")
-    ).resolves.toMatchObject(mockGetRecipientTopicsResponse);
+      profiles.getRecipientLists("RECIPIENT_ID")
+    ).resolves.toMatchObject(mockGetRecipientListsResponse);
   });
 });

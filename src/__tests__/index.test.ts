@@ -3,9 +3,9 @@ import MockAdapter from "axios-mock-adapter";
 import { CourierClient } from "../index";
 
 import {
+  ICourierSendListParams,
   ICourierSendPatternParams,
-  ICourierSendResponse,
-  ICourierSendTopicParams
+  ICourierSendResponse
 } from "../types";
 
 const mockSendResponse: ICourierSendResponse = {
@@ -16,7 +16,7 @@ describe("CourierClient", () => {
   let mock: MockAdapter;
   beforeEach(() => {
     mock = new MockAdapter(axios);
-    mock.onPost("/send/topic").reply(200, mockSendResponse);
+    mock.onPost("/send/list").reply(200, mockSendResponse);
     mock.onPost("/send").reply(200, mockSendResponse);
   });
 
@@ -66,26 +66,24 @@ describe("CourierClient", () => {
     );
   });
 
-  test(".sendTopicOrPattern with Topic", async () => {
-    const { sendTopicOrPattern } = CourierClient({
+  test(".sendList with List", async () => {
+    const { sendList } = CourierClient({
       authorizationToken: "AUTH_TOKEN"
     });
 
-    const params: ICourierSendTopicParams = {
+    const params: ICourierSendListParams = {
       data: {
         example: "EXAMPLE_DATA"
       },
       eventId: "EVENT_ID",
-      topic: "example.topic.id"
+      list: "example.list.id"
     };
 
-    await expect(sendTopicOrPattern(params)).resolves.toMatchObject(
-      mockSendResponse
-    );
+    await expect(sendList(params)).resolves.toMatchObject(mockSendResponse);
   });
 
-  test(".sendTopicOrPattern with Pattern", async () => {
-    const { sendTopicOrPattern } = CourierClient({
+  test(".sendList with Pattern", async () => {
+    const { sendList } = CourierClient({
       authorizationToken: "AUTH_TOKEN"
     });
 
@@ -94,16 +92,14 @@ describe("CourierClient", () => {
         example: "EXAMPLE_DATA"
       },
       eventId: "EVENT_ID",
-      pattern: "example.topic.*"
+      pattern: "example.list.*"
     };
 
-    await expect(sendTopicOrPattern(params)).resolves.toMatchObject(
-      mockSendResponse
-    );
+    await expect(sendList(params)).resolves.toMatchObject(mockSendResponse);
   });
 
-  test(".sendTopicOrPattern with Idempotency Key", async () => {
-    const { sendTopicOrPattern } = CourierClient({
+  test(".sendList with Idempotency Key", async () => {
+    const { sendList } = CourierClient({
       authorizationToken: "AUTH_TOKEN"
     });
 
@@ -112,15 +108,15 @@ describe("CourierClient", () => {
       return [200];
     });
 
-    const params: ICourierSendTopicParams = {
+    const params: ICourierSendListParams = {
       data: {
         example: "EXAMPLE_DATA"
       },
       eventId: "EVENT_ID",
-      topic: "example.topic.id"
+      list: "example.list.id"
     };
 
-    await sendTopicOrPattern(params, {
+    await sendList(params, {
       idempotencyKey: "IDEMPOTENCY_KEY_UUID"
     });
   });

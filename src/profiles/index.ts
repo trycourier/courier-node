@@ -3,8 +3,8 @@ import { ICourierClientConfiguration } from "../types";
 import {
   ICourierClientProfiles,
   ICourierProfileGetParameters,
-  ICourierProfileGetRecipientTopicsParams,
-  ICourierProfileGetRecipientTopicsResponse,
+  ICourierProfileGetRecipientListsParams,
+  ICourierProfileGetRecipientListsResponse,
   ICourierProfileGetResponse,
   ICourierProfilePostConfig,
   ICourierProfilePostParameters,
@@ -61,14 +61,14 @@ export const getProfile = (options: ICourierClientConfiguration) => {
   };
 };
 
-const getRecipientTopics = (options: ICourierClientConfiguration) => {
+const getRecipientLists = (options: ICourierClientConfiguration) => {
   return async (
     recipientId: string,
-    params?: ICourierProfileGetRecipientTopicsParams
-  ): Promise<ICourierProfileGetRecipientTopicsResponse> => {
+    params?: ICourierProfileGetRecipientListsParams
+  ): Promise<ICourierProfileGetRecipientListsResponse> => {
     const res = await options.httpClient.get<
-      ICourierProfileGetRecipientTopicsResponse
-    >(`/profiles/${recipientId}/topics`, params);
+      ICourierProfileGetRecipientListsResponse
+    >(`/profiles/${recipientId}/lists`, params);
     return res.data;
   };
 };
@@ -78,7 +78,7 @@ export const profiles = (
 ): ICourierClientProfiles => {
   return {
     getProfile: getProfile(options),
-    getRecipientTopics: getRecipientTopics(options),
+    getRecipientLists: getRecipientLists(options),
     mergeProfile: mergeProfile(options),
     replaceProfile: replaceProfile(options)
   };

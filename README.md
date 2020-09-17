@@ -28,17 +28,17 @@ const { messageId } = await courier.send({
   data: {} // optional variables for merging into templates
 });
 
-// Example: send a message to a topic
-const { messageId } = await courier.sendTopicOrPattern({
+// Example: send a message to a list
+const { messageId } = await courier.sendList({
   eventId: "<EVENT_ID>", // get from the Courier UI
-  topicId: "<TOPIC_ID>", // e.g. example.topic.id
+  listId: "<LIST_ID>", // e.g. example.list.id
   data: {} // optional variables for merging into templates
 });
 
 // Example: send a message to a pattern
-const { messageId } = await courier.sendTopicOrPattern({
+const { messageId } = await courier.sendList({
   eventId: "<EVENT_ID>", // get from the Courier UI
-  topicId: "<PATTERN>", // e.g. example.topic.*
+  pattern: "<PATTERN>", // e.g. example.list.*
   data: {} // optional variables for merging into templates
 });
 ```
@@ -106,8 +106,8 @@ async function run() {
   });
   console.log(profile);
 
-  // Example: get a recipient's subscribed topics
-  const { paging, results } = await courier.profiles.getRecipientTopics(
+  // Example: get a recipient's subscribed lists
+  const { paging, items } = await courier.profiles.getRecipientLists(
     "<RECIPIENT_ID>"
   );
   console.log(results);
@@ -152,46 +152,49 @@ async function run() {
   // Example: delete a brand
   await courier.brands.deleteBrand("<BRAND_ID>");
 
-  // Example: get all topics
-  const { paging, results } = await courier.topics.getTopics({
+  // Example: get all lists
+  const { paging, results } = await courier.lists.getLists({
     cursor: "<CURSOR>" // optional
   });
   console.log(results);
 
-  // Example: get a specific topic
-  const topic = await courier.topics.getTopic("<TOPIC_ID>");
-  console.log(topic);
+  // Example: get a specific list
+  const list = await courier.lists.getList("<LIST_ID>");
+  console.log(list);
 
-  // Example: create or replace a topic
-  const replacedTopic = await courier.topics.replaceTopic("<TOPIC_ID>", {
-    name: "My New Topic"
+  // Example: create or replace a list
+  const replacedList = await courier.lists.replaceList("<LIST_ID>", {
+    name: "My New List"
   });
-  console.log(replacedTopic);
+  console.log(replacedList);
 
-  // Example: delete a topic
-  await courier.topics.deleteTopic("<TOPIC_ID>");
+  // Example: delete a list
+  await courier.lists.deleteList("<LIST_ID>");
 
-  // Example: get a topic's subscribers
-  const { paging, results } = await courier.topics.getTopicSubscribers(
-    "<TOPIC_ID>"
+  // Example: restore a list
+  await courier.lists.restoreList("<LIST_ID>");
+
+  // Example: get a list's subscriptions
+  const { paging, results } = await courier.lists.getListSubscriptions(
+    "<LIST_ID>"
   );
   console.log(results);
 
-  // Example: subscribe many recipients to a topic
-  await courier.topics.bulkSubscribeToTopic("<TOPIC_ID>", [
+  // Example: subscribe many recipients to a list
+  await courier.lists.bulkSubscribeToList("<LIST_ID>", [
     "RECIPIENT_ID_1",
     "RECIPIENT_ID_2"
   ]);
 
-  // Example: subscribe single recipient to topic
-  const { recipient } = courier.topics.subscribeToTopic(
-    "<TOPIC_ID>",
+  // Example: subscribe single recipient to list
+  const { recipient } = courier.lists.subscribeToList(
+    "<LIST_ID>",
     "<RECIPIENT_ID>"
   );
   console.log(recipient);
 
-  // Example: unsubscribe recipient from topic
-  await courier.topics.unsubscribeFromTopic("<TOPIC_ID>", "<RECIPIENT_ID>");
+  // Example: unsubscribe recipient from list
+  await courier.lists.unsubscribeFromList("<LIST_ID>", "<RECIPIENT_ID>");
 }
 
 run();

@@ -1,4 +1,4 @@
-import { ICourierTopic } from "../topics/types";
+import { ICourierList } from "../lists/types";
 import { ICourierPaging } from "../types";
 // PUT /profiles/{id}
 
@@ -36,23 +36,23 @@ export interface ICourierProfileGetResponse {
   profile: object;
 }
 
-export interface ICourierProfileGetRecipientTopicsParams {
+export interface ICourierProfileGetRecipientListsParams {
   curser?: string;
 }
 
-export interface ICourierProfileGetRecipientTopicsResponse {
+export interface ICourierProfileGetRecipientListsResponse {
   paging: ICourierPaging;
-  results: ICourierTopic[];
+  items: ICourierList[];
 }
 
 export interface ICourierClientProfiles {
   getProfile: (
     params: ICourierProfileGetParameters
   ) => Promise<ICourierProfileGetResponse>;
-  getRecipientTopics: (
+  getRecipientLists: (
     recipientId: string,
-    params?: ICourierProfileGetRecipientTopicsParams
-  ) => Promise<ICourierProfileGetRecipientTopicsResponse>;
+    params?: ICourierProfileGetRecipientListsParams
+  ) => Promise<ICourierProfileGetRecipientListsResponse>;
   mergeProfile: (
     params: ICourierProfilePostParameters,
     config?: ICourierProfilePostConfig
