@@ -7,7 +7,7 @@ import { ICourierClientOptions } from "./types";
 const { version } = require("../package.json");
 
 const DEFAULTS = {
-  BASE_URL: "https://api.trycourier.app"
+  BASE_URL: "https://api.courier.com"
 };
 
 export const CourierClient = (options: ICourierClientOptions = {}) => {

@@ -27,13 +27,27 @@ const { messageId } = await courier.send({
   },
   data: {} // optional variables for merging into templates
 });
+
+// Example: send a message to a list
+const { messageId } = await courier.sendList({
+  eventId: "<EVENT_ID>", // get from the Courier UI
+  listId: "<LIST_ID>", // e.g. example.list.id
+  data: {} // optional variables for merging into templates
+});
+
+// Example: send a message to a pattern
+const { messageId } = await courier.sendList({
+  eventId: "<EVENT_ID>", // get from the Courier UI
+  pattern: "<PATTERN>", // e.g. example.list.*
+  data: {} // optional variables for merging into templates
+});
 ```
 
 ## Environment Variables
 
 `courier-node` supports credential storage in environment variables. If no `authorizationToken` is provided when instantiating the Courier client (e.g., `const courier = CourierClient();`), the value in the `COURIER_AUTH_TOKEN` env var will be used.
 
-If you need to use a base url other than the default https://api.trycourier.app, you can set it using the `COURIER_BASE_URL` env var.
+If you need to use a base url other than the default https://api.courier.com, you can set it using the `COURIER_BASE_URL` env var.
 
 ## Advanced Usage
 
@@ -56,9 +70,17 @@ async function run() {
   });
   console.log(messageId);
 
+  // Example: get all message statuses
+  const { results } = await courier.messages.getMessages();
+  console.log(results);
+
   // Example: get a message status
-  const messageStatus = await courier.getMessage(messageId);
+  const messageStatus = await courier.messages.getMessage(messageId);
   console.log(messageStatus);
+
+  // Example: get a message history
+  const { results } = await courier.messages.getMessageHistory(messageId);
+  console.log(results);
 
   // Example: replace a recipient's profile
   const { status: replaceStatus } = await courier.replaceProfile({
@@ -70,7 +92,7 @@ async function run() {
   console.log(replaceStatus);
 
   // Example: merge into a recipient's profile
-  const { status: mergeStatus } = await courier.mergeProfile({
+  const { status: mergeStatus } = await courier.profiles.mergeProfile({
     recipientId: "<RECIPIENT_ID>",
     profile: {
       sms: "555-555-5555"
@@ -79,23 +101,29 @@ async function run() {
   console.log(mergeStatus);
 
   // Example: get a recipient's profile
-  const { profile } = await courier.getProfile({
+  const { profile } = await courier.profiles.getProfile({
     recipientId: "<RECIPIENT_ID>"
   });
   console.log(profile);
 
+  // Example: get a recipient's subscribed lists
+  const { paging, items } = await courier.profiles.getRecipientLists(
+    "<RECIPIENT_ID>"
+  );
+  console.log(results);
+
   // Example: get all brands
-  const { paging, results } = await courier.getBrands({
+  const { paging, results } = await courier.brands.getBrands({
     cursor: "<CURSOR>" // optional
   });
   console.log(results);
 
   // Example: get a specific brand
-  const brand = await courier.getBrand("<BRAND_ID>");
+  const brand = await courier.brands.getBrand("<BRAND_ID>");
   console.log(brand);
 
   // Example: create a brand
-  const newBrand = await courier.createBrand({
+  const newBrand = await courier.brands.createBrand({
     name: "My Brand",
     settings: {
       colors: {
@@ -108,7 +136,7 @@ async function run() {
   console.log(newBrand);
 
   // Example: replace a brand
-  const replacedBrand = await courier.replaceBrand({
+  const replacedBrand = await courier.brands.replaceBrand({
     id: "<BRAND_ID>",
     name: "My New Brand",
     settings: {
@@ -122,7 +150,51 @@ async function run() {
   console.log(replacedBrand);
 
   // Example: delete a brand
-  await courier.deleteBrand("<BRAND_ID>");
+  await courier.brands.deleteBrand("<BRAND_ID>");
+
+  // Example: get all lists
+  const { paging, items } = await courier.lists.getLists({
+    cursor: "<CURSOR>" // optional
+  });
+  console.log(items);
+
+  // Example: get a specific list
+  const list = await courier.lists.getList("<LIST_ID>");
+  console.log(list);
+
+  // Example: create or replace a list
+  const replacedList = await courier.lists.replaceList("<LIST_ID>", {
+    name: "My New List"
+  });
+  console.log(replacedList);
+
+  // Example: delete a list
+  await courier.lists.deleteList("<LIST_ID>");
+
+  // Example: restore a list
+  await courier.lists.restoreList("<LIST_ID>");
+
+  // Example: get a list's subscriptions
+  const { paging, items } = await courier.lists.getListSubscriptions(
+    "<LIST_ID>"
+  );
+  console.log(items);
+
+  // Example: subscribe many recipients to a list
+  await courier.lists.bulkSubscribeToList("<LIST_ID>", [
+    "RECIPIENT_ID_1",
+    "RECIPIENT_ID_2"
+  ]);
+
+  // Example: subscribe single recipient to list
+  const { recipient } = courier.lists.subscribeToList(
+    "<LIST_ID>",
+    "<RECIPIENT_ID>"
+  );
+  console.log(recipient);
+
+  // Example: unsubscribe recipient from list
+  await courier.lists.unsubscribeFromList("<LIST_ID>", "<RECIPIENT_ID>");
 }
 
 run();
@@ -130,7 +202,7 @@ run();
 
 ### Idempotency
 
-For `POST` methods, you can supply an `idempotencyKey` in the config parameter to ensure the idempotency of the API Call. We recommend that you use a `V4 UUID` for the key. Keys are eligible to be removed from the system after they're at least 24 hours old, and a new request is generated if a key is reused after the original has been removed. For more info, see [Idempotent Requests](https://docs.trycourier.com/reference/idempotent-requests) in the Courier Documentation.
+For `POST` methods, you can supply an `idempotencyKey` in the config parameter to ensure the idempotency of the API Call. We recommend that you use a `V4 UUID` for the key. Keys are eligible to be removed from the system after they're at least 24 hours old, and a new request is generated if a key is reused after the original has been removed. For more info, see [Idempotent Requests](https://docs.courier.com/reference/idempotent-requests) in the Courier Documentation.
 
 ```javascript
 import { CourierClient } from "@trycourier/courier";
