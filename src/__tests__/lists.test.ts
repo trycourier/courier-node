@@ -53,12 +53,12 @@ describe("CourierLists", () => {
       .onGet(/\/lists\/.*\/subscriptions/)
       .reply(200, mockGetListSubscriptionsResponse);
     mock.onGet(/\/lists\/.*/).reply(200, mockListResponse);
-    mock.onPost(/\/lists\/.*\/subscriptions/).reply(204);
+    mock.onPut(/\/lists\/.*\/subscriptions/).reply(204);
     mock
       .onPut(/\/lists\/.*\/subscriptions\/.*/)
       .reply(200, mockRecipientResponse);
     mock.onPut(/\/lists\/.*\/restore/).reply(204);
-    mock.onPut(/\/lists\/.*/).reply(200, mockListResponse);
+    mock.onPut(/\/lists\/.*/).reply(204);
     mock.onDelete(/\/lists\/.*\/subscriptions\/.*/).reply(204);
     mock.onDelete(/\/lists\/.*/).reply(204);
     mock.onPost("/send/list").reply(200, mockSendResponse);
@@ -125,7 +125,7 @@ describe("CourierLists", () => {
         id: "example.list.id",
         name: "Updated Example List"
       })
-    ).resolves.toMatchObject(mockListResponse);
+    ).resolves.toBeUndefined();
   });
 
   test(".delete", async () => {
@@ -186,7 +186,7 @@ describe("CourierLists", () => {
 
     await expect(
       lists.subscribe("example.list.id", "ABCD1234")
-    ).resolves.toMatchObject(mockRecipientResponse);
+    ).resolves.toBeUndefined();
   });
 
   test(".unsubscribe", async () => {

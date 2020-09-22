@@ -58,7 +58,7 @@ export interface ICourierClientLists {
   list: (
     params?: ICourierListGetAllParams
   ) => Promise<ICourierListGetAllResponse>;
-  put: (listId: string, list: ICourierList) => Promise<ICourierList>;
+  put: (listId: string, list: ICourierList) => Promise<void>;
   putSubscriptions: (
     listId: string,
     recipients: string[],
@@ -69,9 +69,6 @@ export interface ICourierClientLists {
     params: ICourierSendListOrPatternParams,
     config?: ICourierSendConfig
   ) => Promise<ICourierSendResponse>;
-  subscribe: (
-    listId: string,
-    recipientId: string
-  ) => Promise<ICourierListRecipient>;
+  subscribe: (listId: string, recipientId: string) => Promise<void>;
   unsubscribe: (listId: string, recipientId: string) => Promise<void>;
 }

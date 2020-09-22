@@ -38,12 +38,8 @@ const get = (options: ICourierClientConfiguration) => {
 
 const put = (options: ICourierClientConfiguration) => {
   // tslint:disable-next-line: no-shadowed-variable
-  return async (listId: string, list: ICourierList): Promise<ICourierList> => {
-    const res = await options.httpClient.put<ICourierList>(
-      `/lists/${listId}`,
-      list
-    );
-    return res.data;
+  return async (listId: string, list: ICourierList): Promise<void> => {
+    await options.httpClient.put<void>(`/lists/${listId}`, list);
   };
 };
 
@@ -95,14 +91,10 @@ const putSubscriptions = (options: ICourierClientConfiguration) => {
 };
 
 const subscribe = (options: ICourierClientConfiguration) => {
-  return async (
-    listId: string,
-    recipientId: string
-  ): Promise<ICourierListRecipient> => {
-    const res = await options.httpClient.put<ICourierListRecipient>(
+  return async (listId: string, recipientId: string): Promise<void> => {
+    await options.httpClient.put<void>(
       `/lists/${listId}/subscriptions/${recipientId}`
     );
-    return res.data;
   };
 };
 
