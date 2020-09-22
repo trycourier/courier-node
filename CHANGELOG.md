@@ -17,7 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - `DELETE /lists/{list_id}` via `client.lists.delete(listId)`
   - `PUT /lists/{list_id}/restore` via `client.lists.restore(listId)`
   - `GET /lists/{list_id}/subscriptions` via `client.lists.getSubscriptions(listId)`
-  - `PUT /lists/{list_id}/subscriptions` via `client.lists.bulkSubscribe(listId, [recipientId], config)`
+  - `PUT /lists/{list_id}/subscriptions` via `client.lists.putSubscriptions(listId, [recipientId], config)`
   - `PUT /lists/{list_id}/subscriptions/{recipient_id}` via `client.lists.subscribe(listId, recipientId)`
   - `DELETE /lists/{list_id}/subscriptions/{recipient_id}` via `client.lists.unsubscribe(listId, recipientId)`
 
