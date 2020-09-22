@@ -45,11 +45,6 @@ export interface ICourierListFindByRecipientIdParams {
 }
 
 export interface ICourierClientLists {
-  bulkSubscribe: (
-    listId: string,
-    recipients: string[],
-    config?: ICourierListPostConfig
-  ) => Promise<void>;
   delete: (listId: string) => Promise<void>;
   findByRecipientId: (
     recipientId: string,
@@ -64,6 +59,11 @@ export interface ICourierClientLists {
     params?: ICourierListGetAllParams
   ) => Promise<ICourierListGetAllResponse>;
   put: (listId: string, list: ICourierList) => Promise<ICourierList>;
+  putSubscriptions: (
+    listId: string,
+    recipients: string[],
+    config?: ICourierListPostConfig
+  ) => Promise<void>;
   restore: (listId: string) => Promise<void>;
   send: (
     params: ICourierSendListOrPatternParams,

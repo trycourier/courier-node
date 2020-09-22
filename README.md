@@ -164,8 +164,8 @@ async function run() {
   const { paging, items } = await courier.lists.getSubscriptions("<LIST_ID>");
   console.log(items);
 
-  // Example: subscribe many recipients to a new or existing list
-  await courier.lists.bulkSubscribe("<LIST_ID>", [
+  // Example: replace many recipients to a new or existing list
+  await courier.lists.putSubscriptions("<LIST_ID>", [
     "RECIPIENT_ID_1",
     "RECIPIENT_ID_2"
   ]);

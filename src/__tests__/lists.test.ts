@@ -154,17 +154,17 @@ describe("CourierLists", () => {
     ).resolves.toMatchObject(mockGetListSubscriptionsResponse);
   });
 
-  test(".bulkSubscribe", async () => {
+  test(".putSubscriptions", async () => {
     const { lists } = CourierClient({
       authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
-      lists.bulkSubscribe("example.list.id", ["ABCD1234"])
+      lists.putSubscriptions("example.list.id", ["ABCD1234"])
     ).resolves.toBeUndefined();
   });
 
-  test(".bulkSubscribe with Idempotency Key", async () => {
+  test(".putSubscriptions with Idempotency Key", async () => {
     const { lists } = CourierClient({
       authorizationToken: "AUTH_TOKEN"
     });
@@ -174,7 +174,7 @@ describe("CourierLists", () => {
       return [204];
     });
 
-    await lists.bulkSubscribe("example.list.id", ["ABCD1234"], {
+    await lists.putSubscriptions("example.list.id", ["ABCD1234"], {
       idempotencyKey: "IDEMPOTENCY_KEY_UUID"
     });
   });

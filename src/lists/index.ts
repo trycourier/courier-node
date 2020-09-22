@@ -71,7 +71,7 @@ const getSubscriptions = (options: ICourierClientConfiguration) => {
   };
 };
 
-const bulkSubscribe = (options: ICourierClientConfiguration) => {
+const putSubscriptions = (options: ICourierClientConfiguration) => {
   return async (
     listId: string,
     recipients: string[],
@@ -84,7 +84,7 @@ const bulkSubscribe = (options: ICourierClientConfiguration) => {
     if (config && config.idempotencyKey) {
       axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
     }
-    await options.httpClient.post<void>(
+    await options.httpClient.put<void>(
       `/lists/${listId}/subscriptions`,
       {
         recipients
@@ -153,13 +153,13 @@ export const lists = (
   options: ICourierClientConfiguration
 ): ICourierClientLists => {
   return {
-    bulkSubscribe: bulkSubscribe(options),
     delete: deleteList(options),
     findByRecipientId: findByRecipientId(options),
     get: get(options),
     getSubscriptions: getSubscriptions(options),
     list: list(options),
     put: put(options),
+    putSubscriptions: putSubscriptions(options),
     restore: restore(options),
     send: send(options),
     subscribe: subscribe(options),
