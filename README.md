@@ -27,13 +27,27 @@ const { messageId } = await courier.send({
   },
   data: {} // optional variables for merging into templates
 });
+
+// Example: send a message to a list
+const { messageId } = await courier.lists.send({
+  eventId: "<EVENT_ID>", // get from the Courier UI
+  listId: "<LIST_ID>", // e.g. example.list.id
+  data: {} // optional variables for merging into templates
+});
+
+// Example: send a message to a pattern
+const { messageId } = await courier.lists.send({
+  eventId: "<EVENT_ID>", // get from the Courier UI
+  pattern: "<PATTERN>", // e.g. example.list.*
+  data: {} // optional variables for merging into templates
+});
 ```
 
 ## Environment Variables
 
 `courier-node` supports credential storage in environment variables. If no `authorizationToken` is provided when instantiating the Courier client (e.g., `const courier = CourierClient();`), the value in the `COURIER_AUTH_TOKEN` env var will be used.
 
-If you need to use a base url other than the default https://api.trycourier.app, you can set it using the `COURIER_BASE_URL` env var.
+If you need to use a base url other than the default https://api.courier.com, you can set it using the `COURIER_BASE_URL` env var.
 
 ## Advanced Usage
 
@@ -123,6 +137,51 @@ async function run() {
 
   // Example: delete a brand
   await courier.deleteBrand("<BRAND_ID>");
+
+  // Example: get all lists
+  const { paging, items } = await courier.lists.list({
+    cursor: "<CURSOR>" // optional
+  });
+  console.log(items);
+
+  // Example: get a specific list
+  const list = await courier.lists.get("<LIST_ID>");
+  console.log(list);
+
+  // Example: create or replace a list
+  const replacedList = await courier.lists.put("<LIST_ID>", {
+    name: "My New List"
+  });
+  console.log(replacedList);
+
+  // Example: delete a list
+  await courier.lists.delete("<LIST_ID>");
+
+  // Example: restore a list
+  await courier.lists.restore("<LIST_ID>");
+
+  // Example: get a list's subscriptions
+  const { paging, items } = await courier.lists.getSubscriptions("<LIST_ID>");
+  console.log(items);
+
+  // Example: replace many recipients to a new or existing list
+  await courier.lists.putSubscriptions("<LIST_ID>", [
+    "RECIPIENT_ID_1",
+    "RECIPIENT_ID_2"
+  ]);
+
+  // Example: subscribe single recipient to a new or existing list
+  const { recipient } = courier.lists.subscribe("<LIST_ID>", "<RECIPIENT_ID>");
+  console.log(recipient);
+
+  // Example: unsubscribe recipient from list
+  await courier.lists.unsubscribe("<LIST_ID>", "<RECIPIENT_ID>");
+
+  // Example: get a recipient's subscribed lists
+  const { paging, items } = await courier.lists.findByRecipientId(
+    "<RECIPIENT_ID>"
+  );
+  console.log(items);
 }
 
 run();
@@ -130,7 +189,7 @@ run();
 
 ### Idempotency
 
-For `POST` methods, you can supply an `idempotencyKey` in the config parameter to ensure the idempotency of the API Call. We recommend that you use a `V4 UUID` for the key. Keys are eligible to be removed from the system after they're at least 24 hours old, and a new request is generated if a key is reused after the original has been removed. For more info, see [Idempotent Requests](https://docs.trycourier.com/reference/idempotent-requests) in the Courier Documentation.
+For `POST` methods, you can supply an `idempotencyKey` in the config parameter to ensure the idempotency of the API Call. We recommend that you use a `V4 UUID` for the key. Keys are eligible to be removed from the system after they're at least 24 hours old, and a new request is generated if a key is reused after the original has been removed. For more info, see [Idempotent Requests](https://docs.courier.com/reference/idempotent-requests) in the Courier Documentation.
 
 ```javascript
 import { CourierClient } from "@trycourier/courier";
