@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v1.6.0] - 2020-09-22
+
 ### Added
 
 - Support for `idempotencyKey` for `POST` methods by @aydrian & @rileylnapier
@@ -90,7 +92,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-python/compare/v1.5.0...HEAD
+[unreleased]: https://github.com/trycourier/courier-python/compare/v1.6.0...HEAD
+[v1.6.0]: https://github.com/trycourier/courier-python/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/trycourier/courier-python/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/trycourier/courier-python/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/trycourier/courier-python/compare/v1.2.1...v1.3.0
