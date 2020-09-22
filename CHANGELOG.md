@@ -8,18 +8,34 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Support for `idempotencyKey` for `POST` methods by @aydrian & @rileylnapier
+- Support for [Lists API](https://docs.courier.com/reference/lists-api) by @aydrian
+  - `POST /send/list` via `client.lists.send(params, config)`
+  - `GET /profiles/{recipient_id}/lists` via `client.lists.findByRecipientId(recipientId, params)`
+  - `GET /lists` via `client.lists.list(params)`
+  - `GET /lists/{list_id}` via `client.lists.get(listId)`
+  - `PUT /lists/{list_id}` via `client.lists.put(listId, {...})`
+  - `DELETE /lists/{list_id}` via `client.lists.delete(listId)`
+  - `PUT /lists/{list_id}/restore` via `client.lists.restore(listId)`
+  - `GET /lists/{list_id}/subscriptions` via `client.lists.getSubscriptions(listId)`
+  - `POST /lists/{list_id}/subscriptions` via `client.lists.bulkSubscribe(listId, [recipientId], config)`
+  - `PUT /lists/{list_id}/subscriptions/{recipient_id}` via `client.lists.subscribe(listId, recipientId)`
+  - `DELETE /lists/{list_id}/subscriptions/{recipient_id}` via `client.lists.unsubscribe(listId, recipientId)`
+
+### Changed
+
+- Default `base_url` is now `api.courier.com`
 
 ## [v1.5.0] - 2020-07-08
 
 ### Added
 
-- Support for [Brands API](https://docs.trycourier.com/reference/brands-api) by @aydrian
+- Support for [Brands API](https://docs.courier.com/reference/brands-api) by @aydrian
   - `GET /brands` via `client.getBrands(params)`
   - `GET /brands/:brand_id` via `client.getBrand(brandId)`
   - `POST /brands` via `client.createBrand({…})`
   - `PUT /brands/:brand_id` via `client.replaceBrand({…})`
   - `DELETE /brands/:brand_id` via `client.deleteBrand(brandId)`
-- Support for specifying notification brand during [send](https://docs.trycourier.com/reference/send-api#sendmessage) by @aydrian
+- Support for specifying notification brand during [send](https://docs.courier.com/reference/send-api#sendmessage) by @aydrian
 
 ## [v1.4.0] - 2020-06-29
 

@@ -1,5 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 
+import { ICourierClientLists } from "./lists/types";
+
 export type HttpMethodClient = <T>(
   url: string,
   body?: object,
@@ -41,6 +43,23 @@ export interface ICourierSendConfig {
 
 export interface ICourierSendResponse {
   messageId: string;
+}
+
+export interface ICourierSendListOrPatternParams {
+  eventId: string;
+  data?: object;
+  brand?: string;
+  override?: object;
+}
+
+export interface ICourierSendListParams
+  extends ICourierSendListOrPatternParams {
+  list: string;
+}
+
+export interface ICourierSendPatternParams
+  extends ICourierSendListOrPatternParams {
+  pattern: string;
 }
 
 // PUT /profiles/{id}
@@ -193,4 +212,5 @@ export interface ICourierClient {
   ) => Promise<ICourierBrand>;
   replaceBrand: (params: ICourierBrandPutParameters) => Promise<ICourierBrand>;
   deleteBrand: (brandId: string) => Promise<void>;
+  lists: ICourierClientLists;
 }
