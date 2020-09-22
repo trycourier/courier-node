@@ -164,13 +164,13 @@ async function run() {
   const { paging, items } = await courier.lists.getSubscriptions("<LIST_ID>");
   console.log(items);
 
-  // Example: subscribe many recipients to a list
+  // Example: subscribe many recipients to a new or existing list
   await courier.lists.bulkSubscribe("<LIST_ID>", [
     "RECIPIENT_ID_1",
     "RECIPIENT_ID_2"
   ]);
 
-  // Example: subscribe single recipient to list
+  // Example: subscribe single recipient to a new or existing list
   const { recipient } = courier.lists.subscribe("<LIST_ID>", "<RECIPIENT_ID>");
   console.log(recipient);
 
