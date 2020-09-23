@@ -12,6 +12,10 @@ export interface ICourierList {
   updated?: number;
 }
 
+export interface ICourierListPutParams {
+  name: string;
+}
+
 export interface ICourierListGetAllParams {
   cursor?: string;
   pattern?: string;
@@ -59,7 +63,7 @@ export interface ICourierClientLists {
   list: (
     params?: ICourierListGetAllParams
   ) => Promise<ICourierListGetAllResponse>;
-  put: (listId: string, list: ICourierList) => Promise<void>;
+  put: (listId: string, parms: ICourierListPutParams) => Promise<void>;
   putSubscriptions: (listId: string, recipients: string[]) => Promise<void>;
   restore: (listId: string) => Promise<void>;
   send: (

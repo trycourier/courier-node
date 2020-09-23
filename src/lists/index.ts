@@ -13,7 +13,8 @@ import {
   ICourierListGetAllParams,
   ICourierListGetAllResponse,
   ICourierListGetSubscriptionsParams,
-  ICourierListGetSubscriptionsResponse
+  ICourierListGetSubscriptionsResponse,
+  ICourierListPutParams
 } from "./types";
 
 const list = (options: ICourierClientConfiguration) => {
@@ -37,8 +38,11 @@ const get = (options: ICourierClientConfiguration) => {
 
 const put = (options: ICourierClientConfiguration) => {
   // tslint:disable-next-line: no-shadowed-variable
-  return async (listId: string, list: ICourierList): Promise<void> => {
-    await options.httpClient.put<void>(`/lists/${listId}`, list);
+  return async (
+    listId: string,
+    params: ICourierListPutParams
+  ): Promise<void> => {
+    await options.httpClient.put<void>(`/lists/${listId}`, params);
   };
 };
 

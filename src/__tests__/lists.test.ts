@@ -140,7 +140,6 @@ describe("CourierLists", () => {
 
     await expect(
       lists.put("example.list.id", {
-        id: "example.list.id",
         name: "Updated Example List"
       })
     ).resolves.toBeUndefined();
