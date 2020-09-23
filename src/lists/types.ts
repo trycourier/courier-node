@@ -12,6 +12,10 @@ export interface ICourierList {
   updated?: number;
 }
 
+export interface ICourierListPutParams {
+  name: string;
+}
+
 export interface ICourierListGetAllParams {
   cursor?: string;
   pattern?: string;
@@ -31,10 +35,6 @@ export interface ICourierListRecipient {
   created?: string;
 }
 
-export interface ICourierListPostConfig {
-  idempotencyKey?: string;
-}
-
 export interface ICourierListGetSubscriptionsResponse {
   paging: ICourierPaging;
   items: ICourierListRecipient[];
@@ -44,12 +44,17 @@ export interface ICourierListFindByRecipientIdParams {
   curser?: string;
 }
 
+export interface ICourierListFindByRecipientIdResponse {
+  paging: ICourierPaging;
+  results: ICourierList[];
+}
+
 export interface ICourierClientLists {
   delete: (listId: string) => Promise<void>;
   findByRecipientId: (
     recipientId: string,
     params?: ICourierListFindByRecipientIdParams
-  ) => Promise<ICourierListGetAllResponse>;
+  ) => Promise<ICourierListFindByRecipientIdResponse>;
   get: (listId: string) => Promise<ICourierList>;
   getSubscriptions: (
     listId: string,
@@ -58,20 +63,13 @@ export interface ICourierClientLists {
   list: (
     params?: ICourierListGetAllParams
   ) => Promise<ICourierListGetAllResponse>;
-  put: (listId: string, list: ICourierList) => Promise<ICourierList>;
-  putSubscriptions: (
-    listId: string,
-    recipients: string[],
-    config?: ICourierListPostConfig
-  ) => Promise<void>;
+  put: (listId: string, parms: ICourierListPutParams) => Promise<void>;
+  putSubscriptions: (listId: string, recipients: string[]) => Promise<void>;
   restore: (listId: string) => Promise<void>;
   send: (
     params: ICourierSendListOrPatternParams,
     config?: ICourierSendConfig
   ) => Promise<ICourierSendResponse>;
-  subscribe: (
-    listId: string,
-    recipientId: string
-  ) => Promise<ICourierListRecipient>;
+  subscribe: (listId: string, recipientId: string) => Promise<void>;
   unsubscribe: (listId: string, recipientId: string) => Promise<void>;
 }

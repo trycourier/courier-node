@@ -4,9 +4,9 @@ import { CourierClient } from "../index";
 
 import {
   ICourierList,
+  ICourierListFindByRecipientIdResponse,
   ICourierListGetAllResponse,
-  ICourierListGetSubscriptionsResponse,
-  ICourierListRecipient
+  ICourierListGetSubscriptionsResponse
 } from "../lists/types";
 
 import {
@@ -33,12 +33,19 @@ const mockGetListsResponse: ICourierListGetAllResponse = {
   }
 };
 
-const mockRecipientResponse: ICourierListRecipient = {
-  recipient: "ABCD1234"
+const mockFindByRecipientIdResponse: ICourierListFindByRecipientIdResponse = {
+  paging: {
+    more: false
+  },
+  results: [mockListResponse]
 };
 
 const mockGetListSubscriptionsResponse: ICourierListGetSubscriptionsResponse = {
-  items: [mockRecipientResponse],
+  items: [
+    {
+      recipient: "ABCD1234"
+    }
+  ],
   paging: {
     more: false
   }
@@ -48,21 +55,32 @@ describe("CourierLists", () => {
   let mock: MockAdapter;
   beforeEach(() => {
     mock = new MockAdapter(axios);
+    // GET /lists
     mock.onGet("/lists").reply(200, mockGetListsResponse);
+    // GET /lists/{list_id}/subscriptions
     mock
       .onGet(/\/lists\/.*\/subscriptions/)
       .reply(200, mockGetListSubscriptionsResponse);
+    // GET /lists/{list_id}
     mock.onGet(/\/lists\/.*/).reply(200, mockListResponse);
-    mock.onPost(/\/lists\/.*\/subscriptions/).reply(204);
-    mock
-      .onPut(/\/lists\/.*\/subscriptions\/.*/)
-      .reply(200, mockRecipientResponse);
+    // PUT /lists/{list_id}/subscriptions
+    mock.onPut(/\/lists\/.*\/subscriptions/).reply(204);
+    // PUT /lists/{list_id}/subscriptions/{recipient_id}
+    mock.onPut(/\/lists\/.*\/subscriptions\/.*/).reply(204);
+    // PUT /lists/{list_id}/restore
     mock.onPut(/\/lists\/.*\/restore/).reply(204);
-    mock.onPut(/\/lists\/.*/).reply(200, mockListResponse);
+    // PUT /lists/{list_id}
+    mock.onPut(/\/lists\/.*/).reply(204);
+    // DELETE /lists/{list_id}/subscriptions/{recipient_id}
     mock.onDelete(/\/lists\/.*\/subscriptions\/.*/).reply(204);
+    // DELETE /lists/{list_id}
     mock.onDelete(/\/lists\/.*/).reply(204);
+    // POST /send/list
     mock.onPost("/send/list").reply(200, mockSendResponse);
-    mock.onGet(/\/profiles\/.*\/lists/).reply(200, mockGetListsResponse);
+    // GET /profiles/{recipient_id}/lists
+    mock
+      .onGet(/\/profiles\/.*\/lists/)
+      .reply(200, mockFindByRecipientIdResponse);
   });
 
   test(".send with List", async () => {
@@ -74,7 +92,7 @@ describe("CourierLists", () => {
       data: {
         example: "EXAMPLE_DATA"
       },
-      eventId: "EVENT_ID",
+      event: "EVENT_ID",
       list: "example.list.id"
     };
 
@@ -90,7 +108,7 @@ describe("CourierLists", () => {
       data: {
         example: "EXAMPLE_DATA"
       },
-      eventId: "EVENT_ID",
+      event: "EVENT_ID",
       pattern: "example.list.*"
     };
 
@@ -122,10 +140,9 @@ describe("CourierLists", () => {
 
     await expect(
       lists.put("example.list.id", {
-        id: "example.list.id",
         name: "Updated Example List"
       })
-    ).resolves.toMatchObject(mockListResponse);
+    ).resolves.toBeUndefined();
   });
 
   test(".delete", async () => {
@@ -164,21 +181,6 @@ describe("CourierLists", () => {
     ).resolves.toBeUndefined();
   });
 
-  test(".putSubscriptions with Idempotency Key", async () => {
-    const { lists } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
-    });
-
-    mock.onPost(/\/lists\/.*\/subscriptions/).reply(async (config) => {
-      expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
-      return [204];
-    });
-
-    await lists.putSubscriptions("example.list.id", ["ABCD1234"], {
-      idempotencyKey: "IDEMPOTENCY_KEY_UUID"
-    });
-  });
-
   test(".subscribe", async () => {
     const { lists } = CourierClient({
       authorizationToken: "AUTH_TOKEN"
@@ -186,7 +188,7 @@ describe("CourierLists", () => {
 
     await expect(
       lists.subscribe("example.list.id", "ABCD1234")
-    ).resolves.toMatchObject(mockRecipientResponse);
+    ).resolves.toBeUndefined();
   });
 
   test(".unsubscribe", async () => {
@@ -206,6 +208,6 @@ describe("CourierLists", () => {
 
     await expect(
       lists.findByRecipientId("RECIPIENT_ID")
-    ).resolves.toMatchObject(mockGetListsResponse);
+    ).resolves.toMatchObject(mockFindByRecipientIdResponse);
   });
 });

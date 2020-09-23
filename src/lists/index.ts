@@ -9,12 +9,12 @@ import {
   ICourierClientLists,
   ICourierList,
   ICourierListFindByRecipientIdParams,
+  ICourierListFindByRecipientIdResponse,
   ICourierListGetAllParams,
   ICourierListGetAllResponse,
   ICourierListGetSubscriptionsParams,
   ICourierListGetSubscriptionsResponse,
-  ICourierListPostConfig,
-  ICourierListRecipient
+  ICourierListPutParams
 } from "./types";
 
 const list = (options: ICourierClientConfiguration) => {
@@ -38,12 +38,11 @@ const get = (options: ICourierClientConfiguration) => {
 
 const put = (options: ICourierClientConfiguration) => {
   // tslint:disable-next-line: no-shadowed-variable
-  return async (listId: string, list: ICourierList): Promise<ICourierList> => {
-    const res = await options.httpClient.put<ICourierList>(
-      `/lists/${listId}`,
-      list
-    );
-    return res.data;
+  return async (
+    listId: string,
+    params: ICourierListPutParams
+  ): Promise<void> => {
+    await options.httpClient.put<void>(`/lists/${listId}`, params);
   };
 };
 
@@ -72,37 +71,18 @@ const getSubscriptions = (options: ICourierClientConfiguration) => {
 };
 
 const putSubscriptions = (options: ICourierClientConfiguration) => {
-  return async (
-    listId: string,
-    recipients: string[],
-    config?: ICourierListPostConfig
-  ): Promise<void> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
-
-    if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-    await options.httpClient.put<void>(
-      `/lists/${listId}/subscriptions`,
-      {
-        recipients
-      },
-      axiosConfig
-    );
+  return async (listId: string, recipients: string[]): Promise<void> => {
+    await options.httpClient.put<void>(`/lists/${listId}/subscriptions`, {
+      recipients
+    });
   };
 };
 
 const subscribe = (options: ICourierClientConfiguration) => {
-  return async (
-    listId: string,
-    recipientId: string
-  ): Promise<ICourierListRecipient> => {
-    const res = await options.httpClient.put<ICourierListRecipient>(
+  return async (listId: string, recipientId: string): Promise<void> => {
+    await options.httpClient.put<void>(
       `/lists/${listId}/subscriptions/${recipientId}`
     );
-    return res.data;
   };
 };
 
@@ -118,11 +98,10 @@ const findByRecipientId = (options: ICourierClientConfiguration) => {
   return async (
     recipientId: string,
     params?: ICourierListFindByRecipientIdParams
-  ): Promise<ICourierListGetAllResponse> => {
-    const res = await options.httpClient.get<ICourierListGetAllResponse>(
-      `/profiles/${recipientId}/lists`,
-      params
-    );
+  ): Promise<ICourierListFindByRecipientIdResponse> => {
+    const res = await options.httpClient.get<
+      ICourierListFindByRecipientIdResponse
+    >(`/profiles/${recipientId}/lists`, params);
     return res.data;
   };
 };

@@ -5,6 +5,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v1.6.1] - 2020-09-23
+
+### Fixed
+
+- Fixed return types for `PUT` methods that return 204
+- Fixed param types for `client.lists.send()`
+- Fixed return type for `client.lists.findByRecipientId()`
+- Fixed param types for `client.lists.put()`
+
 ## [v1.6.0] - 2020-09-22
 
 ### Added
@@ -92,7 +101,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-python/compare/v1.6.0...HEAD
+[unreleased]: https://github.com/trycourier/courier-python/compare/v1.6.1...HEAD
+[v1.6.1]: https://github.com/trycourier/courier-python/compare/v1.6.0...v1.6.1
 [v1.6.0]: https://github.com/trycourier/courier-python/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/trycourier/courier-python/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/trycourier/courier-python/compare/v1.3.0...v1.4.0
