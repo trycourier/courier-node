@@ -46,7 +46,7 @@ export interface ICourierSendResponse {
 }
 
 export interface ICourierSendListOrPatternParams {
-  eventId: string;
+  event: string;
   data?: object;
   brand?: string;
   override?: object;

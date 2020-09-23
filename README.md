@@ -30,14 +30,14 @@ const { messageId } = await courier.send({
 
 // Example: send a message to a list
 const { messageId } = await courier.lists.send({
-  eventId: "<EVENT_ID>", // get from the Courier UI
-  listId: "<LIST_ID>", // e.g. example.list.id
+  event: "<EVENT_ID>", // get from the Courier UI
+  list: "<LIST_ID>", // e.g. example.list.id
   data: {} // optional variables for merging into templates
 });
 
 // Example: send a message to a pattern
 const { messageId } = await courier.lists.send({
-  eventId: "<EVENT_ID>", // get from the Courier UI
+  event: "<EVENT_ID>", // get from the Courier UI
   pattern: "<PATTERN>", // e.g. example.list.*
   data: {} // optional variables for merging into templates
 });

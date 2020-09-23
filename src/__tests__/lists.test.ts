@@ -74,7 +74,7 @@ describe("CourierLists", () => {
       data: {
         example: "EXAMPLE_DATA"
       },
-      eventId: "EVENT_ID",
+      event: "EVENT_ID",
       list: "example.list.id"
     };
 
@@ -90,7 +90,7 @@ describe("CourierLists", () => {
       data: {
         example: "EXAMPLE_DATA"
       },
-      eventId: "EVENT_ID",
+      event: "EVENT_ID",
       pattern: "example.list.*"
     };
 
