@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fixed return types for `PUT` methods that return 204
 - Fixed param types for `client.lists.send()`
+- Fixed return type for `client.lists.findByRecipientId()`
 
 ## [v1.6.0] - 2020-09-22
 

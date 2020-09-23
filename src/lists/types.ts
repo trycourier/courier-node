@@ -31,10 +31,6 @@ export interface ICourierListRecipient {
   created?: string;
 }
 
-export interface ICourierListPostConfig {
-  idempotencyKey?: string;
-}
-
 export interface ICourierListGetSubscriptionsResponse {
   paging: ICourierPaging;
   items: ICourierListRecipient[];
@@ -44,12 +40,17 @@ export interface ICourierListFindByRecipientIdParams {
   curser?: string;
 }
 
+export interface ICourierListFindByRecipientIdResponse {
+  paging: ICourierPaging;
+  results: ICourierList[];
+}
+
 export interface ICourierClientLists {
   delete: (listId: string) => Promise<void>;
   findByRecipientId: (
     recipientId: string,
     params?: ICourierListFindByRecipientIdParams
-  ) => Promise<ICourierListGetAllResponse>;
+  ) => Promise<ICourierListFindByRecipientIdResponse>;
   get: (listId: string) => Promise<ICourierList>;
   getSubscriptions: (
     listId: string,
@@ -59,11 +60,7 @@ export interface ICourierClientLists {
     params?: ICourierListGetAllParams
   ) => Promise<ICourierListGetAllResponse>;
   put: (listId: string, list: ICourierList) => Promise<void>;
-  putSubscriptions: (
-    listId: string,
-    recipients: string[],
-    config?: ICourierListPostConfig
-  ) => Promise<void>;
+  putSubscriptions: (listId: string, recipients: string[]) => Promise<void>;
   restore: (listId: string) => Promise<void>;
   send: (
     params: ICourierSendListOrPatternParams,
