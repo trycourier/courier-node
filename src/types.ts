@@ -45,23 +45,20 @@ export interface ICourierSendResponse {
   messageId: string;
 }
 
-export interface ICourierSendListOrPatternParams {
+export interface ICourierSendParams {
   event: string;
   data?: object;
   brand?: string;
   override?: object;
 }
-
-export interface ICourierSendListParams
-  extends ICourierSendListOrPatternParams {
+export interface ICourierSendListParams extends ICourierSendParams {
   list: string;
 }
-
-export interface ICourierSendPatternParams
-  extends ICourierSendListOrPatternParams {
+export interface ICourierSendPatternParams extends ICourierSendParams {
   pattern: string;
 }
 
+export type ICourierSendListOrPatternParams = ICourierSendListParams | ICourierSendPatternParams;
 // PUT /profiles/{id}
 
 export interface ICourierProfilePutParameters {

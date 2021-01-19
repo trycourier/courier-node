@@ -10,8 +10,7 @@ import {
 } from "../lists/types";
 
 import {
-  ICourierSendListParams,
-  ICourierSendPatternParams,
+  ICourierSendListOrPatternParams,
   ICourierSendResponse
 } from "../types";
 
@@ -88,7 +87,7 @@ describe("CourierLists", () => {
       authorizationToken: "AUTH_TOKEN"
     });
 
-    const params: ICourierSendListParams = {
+    const params: ICourierSendListOrPatternParams = {
       data: {
         example: "EXAMPLE_DATA"
       },
@@ -104,7 +103,7 @@ describe("CourierLists", () => {
       authorizationToken: "AUTH_TOKEN"
     });
 
-    const params: ICourierSendPatternParams = {
+    const params: ICourierSendListOrPatternParams = {
       data: {
         example: "EXAMPLE_DATA"
       },
