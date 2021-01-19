@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v1.6.2] - 2021-01-19
+
+### Fixed
+
+- Bumped [axios](https://www.npmjs.com/package/axios) to version 0.21.1
+- Updated types for Send to List Parameters by @rileylnapier
+
 ## [v1.6.1] - 2020-09-23
 
 ### Fixed
@@ -101,7 +108,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-python/compare/v1.6.1...HEAD
+[unreleased]: https://github.com/trycourier/courier-python/compare/v1.6.2...HEAD
+[v1.6.2]: https://github.com/trycourier/courier-python/compare/v1.6.1...v1.6.2
 [v1.6.1]: https://github.com/trycourier/courier-python/compare/v1.6.0...v1.6.1
 [v1.6.0]: https://github.com/trycourier/courier-python/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/trycourier/courier-python/compare/v1.4.0...v1.5.0
