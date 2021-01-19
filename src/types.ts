@@ -50,16 +50,8 @@ export interface ICourierSendListOrPatternParams {
   data?: object;
   brand?: string;
   override?: object;
-}
-
-export interface ICourierSendListParams
-  extends ICourierSendListOrPatternParams {
-  list: string;
-}
-
-export interface ICourierSendPatternParams
-  extends ICourierSendListOrPatternParams {
-  pattern: string;
+  list?: string;
+  pattern?: string;
 }
 
 // PUT /profiles/{id}
