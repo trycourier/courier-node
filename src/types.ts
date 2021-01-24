@@ -95,6 +95,50 @@ export interface ICourierProfileGetResponse {
   profile: object;
 }
 
+// Preferences
+
+enum NOTIF_STATUS {
+  OPTED_IN = 'OPTED_IN',
+  OPTED_OUT = 'OPTED_OUT',
+}
+
+// GET /preferences/{id}
+export interface ICourierPreferencesGetParameters {
+  recipientId: string;
+}
+
+export interface ICourierPreferencesGetResponse {
+  categories: {
+    [notificationId: string]: {
+      status: string;
+    };
+  };
+  notifications: {
+    [notificationId: string]: {
+      status: string;
+    };
+  };
+}
+
+export interface ICourierPreferencesGetAllResponse {
+  uncategorized: Array<{}>;
+  categories: Array<{
+    id: string;
+    title: string;
+    config?: any; // TODO
+    notifications?: Array<{}>;
+  }>;
+}
+
+export interface ICourierPreferencesPutParameters {
+  recipientId: string;
+  notification: { [notificationId: string]: NOTIF_STATUS };
+}
+
+export interface ICourierPreferencesPutResponse {
+  status: 'SUCCESS';
+}
+
 export interface ICourierMessageGetResponse {
   enqueued?: number;
   event?: string;
@@ -199,6 +243,15 @@ export interface ICourierClient {
   getProfile: (
     params: ICourierProfileGetParameters
   ) => Promise<ICourierProfileGetResponse>;
+  getPreferences: (params?: {
+    cursor: string;
+  }) => Promise<ICourierPreferencesGetAllResponse>;
+  getProfilePreferences: (
+    params: ICourierProfileGetParameters
+  ) => Promise<ICourierPreferencesGetResponse>;
+  updateProfilePreferences: (
+    params: ICourierPreferencesPutParameters
+  ) => Promise<ICourierPreferencesPutResponse>;
   getBrands: (params?: {
     cursor: string;
   }) => Promise<ICourierBrandGetAllResponse>;
