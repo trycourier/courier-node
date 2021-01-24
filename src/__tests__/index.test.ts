@@ -5,6 +5,9 @@ import {
   ICourierBrand,
   ICourierBrandGetAllResponse,
   ICourierMessageGetResponse,
+  ICourierPreferencesGetAllResponse,
+  ICourierPreferencesGetResponse,
+  ICourierPreferencesPutResponse,
   ICourierProfileGetResponse,
   ICourierProfilePostResponse,
   ICourierProfilePutResponse,
@@ -21,6 +24,10 @@ const mockReplaceProfileResponse: ICourierProfilePutResponse = {
 
 const mockMergeProfileResponse: ICourierProfilePostResponse = {
   status: "SUCCESS"
+};
+
+const mockPutPreferenceResponse: ICourierPreferencesPutResponse = {
+  status: 'SUCCESS',
 };
 
 const mockGetProfileResponse: ICourierProfileGetResponse = {
@@ -58,6 +65,40 @@ const mockGetBrandsResponse: ICourierBrandGetAllResponse = {
   },
   results: [mockBrandResponse]
 };
+const mockGetAllPreferenceResponse: ICourierPreferencesGetAllResponse = {
+  uncategorized: [
+    {
+      id: '9e5bb2cf-1ad4-4151-8f57-78e9754ce7dc',
+      title: 'Untitled Notification',
+      config: {
+        type: 'OPT_IN',
+      },
+    },
+  ],
+  categories: [
+    {
+      id: '6ab6f268-d60c-43d9-9987-93f6ed835b94',
+      title: 'New Category',
+      config: {
+        type: 'REQUIRED',
+      },
+    },
+  ],
+};
+
+const mockGetProfilePreferenceResponse: ICourierPreferencesGetResponse = {
+  notifications: {
+    '0089248b-2ce8-423e-838e-f29f938d658b': {
+      status: 'OPTED_OUT',
+    },
+  },
+  categories: {
+    '1341fdf3-f34r-fss3-fs23-fsfdsv233be3': {
+      status: 'OPTED_IN',
+    },
+  },
+};
+
 
 describe("CourierClient", () => {
   let mock: MockAdapter;
@@ -73,6 +114,9 @@ describe("CourierClient", () => {
     mock.onPost("/brands").reply(200, mockBrandResponse);
     mock.onPut(/\/brands\/.*/).reply(200, mockBrandResponse);
     mock.onDelete(/\/brands\/.*/).reply(204);
+    mock.onPut(/\/preferences\/.*/).reply(200, mockPutPreferenceResponse);
+    mock.onGet('/preferences').reply(200, mockGetAllPreferenceResponse);
+    mock.onGet(/\/preferences\/.*/).reply(200, mockGetProfilePreferenceResponse);
   });
 
   test(".send", async () => {
@@ -195,6 +239,28 @@ describe("CourierClient", () => {
       })
     ).resolves.toMatchObject(mockGetProfileResponse);
   });
+
+  test('.getPreferences', async () => {
+    const { getPreferences } = CourierClient({
+      authorizationToken: 'AUTH_TOKEN',
+    });
+
+    await expect(getPreferences()).resolves.toMatchObject(
+      mockGetAllPreferenceResponse
+    );
+  });
+
+   test('.getProfilePreferences', async () => {
+     const { getProfilePreferences } = CourierClient({
+       authorizationToken: 'AUTH_TOKEN',
+     });
+
+     await expect(
+       getProfilePreferences({
+         recipientId: 'RECIPIENT_ID',
+       })
+     ).resolves.toMatchObject(mockGetProfilePreferenceResponse);
+   });
 
   test(".getBrands", async () => {
     const { getBrands } = CourierClient({
