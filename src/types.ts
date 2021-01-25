@@ -33,7 +33,7 @@ export interface ICourierSendParameters {
   recipientId: string;
   data?: object;
   brand?: string;
-  preferences?: ICourierClientPreferences;
+  preferences?: ICourierProfilePreferences;
   profile?: object;
   override?: object;
 }
@@ -174,6 +174,16 @@ export interface ICourierBrandPutParameters extends ICourierBrandParameters {
 export interface ICourierBrandGetAllResponse {
   paging: ICourierPaging;
   results: ICourierBrand[];
+}
+
+export type ICourierChannelClassification =
+  | "direct_message"
+  | "email"
+  | "push"
+  | "webhook";
+
+export interface ICourierProfilePreferences {
+  preferred_channel?: ICourierChannelClassification;
 }
 
 export interface ICourierClient {

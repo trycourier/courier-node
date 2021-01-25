@@ -35,16 +35,6 @@ export interface ICourierPreferencesPutResponse {
   status: "SUCCESS";
 }
 
-export type ICourierChannelClassification =
-  | "direct_message"
-  | "email"
-  | "push"
-  | "webhook";
-
-export interface ICourierProfilePreferences {
-  preferred_channel?: ICourierChannelClassification;
-}
-
 export interface ICourierClientPreferences {
   get: (recipientId: string) => Promise<ICourierPreferencesGetResponse>;
   list: () => Promise<ICourierPreferencesListResponse>;
