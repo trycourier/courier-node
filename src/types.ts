@@ -1,7 +1,10 @@
 import { AxiosRequestConfig } from "axios";
 
 import { ICourierClientLists } from "./lists/types";
-import { ICourierClientPreferences } from "./preferences/types";
+import {
+  ICourierClientPreferences,
+  IRecipientPreferences
+} from "./preferences/types";
 
 export type HttpMethodClient = <T>(
   url: string,
@@ -33,7 +36,7 @@ export interface ICourierSendParameters {
   recipientId: string;
   data?: object;
   brand?: string;
-  preferences?: ICourierProfilePreferences;
+  preferences?: IRecipientPreferences;
   profile?: object;
   override?: object;
 }
@@ -174,16 +177,6 @@ export interface ICourierBrandPutParameters extends ICourierBrandParameters {
 export interface ICourierBrandGetAllResponse {
   paging: ICourierPaging;
   results: ICourierBrand[];
-}
-
-export type ICourierChannelClassification =
-  | "direct_message"
-  | "email"
-  | "push"
-  | "webhook";
-
-export interface ICourierProfilePreferences {
-  preferred_channel?: ICourierChannelClassification;
 }
 
 export interface ICourierClient {

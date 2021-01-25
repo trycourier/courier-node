@@ -5,8 +5,7 @@ import { CourierClient } from "../index";
 import {
   ICourierPreferencesGetResponse,
   ICourierPreferencesListResponse,
-  ICourierPreferencesPutResponse,
-  NOTIF_STATUS
+  ICourierPreferencesPutResponse
 } from "../preferences/types";
 
 const mockGetResponse: ICourierPreferencesGetResponse = {
@@ -81,8 +80,10 @@ describe("CourierPreference", () => {
 
     await expect(
       preferences.put("RECIPIENT_ID", {
-        notification: {
-          "9e5bb2cf-1ad4-4151-8f57-78e9754ce7dc": NOTIF_STATUS.OPTED_IN
+        notifications: {
+          "9e5bb2cf-1ad4-4151-8f57-78e9754ce7dc": {
+            status: "OPTED_IN"
+          }
         }
       })
     ).resolves.toMatchObject(mockPutResponse);

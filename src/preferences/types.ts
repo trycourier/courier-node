@@ -1,8 +1,3 @@
-export enum NOTIF_STATUS {
-  OPTED_IN = "OPTED_IN",
-  OPTED_OUT = "OPTED_OUT"
-}
-
 export interface ICourierPreferencesGetResponse {
   categories: {
     [notificationId: string]: {
@@ -26,9 +21,19 @@ export interface ICourierPreferencesListResponse {
   }>;
 }
 
-export interface ICourierPreferencesPutParameters {
-  notification: { [notificationId: string]: NOTIF_STATUS };
-  categories?: { [categoryId: string]: NOTIF_STATUS };
+export type PreferenceStatus = "OPTED_OUT" | "OPTED_IN" | undefined;
+
+export interface IRecipientPreferences {
+  categories?: {
+    [categoryId: string]: {
+      status: PreferenceStatus;
+    };
+  };
+  notifications: {
+    [notificationId: string]: {
+      status: PreferenceStatus;
+    };
+  };
 }
 
 export interface ICourierPreferencesPutResponse {
@@ -40,6 +45,6 @@ export interface ICourierClientPreferences {
   list: () => Promise<ICourierPreferencesListResponse>;
   put: (
     recipientId: string,
-    params: ICourierPreferencesPutParameters
+    params: IRecipientPreferences
   ) => Promise<ICourierPreferencesPutResponse>;
 }

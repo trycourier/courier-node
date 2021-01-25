@@ -185,7 +185,11 @@ async function run() {
 
   // Example: Notification Preferences
   await courier.preferences.put(
-    recipientId, {notification: { "<NOTIFICATION_ID>": "<OPT_IN_STATUS>" }}
+    recipientId, {
+      notifications: {
+        "<NOTIFICATION_ID>": { status: "<OPT_IN_STATUS>" }
+      }
+    }
   )
   // Where OPT_IN_STATUS = "OPTED_IN" | "OPTED_OUT"
 
