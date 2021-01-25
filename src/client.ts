@@ -23,6 +23,7 @@ import {
   replaceBrand
 } from "./brands";
 import { lists } from "./lists";
+import { preferences } from "./preferences";
 
 const send = (options: ICourierClientConfiguration) => {
   return async (
@@ -123,6 +124,7 @@ export const client = (
     getProfile: getProfile(options),
     lists: lists(options),
     mergeProfile: mergeProfile(options),
+    preferences: preferences(options),
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
     send: send(options)

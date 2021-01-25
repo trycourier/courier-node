@@ -1,6 +1,10 @@
 import { AxiosRequestConfig } from "axios";
 
 import { ICourierClientLists } from "./lists/types";
+import {
+  ICourierClientPreferences,
+  IRecipientPreferences
+} from "./preferences/types";
 
 export type HttpMethodClient = <T>(
   url: string,
@@ -32,7 +36,7 @@ export interface ICourierSendParameters {
   recipientId: string;
   data?: object;
   brand?: string;
-  preferences?: ICourierProfilePreferences;
+  preferences?: IRecipientPreferences;
   profile?: object;
   override?: object;
 }
@@ -58,7 +62,9 @@ export interface ICourierSendPatternParams extends ICourierSendParams {
   pattern: string;
 }
 
-export type ICourierSendListOrPatternParams = ICourierSendListParams | ICourierSendPatternParams;
+export type ICourierSendListOrPatternParams =
+  | ICourierSendListParams
+  | ICourierSendPatternParams;
 // PUT /profiles/{id}
 
 export interface ICourierProfilePutParameters {
@@ -173,16 +179,6 @@ export interface ICourierBrandGetAllResponse {
   results: ICourierBrand[];
 }
 
-export type ICourierChannelClassification =
-  | "direct_message"
-  | "email"
-  | "push"
-  | "webhook";
-
-export interface ICourierProfilePreferences {
-  preferred_channel?: ICourierChannelClassification;
-}
-
 export interface ICourierClient {
   send: (
     params: ICourierSendParameters,
@@ -210,4 +206,5 @@ export interface ICourierClient {
   replaceBrand: (params: ICourierBrandPutParameters) => Promise<ICourierBrand>;
   deleteBrand: (brandId: string) => Promise<void>;
   lists: ICourierClientLists;
+  preferences: ICourierClientPreferences;
 }

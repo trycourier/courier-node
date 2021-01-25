@@ -182,6 +182,25 @@ async function run() {
     "<RECIPIENT_ID>"
   );
   console.log(items);
+
+  // Example: Notification Preferences
+  await courier.preferences.put(
+    recipientId, {
+      notifications: {
+        "<NOTIFICATION_ID>": { status: "<OPT_IN_STATUS>" }
+      }
+    }
+  )
+  // Where OPT_IN_STATUS = "OPTED_IN" | "OPTED_OUT"
+
+  // Example: Get a list of existing notifications and categories
+  const prefs = await courier.preferences.list()
+  console.log(prefs)
+
+  // Example: Get the preferences stored under a specified recipient ID.
+  const profilePrefs = await courier.preferences.get(recipientId)
+  console.log(profilePrefs)
+
 }
 
 run();

@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+### Added
+
+- Support for [Preferences API]() by @helenamerk and @aydrian
+  - `GET /preferences` via `client.preferences.list()`
+  - `GET /preferences/{recipient_id}` via `client.preferences.get(recipientId)`
+  - `PUT /preferences/{recipient_id}` via `client.preferences.put(recipientId, {...})`
+
 ## [v1.6.2] - 2021-01-19
 
 ### Fixed
