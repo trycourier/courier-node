@@ -97,7 +97,7 @@ export interface ICourierProfileGetResponse {
 
 // Preferences
 
-enum NOTIF_STATUS {
+export enum NOTIF_STATUS {
   OPTED_IN = 'OPTED_IN',
   OPTED_OUT = 'OPTED_OUT',
 }
