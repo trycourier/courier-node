@@ -184,23 +184,20 @@ async function run() {
   console.log(items);
 
   // Example: Notification Preferences
-  await courier.preferences.put(
-    recipientId, {
-      notifications: {
-        "<NOTIFICATION_ID>": { status: "<OPT_IN_STATUS>" }
-      }
+  await courier.preferences.put(recipientId, {
+    notifications: {
+      "<NOTIFICATION_ID>": { status: "<OPT_IN_STATUS>" }
     }
-  )
+  });
   // Where OPT_IN_STATUS = "OPTED_IN" | "OPTED_OUT"
 
   // Example: Get a list of existing notifications and categories
-  const prefs = await courier.preferences.list()
-  console.log(prefs)
+  const prefs = await courier.preferences.list();
+  console.log(prefs);
 
   // Example: Get the preferences stored under a specified recipient ID.
-  const profilePrefs = await courier.preferences.get(recipientId)
-  console.log(profilePrefs)
-
+  const profilePrefs = await courier.preferences.get(recipientId);
+  console.log(profilePrefs);
 }
 
 run();
@@ -246,4 +243,4 @@ run();
 
 ## Author
 
-[Courier](https://github.com/trycourier) ([support@trycourier.com](mailto:support@trycourier.com))
+[Courier](https://github.com/trycourier) ([support@courier.com](mailto:support@courier.com))
