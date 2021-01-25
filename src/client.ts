@@ -12,22 +12,18 @@ import {
   ICourierProfilePutResponse,
   ICourierSendConfig,
   ICourierSendParameters,
-  ICourierSendResponse,
-} from './types';
+  ICourierSendResponse
+} from "./types";
 
 import {
   createBrand,
   deleteBrand,
   getBrand,
   getBrands,
-  replaceBrand,
-} from './brands';
-import { lists } from './lists';
-import {
-  getPreferences,
-  getProfilePreferences,
-  updateProfilePreferences,
-} from './preferences';
+  replaceBrand
+} from "./brands";
+import { lists } from "./lists";
+import { preferences } from "./preferences";
 
 const send = (options: ICourierClientConfiguration) => {
   return async (
@@ -127,10 +123,8 @@ export const client = (
     getMessage: getMessage(options),
     getProfile: getProfile(options),
     lists: lists(options),
-    getPreferences: getPreferences(options),
-    getProfilePreferences: getProfilePreferences(options),
-    updateProfilePreferences: updateProfilePreferences(options),
     mergeProfile: mergeProfile(options),
+    preferences: preferences(options),
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
     send: send(options)

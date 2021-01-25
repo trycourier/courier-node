@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 
 import { ICourierClientLists } from "./lists/types";
+import { ICourierClientPreferences } from "./preferences/types";
 
 export type HttpMethodClient = <T>(
   url: string,
@@ -32,7 +33,7 @@ export interface ICourierSendParameters {
   recipientId: string;
   data?: object;
   brand?: string;
-  preferences?: ICourierProfilePreferences;
+  preferences?: ICourierClientPreferences;
   profile?: object;
   override?: object;
 }
@@ -58,7 +59,9 @@ export interface ICourierSendPatternParams extends ICourierSendParams {
   pattern: string;
 }
 
-export type ICourierSendListOrPatternParams = ICourierSendListParams | ICourierSendPatternParams;
+export type ICourierSendListOrPatternParams =
+  | ICourierSendListParams
+  | ICourierSendPatternParams;
 // PUT /profiles/{id}
 
 export interface ICourierProfilePutParameters {
@@ -93,50 +96,6 @@ export interface ICourierProfileGetParameters {
 
 export interface ICourierProfileGetResponse {
   profile: object;
-}
-
-// Preferences
-
-export enum NOTIF_STATUS {
-  OPTED_IN = 'OPTED_IN',
-  OPTED_OUT = 'OPTED_OUT',
-}
-
-// GET /preferences/{id}
-export interface ICourierPreferencesGetParameters {
-  recipientId: string;
-}
-
-export interface ICourierPreferencesGetResponse {
-  categories: {
-    [notificationId: string]: {
-      status: string;
-    };
-  };
-  notifications: {
-    [notificationId: string]: {
-      status: string;
-    };
-  };
-}
-
-export interface ICourierPreferencesGetAllResponse {
-  uncategorized: Array<{}>;
-  categories: Array<{
-    id: string;
-    title: string;
-    config?: any; // TODO
-    notifications?: Array<{}>;
-  }>;
-}
-
-export interface ICourierPreferencesPutParameters {
-  recipientId: string;
-  notification: { [notificationId: string]: NOTIF_STATUS };
-}
-
-export interface ICourierPreferencesPutResponse {
-  status: 'SUCCESS';
 }
 
 export interface ICourierMessageGetResponse {
@@ -217,16 +176,6 @@ export interface ICourierBrandGetAllResponse {
   results: ICourierBrand[];
 }
 
-export type ICourierChannelClassification =
-  | "direct_message"
-  | "email"
-  | "push"
-  | "webhook";
-
-export interface ICourierProfilePreferences {
-  preferred_channel?: ICourierChannelClassification;
-}
-
 export interface ICourierClient {
   send: (
     params: ICourierSendParameters,
@@ -243,15 +192,6 @@ export interface ICourierClient {
   getProfile: (
     params: ICourierProfileGetParameters
   ) => Promise<ICourierProfileGetResponse>;
-  getPreferences: (params?: {
-    cursor: string;
-  }) => Promise<ICourierPreferencesGetAllResponse>;
-  getProfilePreferences: (
-    params: ICourierProfileGetParameters
-  ) => Promise<ICourierPreferencesGetResponse>;
-  updateProfilePreferences: (
-    params: ICourierPreferencesPutParameters
-  ) => Promise<ICourierPreferencesPutResponse>;
   getBrands: (params?: {
     cursor: string;
   }) => Promise<ICourierBrandGetAllResponse>;
@@ -263,4 +203,5 @@ export interface ICourierClient {
   replaceBrand: (params: ICourierBrandPutParameters) => Promise<ICourierBrand>;
   deleteBrand: (brandId: string) => Promise<void>;
   lists: ICourierClientLists;
+  preferences: ICourierClientPreferences;
 }

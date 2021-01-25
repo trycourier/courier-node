@@ -1,0 +1,53 @@
+import { ICourierClientConfiguration } from "../types";
+import {
+  ICourierClientPreferences,
+  ICourierPreferencesGetResponse,
+  ICourierPreferencesListResponse,
+  ICourierPreferencesPutParameters,
+  ICourierPreferencesPutResponse
+} from "./types";
+
+const list = (options: ICourierClientConfiguration) => {
+  return async (): Promise<ICourierPreferencesListResponse> => {
+    const res = await options.httpClient.get<ICourierPreferencesListResponse>(
+      `/preferences`
+    );
+    return res.data;
+  };
+};
+
+const get = (options: ICourierClientConfiguration) => {
+  return async (
+    recipientId: string
+  ): Promise<ICourierPreferencesGetResponse> => {
+    const res = await options.httpClient.get<ICourierPreferencesGetResponse>(
+      `/preferences/${recipientId}`
+    );
+    return res.data;
+  };
+};
+
+const put = (options: ICourierClientConfiguration) => {
+  return async (
+    recipientId: string,
+    params: ICourierPreferencesPutParameters
+  ): Promise<ICourierPreferencesPutResponse> => {
+    const res = await options.httpClient.put<ICourierPreferencesPutResponse>(
+      `/preferences/${recipientId}`,
+      {
+        notification: params.notification
+      }
+    );
+    return res.data;
+  };
+};
+
+export const preferences = (
+  options: ICourierClientConfiguration
+): ICourierClientPreferences => {
+  return {
+    get: get(options),
+    list: list(options),
+    put: put(options)
+  };
+};
