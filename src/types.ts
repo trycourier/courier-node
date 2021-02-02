@@ -23,6 +23,8 @@ export interface IHttpClient {
 export interface ICourierClientOptions {
   baseUrl?: string;
   authorizationToken?: string;
+  username?: string;
+  password?: string;
 }
 
 export interface ICourierClientConfiguration {

@@ -11,11 +11,24 @@ const DEFAULTS = {
 };
 
 export const CourierClient = (options: ICourierClientOptions = {}) => {
-  const authorizationToken =
+  // Bearer Auth Scheme takes a precedence
+  let authScheme = "Bearer";
+  let authorizationToken =
     options.authorizationToken || process.env.COURIER_AUTH_TOKEN;
 
+  // Try falling back to Basic Auth Scheme
   if (!authorizationToken) {
-    throw new Error("Courier Auth Token is required.");
+    const username = options.username || process.env.COURIER_AUTH_USERNAME;
+    const password = options.password || process.env.COURIER_AUTH_PASSWORD;
+    if (username && password) {
+      authScheme = "Basic";
+      authorizationToken = Buffer.from(
+        `${username}:${password}`,
+        "utf8"
+      ).toString("base64");
+    } else {
+      throw new Error("Courier Auth Token OR Username & Password is required.");
+    }
   }
 
   const baseURL =
@@ -24,7 +37,7 @@ export const CourierClient = (options: ICourierClientOptions = {}) => {
   const axiosInstance = axios.create({
     baseURL,
     headers: {
-      Authorization: `Bearer ${authorizationToken}`,
+      Authorization: `${authScheme} ${authorizationToken}`,
       "User-Agent": `courier-node/${version}`
     }
   });

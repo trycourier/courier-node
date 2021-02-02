@@ -45,7 +45,13 @@ const { messageId } = await courier.lists.send({
 
 ## Environment Variables
 
-`courier-node` supports credential storage in environment variables. If no `authorizationToken` is provided when instantiating the Courier client (e.g., `const courier = CourierClient();`), the value in the `COURIER_AUTH_TOKEN` env var will be used.
+`courier-node` supports credential storage in environment variables.
+
+Bearer Auth Scheme - If no `authorizationToken` is provided when instantiating the Courier client (e.g., `const courier = CourierClient();`), the value in the `COURIER_AUTH_TOKEN` env var will be used. 
+
+Basic Auth Scheme - If no `username` and `password` combination is provided when instantiating the Courier client, the values in the `COURIER_AUTH_USERNAME` and `COURIER_AUTH_PASSWORD` env vars will be used.
+
+Note: Bearer Auth Scheme takes a precendence over Basic Auth. So if the details for both are provided, Bearer Auth scheme would be used.
 
 If you need to use a base url other than the default https://api.courier.com, you can set it using the `COURIER_BASE_URL` env var.
 
