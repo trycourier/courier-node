@@ -4,7 +4,7 @@ import {
   ICourierPreferencesGetResponse,
   ICourierPreferencesListResponse,
   ICourierPreferencesPutResponse,
-  IRecipientPreferences,
+  IRecipientPreferences
 } from "./types";
 
 const list = (options: ICourierClientConfiguration) => {
@@ -35,7 +35,7 @@ const put = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.put<ICourierPreferencesPutResponse>(
       `/preferences/${recipientId}`,
       {
-        notifications: params.notifications,
+        notifications: params.notifications
       }
     );
     return res.data;
@@ -48,6 +48,6 @@ export const preferences = (
   return {
     get: get(options),
     list: list(options),
-    put: put(options),
+    put: put(options)
   };
 };

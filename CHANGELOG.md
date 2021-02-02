@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v1.7.1] - 2021-02-01
+### Fixed
+- Fix the notification(s) typo [#28](https://github.com/trycourier/courier-node/pull/28)
+
 ## [v1.7.0] - 2021-01-25
 
 ### Added
@@ -117,23 +121,24 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-python/compare/v1.7.0...HEAD
-[v1.7.0]: https://github.com/trycourier/courier-python/compare/v1.6.2...v1.7.0
-[v1.6.2]: https://github.com/trycourier/courier-python/compare/v1.6.1...v1.6.2
-[v1.6.1]: https://github.com/trycourier/courier-python/compare/v1.6.0...v1.6.1
-[v1.6.0]: https://github.com/trycourier/courier-python/compare/v1.5.0...v1.6.0
-[v1.5.0]: https://github.com/trycourier/courier-python/compare/v1.4.0...v1.5.0
-[v1.4.0]: https://github.com/trycourier/courier-python/compare/v1.3.0...v1.4.0
-[v1.3.0]: https://github.com/trycourier/courier-python/compare/v1.2.1...v1.3.0
-[v1.2.1]: https://github.com/trycourier/courier-python/compare/v1.2.0...v1.2.1
-[v1.2.0]: https://github.com/trycourier/courier-python/compare/v1.1.6...v1.2.0
-[v1.1.6]: https://github.com/trycourier/courier-python/compare/v1.1.5...v1.1.6
-[v1.1.5]: https://github.com/trycourier/courier-python/compare/v1.1.4...v1.1.5
-[v1.1.4]: https://github.com/trycourier/courier-python/compare/v1.1.3...v1.1.4
-[v1.1.3]: https://github.com/trycourier/courier-python/compare/v1.1.2...v1.1.3
-[v1.1.2]: https://github.com/trycourier/courier-python/compare/v1.1.1...v1.1.2
-[v1.1.1]: https://github.com/trycourier/courier-python/compare/v1.1.0...v1.1.1
-[v1.1.0]: https://github.com/trycourier/courier-python/compare/v1.0.4...v1.1.0
-[v1.0.4]: https://github.com/trycourier/courier-python/compare/v1.0.3...v1.0.4
-[v1.0.3]: https://github.com/trycourier/courier-python/compare/v1.0.2...v1.0.3
-[v1.0.2]: https://github.com/trycourier/courier-python/compare/v1.0.1...v1.0.2
+[unreleased]: https://github.com/trycourier/courier-node/compare/v1.7.1...HEAD
+[v1.7.1]: https://github.com/trycourier/courier-node/compare/v1.7.0...v1.7.1
+[v1.7.0]: https://github.com/trycourier/courier-node/compare/v1.6.2...v1.7.0
+[v1.6.2]: https://github.com/trycourier/courier-node/compare/v1.6.1...v1.6.2
+[v1.6.1]: https://github.com/trycourier/courier-node/compare/v1.6.0...v1.6.1
+[v1.6.0]: https://github.com/trycourier/courier-node/compare/v1.5.0...v1.6.0
+[v1.5.0]: https://github.com/trycourier/courier-node/compare/v1.4.0...v1.5.0
+[v1.4.0]: https://github.com/trycourier/courier-node/compare/v1.3.0...v1.4.0
+[v1.3.0]: https://github.com/trycourier/courier-node/compare/v1.2.1...v1.3.0
+[v1.2.1]: https://github.com/trycourier/courier-node/compare/v1.2.0...v1.2.1
+[v1.2.0]: https://github.com/trycourier/courier-node/compare/v1.1.6...v1.2.0
+[v1.1.6]: https://github.com/trycourier/courier-node/compare/v1.1.5...v1.1.6
+[v1.1.5]: https://github.com/trycourier/courier-node/compare/v1.1.4...v1.1.5
+[v1.1.4]: https://github.com/trycourier/courier-node/compare/v1.1.3...v1.1.4
+[v1.1.3]: https://github.com/trycourier/courier-node/compare/v1.1.2...v1.1.3
+[v1.1.2]: https://github.com/trycourier/courier-node/compare/v1.1.1...v1.1.2
+[v1.1.1]: https://github.com/trycourier/courier-node/compare/v1.1.0...v1.1.1
+[v1.1.0]: https://github.com/trycourier/courier-node/compare/v1.0.4...v1.1.0
+[v1.0.4]: https://github.com/trycourier/courier-node/compare/v1.0.3...v1.0.4
+[v1.0.3]: https://github.com/trycourier/courier-node/compare/v1.0.2...v1.0.3
+[v1.0.2]: https://github.com/trycourier/courier-node/compare/v1.0.1...v1.0.2

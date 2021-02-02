@@ -99,7 +99,7 @@ describe("CourierClient", () => {
       authorizationToken: "AUTH_TOKEN"
     });
 
-    mock.onPost("/send").reply(async (config) => {
+    mock.onPost("/send").reply(async config => {
       expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
       return [200];
     });
@@ -166,7 +166,7 @@ describe("CourierClient", () => {
       authorizationToken: "AUTH_TOKEN"
     });
 
-    mock.onPost(/\/profiles\/.*/).reply(async (config) => {
+    mock.onPost(/\/profiles\/.*/).reply(async config => {
       expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
       return [200];
     });
@@ -240,7 +240,7 @@ describe("CourierClient", () => {
       authorizationToken: "AUTH_TOKEN"
     });
 
-    mock.onPost("/brands").reply(async (config) => {
+    mock.onPost("/brands").reply(async config => {
       expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
       return [200];
     });
