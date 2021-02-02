@@ -122,6 +122,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## v1.0.1 - 2019-07-12
 
 [unreleased]: https://github.com/trycourier/courier-node/compare/v1.7.1...HEAD
+[v1.7.1]: https://github.com/trycourier/courier-node/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/trycourier/courier-node/compare/v1.6.2...v1.7.0
 [v1.6.2]: https://github.com/trycourier/courier-node/compare/v1.6.1...v1.6.2
 [v1.6.1]: https://github.com/trycourier/courier-node/compare/v1.6.0...v1.6.1
