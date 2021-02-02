@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v1.7.1] - 2021-02-01
+### Fixed
+- Fix the notification(s) typo [#28](https://github.com/trycourier/courier-node/pull/28)
+
 ## [v1.7.0] - 2021-01-25
 
 ### Added
