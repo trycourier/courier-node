@@ -23,6 +23,8 @@ export interface IHttpClient {
 export interface ICourierClientOptions {
   baseUrl?: string;
   authorizationToken?: string;
+  username?: string;
+  password?: string;
 }
 
 export interface ICourierClientConfiguration {
@@ -88,6 +90,21 @@ export interface ICourierProfilePostConfig {
 }
 
 export interface ICourierProfilePostResponse {
+  status: "SUCCESS";
+}
+
+// PATCH /profiles/{id}
+
+export interface ICourierProfilePatchParameters {
+  recipientId: string;
+  patch: Array<{
+    op: string;
+    path: string;
+    value: string;
+  }>;
+}
+
+export interface ICourierProfilePatchResponse {
   status: "SUCCESS";
 }
 
@@ -188,6 +205,9 @@ export interface ICourierClient {
   replaceProfile: (
     params: ICourierProfilePutParameters
   ) => Promise<ICourierProfilePutResponse>;
+  patchProfile: (
+    params: ICourierProfilePatchParameters
+  ) => Promise<ICourierProfilePatchResponse>;
   mergeProfile: (
     params: ICourierProfilePostParameters,
     config?: ICourierProfilePostConfig

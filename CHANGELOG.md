@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+### Added
+- Support for Basic Auth Scheme by @tk26
+- Support `PATCH /profiles/:recipientId` by @tk26
+
 ## [v1.7.1] - 2021-02-01
 ### Fixed
 - Fix the notification(s) typo [#28](https://github.com/trycourier/courier-node/pull/28)
