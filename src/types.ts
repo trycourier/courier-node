@@ -93,6 +93,21 @@ export interface ICourierProfilePostResponse {
   status: "SUCCESS";
 }
 
+// PATCH /profiles/{id}
+
+export interface ICourierProfilePatchParameters {
+  recipientId: string;
+  patch: Array<{
+    op: string;
+    path: string;
+    value: string;
+  }>;
+}
+
+export interface ICourierProfilePatchResponse {
+  status: "SUCCESS";
+}
+
 // GET /profiles/{id}
 
 export interface ICourierProfileGetParameters {
@@ -190,6 +205,9 @@ export interface ICourierClient {
   replaceProfile: (
     params: ICourierProfilePutParameters
   ) => Promise<ICourierProfilePutResponse>;
+  patchProfile: (
+    params: ICourierProfilePatchParameters
+  ) => Promise<ICourierProfilePatchResponse>;
   mergeProfile: (
     params: ICourierProfilePostParameters,
     config?: ICourierProfilePostConfig

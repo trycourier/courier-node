@@ -89,6 +89,17 @@ async function run() {
   });
   console.log(replaceStatus);
 
+  // Example: patch a recipient's profile
+  const { status: patchStatus } = await courier.patchProfile({
+    recipientId: "<RECIPIENT_ID>",
+    patch: [{
+      op: "add",
+      path: "/email",
+      value: "example@example.com"
+    }]
+  });
+  console.log(patchStatus);
+
   // Example: merge into a recipient's profile
   const { status: mergeStatus } = await courier.mergeProfile({
     recipientId: "<RECIPIENT_ID>",

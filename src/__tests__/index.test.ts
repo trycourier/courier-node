@@ -6,6 +6,7 @@ import {
   ICourierBrandGetAllResponse,
   ICourierMessageGetResponse,
   ICourierProfileGetResponse,
+  ICourierProfilePatchResponse,
   ICourierProfilePostResponse,
   ICourierProfilePutResponse,
   ICourierSendResponse
@@ -16,6 +17,10 @@ const mockSendResponse: ICourierSendResponse = {
 };
 
 const mockReplaceProfileResponse: ICourierProfilePutResponse = {
+  status: "SUCCESS"
+};
+
+const mockPatchProfileResponse: ICourierProfilePatchResponse = {
   status: "SUCCESS"
 };
 
@@ -64,6 +69,7 @@ describe("CourierClient", () => {
   beforeEach(() => {
     mock = new MockAdapter(axios);
     mock.onPost("/send").reply(200, mockSendResponse);
+    mock.onPatch(/\/profiles\/.*/).reply(200, mockPatchProfileResponse);
     mock.onPut(/\/profiles\/.*/).reply(200, mockReplaceProfileResponse);
     mock.onPost(/\/profiles\/.*/).reply(200, mockMergeProfileResponse);
     mock.onGet(/\/profiles\/.*/).reply(200, mockGetProfileResponse);
@@ -144,6 +150,25 @@ describe("CourierClient", () => {
         recipientId: "RECIPIENT_ID"
       })
     ).resolves.toMatchObject(mockReplaceProfileResponse);
+  });
+
+  test(".patchProfile", async () => {
+    const { patchProfile } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      patchProfile({
+        patch: [
+          {
+            op: "add",
+            path: "/email",
+            value: "foo@bar.com"
+          }
+        ],
+        recipientId: "RECIPIENT_ID"
+      })
+    ).resolves.toMatchObject(mockPatchProfileResponse);
   });
 
   test(".mergeProfile", async () => {

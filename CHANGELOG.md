@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Support for Basic Auth Scheme by @tk26
+- Support `PATCH /profiles/:recipientId` by @tk26
 
 ## [v1.7.1] - 2021-02-01
 ### Fixed

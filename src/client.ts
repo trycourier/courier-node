@@ -5,6 +5,8 @@ import {
   ICourierMessageGetResponse,
   ICourierProfileGetParameters,
   ICourierProfileGetResponse,
+  ICourierProfilePatchParameters,
+  ICourierProfilePatchResponse,
   ICourierProfilePostConfig,
   ICourierProfilePostParameters,
   ICourierProfilePostResponse,
@@ -78,6 +80,20 @@ const replaceProfile = (options: ICourierClientConfiguration) => {
   };
 };
 
+const patchProfile = (options: ICourierClientConfiguration) => {
+  return async (
+    params: ICourierProfilePatchParameters
+  ): Promise<ICourierProfilePatchResponse> => {
+    const res = await options.httpClient.patch<ICourierProfilePatchResponse>(
+      `/profiles/${params.recipientId}`,
+      {
+        patch: params.patch
+      }
+    );
+    return res.data;
+  };
+};
+
 const mergeProfile = (options: ICourierClientConfiguration) => {
   return async (
     params: ICourierProfilePostParameters,
@@ -124,6 +140,7 @@ export const client = (
     getProfile: getProfile(options),
     lists: lists(options),
     mergeProfile: mergeProfile(options),
+    patchProfile: patchProfile(options),
     preferences: preferences(options),
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
