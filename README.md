@@ -23,23 +23,23 @@ const { messageId } = await courier.send({
   recipientId: "<RECIPIENT_ID>", // usually your system's User ID
   profile: {
     email: "example@example.com",
-    phone_number: "555-228-3890"
+    phone_number: "555-228-3890",
   },
-  data: {} // optional variables for merging into templates
+  data: {}, // optional variables for merging into templates
 });
 
 // Example: send a message to a list
 const { messageId } = await courier.lists.send({
   event: "<EVENT_ID>", // get from the Courier UI
   list: "<LIST_ID>", // e.g. example.list.id
-  data: {} // optional variables for merging into templates
+  data: {}, // optional variables for merging into templates
 });
 
 // Example: send a message to a pattern
 const { messageId } = await courier.lists.send({
   event: "<EVENT_ID>", // get from the Courier UI
   pattern: "<PATTERN>", // e.g. example.list.*
-  data: {} // optional variables for merging into templates
+  data: {}, // optional variables for merging into templates
 });
 ```
 
@@ -66,7 +66,7 @@ async function run() {
     data: {}, // optional
     brand: "<BRAND_ID>", //optional
     preferences: {}, // optional
-    override: {} // optional
+    override: {}, // optional
   });
   console.log(messageId);
 
@@ -78,8 +78,8 @@ async function run() {
   const { status: replaceStatus } = await courier.replaceProfile({
     recipientId: "<RECIPIENT_ID>",
     profile: {
-      email: "example@example.com"
-    }
+      email: "example@example.com",
+    },
   });
   console.log(replaceStatus);
 
@@ -87,20 +87,20 @@ async function run() {
   const { status: mergeStatus } = await courier.mergeProfile({
     recipientId: "<RECIPIENT_ID>",
     profile: {
-      sms: "555-555-5555"
-    }
+      sms: "555-555-5555",
+    },
   });
   console.log(mergeStatus);
 
   // Example: get a recipient's profile
   const { profile } = await courier.getProfile({
-    recipientId: "<RECIPIENT_ID>"
+    recipientId: "<RECIPIENT_ID>",
   });
   console.log(profile);
 
   // Example: get all brands
   const { paging, results } = await courier.getBrands({
-    cursor: "<CURSOR>" // optional
+    cursor: "<CURSOR>", // optional
   });
   console.log(results);
 
@@ -115,9 +115,9 @@ async function run() {
       colors: {
         primary: "#0000FF",
         secondary: "#FF0000",
-        tertiary: "#00FF00"
-      }
-    }
+        tertiary: "#00FF00",
+      },
+    },
   });
   console.log(newBrand);
 
@@ -129,9 +129,9 @@ async function run() {
       color: {
         primary: "#FF0000",
         secondary: "#00FF00",
-        tertiary: "#0000FF"
-      }
-    }
+        tertiary: "#0000FF",
+      },
+    },
   });
   console.log(replacedBrand);
 
@@ -140,7 +140,7 @@ async function run() {
 
   // Example: get all lists
   const { paging, items } = await courier.lists.list({
-    cursor: "<CURSOR>" // optional
+    cursor: "<CURSOR>", // optional
   });
   console.log(items);
 
@@ -150,7 +150,7 @@ async function run() {
 
   // Example: create or replace a list
   const replacedList = await courier.lists.put("<LIST_ID>", {
-    name: "My New List"
+    name: "My New List",
   });
   console.log(replacedList);
 
@@ -166,8 +166,8 @@ async function run() {
 
   // Example: replace many recipients to a new or existing list
   await courier.lists.putSubscriptions("<LIST_ID>", [
-    "RECIPIENT_ID_1",
-    "RECIPIENT_ID_2"
+    { recipientId: "RECIPIENT_ID_1" },
+    { recipientId: "RECIPIENT_ID_2" },
   ]);
 
   // Example: subscribe single recipient to a new or existing list
@@ -186,8 +186,8 @@ async function run() {
   // Example: Notification Preferences
   await courier.preferences.put(recipientId, {
     notifications: {
-      "<NOTIFICATION_ID>": { status: "<OPT_IN_STATUS>" }
-    }
+      "<NOTIFICATION_ID>": { status: "<OPT_IN_STATUS>" },
+    },
   });
   // Where OPT_IN_STATUS = "OPTED_IN" | "OPTED_OUT"
 
@@ -221,14 +221,14 @@ async function run() {
       recipientId: "<RECIPIENT_ID>",
       profile: {
         email: "example@example.com",
-        phone_number: "555-867-5309"
+        phone_number: "555-867-5309",
       },
       data: {
-        world: "JavaScript!"
-      }
+        world: "JavaScript!",
+      },
     },
     {
-      idempotencyKey
+      idempotencyKey,
     }
   );
   console.log(messageId);

@@ -2,7 +2,7 @@ import {
   ICourierPaging,
   ICourierSendConfig,
   ICourierSendListOrPatternParams,
-  ICourierSendResponse
+  ICourierSendResponse,
 } from "../types";
 
 export interface ICourierList {
@@ -49,6 +49,16 @@ export interface ICourierListFindByRecipientIdResponse {
   results: ICourierList[];
 }
 
+export interface ICourierRecipientPreference {
+  categories?: string;
+  notifications: string;
+}
+
+export interface ICourierPutSubscriptionsRecipient {
+  recipientId: string;
+  preferences?: ICourierRecipientPreference;
+}
+
 export interface ICourierClientLists {
   delete: (listId: string) => Promise<void>;
   findByRecipientId: (
@@ -64,7 +74,10 @@ export interface ICourierClientLists {
     params?: ICourierListGetAllParams
   ) => Promise<ICourierListGetAllResponse>;
   put: (listId: string, parms: ICourierListPutParams) => Promise<void>;
-  putSubscriptions: (listId: string, recipients: string[]) => Promise<void>;
+  putSubscriptions: (
+    listId: string,
+    recipients: ICourierPutSubscriptionsRecipient[]
+  ) => Promise<void>;
   restore: (listId: string) => Promise<void>;
   send: (
     params: ICourierSendListOrPatternParams,

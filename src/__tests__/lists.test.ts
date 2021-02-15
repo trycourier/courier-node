@@ -176,7 +176,7 @@ describe("CourierLists", () => {
     });
 
     await expect(
-      lists.putSubscriptions("example.list.id", ["ABCD1234"])
+      lists.putSubscriptions("example.list.id", [{ recipientId: "ABCD1234" }])
     ).resolves.toBeUndefined();
   });
 
