@@ -14,7 +14,8 @@ import {
   ICourierListGetAllResponse,
   ICourierListGetSubscriptionsParams,
   ICourierListGetSubscriptionsResponse,
-  ICourierListPutParams
+  ICourierListPutParams,
+  ICourierPutSubscriptionsRecipient
 } from "./types";
 
 const list = (options: ICourierClientConfiguration) => {
@@ -71,7 +72,10 @@ const getSubscriptions = (options: ICourierClientConfiguration) => {
 };
 
 const putSubscriptions = (options: ICourierClientConfiguration) => {
-  return async (listId: string, recipients: string[]): Promise<void> => {
+  return async (
+    listId: string,
+    recipients: ICourierPutSubscriptionsRecipient[]
+  ): Promise<void> => {
     await options.httpClient.put<void>(`/lists/${listId}/subscriptions`, {
       recipients
     });
