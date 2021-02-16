@@ -5,8 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
-## [v1.7.1] - 2021-02-01
+## [v1.7.2] - 2021-02-16
+
 ### Fixed
+
+- Update PUT list subscription request params with appropriate type [#32](https://github.com/trycourier/courier-node/pull/32)
+
+## [v1.7.1] - 2021-02-01
+
+### Fixed
+
 - Fix the notification(s) typo [#28](https://github.com/trycourier/courier-node/pull/28)
 
 ## [v1.7.0] - 2021-01-25
@@ -121,7 +129,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-node/compare/v1.7.1...HEAD
+[unreleased]: https://github.com/trycourier/courier-node/compare/v1.7.2...HEAD
+[v1.7.2]: https://github.com/trycourier/courier-node/compare/v1.7.1...v1.7.2
 [v1.7.1]: https://github.com/trycourier/courier-node/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/trycourier/courier-node/compare/v1.6.2...v1.7.0
 [v1.6.2]: https://github.com/trycourier/courier-node/compare/v1.6.1...v1.6.2
