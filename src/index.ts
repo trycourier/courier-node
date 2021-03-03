@@ -2,6 +2,7 @@ import axios from "axios";
 import { client } from "./client";
 import { ICourierClientOptions } from "./types";
 import { CourierInputError } from "./exceptions";
+
 export { ICourierClient } from "./types";
 
 // cannot be `import` as it's not under TS root dir
