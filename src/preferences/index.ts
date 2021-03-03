@@ -1,3 +1,4 @@
+import { ErrorHandlerFunction } from "../exceptions";
 import { ICourierClientConfiguration } from "../types";
 import {
   ICourierClientPreferences,
@@ -11,7 +12,7 @@ const list = (options: ICourierClientConfiguration) => {
   return async (): Promise<ICourierPreferencesListResponse> => {
     const res = await options.httpClient.get<ICourierPreferencesListResponse>(
       `/preferences`
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -22,7 +23,7 @@ const get = (options: ICourierClientConfiguration) => {
   ): Promise<ICourierPreferencesGetResponse> => {
     const res = await options.httpClient.get<ICourierPreferencesGetResponse>(
       `/preferences/${recipientId}`
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -37,7 +38,7 @@ const put = (options: ICourierClientConfiguration) => {
       {
         notifications: params.notifications
       }
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };

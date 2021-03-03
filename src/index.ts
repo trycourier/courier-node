@@ -1,6 +1,8 @@
 import axios from "axios";
 import { client } from "./client";
 import { ICourierClientOptions } from "./types";
+import { CourierInputError } from "./exceptions";
+export { ICourierClient } from "./types";
 
 // cannot be `import` as it's not under TS root dir
 // tslint:disable-next-line:no-var-requires
@@ -15,7 +17,7 @@ export const CourierClient = (options: ICourierClientOptions = {}) => {
     options.authorizationToken || process.env.COURIER_AUTH_TOKEN;
 
   if (!authorizationToken) {
-    throw new Error("Courier Auth Token is required.");
+    throw new CourierInputError(400, "Invalid Input: Courier Auth Token is required.");
   }
 
   const baseURL =

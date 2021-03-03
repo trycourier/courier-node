@@ -24,6 +24,7 @@ import {
 } from "./brands";
 import { lists } from "./lists";
 import { preferences } from "./preferences";
+import { CourierAPIError, CourierError, CourierInputError, CourierNoResponseError, ErrorHandlerFunction } from "./exceptions";
 
 const send = (options: ICourierClientConfiguration) => {
   return async (
@@ -50,7 +51,7 @@ const send = (options: ICourierClientConfiguration) => {
         recipient: params.recipientId
       },
       axiosConfig
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -59,7 +60,7 @@ const getMessage = (options: ICourierClientConfiguration) => {
   return async (messageId: string): Promise<ICourierMessageGetResponse> => {
     const res = await options.httpClient.get<ICourierMessageGetResponse>(
       `/messages/${messageId}`
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -73,7 +74,7 @@ const replaceProfile = (options: ICourierClientConfiguration) => {
       {
         profile: params.profile
       }
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -96,7 +97,7 @@ const mergeProfile = (options: ICourierClientConfiguration) => {
         profile: params.profile
       },
       axiosConfig
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -107,7 +108,7 @@ const getProfile = (options: ICourierClientConfiguration) => {
   ): Promise<ICourierProfileGetResponse> => {
     const res = await options.httpClient.get<ICourierProfileGetResponse>(
       `/profiles/${params.recipientId}`
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
