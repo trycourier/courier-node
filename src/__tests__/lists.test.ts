@@ -213,7 +213,7 @@ describe("CourierLists", () => {
   });
 });
 
-describe("CourierLists", () => {
+describe("CourierListsErrors", () => {
   let mock: MockAdapter;
   beforeEach(() => {
     mock = new MockAdapter(axios);
