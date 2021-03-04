@@ -8,6 +8,8 @@ import {
   ICourierPreferencesPutResponse
 } from "../preferences/types";
 
+const mockError = "Bad Request";
+
 const mockGetResponse: ICourierPreferencesGetResponse = {
   notifications: {
     "0089248b-2ce8-423e-838e-f29f938d658b": {
@@ -87,5 +89,47 @@ describe("CourierPreference", () => {
         }
       })
     ).resolves.toMatchObject(mockPutResponse);
+  });
+});
+
+describe("CourierPreferenceErrors", () => {
+  let mock: MockAdapter;
+  beforeEach(() => {
+    mock = new MockAdapter(axios);
+    mock.onPut(/\/preferences\/.*/).reply(400, "Bad Request");
+    mock.onGet(/\/preferences\/.*/).networkError();
+    mock.onGet("/preferences").abortRequest();
+  });
+
+  test(".get", async () => {
+    const { preferences } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(preferences.get("RECIPIENT_ID")).rejects.toThrowError(mockError);
+  });
+
+  test(".list", async () => {
+    const { preferences } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(preferences.list()).rejects.toThrowError(mockError);
+  });
+
+  test(".put", async () => {
+    const { preferences } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      preferences.put("RECIPIENT_ID", {
+        notifications: {
+          "9e5bb2cf-1ad4-4151-8f57-78e9754ce7dc": {
+            status: "OPTED_IN"
+          }
+        }
+      })
+    ).rejects.toThrowError(mockError);
   });
 });
