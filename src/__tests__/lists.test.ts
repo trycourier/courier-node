@@ -6,7 +6,8 @@ import {
   ICourierList,
   ICourierListFindByRecipientIdResponse,
   ICourierListGetAllResponse,
-  ICourierListGetSubscriptionsResponse
+  ICourierListGetSubscriptionsResponse,
+  ICourierPutSubscriptionsRecipient
 } from "../lists/types";
 
 import {
@@ -42,7 +43,14 @@ const mockFindByRecipientIdResponse: ICourierListFindByRecipientIdResponse = {
 const mockGetListSubscriptionsResponse: ICourierListGetSubscriptionsResponse = {
   items: [
     {
-      recipient: "ABCD1234"
+      preferences: {
+        notifications: {
+          W951R8G37V49KZMK8DEKW8Z588BZ: {
+            status: "OPTED_IN"
+          }
+        }
+      },
+      recipientId: "ABCD1234"
     }
   ],
   paging: {
@@ -180,13 +188,42 @@ describe("CourierLists", () => {
     ).resolves.toBeUndefined();
   });
 
+  test(".putSubscriptions with subscription preferences", async () => {
+    const { lists } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    const mockNotificationId = "8YA052Y5VV4EMQP2C4KW76WF3BC3";
+
+    const mockRecipientWithPreferences: ICourierPutSubscriptionsRecipient = {
+      preferences: {
+        notifications: {
+          [mockNotificationId]: {
+            status: "OPTED_IN"
+          }
+        }
+      },
+      recipientId: "ABCD1234"
+    };
+
+    await expect(
+      lists.putSubscriptions("example.list.id", [mockRecipientWithPreferences])
+    ).resolves.toBeUndefined();
+  });
+
   test(".subscribe", async () => {
     const { lists } = CourierClient({
       authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
-      lists.subscribe("example.list.id", "ABCD1234")
+      lists.subscribe("example.list.id", "ABCD1234", {
+        notifications: {
+          W951R8G37V49KZMK8DEKW8Z588BZ: {
+            status: "OPTED_IN"
+          }
+        }
+      })
     ).resolves.toBeUndefined();
   });
 

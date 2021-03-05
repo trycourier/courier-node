@@ -1,14 +1,12 @@
+export interface ICourierNotificationPreferences {
+  [id: string]: {
+    status: PreferenceStatus;
+  };
+}
+
 export interface ICourierPreferencesGetResponse {
-  categories: {
-    [notificationId: string]: {
-      status: string;
-    };
-  };
-  notifications: {
-    [notificationId: string]: {
-      status: string;
-    };
-  };
+  categories?: ICourierNotificationPreferences;
+  notifications: ICourierNotificationPreferences;
 }
 
 export interface ICourierPreferencesListResponse {
@@ -21,19 +19,11 @@ export interface ICourierPreferencesListResponse {
   }>;
 }
 
-export type PreferenceStatus = "OPTED_OUT" | "OPTED_IN" | undefined;
+export type PreferenceStatus = "OPTED_OUT" | "OPTED_IN";
 
 export interface IRecipientPreferences {
-  categories?: {
-    [categoryId: string]: {
-      status: PreferenceStatus;
-    };
-  };
-  notifications: {
-    [notificationId: string]: {
-      status: PreferenceStatus;
-    };
-  };
+  categories?: ICourierNotificationPreferences;
+  notifications: ICourierNotificationPreferences;
 }
 
 export interface ICourierPreferencesPutResponse {

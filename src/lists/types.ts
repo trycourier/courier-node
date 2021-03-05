@@ -1,8 +1,9 @@
+import { ICourierNotificationPreferences } from "../preferences/types";
 import {
   ICourierPaging,
   ICourierSendConfig,
   ICourierSendListOrPatternParams,
-  ICourierSendResponse,
+  ICourierSendResponse
 } from "../types";
 
 export interface ICourierList {
@@ -31,8 +32,9 @@ export interface ICourierListGetSubscriptionsParams {
 }
 
 export interface ICourierListRecipient {
-  recipient: string;
+  recipientId: string;
   created?: string;
+  preferences?: ICourierRecipientPreferences;
 }
 
 export interface ICourierListGetSubscriptionsResponse {
@@ -49,14 +51,14 @@ export interface ICourierListFindByRecipientIdResponse {
   results: ICourierList[];
 }
 
-export interface ICourierRecipientPreference {
-  categories?: string;
-  notifications: string;
+export interface ICourierRecipientPreferences {
+  categories?: ICourierNotificationPreferences;
+  notifications: ICourierNotificationPreferences;
 }
 
 export interface ICourierPutSubscriptionsRecipient {
   recipientId: string;
-  preferences?: ICourierRecipientPreference;
+  preferences?: ICourierRecipientPreferences;
 }
 
 export interface ICourierClientLists {
@@ -83,6 +85,10 @@ export interface ICourierClientLists {
     params: ICourierSendListOrPatternParams,
     config?: ICourierSendConfig
   ) => Promise<ICourierSendResponse>;
-  subscribe: (listId: string, recipientId: string) => Promise<void>;
+  subscribe: (
+    listId: string,
+    recipientId: string,
+    preferences?: ICourierRecipientPreferences
+  ) => Promise<void>;
   unsubscribe: (listId: string, recipientId: string) => Promise<void>;
 }
