@@ -1,4 +1,5 @@
 import { AxiosRequestConfig } from "axios";
+import { ErrorHandlerFunction } from "../exceptions";
 import {
   ICourierClientConfiguration,
   ICourierSendConfig,
@@ -26,16 +27,18 @@ const list = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.get<ICourierListGetAllResponse>(
       `/lists`,
       params
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
 
 const get = (options: ICourierClientConfiguration) => {
   return async (listId: string): Promise<ICourierList> => {
-    const res = await options.httpClient.get<ICourierList>(`/lists/${listId}`);
+    const res = await options.httpClient.get<ICourierList>(
+      `/lists/${listId}`
+      ).catch(ErrorHandlerFunction);
     return res.data;
-  };
+  }
 };
 
 const put = (options: ICourierClientConfiguration) => {
@@ -44,19 +47,20 @@ const put = (options: ICourierClientConfiguration) => {
     listId: string,
     params: ICourierListPutParams
   ): Promise<void> => {
-    await options.httpClient.put<void>(`/lists/${listId}`, params);
+    await options.httpClient.put<void>(
+      `/lists/${listId}`, params).catch(ErrorHandlerFunction);
   };
 };
 
 const deleteList = (options: ICourierClientConfiguration) => {
   return async (listId: string): Promise<void> => {
-    await options.httpClient.delete<void>(`/lists/${listId}`);
+    await options.httpClient.delete<void>(`/lists/${listId}`).catch(ErrorHandlerFunction);
   };
 };
 
 const restore = (options: ICourierClientConfiguration) => {
   return async (listId: string): Promise<void> => {
-    await options.httpClient.put<void>(`/lists/${listId}/restore`);
+    await options.httpClient.put<void>(`/lists/${listId}/restore`).catch(ErrorHandlerFunction);
   };
 };
 
@@ -67,7 +71,7 @@ const getSubscriptions = (options: ICourierClientConfiguration) => {
   ): Promise<ICourierListGetSubscriptionsResponse> => {
     const res = await options.httpClient.get<
       ICourierListGetSubscriptionsResponse
-    >(`/lists/${listId}/subscriptions`, params);
+    >(`/lists/${listId}/subscriptions`, params).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -79,7 +83,7 @@ const putSubscriptions = (options: ICourierClientConfiguration) => {
   ): Promise<void> => {
     await options.httpClient.put<void>(`/lists/${listId}/subscriptions`, {
       recipients
-    });
+    }).catch(ErrorHandlerFunction);
   };
 };
 
@@ -94,7 +98,7 @@ const subscribe = (options: ICourierClientConfiguration) => {
       {
         preferences
       }
-    );
+    ).catch(ErrorHandlerFunction);
   };
 };
 
@@ -102,7 +106,7 @@ const unsubscribe = (options: ICourierClientConfiguration) => {
   return async (listId: string, recipientId: string): Promise<void> => {
     await options.httpClient.delete<void>(
       `/lists/${listId}/subscriptions/${recipientId}`
-    );
+    ).catch(ErrorHandlerFunction);
   };
 };
 
@@ -113,7 +117,7 @@ const findByRecipientId = (options: ICourierClientConfiguration) => {
   ): Promise<ICourierListFindByRecipientIdResponse> => {
     const res = await options.httpClient.get<
       ICourierListFindByRecipientIdResponse
-    >(`/profiles/${recipientId}/lists`, params);
+    >(`/profiles/${recipientId}/lists`, params).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -135,7 +139,7 @@ const send = (options: ICourierClientConfiguration) => {
       `/send/list`,
       params,
       axiosConfig
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };

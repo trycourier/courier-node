@@ -10,7 +10,7 @@ export type HttpMethodClient = <T>(
   url: string,
   body?: object,
   config?: AxiosRequestConfig
-) => Promise<{ data: T }>;
+) => Promise<{ data: T, status: number, statusText: string }>;
 
 export interface IHttpClient {
   post: HttpMethodClient;

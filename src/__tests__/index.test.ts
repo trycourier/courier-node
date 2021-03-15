@@ -11,6 +11,8 @@ import {
   ICourierSendResponse
 } from "../types";
 
+const mockError = "Bad Request";
+
 const mockSendResponse: ICourierSendResponse = {
   messageId: "1234"
 };
@@ -293,5 +295,157 @@ describe("CourierClient", () => {
     await expect(
       deleteBrand("VHEGJ8NQEB4T3JM3SZJ8TWD27JPG")
     ).resolves.toBeUndefined();
+  });
+});
+
+describe("CourierClientErrors", () => {
+  let mock: MockAdapter;
+  beforeEach(() => {
+    mock = new MockAdapter(axios);
+    mock.onPost("/send").reply(400, mockError);
+    mock.onAny(/\/profiles\/.*/).networkError();
+    mock.onGet(/\/messages\/.*/).reply(400, mockError);
+    mock.onAny("/brands").timeout();
+    mock.onAny(/\/brands\/.*/).abortRequest();
+  });
+
+  test(".send", async () => {
+    const { send } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      send({
+        data: {
+          example: "EXAMPLE_DATA"
+        },
+        eventId: "EVENT_ID",
+        profile: {
+          sms: "PHONE_NUMBER"
+        },
+        recipientId: "RECIPIENT_ID"
+      })
+    ).rejects.toThrowError(mockError);
+  });
+
+  test(".getMessage", async () => {
+    const { getMessage } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(getMessage(mockGetMessageResponse.id)).rejects.toThrowError(mockError);
+  });
+
+  test(".replaceProfile", async () => {
+    const { replaceProfile } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      replaceProfile({
+        profile: {
+          foo: "bar"
+        },
+        recipientId: "RECIPIENT_ID"
+      })
+    ).rejects.toThrowError(mockError);
+  });
+
+  test(".mergeProfile", async () => {
+    const { mergeProfile } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      mergeProfile({
+        profile: {
+          foo: "bar"
+        },
+        recipientId: "RECIPIENT_ID"
+      })
+    ).rejects.toThrowError(mockError);
+  });
+
+  test(".getProfile", async () => {
+    const { getProfile } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      getProfile({
+        recipientId: "RECIPIENT_ID"
+      })
+    ).rejects.toThrowError(mockError);
+  });
+
+  test(".getBrands", async () => {
+    const { getBrands } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(getBrands()).rejects.toThrowError(mockError);
+  });
+
+  test(".getBrand", async () => {
+    const { getBrand } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      getBrand("VHEGJ8NQEB4T3JM3SZJ8TWD27JPG")
+    ).rejects.toThrowError(mockError);
+  });
+
+  test(".createBrand", async () => {
+    const { createBrand } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      createBrand({
+        id: "VHEGJ8NQEB4T3JM3SZJ8TWD27JPG",
+        name: "Default Brand",
+        settings: {
+          email: {
+            footer: {},
+            header: {
+              barColor: "#9D3789"
+            }
+          }
+        }
+      })
+    ).rejects.toThrowError(mockError);
+  });
+
+
+  test(".replaceBrand", async () => {
+    const { replaceBrand } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      replaceBrand({
+        id: "VHEGJ8NQEB4T3JM3SZJ8TWD27JPG",
+        name: "Default Brand",
+        settings: {
+          email: {
+            footer: {},
+            header: {
+              barColor: "#9D3789"
+            }
+          }
+        }
+      })
+    ).rejects.toThrowError(mockError);
+  });
+
+  test(".deleteBrand", async () => {
+    const { deleteBrand } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      deleteBrand("VHEGJ8NQEB4T3JM3SZJ8TWD27JPG")
+    ).rejects.toThrowError(mockError);
   });
 });

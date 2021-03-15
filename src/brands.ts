@@ -1,4 +1,5 @@
 import { AxiosRequestConfig } from "axios";
+import { ErrorHandlerFunction } from "./exceptions";
 import {
   ICourierBrand,
   ICourierBrandGetAllResponse,
@@ -15,7 +16,7 @@ export const getBrands = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.get<ICourierBrandGetAllResponse>(
       `/brands`,
       params
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -24,7 +25,7 @@ export const getBrand = (options: ICourierClientConfiguration) => {
   return async (brandId: string): Promise<ICourierBrand> => {
     const res = await options.httpClient.get<ICourierBrand>(
       `/brands/${brandId}`
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -45,7 +46,7 @@ export const createBrand = (options: ICourierClientConfiguration) => {
       `/brands`,
       params,
       axiosConfig
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
@@ -56,13 +57,13 @@ export const replaceBrand = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.put<ICourierBrand>(
       `/brands/${id}`,
       rest
-    );
+    ).catch(ErrorHandlerFunction);
     return res.data;
   };
 };
 
 export const deleteBrand = (options: ICourierClientConfiguration) => {
   return async (brandId: string): Promise<void> => {
-    await options.httpClient.delete<void>(`/brands/${brandId}`);
+    await options.httpClient.delete<void>(`/brands/${brandId}`).catch(ErrorHandlerFunction);
   };
 };
