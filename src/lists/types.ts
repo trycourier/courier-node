@@ -1,4 +1,7 @@
-import { ICourierNotificationPreferences } from "../preferences/types";
+import {
+  ICourierNotificationPreferences,
+  IRecipientPreferences
+} from "../preferences/types";
 import {
   ICourierPaging,
   ICourierSendConfig,
@@ -15,6 +18,10 @@ export interface ICourierList {
 
 export interface ICourierListPutParams {
   name: string;
+  preferences?: {
+    notifications: IRecipientPreferences;
+    categories?: IRecipientPreferences;
+  };
 }
 
 export interface ICourierListGetAllParams {
