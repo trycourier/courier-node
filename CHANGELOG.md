@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v2.3.1] - 2021-03-15
+- adds support to add more recipients to a list subscription (#40)
+- adds support to delete all the lists subscriptions for a recipient (#39)
+- adds support to add recipient to multiple lists (#38)
+- updates preference interface to accept new preference options (#37)
+
 ## [v2.0.0] - 2021-03-03
 
 - supports adding subscription preferences (#35)
@@ -140,6 +146,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## v1.0.1 - 2019-07-12
 
 [unreleased]: https://github.com/trycourier/courier-node/compare/v2.0.0...HEAD
+[v2.3.1]: https://github.com/trycourier/courier-node/compare/v2.0.0...v2.3.1
 [v2.0.0]: https://github.com/trycourier/courier-node/compare/v1.7.3...v2.0.0
 [v1.7.3]: https://github.com/trycourier/courier-node/compare/v1.7.2...v1.7.3
 [v1.7.2]: https://github.com/trycourier/courier-node/compare/v1.7.1...v1.7.2
