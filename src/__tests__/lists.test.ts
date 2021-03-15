@@ -74,6 +74,7 @@ describe("CourierLists", () => {
     mock.onPut(/\/lists\/.*\/subscriptions/).reply(204);
     // PUT /lists/{list_id}/subscriptions/{recipient_id}
     mock.onPut(/\/lists\/.*\/subscriptions\/.*/).reply(204);
+    mock.onPost(/\/lists\/.*\/subscriptions/).reply(204);
     // PUT /lists/{list_id}/restore
     mock.onPut(/\/lists\/.*\/restore/).reply(204);
     // PUT /lists/{list_id}
@@ -208,6 +209,16 @@ describe("CourierLists", () => {
 
     await expect(
       lists.putSubscriptions("example.list.id", [mockRecipientWithPreferences])
+    ).resolves.toBeUndefined();
+  });
+
+  test(".postSubscriptions", async () => {
+    const { lists } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      lists.postSubscriptions("example.list.id", [{ recipientId: "ABCD1234" }])
     ).resolves.toBeUndefined();
   });
 
