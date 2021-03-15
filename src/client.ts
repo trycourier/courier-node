@@ -1,21 +1,5 @@
 import { AxiosRequestConfig } from "axios";
 import {
-  ICourierClient,
-  ICourierClientConfiguration,
-  ICourierMessageGetResponse,
-  ICourierProfileGetParameters,
-  ICourierProfileGetResponse,
-  ICourierProfilePostConfig,
-  ICourierProfilePostParameters,
-  ICourierProfilePostResponse,
-  ICourierProfilePutParameters,
-  ICourierProfilePutResponse,
-  ICourierSendConfig,
-  ICourierSendParameters,
-  ICourierSendResponse
-} from "./types";
-
-import {
   createBrand,
   deleteBrand,
   getBrand,
@@ -24,6 +8,22 @@ import {
 } from "./brands";
 import { lists } from "./lists";
 import { preferences } from "./preferences";
+import {
+  addRecipientToLists,
+  getProfile,
+  getRecipientSubscriptions,
+  mergeProfile,
+  replaceProfile
+} from "./profile";
+
+import {
+  ICourierClient,
+  ICourierClientConfiguration,
+  ICourierMessageGetResponse,
+  ICourierSendConfig,
+  ICourierSendParameters,
+  ICourierSendResponse
+} from "./types";
 
 const send = (options: ICourierClientConfiguration) => {
   return async (
@@ -64,64 +64,18 @@ const getMessage = (options: ICourierClientConfiguration) => {
   };
 };
 
-const replaceProfile = (options: ICourierClientConfiguration) => {
-  return async (
-    params: ICourierProfilePutParameters
-  ): Promise<ICourierProfilePutResponse> => {
-    const res = await options.httpClient.put<ICourierProfilePutResponse>(
-      `/profiles/${params.recipientId}`,
-      {
-        profile: params.profile
-      }
-    );
-    return res.data;
-  };
-};
-
-const mergeProfile = (options: ICourierClientConfiguration) => {
-  return async (
-    params: ICourierProfilePostParameters,
-    config?: ICourierProfilePostConfig
-  ): Promise<ICourierProfilePostResponse> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
-
-    if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-    const res = await options.httpClient.post<ICourierProfilePostResponse>(
-      `/profiles/${params.recipientId}`,
-      {
-        profile: params.profile
-      },
-      axiosConfig
-    );
-    return res.data;
-  };
-};
-
-const getProfile = (options: ICourierClientConfiguration) => {
-  return async (
-    params: ICourierProfileGetParameters
-  ): Promise<ICourierProfileGetResponse> => {
-    const res = await options.httpClient.get<ICourierProfileGetResponse>(
-      `/profiles/${params.recipientId}`
-    );
-    return res.data;
-  };
-};
-
 export const client = (
   options: ICourierClientConfiguration
 ): ICourierClient => {
   return {
+    addRecipientToLists: addRecipientToLists(options),
     createBrand: createBrand(options),
     deleteBrand: deleteBrand(options),
     getBrand: getBrand(options),
     getBrands: getBrands(options),
     getMessage: getMessage(options),
     getProfile: getProfile(options),
+    getRecipientSubscriptions: getRecipientSubscriptions(options),
     lists: lists(options),
     mergeProfile: mergeProfile(options),
     preferences: preferences(options),

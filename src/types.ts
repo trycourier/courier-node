@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 
-import { ICourierClientLists } from "./lists/types";
+import { ICourierClientLists, ICourierList } from "./lists/types";
 import {
   ICourierClientPreferences,
   IRecipientPreferences
@@ -81,6 +81,16 @@ export interface ICourierProfilePutResponse {
 export interface ICourierProfilePostParameters {
   recipientId: string;
   profile: object;
+}
+// POST /profiles/{id}/lists
+export type List = Omit<ICourierList, "id"> & {
+  listId: string;
+  preferences?: IRecipientPreferences;
+};
+
+export interface ICourierProfileListsPostParameters {
+  recipientId: string;
+  lists: List[];
 }
 
 export interface ICourierProfilePostConfig {
@@ -180,31 +190,37 @@ export interface ICourierBrandGetAllResponse {
 }
 
 export interface ICourierClient {
-  send: (
-    params: ICourierSendParameters,
-    config?: ICourierSendConfig
-  ) => Promise<ICourierSendResponse>;
-  getMessage: (messageId: string) => Promise<ICourierMessageGetResponse>;
-  replaceProfile: (
-    params: ICourierProfilePutParameters
-  ) => Promise<ICourierProfilePutResponse>;
-  mergeProfile: (
-    params: ICourierProfilePostParameters,
-    config?: ICourierProfilePostConfig
+  addRecipientToLists: (
+    params: ICourierProfileListsPostParameters
   ) => Promise<ICourierProfilePostResponse>;
-  getProfile: (
-    params: ICourierProfileGetParameters
-  ) => Promise<ICourierProfileGetResponse>;
-  getBrands: (params?: {
-    cursor: string;
-  }) => Promise<ICourierBrandGetAllResponse>;
-  getBrand: (brandId: string) => Promise<ICourierBrand>;
   createBrand: (
     params: ICourierBrandParameters,
     config?: ICourierBrandPostConfig
   ) => Promise<ICourierBrand>;
-  replaceBrand: (params: ICourierBrandPutParameters) => Promise<ICourierBrand>;
   deleteBrand: (brandId: string) => Promise<void>;
+  getBrand: (brandId: string) => Promise<ICourierBrand>;
+  getBrands: (params?: {
+    cursor: string;
+  }) => Promise<ICourierBrandGetAllResponse>;
+  getMessage: (messageId: string) => Promise<ICourierMessageGetResponse>;
+  getProfile: (
+    params: ICourierProfileGetParameters
+  ) => Promise<ICourierProfileGetResponse>;
+  getRecipientSubscriptions: (
+    params: ICourierProfileGetParameters
+  ) => Promise<ICourierList[]>;
   lists: ICourierClientLists;
+  mergeProfile: (
+    params: ICourierProfilePostParameters,
+    config?: ICourierProfilePostConfig
+  ) => Promise<ICourierProfilePostResponse>;
   preferences: ICourierClientPreferences;
+  replaceBrand: (params: ICourierBrandPutParameters) => Promise<ICourierBrand>;
+  replaceProfile: (
+    params: ICourierProfilePutParameters
+  ) => Promise<ICourierProfilePutResponse>;
+  send: (
+    params: ICourierSendParameters,
+    config?: ICourierSendConfig
+  ) => Promise<ICourierSendResponse>;
 }
