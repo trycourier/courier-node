@@ -1,6 +1,26 @@
+export type RuleType = "snooze";
+
+export interface IRule<T extends RuleType> {
+  type: T;
+}
+
+export interface ISnoozeRule extends IRule<"snooze"> {
+  start?: string;
+  until: string;
+}
+
+export type ChannelClassification = "direct_message" | "email" | "push";
+
+export type Rule = ISnoozeRule;
+
+export type PreferenceStatus = "OPTED_OUT" | "OPTED_IN";
 export interface ICourierNotificationPreferences {
   [id: string]: {
     status: PreferenceStatus;
+    rules?: Rule[];
+    channel_preferences?: Array<{
+      channel: ChannelClassification;
+    }>;
   };
 }
 
@@ -18,8 +38,6 @@ export interface ICourierPreferencesListResponse {
     notifications?: Array<{}>;
   }>;
 }
-
-export type PreferenceStatus = "OPTED_OUT" | "OPTED_IN";
 
 export interface IRecipientPreferences {
   categories?: ICourierNotificationPreferences;

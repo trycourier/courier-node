@@ -30,12 +30,16 @@ const get = (options: ICourierClientConfiguration) => {
 const put = (options: ICourierClientConfiguration) => {
   return async (
     recipientId: string,
-    params: IRecipientPreferences
+    params?: IRecipientPreferences
   ): Promise<ICourierPreferencesPutResponse> => {
+    const categories = params?.categories ?? {};
+    const notifications = params?.notifications ?? {};
+
     const res = await options.httpClient.put<ICourierPreferencesPutResponse>(
       `/preferences/${recipientId}`,
       {
-        notifications: params.notifications
+        categories,
+        notifications
       }
     );
     return res.data;
