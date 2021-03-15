@@ -215,6 +215,9 @@ export interface ICourierClient {
     config?: ICourierProfilePostConfig
   ) => Promise<ICourierProfilePostResponse>;
   preferences: ICourierClientPreferences;
+  removeRecipientFromAllLists: (
+    params: ICourierProfileGetParameters
+  ) => Promise<ICourierProfilePostResponse>;
   replaceBrand: (params: ICourierBrandPutParameters) => Promise<ICourierBrand>;
   replaceProfile: (
     params: ICourierProfilePutParameters

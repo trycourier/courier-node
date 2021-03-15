@@ -47,6 +47,7 @@ describe("Courier Recipient Profile", () => {
     mock = new MockAdapter(axios);
     mock.onGet(/\/profiles\/.*\/lists/).reply(200, mockGetProfileListResponse);
     mock.onPost(/\/profiles\/.*\/lists/).reply(200, mockPostResponse);
+    mock.onDelete(/\/profiles\/.*\/lists/).reply(200, mockPostResponse);
   });
 
   test("should return lists associated with recipient", async () => {
@@ -67,6 +68,18 @@ describe("Courier Recipient Profile", () => {
     await expect(
       addRecipientToLists({
         lists: additionalMocklists,
+        recipientId: "12345"
+      })
+    ).resolves.toMatchObject(mockPostResponse);
+  });
+
+  test("should remove recipient from all the lists subscription", async () => {
+    const { removeRecipientFromAllLists } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      removeRecipientFromAllLists({
         recipientId: "12345"
       })
     ).resolves.toMatchObject(mockPostResponse);
