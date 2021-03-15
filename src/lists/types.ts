@@ -82,6 +82,10 @@ export interface ICourierClientLists {
   list: (
     params?: ICourierListGetAllParams
   ) => Promise<ICourierListGetAllResponse>;
+  postSubscriptions: (
+    listId: string,
+    recipients: ICourierPutSubscriptionsRecipient[]
+  ) => Promise<void>;
   put: (listId: string, parms: ICourierListPutParams) => Promise<void>;
   putSubscriptions: (
     listId: string,

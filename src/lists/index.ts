@@ -83,6 +83,17 @@ const putSubscriptions = (options: ICourierClientConfiguration) => {
   };
 };
 
+const postSubscriptions = (options: ICourierClientConfiguration) => {
+  return async (
+    listId: string,
+    recipients: ICourierPutSubscriptionsRecipient[]
+  ): Promise<void> => {
+    await options.httpClient.post<void>(`/lists/${listId}/subscriptions`, {
+      recipients
+    });
+  };
+};
+
 const subscribe = (options: ICourierClientConfiguration) => {
   return async (
     listId: string,
@@ -149,6 +160,7 @@ export const lists = (
     get: get(options),
     getSubscriptions: getSubscriptions(options),
     list: list(options),
+    postSubscriptions: postSubscriptions(options),
     put: put(options),
     putSubscriptions: putSubscriptions(options),
     restore: restore(options),
