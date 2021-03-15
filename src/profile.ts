@@ -77,16 +77,24 @@ export const addRecipientToLists = (options: ICourierClientConfiguration) => {
   return async (
     params: ICourierProfileListsPostParameters
   ): Promise<ICourierProfilePostResponse> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
-
     const res = await options.httpClient.post<ICourierProfilePostResponse>(
       `/profiles/${params.recipientId}/lists`,
       {
         lists: params.lists
-      },
-      axiosConfig
+      }
+    );
+    return res.data;
+  };
+};
+
+export const removeRecipientFromAllLists = (
+  options: ICourierClientConfiguration
+) => {
+  return async (
+    params: ICourierProfileGetParameters
+  ): Promise<ICourierProfilePostResponse> => {
+    const res = await options.httpClient.delete<ICourierProfilePostResponse>(
+      `/profiles/${params.recipientId}/lists`
     );
     return res.data;
   };

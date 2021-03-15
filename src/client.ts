@@ -13,6 +13,7 @@ import {
   getProfile,
   getRecipientSubscriptions,
   mergeProfile,
+  removeRecipientFromAllLists,
   replaceProfile
 } from "./profile";
 
@@ -79,6 +80,7 @@ export const client = (
     lists: lists(options),
     mergeProfile: mergeProfile(options),
     preferences: preferences(options),
+    removeRecipientFromAllLists: removeRecipientFromAllLists(options),
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
     send: send(options)
