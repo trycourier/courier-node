@@ -198,6 +198,43 @@ async function run() {
   // Example: Get the preferences stored under a specified recipient ID.
   const profilePrefs = await courier.preferences.get(recipientId);
   console.log(profilePrefs);
+
+  // Example: Automation Ad-Hoc Invoke
+  const { runId } = await courier.automations.invokeAdHocAutomation({
+    automation: {
+      cancelation_token: "I_AM_TOKEN",
+      steps: [
+        {
+          action: "send",
+        },
+      ],
+    },
+    brand: "BRAND_ID",
+    data: {
+      example: "EXAMPLE_DATA",
+    },
+    profile: {
+      email: "foo@bar.com",
+    },
+    recipient: "RECIPIENT_ID",
+    template: "TEMPLATE_NAME_OR_ID",
+  });
+  console.log(runId);
+
+  // Example: Automation Invoke Template
+  const { runId } = await courier.automations.invokeAutomationTemplate({
+    templateId: "AUTOMATION_TEMPLATE_ID",
+    brand: "BRAND_ID",
+    data: {
+      example: "EXAMPLE_DATA",
+    },
+    profile: {
+      email: "foo@bar.com",
+    },
+    recipient: "RECIPIENT_ID",
+    template: "TEMPLATE_NAME_OR_ID",
+  });
+  console.log(runId);
 }
 
 run();
