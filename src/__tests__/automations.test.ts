@@ -31,6 +31,16 @@ describe("CourierAutomations", () => {
           steps: [
             {
               action: "send"
+            },
+            {
+              action: "cancel"
+            },
+            {
+              action: "send-list",
+              list: "my-list"
+            },
+            {
+              action: "delay"
             }
           ]
         },
