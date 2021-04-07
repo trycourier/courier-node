@@ -1,4 +1,6 @@
 import { AxiosRequestConfig } from "axios";
+
+import { automations } from "./automations";
 import {
   createBrand,
   deleteBrand,
@@ -70,6 +72,7 @@ export const client = (
 ): ICourierClient => {
   return {
     addRecipientToLists: addRecipientToLists(options),
+    automations: automations(options),
     createBrand: createBrand(options),
     deleteBrand: deleteBrand(options),
     getBrand: getBrand(options),
