@@ -20,8 +20,8 @@ export interface IAutomationDelayStep extends IAutomationStep {
 export interface IAutomationSendStep extends IAutomationStep {
   action: "send";
   brand?: string;
-  data?: object;
-  override?: object;
+  data?: Record<string, unknown>;
+  override?: Record<string, unknown>;
   profile?: object;
   recipient?: string;
   template?: string;
@@ -30,9 +30,9 @@ export interface IAutomationSendStep extends IAutomationStep {
 export interface IAutomationSendListStep extends IAutomationStep {
   action: "send-list";
   brand?: string;
-  data?: object;
+  data?: Record<string, unknown>;
   list: string;
-  override?: object;
+  override?: Record<string, unknown>;
   template?: string;
 }
 
@@ -49,7 +49,7 @@ export interface IAutomation {
 
 export interface ICourierAutomationInvokeParams {
   brand?: string;
-  data?: object;
+  data?: Record<string, unknown>;
   profile?: object;
   recipient?: string;
   template?: string;
