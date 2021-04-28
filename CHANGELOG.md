@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v2.3.0] - 2021-04-28
 
-- adds update-profile step to the Automations API
+- adds support for update-profile step via `client.automations.invokeAdHocAutomation({...})`
 
 ## [v2.2.0] - 2021-04-07
 
