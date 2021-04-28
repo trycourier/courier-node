@@ -41,6 +41,14 @@ describe("CourierAutomations", () => {
             },
             {
               action: "delay"
+            },
+            {
+              action: "update-profile",
+              recipient_id: "RECIPIENT_ID",
+              profile: {
+                email: "foo@bar.com"
+              },
+              merge: "none"
             }
           ]
         },

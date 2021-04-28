@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v2.3.0] - 2021-04-28
+
+- adds support for update-profile step via `client.automations.invokeAdHocAutomation({...})`
+
 ## [v2.2.0] - 2021-04-07
 
 - adds automations API
@@ -150,7 +154,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-node/compare/v2.2.0...HEAD
+[unreleased]: https://github.com/trycourier/courier-node/compare/v2.3.0...HEAD
+[v2.3.0]: https://github.com/trycourier/courier-node/compare/v2.2.0...v2.3.0
 [v2.2.0]: https://github.com/trycourier/courier-node/compare/v2.1.0...v2.2.0
 [v2.1.0]: https://github.com/trycourier/courier-node/compare/v2.0.0...v2.1.0
 [v2.0.0]: https://github.com/trycourier/courier-node/compare/v1.7.3...v2.0.0
