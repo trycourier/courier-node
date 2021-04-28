@@ -1,4 +1,11 @@
-export type AutomationStepAction = "cancel" | "delay" | "send" | "send-list";
+export type AutomationStepAction =
+  | "cancel"
+  | "delay"
+  | "send"
+  | "send-list"
+  | "update-profile";
+
+export type MergeAlgorithm = "replace" | "none" | "overwrite" | "soft-merge";
 
 export interface IAutomationStep {
   action: AutomationStepAction;
@@ -36,11 +43,19 @@ export interface IAutomationSendListStep extends IAutomationStep {
   template?: string;
 }
 
+export interface IAutomationUpdateProfileStep extends IAutomationStep {
+  action: "update-profile";
+  recipient_id: string;
+  profile: object;
+  merge: MergeAlgorithm;
+}
+
 export type AutomationStep =
   | IAutomationCancelStep
   | IAutomationDelayStep
   | IAutomationSendStep
-  | IAutomationSendListStep;
+  | IAutomationSendListStep
+  | IAutomationUpdateProfileStep;
 
 export interface IAutomation {
   cancelation_token?: string;
