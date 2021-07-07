@@ -5,6 +5,7 @@
 
 This is the official node.js module for sending notifications with node.js with the [Courier](https://courier.com) REST API.
 
+
 [Complete Courier docs can be found here](https://docs.courier.com/docs).
 
 ## Installation (via [npm](https://www.npmjs.com/package/@trycourier/courier))
@@ -12,6 +13,10 @@ This is the official node.js module for sending notifications with node.js with 
 ```bash
 npm install @trycourier/courier
 ```
+
+## Requirements
+You will need to a Courier API key to get started. You can signup and create one for free at [courier.com](https://courier.com)
+
 
 ## Usage
 
