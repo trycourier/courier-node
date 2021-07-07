@@ -1,5 +1,8 @@
 # `@trycourier/courier`
 
+[![Courier: your Your Complete Communication Stack](https://marketing-assets-public.s3.us-west-1.amazonaws.com/Cover+1.png)](https://courier.com)
+
+
 [![npm version](https://badge.fury.io/js/%40trycourier%2Fcourier.svg)](https://badge.fury.io/js/%40trycourier%2Fcourier)
 
 A node.js module for communicating with the Courier REST API.
