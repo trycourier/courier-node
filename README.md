@@ -1,5 +1,3 @@
-# `@trycourier/courier`
-
 [![Courier: your Your Complete Communication Stack](https://marketing-assets-public.s3.us-west-1.amazonaws.com/Cover+1.png)](https://courier.com)
 
 
