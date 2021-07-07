@@ -5,7 +5,9 @@
 
 [![npm version](https://badge.fury.io/js/%40trycourier%2Fcourier.svg)](https://badge.fury.io/js/%40trycourier%2Fcourier)
 
-A node.js module for communicating with the Courier REST API.
+This is the official node.js module for sending notifications with node.js with the [Courier](https://courier.com) REST API.
+
+[Complete Courier docs can be found here](https://docs.courier.com/docs).
 
 ## Installation (via [npm](https://www.npmjs.com/package/@trycourier/courier))
 
