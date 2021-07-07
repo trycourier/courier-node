@@ -18,7 +18,7 @@ npm install @trycourier/courier
 You will need to a Courier API key to get started. You can signup and create one for free at [courier.com](https://courier.com)
 
 
-## Usage
+## Getting Started
 
 ```javascript
 import { CourierClient } from "@trycourier/courier";
