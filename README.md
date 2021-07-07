@@ -1,8 +1,12 @@
-# `@trycourier/courier`
+[![Courier: your Your Complete Communication Stack](https://marketing-assets-public.s3.us-west-1.amazonaws.com/github_nodejs.png)](https://courier.com)
+
 
 [![npm version](https://badge.fury.io/js/%40trycourier%2Fcourier.svg)](https://badge.fury.io/js/%40trycourier%2Fcourier)
 
-A node.js module for communicating with the Courier REST API.
+This is the official node.js module for sending notifications with node.js with the [Courier](https://courier.com) REST API.
+
+
+[Complete Courier docs can be found here](https://docs.courier.com/docs).
 
 ## Installation (via [npm](https://www.npmjs.com/package/@trycourier/courier))
 
@@ -10,7 +14,11 @@ A node.js module for communicating with the Courier REST API.
 npm install @trycourier/courier
 ```
 
-## Usage
+## Requirements
+You will need to a Courier API key to get started. You can signup and create one for free at [courier.com](https://courier.com)
+
+
+## Getting Started
 
 ```javascript
 import { CourierClient } from "@trycourier/courier";
