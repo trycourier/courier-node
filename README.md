@@ -1,4 +1,4 @@
-[![Courier: your Your Complete Communication Stack](https://marketing-assets-public.s3.us-west-1.amazonaws.com/github_nodejs.png)](https://courier.com)
+[![Courier: Your Complete Communication Stack](https://marketing-assets-public.s3.us-west-1.amazonaws.com/github_nodejs.png)](https://courier.com)
 
 
 [![npm version](https://badge.fury.io/js/%40trycourier%2Fcourier.svg)](https://badge.fury.io/js/%40trycourier%2Fcourier)
@@ -15,7 +15,7 @@ npm install @trycourier/courier
 ```
 
 ## Requirements
-You will need to a Courier API key to get started. You can signup and create one for free at [courier.com](https://courier.com)
+You will need to get a Courier API key to get started. You can sign up and create one for free at [courier.com](https://courier.com).
 
 
 ## Getting Started
@@ -250,7 +250,7 @@ run();
 
 ### Idempotency
 
-For `POST` methods, you can supply an `idempotencyKey` in the config parameter to ensure the idempotency of the API Call. We recommend that you use a `V4 UUID` for the key. Keys are eligible to be removed from the system after they're at least 24 hours old, and a new request is generated if a key is reused after the original has been removed. For more info, see [Idempotent Requests](https://docs.courier.com/reference/idempotent-requests) in the Courier Documentation.
+For `POST` methods, you can supply an `idempotencyKey` in the config parameter to ensure the idempotency of the API Call. We recommend that you use a `V4 UUID` for the key. Keys are eligible to be removed from the system after they're at least 24 hours old, and a new request is generated if a key is reused after the original has been removed. For more info, see [Idempotent Requests](https://docs.courier.com/reference/idempotent-requests) in the Courier documentation.
 
 ```javascript
 import { CourierClient } from "@trycourier/courier";
