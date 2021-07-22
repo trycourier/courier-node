@@ -47,6 +47,7 @@ const send = (options: ICourierClientConfiguration) => {
         brand: params.brand,
         data: params.data,
         event: params.eventId,
+        locale: params.locale,
         override: params.override,
         preferences: params.preferences,
         profile: params.profile,

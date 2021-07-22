@@ -33,13 +33,14 @@ export interface ICourierClientConfiguration {
 // POST /send
 
 export interface ICourierSendParameters {
-  eventId: string;
-  recipientId: string;
-  data?: object;
   brand?: string;
+  data?: object;
+  eventId: string;
+  locale?: string;
+  override?: object;
   preferences?: IRecipientPreferences;
   profile?: object;
-  override?: object;
+  recipientId: string;
 }
 
 export interface ICourierSendConfig {
