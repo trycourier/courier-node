@@ -9,6 +9,7 @@ import {
   replaceBrand
 } from "./brands";
 import { lists } from "./lists";
+import { notifications } from "./notifications";
 import { preferences } from "./preferences";
 import {
   addRecipientToLists,
@@ -82,6 +83,7 @@ export const client = (
     getRecipientSubscriptions: getRecipientSubscriptions(options),
     lists: lists(options),
     mergeProfile: mergeProfile(options),
+    notifications: notifications(options),
     preferences: preferences(options),
     removeRecipientFromAllLists: removeRecipientFromAllLists(options),
     replaceBrand: replaceBrand(options),
