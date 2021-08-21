@@ -264,38 +264,36 @@ async function run() {
   await courier.notifications.postVariations("notification1", {
     blocks: [
       {
-        id: "block_00d0bcb0-aba1-443f-a8dd-daac505500fe",
+        id: "block_1d4c32e0-bca8-43f6-b5d5-8c043199bce6",
         type: "text",
         locales: {
-          fr_FR: "french text block",
+          fr_FR: "block fr 1",
         },
       },
       {
-        id: "block_41f7d5c0-bfeb-49fb-b3be-fee7c84f4d45",
-        type: "action",
+        id: "block_6d50a6e3-ecc3-4815-bf51-0202c6bf54e2",
+        type: "text",
         locales: {
-          fr_FR: "french action block",
+          fr_FR: "block fr 2",
         },
       },
     ],
     channels: [
       {
-        id: "channel_79d25574-83be-4da1-a5c3-3d4e2ab5f154",
+        id: "channel_1ba46024-f156-4ed7-893b-cb1cdcfbd36e",
+        type: "email",
         locales: {
           fr_FR: {
-            email: {
-              subject: "French hey!",
-            },
+            subject: "French Subject",
           },
         },
       },
       {
-        id: "channel_76051a88-9fd6-4fde-9d9f-4f77f83d0fea",
+        id: "channel_2c2aad1c-30f0-4a55-8d8f-d213f32147bc",
+        type: "push",
         locales: {
           fr_FR: {
-            push: {
-              title: "French tk",
-            },
+            title: "French Title",
           },
         },
       },
@@ -306,38 +304,36 @@ async function run() {
   await courier.notifications.postDraftVariations("notification1", {
     blocks: [
       {
-        id: "block_00d0bcb0-aba1-443f-a8dd-daac505500fe",
+        id: "block_1d4c32e0-bca8-43f6-b5d5-8c043199bce6",
         type: "text",
         locales: {
-          fr_FR: "french text block",
+          fr_FR: "block fr 1",
         },
       },
       {
-        id: "block_41f7d5c0-bfeb-49fb-b3be-fee7c84f4d45",
-        type: "action",
+        id: "block_6d50a6e3-ecc3-4815-bf51-0202c6bf54e2",
+        type: "text",
         locales: {
-          fr_FR: "french action block",
+          fr_FR: "block fr 2",
         },
       },
     ],
     channels: [
       {
-        id: "channel_79d25574-83be-4da1-a5c3-3d4e2ab5f154",
+        id: "channel_1ba46024-f156-4ed7-893b-cb1cdcfbd36e",
+        type: "email",
         locales: {
           fr_FR: {
-            email: {
-              subject: "French hey!",
-            },
+            subject: "French Subject",
           },
         },
       },
       {
-        id: "channel_76051a88-9fd6-4fde-9d9f-4f77f83d0fea",
+        id: "channel_2c2aad1c-30f0-4a55-8d8f-d213f32147bc",
+        type: "push",
         locales: {
           fr_FR: {
-            push: {
-              title: "French tk",
-            },
+            title: "French Title",
           },
         },
       },

@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
-## [v2.4.0] - 2021-08-19
+## [v2.4.0] - 2021-08-23
 
 - adds notifications API
 - type fix `put` method of `ICourierClientLists`

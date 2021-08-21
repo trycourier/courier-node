@@ -37,40 +37,38 @@ export interface ICourierNotificationBlock {
           children?: string;
         };
   };
+  checksum?: string;
 }
 
 export interface ICourierNotificationChannel {
   id: string;
-  email?: {
+  type?: string;
+  content?: {
     subject?: string;
-  };
-  push?: {
     title?: string;
   };
   locales?: {
     [locale: string]: {
-      email?: {
-        subject?: string;
-      };
-      push?: {
-        title?: string;
-      };
+      subject?: string;
+      title?: string;
     };
   };
+  checksum?: string;
 }
 
 export interface ICourierNotificationGetContentResponse {
-  blocks: ICourierNotificationBlock[];
+  blocks?: ICourierNotificationBlock[];
   channels?: ICourierNotificationChannel[];
+  checksum?: string;
 }
 
 export interface ICourierNotificationPostVariationsParams {
-  blocks: ICourierNotificationBlock[];
+  blocks?: ICourierNotificationBlock[];
   channels?: ICourierNotificationChannel[];
 }
 
 export interface ICourierNotificationPostDraftVariationsParams {
-  blocks: ICourierNotificationBlock[];
+  blocks?: ICourierNotificationBlock[];
   channels?: ICourierNotificationChannel[];
 }
 
