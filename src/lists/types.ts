@@ -86,7 +86,7 @@ export interface ICourierClientLists {
     listId: string,
     recipients: ICourierPutSubscriptionsRecipient[]
   ) => Promise<void>;
-  put: (listId: string, parms: ICourierListPutParams) => Promise<void>;
+  put: (listId: string, params: ICourierListPutParams) => Promise<void>;
   putSubscriptions: (
     listId: string,
     recipients: ICourierPutSubscriptionsRecipient[]

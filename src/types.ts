@@ -2,6 +2,7 @@ import { AxiosRequestConfig } from "axios";
 
 import { ICourierClientAutomations } from "./automations/types";
 import { ICourierClientLists, ICourierList } from "./lists/types";
+import { ICourierClientNotifications } from "./notifications/types";
 import {
   ICourierClientPreferences,
   IRecipientPreferences
@@ -216,6 +217,7 @@ export interface ICourierClient {
     params: ICourierProfilePostParameters,
     config?: ICourierProfilePostConfig
   ) => Promise<ICourierProfilePostResponse>;
+  notifications: ICourierClientNotifications;
   preferences: ICourierClientPreferences;
   removeRecipientFromAllLists: (
     params: ICourierProfileGetParameters

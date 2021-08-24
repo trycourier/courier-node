@@ -1,10 +1,8 @@
 [![Courier: Your Complete Communication Stack](https://marketing-assets-public.s3.us-west-1.amazonaws.com/github_nodejs.png)](https://courier.com)
 
-
 [![npm version](https://badge.fury.io/js/%40trycourier%2Fcourier.svg)](https://badge.fury.io/js/%40trycourier%2Fcourier)
 
 This is the official node.js module for sending notifications with node.js with the [Courier](https://courier.com) REST API.
-
 
 [Courier docs](https://docs.courier.com/docs) • [3 Different Ways To Send Emails With Node.js](https://www.courier.com/blog/how-to-send-emails-with-node-js?utm_campaign=General-Content-Distribution&utm_source=github&utm_medium=node-sdk)
 
@@ -15,8 +13,8 @@ npm install @trycourier/courier
 ```
 
 ## Requirements
-You will need to get a Courier API key to get started. You can sign up and create one for free at [courier.com](https://courier.com).
 
+You will need to get a Courier API key to get started. You can sign up and create one for free at [courier.com](https://courier.com).
 
 ## Getting Started
 
@@ -243,6 +241,130 @@ async function run() {
     template: "TEMPLATE_NAME_OR_ID",
   });
   console.log(runId);
+
+  // Example: List notifications
+  const { paging, results } = await courier.notifications.list({});
+  console.log(results);
+
+  // Example: Get notification content
+  const { blocks, channels } = await courier.notifications.getContent(
+    "notification1"
+  );
+  console.log(blocks);
+  console.log(channels);
+
+  // Example: Get notification draft content
+  const { blocks, channels } = await courier.notifications.getDraftContent(
+    "notification1"
+  );
+  console.log(blocks);
+  console.log(channels);
+
+  // Example: Post notification variations
+  await courier.notifications.postVariations("notification1", {
+    blocks: [
+      {
+        id: "block_1d4c32e0-bca8-43f6-b5d5-8c043199bce6",
+        type: "text",
+        locales: {
+          fr_FR: "block fr 1",
+        },
+      },
+      {
+        id: "block_6d50a6e3-ecc3-4815-bf51-0202c6bf54e2",
+        type: "text",
+        locales: {
+          fr_FR: "block fr 2",
+        },
+      },
+    ],
+    channels: [
+      {
+        id: "channel_1ba46024-f156-4ed7-893b-cb1cdcfbd36e",
+        type: "email",
+        locales: {
+          fr_FR: {
+            subject: "French Subject",
+          },
+        },
+      },
+      {
+        id: "channel_2c2aad1c-30f0-4a55-8d8f-d213f32147bc",
+        type: "push",
+        locales: {
+          fr_FR: {
+            title: "French Title",
+          },
+        },
+      },
+    ],
+  });
+
+  // Example: Post notification draft variations
+  await courier.notifications.postDraftVariations("notification1", {
+    blocks: [
+      {
+        id: "block_1d4c32e0-bca8-43f6-b5d5-8c043199bce6",
+        type: "text",
+        locales: {
+          fr_FR: "block fr 1",
+        },
+      },
+      {
+        id: "block_6d50a6e3-ecc3-4815-bf51-0202c6bf54e2",
+        type: "text",
+        locales: {
+          fr_FR: "block fr 2",
+        },
+      },
+    ],
+    channels: [
+      {
+        id: "channel_1ba46024-f156-4ed7-893b-cb1cdcfbd36e",
+        type: "email",
+        locales: {
+          fr_FR: {
+            subject: "French Subject",
+          },
+        },
+      },
+      {
+        id: "channel_2c2aad1c-30f0-4a55-8d8f-d213f32147bc",
+        type: "push",
+        locales: {
+          fr_FR: {
+            title: "French Title",
+          },
+        },
+      },
+    ],
+  });
+
+  // Example: Get notification submission checks
+  const { checks } = await courier.notifications.getSubmissionChecks(
+    "notification1",
+    "submission1"
+  );
+  console.log(checks);
+
+  // Example: Put notification submission checks
+  const { checks } = await courier.notifications.putSubmissionChecks(
+    "notification1",
+    "submission1",
+    {
+      checks: [
+        {
+          id: "check1",
+          status: "RESOLVED",
+          type: "custom",
+        },
+      ],
+    }
+  );
+  console.log(checks);
+
+  // Example: Cancel notification submission
+  await courier.notifications.cancelSubmission("notification1", "submission1");
 }
 
 run();
