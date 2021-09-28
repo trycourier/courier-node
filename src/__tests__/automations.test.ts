@@ -26,42 +26,48 @@ describe("CourierAutomations", () => {
 
     await expect(
       automations.invokeAdHocAutomation({
-        automation: {
-          cancelation_token: "I_AM_TOKEN",
-          steps: [
-            {
-              action: "send"
-            },
-            {
-              action: "cancel"
-            },
-            {
-              action: "send-list",
-              list: "my-list"
-            },
-            {
-              action: "delay"
-            },
-            {
-              action: "update-profile",
-              recipient_id: "RECIPIENT_ID",
-              profile: {
-                email: "foo@bar.com"
+          automation: {
+            cancelation_token: "I_AM_TOKEN",
+            steps: [
+              {
+                action: "send"
               },
-              merge: "none"
-            }
-          ]
+              {
+                action: "cancel"
+              },
+              {
+                action: "send-list",
+                list: "my-list"
+              },
+              {
+                action: "delay"
+              },
+              {
+                action: "update-profile",
+                recipient_id: "RECIPIENT_ID",
+                profile: {
+                  email: "foo@bar.com"
+                },
+                merge: "none"
+              },
+            ],
+          },
+          brand: "BRAND_ID",
+          data: {
+            example: "EXAMPLE_DATA"
+          },
+          profile: {
+            email: "foo@bar.com"
+          },
+          recipient: "RECIPIENT_ID",
+          template: "TEMPLATE_NAME_OR_ID"
         },
-        brand: "BRAND_ID",
-        data: {
-          example: "EXAMPLE_DATA"
-        },
-        profile: {
-          email: "foo@bar.com"
-        },
-        recipient: "RECIPIENT_ID",
-        template: "TEMPLATE_NAME_OR_ID"
-      })
+        {
+          idempotencyKey: "IDEMPOTENCY_KEY",
+          // e.g. expiration date in epoch time, 30 mins from now
+          idempotencyExpiry: Date.now() + 30 * 60 * 1000,
+        }
+      )
     ).resolves.toMatchObject(mockAutomationInvokeResponse);
   });
 

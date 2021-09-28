@@ -75,6 +75,11 @@ export interface ICourierAutomationAdHocInvokeParams
   automation: IAutomation;
 }
 
+export interface ICourierAutomationConfig {
+  idempotencyKey?: string;
+  idempotencyExpiry?: number;
+}
+
 export interface ICourierAutomationInvokeTemplateParams
   extends ICourierAutomationInvokeParams {
   templateId: string;
@@ -86,9 +91,11 @@ export interface ICourierAutomationInvokeResponse {
 
 export interface ICourierClientAutomations {
   invokeAdHocAutomation: (
-    params: ICourierAutomationAdHocInvokeParams
+    params: ICourierAutomationAdHocInvokeParams,
+    config?: ICourierAutomationConfig
   ) => Promise<ICourierAutomationInvokeResponse>;
   invokeAutomationTemplate: (
-    params: ICourierAutomationInvokeTemplateParams
+    params: ICourierAutomationInvokeTemplateParams,
+    config?: ICourierAutomationConfig
   ) => Promise<ICourierAutomationInvokeResponse>;
 }

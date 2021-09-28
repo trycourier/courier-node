@@ -1,15 +1,25 @@
+import { AxiosRequestConfig } from "axios";
 import { ICourierClientConfiguration } from "../types";
 import {
   ICourierAutomationAdHocInvokeParams,
+  ICourierAutomationConfig,
   ICourierAutomationInvokeResponse,
   ICourierAutomationInvokeTemplateParams,
-  ICourierClientAutomations
+  ICourierClientAutomations,
 } from "./types";
 
 const invokeAdHocAutomation = (options: ICourierClientConfiguration) => {
   return async (
-    params: ICourierAutomationAdHocInvokeParams
+    params: ICourierAutomationAdHocInvokeParams,
+    config?: ICourierAutomationConfig
   ): Promise<ICourierAutomationInvokeResponse> => {
+    const axiosConfig: AxiosRequestConfig = {
+      headers: {},
+    };
+
+    if (config && config.idempotencyKey) {
+      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
+    }
     const res = await options.httpClient.post<ICourierAutomationInvokeResponse>(
       "/automations/invoke",
       {
@@ -18,8 +28,9 @@ const invokeAdHocAutomation = (options: ICourierClientConfiguration) => {
         data: params.data,
         profile: params.profile,
         recipient: params.recipient,
-        template: params.template
-      }
+        template: params.template,
+      },
+      axiosConfig
     );
 
     return res.data;
@@ -28,8 +39,17 @@ const invokeAdHocAutomation = (options: ICourierClientConfiguration) => {
 
 const invokeAutomationTemplate = (options: ICourierClientConfiguration) => {
   return async (
-    params: ICourierAutomationInvokeTemplateParams
+    params: ICourierAutomationInvokeTemplateParams,
+    config?: ICourierAutomationConfig
   ): Promise<ICourierAutomationInvokeResponse> => {
+    const axiosConfig: AxiosRequestConfig = {
+      headers: {},
+    };
+
+    if (config && config.idempotencyKey) {
+      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
+    }
+
     const res = await options.httpClient.post<ICourierAutomationInvokeResponse>(
       `/automations/${params.templateId}/invoke`,
       {
@@ -37,8 +57,9 @@ const invokeAutomationTemplate = (options: ICourierClientConfiguration) => {
         data: params.data,
         profile: params.profile,
         recipient: params.recipient,
-        template: params.template
-      }
+        template: params.template,
+      },
+      axiosConfig
     );
 
     return res.data;
@@ -50,6 +71,6 @@ export const automations = (
 ): ICourierClientAutomations => {
   return {
     invokeAdHocAutomation: invokeAdHocAutomation(options),
-    invokeAutomationTemplate: invokeAutomationTemplate(options)
+    invokeAutomationTemplate: invokeAutomationTemplate(options),
   };
 };
