@@ -25,7 +25,8 @@ describe("CourierAutomations", () => {
     });
 
     await expect(
-      automations.invokeAdHocAutomation({
+      automations.invokeAdHocAutomation(
+        {
           automation: {
             cancelation_token: "I_AM_TOKEN",
             steps: [
@@ -49,8 +50,8 @@ describe("CourierAutomations", () => {
                   email: "foo@bar.com"
                 },
                 merge: "none"
-              },
-            ],
+              }
+            ]
           },
           brand: "BRAND_ID",
           data: {
@@ -65,7 +66,7 @@ describe("CourierAutomations", () => {
         {
           idempotencyKey: "IDEMPOTENCY_KEY",
           // e.g. expiration date in epoch time, 30 mins from now
-          idempotencyExpiry: Date.now() + 30 * 60 * 1000,
+          idempotencyExpiry: Date.now() + 30 * 60 * 1000
         }
       )
     ).resolves.toMatchObject(mockAutomationInvokeResponse);
