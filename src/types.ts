@@ -113,6 +113,29 @@ export interface ICourierProfileGetResponse {
   profile: object;
 }
 
+export interface ICourierMessagesGetParameters {
+  cursor?: string;
+  eventId?: string;
+  listId?: string;
+  messageId?: string;
+  notificationId?: string;
+  recipientId?: string;
+  status?: string | string[];
+}
+
+export interface ICourierMessagesGetResponse {
+  paging: ICourierPaging;
+  results: Array<{
+    enqueued?: number;
+    event?: string;
+    id: string;
+    notification?: string;
+    recipient: string;
+    sent?: number;
+    status: string;
+  }>;
+}
+
 export interface ICourierMessageGetResponse {
   enqueued?: number;
   event?: string;
@@ -206,6 +229,9 @@ export interface ICourierClient {
     cursor: string;
   }) => Promise<ICourierBrandGetAllResponse>;
   getMessage: (messageId: string) => Promise<ICourierMessageGetResponse>;
+  getMessages: (
+    params?: ICourierMessagesGetParameters
+  ) => Promise<ICourierMessagesGetResponse>;
   getProfile: (
     params: ICourierProfileGetParameters
   ) => Promise<ICourierProfileGetResponse>;
