@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v2.5.0] - 2021-09-28
+
+- adds GET /messages API
+
 ## [v2.4.0] - 2021-08-23
 
 - adds notifications API
@@ -159,7 +163,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-node/compare/v2.4.0...HEAD
+[unreleased]: https://github.com/trycourier/courier-node/compare/v2.5.0...HEAD
+[v2.5.0]: https://github.com/trycourier/courier-node/compare/v2.4.0...v2.5.0
 [v2.4.0]: https://github.com/trycourier/courier-node/compare/v2.3.0...v2.4.0
 [v2.3.0]: https://github.com/trycourier/courier-node/compare/v2.2.0...v2.3.0
 [v2.2.0]: https://github.com/trycourier/courier-node/compare/v2.1.0...v2.2.0
