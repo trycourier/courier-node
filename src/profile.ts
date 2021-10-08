@@ -2,9 +2,9 @@ import { AxiosRequestConfig } from "axios";
 import { ICourierList } from "./lists/types";
 import {
   ICourierClientConfiguration,
+  ICourierProfileDeleteParameters,
   ICourierProfileGetParameters,
   ICourierProfileGetResponse,
-  ICourierProfileDeleteParameters,
   ICourierProfileListsPostParameters,
   ICourierProfilePostConfig,
   ICourierProfilePostParameters,

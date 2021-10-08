@@ -5,7 +5,7 @@ import {
   ICourierAutomationConfig,
   ICourierAutomationInvokeResponse,
   ICourierAutomationInvokeTemplateParams,
-  ICourierClientAutomations,
+  ICourierClientAutomations
 } from "./types";
 
 const invokeAdHocAutomation = (options: ICourierClientConfiguration) => {
@@ -14,7 +14,7 @@ const invokeAdHocAutomation = (options: ICourierClientConfiguration) => {
     config?: ICourierAutomationConfig
   ): Promise<ICourierAutomationInvokeResponse> => {
     const axiosConfig: AxiosRequestConfig = {
-      headers: {},
+      headers: {}
     };
 
     if (config && config.idempotencyKey) {
@@ -33,7 +33,7 @@ const invokeAdHocAutomation = (options: ICourierClientConfiguration) => {
         data: params.data,
         profile: params.profile,
         recipient: params.recipient,
-        template: params.template,
+        template: params.template
       },
       axiosConfig
     );
@@ -48,7 +48,7 @@ const invokeAutomationTemplate = (options: ICourierClientConfiguration) => {
     config?: ICourierAutomationConfig
   ): Promise<ICourierAutomationInvokeResponse> => {
     const axiosConfig: AxiosRequestConfig = {
-      headers: {},
+      headers: {}
     };
 
     if (config && config.idempotencyKey) {
@@ -64,7 +64,7 @@ const invokeAutomationTemplate = (options: ICourierClientConfiguration) => {
         data: params.data,
         profile: params.profile,
         recipient: params.recipient,
-        template: params.template,
+        template: params.template
       },
       axiosConfig
     );
@@ -78,6 +78,6 @@ export const automations = (
 ): ICourierClientAutomations => {
   return {
     invokeAdHocAutomation: invokeAdHocAutomation(options),
-    invokeAutomationTemplate: invokeAutomationTemplate(options),
+    invokeAutomationTemplate: invokeAutomationTemplate(options)
   };
 };
