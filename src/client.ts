@@ -25,8 +25,8 @@ import {
   ICourierClient,
   ICourierClientConfiguration,
   ICourierMessageGetResponse,
-  ICourierMessagesGetResponse,
   ICourierMessagesGetParameters,
+  ICourierMessagesGetResponse,
   ICourierSendConfig,
   ICourierSendParameters,
   ICourierSendResponse
