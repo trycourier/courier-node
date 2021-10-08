@@ -135,6 +135,12 @@ export interface ICourierMessageGetResponse {
   status: string;
 }
 
+// DELETE /profiles/{recipient_id}
+
+export interface ICourierProfileDeleteParameters {
+  recipientId: string;
+}
+
 interface ICourierBrandSettings {
   colors?: {
     primary: string;
@@ -209,6 +215,7 @@ export interface ICourierClient {
   getProfile: (
     params: ICourierProfileGetParameters
   ) => Promise<ICourierProfileGetResponse>;
+  deleteProfile: (params: ICourierProfileDeleteParameters) => Promise<void>;
   getRecipientSubscriptions: (
     params: ICourierProfileGetParameters
   ) => Promise<ICourierList[]>;

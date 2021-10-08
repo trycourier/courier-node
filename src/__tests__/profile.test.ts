@@ -48,6 +48,17 @@ describe("Courier Recipient Profile", () => {
     mock.onGet(/\/profiles\/.*\/lists/).reply(200, mockGetProfileListResponse);
     mock.onPost(/\/profiles\/.*\/lists/).reply(200, mockPostResponse);
     mock.onDelete(/\/profiles\/.*\/lists/).reply(200, mockPostResponse);
+    mock.onDelete(/\/profiles\/.*/).reply(200);
+  });
+
+  test("should delete profile", async () => {
+    const { deleteProfile } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      deleteProfile({ recipientId: "12345" })
+    ).resolves.toBeUndefined();
   });
 
   test("should return lists associated with recipient", async () => {

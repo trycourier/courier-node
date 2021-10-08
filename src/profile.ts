@@ -4,6 +4,7 @@ import {
   ICourierClientConfiguration,
   ICourierProfileGetParameters,
   ICourierProfileGetResponse,
+  ICourierProfileDeleteParameters,
   ICourierProfileListsPostParameters,
   ICourierProfilePostConfig,
   ICourierProfilePostParameters,
@@ -57,6 +58,12 @@ export const getProfile = (options: ICourierClientConfiguration) => {
       `/profiles/${params.recipientId}`
     );
     return res.data;
+  };
+};
+
+export const deleteProfile = (options: ICourierClientConfiguration) => {
+  return async (params: ICourierProfileDeleteParameters): Promise<void> => {
+    await options.httpClient.delete<void>(`/profiles/${params.recipientId}`);
   };
 };
 
