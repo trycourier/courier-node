@@ -13,6 +13,7 @@ import { notifications } from "./notifications";
 import { preferences } from "./preferences";
 import {
   addRecipientToLists,
+  deleteProfile,
   getProfile,
   getRecipientSubscriptions,
   mergeProfile,
@@ -102,6 +103,7 @@ export const client = (
     getBrands: getBrands(options),
     getMessage: getMessage(options),
     getMessages: getMessages(options),
+    deleteProfile: deleteProfile(options),
     getProfile: getProfile(options),
     getRecipientSubscriptions: getRecipientSubscriptions(options),
     lists: lists(options),
