@@ -25,6 +25,8 @@ import {
   ICourierClient,
   ICourierClientConfiguration,
   ICourierMessageGetResponse,
+  ICourierMessagesGetResponse,
+  ICourierMessagesGetParameters,
   ICourierSendConfig,
   ICourierSendParameters,
   ICourierSendResponse
@@ -69,6 +71,26 @@ const getMessage = (options: ICourierClientConfiguration) => {
   };
 };
 
+const getMessages = (options: ICourierClientConfiguration) => {
+  return async (
+    params?: ICourierMessagesGetParameters
+  ): Promise<ICourierMessagesGetResponse> => {
+    const res = await options.httpClient.get<ICourierMessagesGetResponse>(
+      "/messages",
+      {
+        cursor: params?.cursor,
+        event: params?.eventId,
+        list: params?.listId,
+        messageId: params?.messageId,
+        notification: params?.notificationId,
+        recipient: params?.recipientId,
+        status: params?.status
+      }
+    );
+    return res.data;
+  };
+};
+
 export const client = (
   options: ICourierClientConfiguration
 ): ICourierClient => {
@@ -77,10 +99,11 @@ export const client = (
     automations: automations(options),
     createBrand: createBrand(options),
     deleteBrand: deleteBrand(options),
+    deleteProfile: deleteProfile(options),
     getBrand: getBrand(options),
     getBrands: getBrands(options),
     getMessage: getMessage(options),
-    deleteProfile: deleteProfile(options),
+    getMessages: getMessages(options),
     getProfile: getProfile(options),
     getRecipientSubscriptions: getRecipientSubscriptions(options),
     lists: lists(options),

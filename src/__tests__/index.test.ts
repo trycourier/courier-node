@@ -5,6 +5,7 @@ import {
   ICourierBrand,
   ICourierBrandGetAllResponse,
   ICourierMessageGetResponse,
+  ICourierMessagesGetResponse,
   ICourierProfileGetResponse,
   ICourierProfilePostResponse,
   ICourierProfilePutResponse,
@@ -33,6 +34,23 @@ const mockGetMessageResponse: ICourierMessageGetResponse = {
   id: "mockMessageId",
   recipient: "mockRecipient",
   status: "mockStatus"
+};
+
+const mockGetMessagesResponse: ICourierMessagesGetResponse = {
+  paging: {
+    more: false
+  },
+  results: [
+    {
+      id: "mockMessageId",
+      enqueued: 1632840573355,
+      sent: 1632840580620,
+      recipient: "mockRecipient",
+      status: "mockStatus",
+      event: "mockEvent",
+      notification: "mockNotification"
+    }
+  ]
 };
 
 const mockBrandResponse: ICourierBrand = {
@@ -68,6 +86,7 @@ describe("CourierClient", () => {
     mock.onPost(/\/profiles\/.*/).reply(200, mockMergeProfileResponse);
     mock.onGet(/\/profiles\/.*/).reply(200, mockGetProfileResponse);
     mock.onGet(/\/messages\/.*/).reply(200, mockGetMessageResponse);
+    mock.onGet("/messages").reply(200, mockGetMessagesResponse);
     mock.onGet("/brands").reply(200, mockGetBrandsResponse);
     mock.onGet(/\/brands\/.*/).reply(200, mockBrandResponse);
     mock.onPost("/brands").reply(200, mockBrandResponse);
@@ -129,6 +148,14 @@ describe("CourierClient", () => {
     await expect(getMessage(mockGetMessageResponse.id)).resolves.toMatchObject(
       mockGetMessageResponse
     );
+  });
+
+  test(".getMessages", async () => {
+    const { getMessages } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(getMessages()).resolves.toMatchObject(mockGetMessagesResponse);
   });
 
   test(".replaceProfile", async () => {
