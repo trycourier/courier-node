@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v2.6.0] - 2021-10-07
 
+- Add support for DELETE /profiles/{recipient_id} (#58)
 - adds GET /messages API
 
 ## [v2.5.0] - 2021-09-30
