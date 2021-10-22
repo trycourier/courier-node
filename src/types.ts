@@ -158,8 +158,115 @@ export interface ICourierMessageGetResponse {
   status: string;
 }
 
+export type MessageStatus =
+  | "CLICKED"
+  | "DELIVERED"
+  | "ENQUEUED"
+  | "FILTERED"
+  | "OPENED"
+  | "SENT"
+  | "SIMULATED"
+  | "UNDELIVERABLE"
+  | "UNMAPPED";
+
+export type MessageHistoryType =
+  | MessageStatus
+  | "DELIVERING"
+  | "FILTERED"
+  | "MAPPED"
+  | "PROFILE_LOADED"
+  | "RENDERED";
+
+export type MessageStatusReason =
+  | "BOUNCED"
+  | "FAILED"
+  | "FILTERED"
+  | "NO_CHANNELS"
+  | "NO_PROVIDERS"
+  | "OPT_IN_REQUIRED"
+  | "PROVIDER_ERROR"
+  | "UNPUBLISHED"
+  | "UNSUBSCRIBED";
+
+export type MessageStatusReasonCode = "HARD" | "SOFT";
+
+export interface IMessageHistory<T extends MessageHistoryType> {
+  ts: number;
+  type: T;
+}
+
+export interface IEnqueuedMessageHistory extends IMessageHistory<"ENQUEUED"> {
+  data?: string | { [key: string]: string };
+  event: string;
+  profile?: { [key: string]: any };
+  override?: { [key: string]: any };
+  recipient: string;
+}
+
+export interface IMappedMessageHistory extends IMessageHistory<"MAPPED"> {
+  event_id: string;
+  notification_id: string;
+}
+
+export interface IProfileLoadedMessageHistory
+  extends IMessageHistory<"PROFILE_LOADED"> {
+  merged_profile?: { [key: string]: any };
+  received_profile?: { [key: string]: any };
+  stored_profile?: { [key: string]: any };
+}
+
+export interface IRenderedMessageHistory
+  extends IRoutedMessageHistory<"RENDERED"> {
+  output: {
+    [key: string]: string;
+  };
+}
+
+export interface IUndeliverableMessageHistory
+  extends IMessageHistory<"UNDELIVERABLE">,
+    Partial<Omit<IRoutedMessageHistory<"UNDELIVERABLE">, "ts" | "type">> {
+  reason: MessageStatusReason;
+  reasonCode?: MessageStatusReasonCode;
+}
+
+export type RoutedMessageHistoryTypes = Extract<
+  MessageHistoryType,
+  | "CLICKED"
+  | "DELIVERED"
+  | "DELIVERING"
+  | "OPENED"
+  | "RENDERED"
+  | "SENT"
+  | "UNDELIVERABLE"
+>;
+
+export interface IRoutedMessageHistory<T extends RoutedMessageHistoryTypes>
+  extends IMessageHistory<T> {
+  channel: { id: string; label?: string };
+  integration: { id: string; provider: string };
+}
+
+export interface IDeliveredMessageHistory
+  extends IRoutedMessageHistory<"DELIVERED"> {
+  reference: { [key: string]: string };
+}
+
+export interface IProviderErrorMessageHistory
+  extends IRoutedMessageHistory<"UNDELIVERABLE"> {
+  error_message: string;
+}
+
 export interface ICourierMessageGetHistoryResponse {
-  results: Array<{}>;
+  results: Array<
+    | IEnqueuedMessageHistory
+    | IMappedMessageHistory
+    | IProfileLoadedMessageHistory
+    | IRenderedMessageHistory
+    | IRoutedMessageHistory<RoutedMessageHistoryTypes>
+    | IDeliveredMessageHistory
+    | IProviderErrorMessageHistory
+    | IUndeliverableMessageHistory
+  >;
 }
 
 // DELETE /profiles/{recipient_id}
