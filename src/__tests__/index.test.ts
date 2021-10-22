@@ -4,6 +4,7 @@ import { CourierClient } from "../index";
 import {
   ICourierBrand,
   ICourierBrandGetAllResponse,
+  ICourierMessageGetHistoryResponse,
   ICourierMessageGetResponse,
   ICourierMessagesGetResponse,
   ICourierProfileGetResponse,
@@ -34,6 +35,86 @@ const mockGetMessageResponse: ICourierMessageGetResponse = {
   id: "mockMessageId",
   recipient: "mockRecipient",
   status: "mockStatus"
+};
+
+const mockGetMessageHistoryResponse: ICourierMessageGetHistoryResponse = {
+  results: [
+    {
+      data: '{"favoriteAdjective":"awesomeness"}',
+      event: "courier-quickstart",
+      recipient: "Google_107913066099530916297",
+      ts: 1621286334939,
+      type: "ENQUEUED"
+    },
+    {
+      event_id: "courier-quickstart",
+      notification_id: "courier-quickstart",
+      ts: 1621286335117,
+      type: "MAPPED"
+    },
+    {
+      merged_profile: {
+        email: "tejas.kumthekar26@gmail.com",
+        email_verified: true,
+        family_name: "K",
+        given_name: "Tejas",
+        name: "Tejas K",
+        sub: "Google_107913066099530916297"
+      },
+      stored_profile: {
+        email: "tejas.kumthekar26@gmail.com",
+        email_verified: true,
+        family_name: "K",
+        given_name: "Tejas",
+        name: "Tejas K",
+        sub: "Google_107913066099530916297"
+      },
+      ts: 1621286335173,
+      type: "PROFILE_LOADED"
+    },
+    {
+      channel: {
+        id: "5371fee1-8d74-4e00-bf45-037637168a07"
+      },
+      integration: {
+        id: "courier-internal-sendgrid",
+        provider: "sendgrid"
+      },
+      output: {
+        html:
+          "/messages/1-60a2ddbe-51a48d9c5fd0866e2495ce11/output/ffdc6d0d-2fc8-4447-a3b3-7d7e07e10689/html",
+        subject:
+          "/messages/1-60a2ddbe-51a48d9c5fd0866e2495ce11/output/ffdc6d0d-2fc8-4447-a3b3-7d7e07e10689/subject",
+        text:
+          "/messages/1-60a2ddbe-51a48d9c5fd0866e2495ce11/output/ffdc6d0d-2fc8-4447-a3b3-7d7e07e10689/text"
+      },
+      ts: 1621286335562,
+      type: "RENDERED"
+    },
+    {
+      channel: {
+        id: "5371fee1-8d74-4e00-bf45-037637168a07"
+      },
+      integration: {
+        id: "courier-internal-sendgrid",
+        provider: "sendgrid"
+      },
+      ts: 1621286335715,
+      type: "SENT"
+    },
+    {
+      channel: {
+        id: "5371fee1-8d74-4e00-bf45-037637168a07"
+      },
+      integration: {
+        id: "courier-internal-sendgrid",
+        provider: "sendgrid"
+      },
+      reference: {},
+      ts: 1621286337000,
+      type: "DELIVERED"
+    }
+  ]
 };
 
 const mockGetMessagesResponse: ICourierMessagesGetResponse = {
@@ -85,6 +166,9 @@ describe("CourierClient", () => {
     mock.onPut(/\/profiles\/.*/).reply(200, mockReplaceProfileResponse);
     mock.onPost(/\/profiles\/.*/).reply(200, mockMergeProfileResponse);
     mock.onGet(/\/profiles\/.*/).reply(200, mockGetProfileResponse);
+    mock
+      .onGet(/\/messages\/.*\/history/)
+      .reply(200, mockGetMessageHistoryResponse);
     mock.onGet(/\/messages\/.*/).reply(200, mockGetMessageResponse);
     mock.onGet("/messages").reply(200, mockGetMessagesResponse);
     mock.onGet("/brands").reply(200, mockGetBrandsResponse);
@@ -147,6 +231,16 @@ describe("CourierClient", () => {
 
     await expect(getMessage(mockGetMessageResponse.id)).resolves.toMatchObject(
       mockGetMessageResponse
+    );
+  });
+
+  test(".getMessageHistory", async () => {
+    const { getMessageHistory } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(getMessageHistory("MESSAGE_ID")).resolves.toMatchObject(
+      mockGetMessageHistoryResponse
     );
   });
 

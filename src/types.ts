@@ -158,6 +158,10 @@ export interface ICourierMessageGetResponse {
   status: string;
 }
 
+export interface ICourierMessageGetHistoryResponse {
+  results: Array<{}>;
+}
+
 // DELETE /profiles/{recipient_id}
 
 export interface ICourierProfileDeleteParameters {
@@ -235,6 +239,9 @@ export interface ICourierClient {
     cursor: string;
   }) => Promise<ICourierBrandGetAllResponse>;
   getMessage: (messageId: string) => Promise<ICourierMessageGetResponse>;
+  getMessageHistory: (
+    messageId: string
+  ) => Promise<ICourierMessageGetHistoryResponse>;
   getMessages: (
     params?: ICourierMessagesGetParameters
   ) => Promise<ICourierMessagesGetResponse>;

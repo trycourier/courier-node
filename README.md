@@ -80,6 +80,14 @@ async function run() {
   const messageStatus = await courier.getMessage(messageId);
   console.log(messageStatus);
 
+  // Example: get a message history
+  const { results } = await courier.getMessageHistory(messageId);
+  console.log(results);
+
+  // Example: get all messages
+  const { paging, results } = await courier.getMessages();
+  console.log(results);
+
   // Example: replace a recipient's profile
   const { status: replaceStatus } = await courier.replaceProfile({
     recipientId: "<RECIPIENT_ID>",
