@@ -25,6 +25,7 @@ import {
   ICourierClient,
   ICourierClientConfiguration,
   ICourierMessageGetHistoryResponse,
+  ICourierMessageGetOutputResponse,
   ICourierMessageGetResponse,
   ICourierMessagesGetParameters,
   ICourierMessagesGetResponse,
@@ -83,6 +84,17 @@ const getMessageHistory = (options: ICourierClientConfiguration) => {
   };
 };
 
+const getMessageOutput = (options: ICourierClientConfiguration) => {
+  return async (
+    messageId: string
+  ): Promise<ICourierMessageGetOutputResponse> => {
+    const res = await options.httpClient.get<ICourierMessageGetOutputResponse>(
+      `/messages/${messageId}/output`
+    );
+    return res.data;
+  };
+};
+
 const getMessages = (options: ICourierClientConfiguration) => {
   return async (
     params?: ICourierMessagesGetParameters
@@ -116,6 +128,7 @@ export const client = (
     getBrands: getBrands(options),
     getMessage: getMessage(options),
     getMessageHistory: getMessageHistory(options),
+    getMessageOutput: getMessageOutput(options),
     getMessages: getMessages(options),
     getProfile: getProfile(options),
     getRecipientSubscriptions: getRecipientSubscriptions(options),

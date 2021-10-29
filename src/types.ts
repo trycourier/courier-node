@@ -269,6 +269,23 @@ export interface ICourierMessageGetHistoryResponse {
   >;
 }
 
+export interface IApiMessageOutputItem {
+  channel: string;
+  channel_id: string;
+  content: {
+    html?: string;
+    title?: string;
+    blocks?: any[];
+    body?: string;
+    subject?: string;
+    text?: string;
+  };
+}
+
+export interface ICourierMessageGetOutputResponse {
+  results: IApiMessageOutputItem[];
+}
+
 // DELETE /profiles/{recipient_id}
 
 export interface ICourierProfileDeleteParameters {
@@ -349,6 +366,9 @@ export interface ICourierClient {
   getMessageHistory: (
     messageId: string
   ) => Promise<ICourierMessageGetHistoryResponse>;
+  getMessageOutput: (
+    messageId: string
+  ) => Promise<ICourierMessageGetOutputResponse>;
   getMessages: (
     params?: ICourierMessagesGetParameters
   ) => Promise<ICourierMessagesGetResponse>;
