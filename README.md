@@ -84,6 +84,10 @@ async function run() {
   const { results } = await courier.getMessageHistory(messageId);
   console.log(results);
 
+  // Example: get a message output
+  const { results } = await courier.getMessageOutput(messageId);
+  console.log(results);
+
   // Example: get all messages
   const { paging, results } = await courier.getMessages();
   console.log(results);

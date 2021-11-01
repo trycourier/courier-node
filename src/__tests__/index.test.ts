@@ -5,6 +5,7 @@ import {
   ICourierBrand,
   ICourierBrandGetAllResponse,
   ICourierMessageGetHistoryResponse,
+  ICourierMessageGetOutputResponse,
   ICourierMessageGetResponse,
   ICourierMessagesGetResponse,
   ICourierProfileGetResponse,
@@ -117,6 +118,34 @@ const mockGetMessageHistoryResponse: ICourierMessageGetHistoryResponse = {
   ]
 };
 
+const mockGetMessageOutputResponse: ICourierMessageGetOutputResponse = {
+  results: [
+    {
+      channel: "email",
+      channel_id: "02db680f-38c2-4203-b1f2-ec4e31dc7362",
+      content: {
+        html: "",
+        subject: "foo bar",
+        text: "Lorem ipsum dolor, sit amet"
+      }
+    },
+    {
+      channel: "push",
+      channel_id: "8f2494bb-480f-49a3-b601-86f13d651d0d",
+      content: {
+        blocks: [
+          {
+            text: "Lorem ipsum dolor, sit amet.",
+            type: "text"
+          }
+        ],
+        body: "Lorem ipsum dolor, sit amet",
+        title: "foo bar"
+      }
+    }
+  ]
+};
+
 const mockGetMessagesResponse: ICourierMessagesGetResponse = {
   paging: {
     more: false
@@ -169,6 +198,9 @@ describe("CourierClient", () => {
     mock
       .onGet(/\/messages\/.*\/history/)
       .reply(200, mockGetMessageHistoryResponse);
+    mock
+      .onGet(/\/messages\/.*\/output/)
+      .reply(200, mockGetMessageOutputResponse);
     mock.onGet(/\/messages\/.*/).reply(200, mockGetMessageResponse);
     mock.onGet("/messages").reply(200, mockGetMessagesResponse);
     mock.onGet("/brands").reply(200, mockGetBrandsResponse);
@@ -241,6 +273,16 @@ describe("CourierClient", () => {
 
     await expect(getMessageHistory("MESSAGE_ID")).resolves.toMatchObject(
       mockGetMessageHistoryResponse
+    );
+  });
+
+  test(".getMessageOutput", async () => {
+    const { getMessageOutput } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(getMessageOutput("MESSAGE_ID")).resolves.toMatchObject(
+      mockGetMessageOutputResponse
     );
   });
 
