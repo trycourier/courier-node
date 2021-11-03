@@ -16,6 +16,11 @@ export interface ICourierList {
   updated?: number;
 }
 
+export interface ICourierRecipientSubscriptionsResponse {
+  paging: ICourierPaging;
+  results: ICourierList[];
+}
+
 export interface ICourierListPutParams {
   name: string;
   preferences?: {

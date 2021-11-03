@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios";
-import { ICourierList } from "./lists/types";
+import { ICourierRecipientSubscriptionsResponse } from "./lists/types";
 import {
   ICourierClientConfiguration,
   ICourierProfileDeleteParameters,
@@ -72,10 +72,10 @@ export const getRecipientSubscriptions = (
 ) => {
   return async (
     params: ICourierProfileGetParameters
-  ): Promise<ICourierList[]> => {
-    const res = await options.httpClient.get<ICourierList[]>(
-      `/profiles/${params.recipientId}/lists`
-    );
+  ): Promise<ICourierRecipientSubscriptionsResponse> => {
+    const res = await options.httpClient.get<
+      ICourierRecipientSubscriptionsResponse
+    >(`/profiles/${params.recipientId}/lists`);
     return res.data;
   };
 };

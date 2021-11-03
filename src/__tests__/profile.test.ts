@@ -1,15 +1,21 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { CourierClient } from "../index";
-import { ICourierList } from "../lists/types";
+import { ICourierRecipientSubscriptionsResponse } from "../lists/types";
 import { ICourierProfilePostResponse, List } from "../types";
 
-const mockGetProfileListResponse: ICourierList[] = [
-  {
-    id: "example.list1",
-    name: "Courier Feature update list"
-  }
-];
+const mockGetProfileListResponse: ICourierRecipientSubscriptionsResponse = {
+  paging: {
+    cursor: "",
+    more: false
+  },
+  results: [
+    {
+      id: "example.list1",
+      name: "Courier Feature update list"
+    }
+  ]
+};
 
 const mockPostResponse: ICourierProfilePostResponse = {
   status: "SUCCESS"
