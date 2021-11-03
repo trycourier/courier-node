@@ -1,18 +1,24 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { CourierClient } from "../index";
-import { ICourierList } from "../lists/types";
+import { ICourierRecipientSubscriptionsResponse } from "../lists/types";
 import { ICourierProfilePostResponse, List } from "../types";
 
-const mockGetProfileListResponse: ICourierList[] = [
-  {
-    id: "example.list1",
-    name: "Courier Feature update list"
-  }
-];
+const mockGetProfileListResponse: ICourierRecipientSubscriptionsResponse = {
+  paging: {
+    cursor: "",
+    more: false,
+  },
+  results: [
+    {
+      id: "example.list1",
+      name: "Courier Feature update list",
+    },
+  ],
+};
 
 const mockPostResponse: ICourierProfilePostResponse = {
-  status: "SUCCESS"
+  status: "SUCCESS",
 };
 
 const additionalMocklists: List[] = [
@@ -22,10 +28,10 @@ const additionalMocklists: List[] = [
     preferences: {
       notifications: {
         "1231123": {
-          status: "OPTED_IN"
-        }
-      }
-    }
+          status: "OPTED_IN",
+        },
+      },
+    },
   },
   {
     listId: "example.list2",
@@ -33,11 +39,11 @@ const additionalMocklists: List[] = [
     preferences: {
       notifications: {
         "1231123": {
-          status: "OPTED_IN"
-        }
-      }
-    }
-  }
+          status: "OPTED_IN",
+        },
+      },
+    },
+  },
 ];
 
 describe("Courier Recipient Profile", () => {
@@ -53,7 +59,7 @@ describe("Courier Recipient Profile", () => {
 
   test("should delete profile", async () => {
     const { deleteProfile } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
@@ -63,7 +69,7 @@ describe("Courier Recipient Profile", () => {
 
   test("should return lists associated with recipient", async () => {
     const { getRecipientSubscriptions } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
@@ -73,25 +79,25 @@ describe("Courier Recipient Profile", () => {
 
   test("should subscribe recipient to provided lists", async () => {
     const { addRecipientToLists } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
       addRecipientToLists({
         lists: additionalMocklists,
-        recipientId: "12345"
+        recipientId: "12345",
       })
     ).resolves.toMatchObject(mockPostResponse);
   });
 
   test("should remove recipient from all the lists subscription", async () => {
     const { removeRecipientFromAllLists } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
       removeRecipientFromAllLists({
-        recipientId: "12345"
+        recipientId: "12345",
       })
     ).resolves.toMatchObject(mockPostResponse);
   });

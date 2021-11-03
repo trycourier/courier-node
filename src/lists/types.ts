@@ -1,12 +1,12 @@
 import {
   ICourierNotificationPreferences,
-  IRecipientPreferences
+  IRecipientPreferences,
 } from "../preferences/types";
 import {
   ICourierPaging,
   ICourierSendConfig,
   ICourierSendListOrPatternParams,
-  ICourierSendResponse
+  ICourierSendResponse,
 } from "../types";
 
 export interface ICourierList {
@@ -14,6 +14,11 @@ export interface ICourierList {
   id: string;
   name: string;
   updated?: number;
+}
+
+export interface ICourierRecipientSubscriptionsResponse {
+  paging: ICourierPaging;
+  results: ICourierList[];
 }
 
 export interface ICourierListPutParams {
