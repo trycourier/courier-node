@@ -10,7 +10,7 @@ import {
   ICourierProfilePostParameters,
   ICourierProfilePostResponse,
   ICourierProfilePutParameters,
-  ICourierProfilePutResponse,
+  ICourierProfilePutResponse
 } from "./types";
 
 export const replaceProfile = (options: ICourierClientConfiguration) => {
@@ -20,7 +20,7 @@ export const replaceProfile = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.put<ICourierProfilePutResponse>(
       `/profiles/${params.recipientId}`,
       {
-        profile: params.profile,
+        profile: params.profile
       }
     );
     return res.data;
@@ -33,7 +33,7 @@ export const mergeProfile = (options: ICourierClientConfiguration) => {
     config?: ICourierProfilePostConfig
   ): Promise<ICourierProfilePostResponse> => {
     const axiosConfig: AxiosRequestConfig = {
-      headers: {},
+      headers: {}
     };
 
     if (config && config.idempotencyKey) {
@@ -42,7 +42,7 @@ export const mergeProfile = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.post<ICourierProfilePostResponse>(
       `/profiles/${params.recipientId}`,
       {
-        profile: params.profile,
+        profile: params.profile
       },
       axiosConfig
     );
@@ -87,7 +87,7 @@ export const addRecipientToLists = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.post<ICourierProfilePostResponse>(
       `/profiles/${params.recipientId}/lists`,
       {
-        lists: params.lists,
+        lists: params.lists
       }
     );
     return res.data;

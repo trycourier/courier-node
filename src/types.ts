@@ -4,12 +4,12 @@ import { ICourierClientAutomations } from "./automations/types";
 import {
   ICourierClientLists,
   ICourierList,
-  ICourierRecipientSubscriptionsResponse,
+  ICourierRecipientSubscriptionsResponse
 } from "./lists/types";
 import { ICourierClientNotifications } from "./notifications/types";
 import {
   ICourierClientPreferences,
-  IRecipientPreferences,
+  IRecipientPreferences
 } from "./preferences/types";
 
 export type HttpMethodClient = <T>(
