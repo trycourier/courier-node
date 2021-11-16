@@ -35,7 +35,7 @@ const mockGetProfileResponse: ICourierProfileGetResponse = {
 const mockGetMessageResponse: ICourierMessageGetResponse = {
   id: "mockMessageId",
   recipient: "mockRecipient",
-  status: "mockStatus"
+  status: "SENT"
 };
 
 const mockGetMessageHistoryResponse: ICourierMessageGetHistoryResponse = {
@@ -156,7 +156,7 @@ const mockGetMessagesResponse: ICourierMessagesGetResponse = {
       enqueued: 1632840573355,
       sent: 1632840580620,
       recipient: "mockRecipient",
-      status: "mockStatus",
+      status: "SENT",
       event: "mockEvent",
       notification: "mockNotification"
     }
