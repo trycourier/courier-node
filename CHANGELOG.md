@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v3.1.0] - 2021-11-16
+
+- Expose additional type definitions for `getMessage`
+
 ## [v3.0.0] - 2021-11-02
 
 - fixes type definition for `getRecipientSubscriptions`
@@ -177,7 +181,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-node/compare/v3.0.0...HEAD
+[unreleased]: https://github.com/trycourier/courier-node/compare/v3.1.0...HEAD
+[v3.1.0]: https://github.com/trycourier/courier-node/compare/v3.0.0...v3.1.0
 [v3.0.0]: https://github.com/trycourier/courier-node/compare/v2.8.0...v3.0.0
 [v2.8.0]: https://github.com/trycourier/courier-node/compare/v2.7.0...v2.8.0
 [v2.7.0]: https://github.com/trycourier/courier-node/compare/v2.6.0...v2.7.0

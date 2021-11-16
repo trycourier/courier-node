@@ -141,25 +141,38 @@ export interface ICourierMessagesGetResponse {
 }
 
 export interface ICourierMessageGetResponse {
+  clicked?: number;
+  delivered?: number;
   enqueued?: number;
+  error?: string;
   event?: string;
   id: string;
+  idempotencyKey?: string;
+  listId?: string;
+  listMessageId?: string;
   notification?: string;
+  opened?: number;
   providers?: Array<{
     channel: {
-      name: string;
+      key?: string;
+      name?: string;
       template: string;
     };
+    clicked?: number;
+    delivered?: number;
+    error?: string;
     provider: string;
-    reference: {
-      "x-message-id": string;
-    };
+    reference?: { [key: string]: string | number };
     sent: number;
-    status: string;
+    status: MessageStatus;
   }>;
+  reason?: MessageStatusReason;
+  reasonCode?: MessageStatusReasonCode;
+  reasonDetails?: string;
   recipient: string;
+  runId?: string;
   sent?: number;
-  status: string;
+  status: MessageStatus;
 }
 
 export type MessageStatus =
