@@ -49,6 +49,7 @@ export interface ICourierSendParameters {
 
 export interface ICourierSendConfig {
   idempotencyKey?: string;
+  idempotencyExpiry?: number;
 }
 
 export interface ICourierSendResponse {
