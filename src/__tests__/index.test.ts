@@ -251,7 +251,9 @@ describe("CourierClient", () => {
         recipientId: "RECIPIENT_ID"
       },
       {
-        idempotencyKey: "IDEMPOTENCY_KEY_UUID"
+        idempotencyKey: "IDEMPOTENCY_KEY_UUID",
+        // e.g. expiration date in epoch time, 30 mins from now
+        idempotencyExpiry: Date.now() + 30 * 60 * 1000
       }
     );
   });
