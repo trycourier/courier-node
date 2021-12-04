@@ -37,15 +37,19 @@ export interface ICourierClientConfiguration {
 
 // POST /send
 
-export interface ICourierSendParameters {
-  eventId: string;
-  recipientId: string;
+interface ICourierSendBaseParameters {
   data?: object;
   brand?: string;
   preferences?: IRecipientPreferences;
   profile?: object;
   override?: object;
 }
+
+export type ICourierSendParameters = (
+  | { event: string; recipient: string }
+  | { eventId: string; recipientId: string }
+) &
+  ICourierSendBaseParameters;
 
 export interface ICourierSendConfig {
   idempotencyKey?: string;
