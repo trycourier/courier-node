@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v3.2.1] - 2022-01-13
+
+- Fixes `getMessages` query params
+
 ## [v3.2.0] - 2021-11-18
 
 - adds idempotency expiration support for send and send list endpoints
@@ -185,7 +189,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-node/compare/v3.2.0...HEAD
+[unreleased]: https://github.com/trycourier/courier-node/compare/v3.2.1...HEAD
+[v3.2.1]: https://github.com/trycourier/courier-node/compare/v3.2.0...v3.2.1
 [v3.2.0]: https://github.com/trycourier/courier-node/compare/v3.1.0...v3.2.0
 [v3.1.0]: https://github.com/trycourier/courier-node/compare/v3.0.0...v3.1.0
 [v3.0.0]: https://github.com/trycourier/courier-node/compare/v2.8.0...v3.0.0
