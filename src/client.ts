@@ -107,13 +107,15 @@ const getMessages = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.get<ICourierMessagesGetResponse>(
       "/messages",
       {
-        cursor: params?.cursor,
-        event: params?.eventId,
-        list: params?.listId,
-        messageId: params?.messageId,
-        notification: params?.notificationId,
-        recipient: params?.recipientId,
-        status: params?.status
+        params: {
+          cursor: params?.cursor,
+          event: params?.eventId,
+          list: params?.listId,
+          messageId: params?.messageId,
+          notification: params?.notificationId,
+          recipient: params?.recipientId,
+          status: params?.status
+        }
       }
     );
     return res.data;
