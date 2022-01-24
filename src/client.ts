@@ -66,11 +66,19 @@ const sendV2Call = async (options: ICourierClientConfiguration, config: AxiosReq
   return res.data;
 }
 
+type SendResponse<T extends ICourierSendParameters | ICourierSendV2Parameters> = T extends ICourierSendParameters
+  ? ICourierSendResponse
+  : ICourierSendV2Response;
+
+const a: SendResponse<ICourierSendV2Parameters> = {
+  requestId: ""
+};
+  
 const send = (options: ICourierClientConfiguration) => {
-  return async (
-    params: ICourierSendParameters | ICourierSendV2Parameters,
+  return async <T extends ICourierSendParameters | ICourierSendV2Parameters>(
+    params: T,
     config?: ICourierSendConfig
-  ): Promise<ICourierSendResponse | ICourierSendV2Response> => {
+  ): Promise<SendResponse<T>> => {
     const axiosConfig: AxiosRequestConfig = {
       headers: {}
     };
