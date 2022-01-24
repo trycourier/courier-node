@@ -47,6 +47,10 @@ export interface ICourierSendParameters {
   override?: object;
 }
 
+export interface ICourierSendV2Parameters {
+  message: any;
+}
+
 export interface ICourierSendConfig {
   idempotencyKey?: string;
   idempotencyExpiry?: number;
@@ -54,6 +58,10 @@ export interface ICourierSendConfig {
 
 export interface ICourierSendResponse {
   messageId: string;
+}
+
+export interface ICourierSendV2Response {
+  requestId: string;
 }
 
 export interface ICourierSendParams {
@@ -412,7 +420,7 @@ export interface ICourierClient {
     params: ICourierProfilePutParameters
   ) => Promise<ICourierProfilePutResponse>;
   send: (
-    params: ICourierSendParameters,
+    params: ICourierSendParameters | ICourierSendV2Parameters,
     config?: ICourierSendConfig
-  ) => Promise<ICourierSendResponse>;
+  ) => Promise<ICourierSendResponse | ICourierSendV2Response>;
 }

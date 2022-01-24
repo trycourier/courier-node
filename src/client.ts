@@ -31,14 +31,46 @@ import {
   ICourierMessagesGetResponse,
   ICourierSendConfig,
   ICourierSendParameters,
-  ICourierSendResponse
+  ICourierSendResponse,
+  ICourierSendV2Parameters,
+  ICourierSendV2Response
 } from "./types";
+
+const sendCall = async (options: ICourierClientConfiguration, config: AxiosRequestConfig, params: ICourierSendParameters) => {
+  const res = await options.httpClient.post<ICourierSendResponse>(
+    "/send",
+    {
+      brand: params.brand,
+      data: params.data,
+      event: params.eventId,
+      override: params.override,
+      preferences: params.preferences,
+      profile: params.profile,
+      recipient: params.recipientId
+    },
+    config
+  );
+
+  return res.data;
+}
+
+const sendV2Call = async (options: ICourierClientConfiguration, config: AxiosRequestConfig, params: ICourierSendV2Parameters) => {
+  const res = await options.httpClient.post<ICourierSendV2Response>(
+    "/send",
+    {
+      message: params.message,
+    },
+    config
+  );
+
+  return res.data;
+}
 
 const send = (options: ICourierClientConfiguration) => {
   return async (
-    params: ICourierSendParameters,
+    params: ICourierSendParameters | ICourierSendV2Parameters,
     config?: ICourierSendConfig
-  ): Promise<ICourierSendResponse> => {
+  ): Promise<ICourierSendResponse | ICourierSendV2Response> => {
     const axiosConfig: AxiosRequestConfig = {
       headers: {}
     };
@@ -52,20 +84,13 @@ const send = (options: ICourierClientConfiguration) => {
         config.idempotencyExpiry;
     }
 
-    const res = await options.httpClient.post<ICourierSendResponse>(
-      "/send",
-      {
-        brand: params.brand,
-        data: params.data,
-        event: params.eventId,
-        override: params.override,
-        preferences: params.preferences,
-        profile: params.profile,
-        recipient: params.recipientId
-      },
-      axiosConfig
-    );
-    return res.data;
+    if((params as ICourierSendV2Parameters).message) {
+      const data = await sendV2Call(options, axiosConfig, (params as ICourierSendV2Parameters));
+      return data;
+    }
+
+    const data = await sendCall(options, axiosConfig, (params as ICourierSendParameters));
+    return data;
   };
 };
 
@@ -146,6 +171,6 @@ export const client = (
     removeRecipientFromAllLists: removeRecipientFromAllLists(options),
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
-    send: send(options)
+    send: send(options),
   };
 };
