@@ -12,14 +12,14 @@ import {
   ICourierProfilePostResponse,
   ICourierProfilePutResponse,
   ICourierSendResponse,
-  ICourierSendV2Response
+  ICourierSendMessageResponse
 } from "../types";
 
 const mockSendResponse: ICourierSendResponse = {
   messageId: "1234"
 };
 
-const mockSendV2Response: ICourierSendV2Response = {
+const mockSendV2Response: ICourierSendMessageResponse = {
   requestId: "1234"
 };
 
