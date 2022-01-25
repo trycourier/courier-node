@@ -26,3 +26,5 @@ Make sure you have incremented the version string in `package.json` to your new 
 git tag -a v<VERSION> -m v<VERSION>
 git push origin v<VERSION>
 ```
+
+Note: We use NPM Automation token (https://docs.npmjs.com/creating-and-viewing-access-tokens) to publish the package. The token exists in Circle CI environment.

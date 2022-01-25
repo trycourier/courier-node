@@ -6,6 +6,7 @@ import {
   getBrands,
   replaceBrand
 } from "./brands";
+import { bulk } from "./bulk";
 import { lists } from "./lists";
 import { notifications } from "./notifications";
 import { preferences } from "./preferences";
@@ -89,6 +90,7 @@ export const client = (
   return {
     addRecipientToLists: addRecipientToLists(options),
     automations: automations(options),
+    bulk: bulk(options),
     createBrand: createBrand(options),
     deleteBrand: deleteBrand(options),
     deleteProfile: deleteProfile(options),
