@@ -48,7 +48,7 @@ export interface ICourierSendParameters {
   override?: object;
 }
 
-export interface ICourierSendV2Parameters {
+export interface ICourierSendMessageParameters {
   message: Message;
 }
 
@@ -61,7 +61,7 @@ export interface ICourierSendResponse {
   messageId: string;
 }
 
-export interface ICourierSendV2Response {
+export interface ICourierSendMessageResponse {
   requestId: string;
 }
 
@@ -375,9 +375,9 @@ export interface ICourierBrandGetAllResponse {
   results: ICourierBrand[];
 }
 
-export type SendResponse<T extends ICourierSendParameters | ICourierSendV2Parameters> = T extends ICourierSendParameters
+export type SendResponse<T extends ICourierSendParameters | ICourierSendMessageParameters> = T extends ICourierSendParameters
   ? ICourierSendResponse
-  : ICourierSendV2Response;
+  : ICourierSendMessageResponse;
 
 export interface ICourierClient {
   addRecipientToLists: (
@@ -424,7 +424,7 @@ export interface ICourierClient {
   replaceProfile: (
     params: ICourierProfilePutParameters
   ) => Promise<ICourierProfilePutResponse>;
-  send: <T extends ICourierSendParameters | ICourierSendV2Parameters>(
+  send: <T extends ICourierSendParameters | ICourierSendMessageParameters>(
     params: T,
     config?: ICourierSendConfig
   ) => Promise<SendResponse<T>>;
