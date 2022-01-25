@@ -118,7 +118,11 @@ export interface ElementalTextNode extends ElementalBaseNode {
   type: "text";
   content: string;
   format?: "markdown";
-  locales?: ElementalLocales;
+  locales?: {
+    [locale: string]: {
+      content: string;
+    };
+  };
 }
 
 export interface ElementalMetaNode extends ElementalBaseNode {
@@ -150,7 +154,11 @@ export interface ElementalActionNode extends ElementalBaseNode {
   style?: IActionButtonStyle;
   align?: IAlignment;
   backgroundColor?: string;
-  locales?: ElementalLocales;
+  locales?: {
+    [locale: string]: {
+      content: string;
+    };
+  };
 }
 
 export interface ElementalDividerNode extends ElementalBaseNode {
@@ -169,7 +177,11 @@ export interface ElementalQuoteNode extends ElementalBaseNode {
   align?: IAlignment;
   borderColor?: string;
   textStyle?: "text" | "h1" | "h2" | "subtext";
-  locales?: ElementalLocales;
+  locales?: {
+    [locale: string]: {
+      content: string;
+    };
+  };
 }
 
 interface ElementalBaseNode {
