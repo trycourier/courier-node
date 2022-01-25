@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v3.4.0] - 2022-01-25
+
+- adds support for the send message object in the request body of a `/send` call
+
 ## [v3.3.0] - 2022-01-25
 
 - adds support for bulk processing endpoints
@@ -193,7 +197,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-node/compare/v3.3.0...HEAD
+[unreleased]: https://github.com/trycourier/courier-node/compare/v3.4.0...HEAD
+[v3.4.0]: https://github.com/trycourier/courier-node/compare/v3.3.0...v3.4.0
 [v3.3.0]: https://github.com/trycourier/courier-node/compare/v3.2.1...v3.3.0
 [v3.2.1]: https://github.com/trycourier/courier-node/compare/v3.2.0...v3.2.1
 [v3.2.0]: https://github.com/trycourier/courier-node/compare/v3.1.0...v3.2.0

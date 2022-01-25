@@ -1,5 +1,3 @@
-import { AxiosRequestConfig } from "axios";
-
 import { automations } from "./automations";
 import {
   createBrand,
@@ -21,6 +19,7 @@ import {
   removeRecipientFromAllLists,
   replaceProfile
 } from "./profile";
+import { send } from "./send";
 
 import {
   ICourierClient,
@@ -29,46 +28,8 @@ import {
   ICourierMessageGetOutputResponse,
   ICourierMessageGetResponse,
   ICourierMessagesGetParameters,
-  ICourierMessagesGetResponse,
-  ICourierSendConfig,
-  ICourierSendParameters,
-  ICourierSendResponse
+  ICourierMessagesGetResponse
 } from "./types";
-
-const send = (options: ICourierClientConfiguration) => {
-  return async (
-    params: ICourierSendParameters,
-    config?: ICourierSendConfig
-  ): Promise<ICourierSendResponse> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
-
-    if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-
-    if (config && config.idempotencyExpiry) {
-      axiosConfig.headers["x-idempotency-expiration"] =
-        config.idempotencyExpiry;
-    }
-
-    const res = await options.httpClient.post<ICourierSendResponse>(
-      "/send",
-      {
-        brand: params.brand,
-        data: params.data,
-        event: params.eventId,
-        override: params.override,
-        preferences: params.preferences,
-        profile: params.profile,
-        recipient: params.recipientId
-      },
-      axiosConfig
-    );
-    return res.data;
-  };
-};
 
 const getMessage = (options: ICourierClientConfiguration) => {
   return async (messageId: string): Promise<ICourierMessageGetResponse> => {

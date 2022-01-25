@@ -12,6 +12,7 @@ import {
   ICourierClientPreferences,
   IRecipientPreferences
 } from "./preferences/types";
+import { Message } from "./send/types";
 
 export type HttpMethodClient = <T>(
   url: string,
@@ -48,6 +49,10 @@ export interface ICourierSendParameters {
   override?: object;
 }
 
+export interface ICourierSendMessageParameters {
+  message: Message;
+}
+
 export interface ICourierSendConfig {
   idempotencyKey?: string;
   idempotencyExpiry?: number;
@@ -55,6 +60,10 @@ export interface ICourierSendConfig {
 
 export interface ICourierSendResponse {
   messageId: string;
+}
+
+export interface ICourierSendMessageResponse {
+  requestId: string;
 }
 
 export interface ICourierSendParams {
@@ -367,6 +376,12 @@ export interface ICourierBrandGetAllResponse {
   results: ICourierBrand[];
 }
 
+export type SendResponse<
+  T extends ICourierSendParameters | ICourierSendMessageParameters
+> = T extends ICourierSendParameters
+  ? ICourierSendResponse
+  : ICourierSendMessageResponse;
+
 export interface ICourierClient {
   addRecipientToLists: (
     params: ICourierProfileListsPostParameters
@@ -413,8 +428,8 @@ export interface ICourierClient {
   replaceProfile: (
     params: ICourierProfilePutParameters
   ) => Promise<ICourierProfilePutResponse>;
-  send: (
-    params: ICourierSendParameters,
+  send: <T extends ICourierSendParameters | ICourierSendMessageParameters>(
+    params: T,
     config?: ICourierSendConfig
-  ) => Promise<ICourierSendResponse>;
+  ) => Promise<SendResponse<T>>;
 }
