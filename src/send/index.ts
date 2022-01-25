@@ -31,7 +31,7 @@ const sendCall = async (
   return res.data;
 };
 
-const sendV2Call = async (
+const sendMessageCall = async (
   options: ICourierClientConfiguration,
   config: AxiosRequestConfig,
   params: ICourierSendMessageParameters
@@ -68,7 +68,7 @@ export const send = (options: ICourierClientConfiguration) => {
     }
 
     if ((params as ICourierSendMessageParameters).message) {
-      const v2Response = await sendV2Call(
+      const v2Response = await sendMessageCall(
         options,
         axiosConfig,
         params as ICourierSendMessageParameters
