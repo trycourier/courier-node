@@ -1,3 +1,4 @@
+/* tslint:disable:interface-name */
 export interface IBrandSnippet {
   format: "handlebars"; // could support other formats in the future
   name: string;
