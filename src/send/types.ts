@@ -268,6 +268,7 @@ export interface MessageProviders {
 }
 
 export interface MessageChannelEmailOverride {
+  /* tslint:disable-next-line:array-type */
   attachments?: Record<string, any>[];
   bcc?: string;
   // content?: Content; TODO: https://linear.app/trycourier/issue/C-4462/add-content-support-to-channel-overrides
@@ -331,6 +332,7 @@ export interface RoutingStrategyChannel<T = Record<string, any>> {
   channel: string;
   config?: T;
   method?: "all" | "single";
+  /* tslint:disable-next-line:array-type */
   providers?: (RoutingStrategyProvider | string)[];
   if?: string;
 }
