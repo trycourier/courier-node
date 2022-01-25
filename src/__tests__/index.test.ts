@@ -11,11 +11,16 @@ import {
   ICourierProfileGetResponse,
   ICourierProfilePostResponse,
   ICourierProfilePutResponse,
-  ICourierSendResponse
+  ICourierSendResponse,
+  ICourierSendV2Response
 } from "../types";
 
 const mockSendResponse: ICourierSendResponse = {
   messageId: "1234"
+};
+
+const mockSendV2Response: ICourierSendV2Response = {
+  requestId: "1234"
 };
 
 const mockReplaceProfileResponse: ICourierProfilePutResponse = {
@@ -186,6 +191,64 @@ const mockGetBrandsResponse: ICourierBrandGetAllResponse = {
   },
   results: [mockBrandResponse]
 };
+
+describe("CourierClient - send with V2 schema", () => {
+  let mock: MockAdapter;
+  beforeEach(() => {
+    mock = new MockAdapter(axios);
+    mock.onPost("/send").reply(200, mockSendV2Response);
+  });
+
+  test(".send", async () => {
+    const { send } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      send({
+        message: {
+          data: {
+            example: "EXAMPLE_DATA"
+          },
+          template: "EVENT_ID",
+          to: {
+            phone_number: "PHONE_NUMBER"
+          },
+        }
+      })
+    ).resolves.toMatchObject(mockSendV2Response);
+  });
+
+  test(".send with Idempotency Key", async () => {
+    const { send } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    mock.onPost("/send").reply(async config => {
+      expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
+      return [200];
+    });
+
+    await send(
+      {
+        message: {
+          data: {
+            example: "EXAMPLE_DATA"
+          },
+          template: "EVENT_ID",
+          to: {
+            phone_number: "PHONE_NUMBER"
+          },
+        }
+      },
+      {
+        idempotencyKey: "IDEMPOTENCY_KEY_UUID",
+        // e.g. expiration date in epoch time, 30 mins from now
+        idempotencyExpiry: Date.now() + 30 * 60 * 1000
+      }
+    );
+  });
+})
 
 describe("CourierClient", () => {
   let mock: MockAdapter;
