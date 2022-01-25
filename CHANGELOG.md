@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v3.4.0] - 2022-01-25
+
+- adds support for the send message object in the request body of a `/send` call
+
 ## [v3.3.0] - 2022-01-25
 
 - adds support for bulk processing endpoints
