@@ -213,7 +213,7 @@ describe("CourierClient - send with V2 schema", () => {
           template: "EVENT_ID",
           to: {
             phone_number: "PHONE_NUMBER"
-          },
+          }
         }
       })
     ).resolves.toMatchObject(mockSendV2Response);
@@ -238,7 +238,7 @@ describe("CourierClient - send with V2 schema", () => {
           template: "EVENT_ID",
           to: {
             phone_number: "PHONE_NUMBER"
-          },
+          }
         }
       },
       {
@@ -248,7 +248,7 @@ describe("CourierClient - send with V2 schema", () => {
       }
     );
   });
-})
+});
 
 describe("CourierClient", () => {
   let mock: MockAdapter;

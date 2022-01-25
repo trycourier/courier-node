@@ -375,7 +375,9 @@ export interface ICourierBrandGetAllResponse {
   results: ICourierBrand[];
 }
 
-export type SendResponse<T extends ICourierSendParameters | ICourierSendMessageParameters> = T extends ICourierSendParameters
+export type SendResponse<
+  T extends ICourierSendParameters | ICourierSendMessageParameters
+> = T extends ICourierSendParameters
   ? ICourierSendResponse
   : ICourierSendMessageResponse;
 

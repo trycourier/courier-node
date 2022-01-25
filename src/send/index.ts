@@ -1,7 +1,19 @@
 import { AxiosRequestConfig } from "axios";
-import { ICourierClientConfiguration, ICourierSendConfig, ICourierSendParameters, ICourierSendResponse, ICourierSendMessageParameters, ICourierSendMessageResponse, SendResponse } from "../types";
+import {
+  ICourierClientConfiguration,
+  ICourierSendConfig,
+  ICourierSendMessageParameters,
+  ICourierSendMessageResponse,
+  ICourierSendParameters,
+  ICourierSendResponse,
+  SendResponse
+} from "../types";
 
-const sendCall = async (options: ICourierClientConfiguration, config: AxiosRequestConfig, params: ICourierSendParameters) => {
+const sendCall = async (
+  options: ICourierClientConfiguration,
+  config: AxiosRequestConfig,
+  params: ICourierSendParameters
+) => {
   const res = await options.httpClient.post<ICourierSendResponse>(
     "/send",
     {
@@ -17,22 +29,28 @@ const sendCall = async (options: ICourierClientConfiguration, config: AxiosReque
   );
 
   return res.data;
-}
+};
 
-const sendV2Call = async (options: ICourierClientConfiguration, config: AxiosRequestConfig, params: ICourierSendMessageParameters) => {
+const sendV2Call = async (
+  options: ICourierClientConfiguration,
+  config: AxiosRequestConfig,
+  params: ICourierSendMessageParameters
+) => {
   const res = await options.httpClient.post<ICourierSendMessageResponse>(
     "/send",
     {
-      message: params.message,
+      message: params.message
     },
     config
   );
 
   return res.data;
-}
+};
 
 export const send = (options: ICourierClientConfiguration) => {
-  return async <T extends ICourierSendParameters | ICourierSendMessageParameters>(
+  return async <
+    T extends ICourierSendParameters | ICourierSendMessageParameters
+  >(
     params: T,
     config?: ICourierSendConfig
   ): Promise<SendResponse<T>> => {
@@ -49,12 +67,20 @@ export const send = (options: ICourierClientConfiguration) => {
         config.idempotencyExpiry;
     }
 
-    if((params as ICourierSendMessageParameters).message) {
-      const v2Response = await sendV2Call(options, axiosConfig, (params as ICourierSendMessageParameters));
+    if ((params as ICourierSendMessageParameters).message) {
+      const v2Response = await sendV2Call(
+        options,
+        axiosConfig,
+        params as ICourierSendMessageParameters
+      );
       return v2Response as SendResponse<T>;
     }
 
-    const v1Response = await sendCall(options, axiosConfig, (params as ICourierSendParameters));
+    const v1Response = await sendCall(
+      options,
+      axiosConfig,
+      params as ICourierSendParameters
+    );
     return v1Response as SendResponse<T>;
   };
 };

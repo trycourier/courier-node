@@ -50,7 +50,6 @@ export interface IBrandSettingsSocialPresence {
   };
 }
 
-
 export interface IBrandSettingsEmail {
   templateOverride?: IBrandTemplateOverride;
   head?: {

@@ -27,7 +27,7 @@ import {
   ICourierMessageGetOutputResponse,
   ICourierMessageGetResponse,
   ICourierMessagesGetParameters,
-  ICourierMessagesGetResponse,
+  ICourierMessagesGetResponse
 } from "./types";
 
 const getMessage = (options: ICourierClientConfiguration) => {
@@ -107,6 +107,6 @@ export const client = (
     removeRecipientFromAllLists: removeRecipientFromAllLists(options),
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
-    send: send(options),
+    send: send(options)
   };
 };
