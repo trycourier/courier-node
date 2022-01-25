@@ -50,11 +50,11 @@ export const send = (options: ICourierClientConfiguration) => {
     }
 
     if((params as ICourierSendV2Parameters).message) {
-      const data = await sendV2Call(options, axiosConfig, (params as ICourierSendV2Parameters));
-      return data as SendResponse<T>;
+      const v2Response = await sendV2Call(options, axiosConfig, (params as ICourierSendV2Parameters));
+      return v2Response as SendResponse<T>;
     }
 
-    const data = await sendCall(options, axiosConfig, (params as ICourierSendParameters));
-    return data as SendResponse<T>;
+    const v1Response = await sendCall(options, axiosConfig, (params as ICourierSendParameters));
+    return v1Response as SendResponse<T>;
   };
 };
