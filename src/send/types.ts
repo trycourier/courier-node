@@ -192,12 +192,6 @@ interface ElementalBaseNode {
   loop?: string;
 }
 
-export interface ElementalLocales {
-  [locale: string]: {
-    content: string;
-  };
-}
-
 export interface MessageData extends Record<string, any> {}
 
 interface ListRecipient {
