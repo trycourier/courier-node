@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 
 import { ICourierClientAutomations } from "./automations/types";
+import { ICourierClientBulk } from "./bulk/types";
 import {
   ICourierClientLists,
   ICourierList,
@@ -371,6 +372,7 @@ export interface ICourierClient {
     params: ICourierProfileListsPostParameters
   ) => Promise<ICourierProfilePostResponse>;
   automations: ICourierClientAutomations;
+  bulk: ICourierClientBulk;
   createBrand: (
     params: ICourierBrandParameters,
     config?: ICourierBrandPostConfig
