@@ -377,6 +377,45 @@ async function run() {
 
   // Example: Cancel notification submission
   await courier.notifications.cancelSubmission("notification1", "submission1");
+
+  // Bulk Processing
+  // Example: create a job
+  const response = await courier.bulk.createJob({
+    message: {
+      event: "RR4NDQ7NZ24A8TKPWVBEDGE15E9A",
+    },
+  });
+  console.log(response);
+
+  // Example: get a job
+  const response = await courier.bulk.getJob({
+    jobId: "1-61efe386-6ff57552409e311b7a1f371f",
+  });
+  console.log(response);
+
+  // Example: Ingest users in a job
+  const response = await courier.bulk.ingestUsers({
+    jobId: "1-61efe386-6ff57552409e311b7a1f371f",
+    users: [
+      {
+        profile: {
+          email: "tejas@courier.com",
+        },
+      },
+    ],
+  });
+  console.log(response);
+
+  // Example: Run a job
+  await courier.bulk.runJob({
+    jobId: "1-61efe386-6ff57552409e311b7a1f371f",
+  });
+
+  // Example: Get user details in a job
+  const response = await courier.bulk.getJobUsers({
+    jobId: "1-61efe386-6ff57552409e311b7a1f371f",
+  });
+  console.log(response);
 }
 
 run();
