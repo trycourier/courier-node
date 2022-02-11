@@ -5,12 +5,12 @@ import { ICourierClientBulk } from "./bulk/types";
 import {
   ICourierClientLists,
   ICourierList,
-  ICourierRecipientSubscriptionsResponse
+  ICourierRecipientSubscriptionsResponse,
 } from "./lists/types";
 import { ICourierClientNotifications } from "./notifications/types";
 import {
   ICourierClientPreferences,
-  IRecipientPreferences
+  IRecipientPreferences,
 } from "./preferences/types";
 import { Message } from "./send/types";
 
@@ -195,7 +195,8 @@ export type MessageStatus =
   | "SENT"
   | "SIMULATED"
   | "UNDELIVERABLE"
-  | "UNMAPPED";
+  | "UNMAPPED"
+  | "UNROUTABLE";
 
 export type MessageHistoryType =
   | MessageStatus
@@ -250,6 +251,11 @@ export interface IRenderedMessageHistory
   };
 }
 
+export interface IUnroutableMessageHistory
+  extends IMessageHistory<"UNROUTABLE"> {
+  reason: MessageStatusReason;
+}
+
 export interface IUndeliverableMessageHistory
   extends IMessageHistory<"UNDELIVERABLE">,
     Partial<Omit<IRoutedMessageHistory<"UNDELIVERABLE">, "ts" | "type">> {
@@ -294,6 +300,7 @@ export interface ICourierMessageGetHistoryResponse {
     | IDeliveredMessageHistory
     | IProviderErrorMessageHistory
     | IUndeliverableMessageHistory
+    | IUnroutableMessageHistory
   >;
 }
 
