@@ -24,28 +24,38 @@ import { CourierClient } from "@trycourier/courier";
 const courier = CourierClient({ authorizationToken: "<AUTH_TOKEN>" }); // get from the Courier UI
 
 // Example: send a message supporting email & SMS
-const { messageId } = await courier.send({
-  eventId: "<EVENT_ID>", // get from the Courier UI
-  recipientId: "<RECIPIENT_ID>", // usually your system's User ID
-  profile: {
-    email: "example@example.com",
-    phone_number: "555-228-3890",
+const { requestId } = await courier.send({
+  message: {
+    template: "<TEMPLATE_OR_EVENT_ID>", // get from the Courier UI
+    to: {
+      user_Id: "<USER_ID>", // usually your system's User ID
+      email: "example@example.com",
+      phone_number: "555-228-3890",
+    },
+    data: {}, // optional variables for merging into templates
   },
-  data: {}, // optional variables for merging into templates
 });
 
 // Example: send a message to a list
-const { messageId } = await courier.lists.send({
-  event: "<EVENT_ID>", // get from the Courier UI
-  list: "<LIST_ID>", // e.g. example.list.id
-  data: {}, // optional variables for merging into templates
+const { requestId } = await courier.send({
+  message: {
+    template: "<TEMPLATE_OR_EVENT_ID>", // get from the Courier UI
+    to: {
+      list_id: "<LIST_ID>", // e.g. your Courier List Id
+    },
+    data: {}, // optional variables for merging into templates
+  },
 });
 
 // Example: send a message to a pattern
-const { messageId } = await courier.lists.send({
-  event: "<EVENT_ID>", // get from the Courier UI
-  pattern: "<PATTERN>", // e.g. example.list.*
-  data: {}, // optional variables for merging into templates
+const { requestId } = await courier.send({
+  message: {
+    template: "<TEMPLATE_OR_EVENT_ID>", // get from the Courier UI
+    to: {
+      list_pattern: "<PATTERN>", // e.g. example.list.*
+    },
+    data: {}, // optional variables for merging into templates
+  },
 });
 ```
 
@@ -65,27 +75,32 @@ const courier = CourierClient({ authorizationToken: "<AUTH_TOKEN>" });
 
 async function run() {
   // Example: send a message
-  const { messageId } = await courier.send({
-    eventId: "<EVENT_ID>",
-    recipientId: "<RECIPIENT_ID>",
-    profile: {}, // optional
-    data: {}, // optional
-    brand: "<BRAND_ID>", //optional
-    preferences: {}, // optional
-    override: {}, // optional
+  const { requestId } = await courier.send({
+    message: {
+      template: "<TEMPLATE_OR_EVENT_ID>",
+      to: {
+        // optional
+        user_id: "<RECIPIENT_ID>",
+      },
+      data: {}, // optional
+      brand_id: "<BRAND_ID>", //optional
+      routing: {},
+      channels: {}, // optional
+      providers: {}, // optional
+    },
   });
-  console.log(messageId);
+  console.log(requestId);
 
   // Example: get a message status
-  const messageStatus = await courier.getMessage(messageId);
+  const messageStatus = await courier.getMessage(requestId);
   console.log(messageStatus);
 
   // Example: get a message history
-  const { results } = await courier.getMessageHistory(messageId);
+  const { results } = await courier.getMessageHistory(requestId);
   console.log(results);
 
   // Example: get a message output
-  const { results } = await courier.getMessageOutput(messageId);
+  const { results } = await courier.getMessageOutput(requestId);
   console.log(results);
 
   // Example: get all messages
@@ -433,11 +448,11 @@ const courier = CourierClient();
 const idempotencyKey = uuid4();
 
 async function run() {
-  const { messageId } = await courier.send(
+  const { requestId } = await courier.send(
     {
-      eventId: "<EVENT_ID>",
-      recipientId: "<RECIPIENT_ID>",
-      profile: {
+      template: "<TEMPLATE_OR_EVENT_ID>",
+      to: {
+        user_id: "<USER_ID>",
         email: "example@example.com",
         phone_number: "555-867-5309",
       },
@@ -449,7 +464,7 @@ async function run() {
       idempotencyKey,
     }
   );
-  console.log(messageId);
+  console.log(requestId);
 }
 
 run();
