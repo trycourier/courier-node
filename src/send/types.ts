@@ -193,11 +193,6 @@ interface ElementalBaseNode {
 
 export interface MessageData extends Record<string, any> {}
 
-interface ListRecipient {
-  list_id: string;
-  pattern?: string;
-}
-
 export type RuleType = "snooze" | "channel_preferences" | "status";
 
 export interface IRule<T extends RuleType> {
@@ -234,7 +229,45 @@ export interface IProfilePreferences {
   templateId?: string;
 }
 
-export interface UserRecipient extends Record<string, any> {
+type InvalidListRecipient = {
+  user_id: string;
+  list_pattern: string;
+};
+
+type ListRecipientType = Record<string, unknown> &
+  {
+    [key in keyof InvalidListRecipient]?: never;
+  };
+export interface ListRecipient extends ListRecipientType {
+  list_id?: string;
+  data?: MessageData;
+}
+
+type InvalidListPatternRecipient = {
+  user_id: string;
+  list_id: string;
+};
+
+type ListPatternRecipientType = Record<string, unknown> &
+  {
+    [key in keyof InvalidListPatternRecipient]?: never;
+  };
+export interface ListPatternRecipient extends ListPatternRecipientType {
+  list_pattern?: string;
+  data?: MessageData;
+}
+
+type InvalidUserRecipient = {
+  list_id: string;
+  list_pattern: string;
+};
+
+type UserRecipientType = Record<string, unknown> &
+  {
+    [key in keyof InvalidUserRecipient]?: never;
+  };
+
+export interface UserRecipient extends UserRecipientType {
   data?: MessageData;
   email?: string;
   locale?: string;
@@ -243,7 +276,9 @@ export interface UserRecipient extends Record<string, any> {
   preferences?: IProfilePreferences;
 }
 
-export type MessageRecipient = ListRecipient | UserRecipient;
+export type Recipient = ListRecipient | ListPatternRecipient | UserRecipient;
+
+export type MessageRecipient = Recipient | Recipient[];
 
 export interface ElementalContentSugar {
   body?: string;
@@ -253,7 +288,7 @@ export interface ElementalContentSugar {
 export type Content = ElementalContentSugar | ElementalContent;
 
 export interface BaseMessage {
-  to: MessageRecipient | MessageRecipient[];
+  to: MessageRecipient;
   data?: MessageData;
   // brands?: MessageBrands; TODO: https://linear.app/trycourier/issue/C-4476/add-brand-level-overrides-to-v2-request
   channels?: MessageChannels;
