@@ -229,10 +229,10 @@ export interface IProfilePreferences {
   templateId?: string;
 }
 
-type InvalidListRecipient = {
+interface InvalidListRecipient {
   user_id: string;
   list_pattern: string;
-};
+}
 
 type ListRecipientType = Record<string, unknown> &
   {
@@ -243,10 +243,10 @@ export interface ListRecipient extends ListRecipientType {
   data?: MessageData;
 }
 
-type InvalidListPatternRecipient = {
+interface InvalidListPatternRecipient {
   user_id: string;
   list_id: string;
-};
+}
 
 type ListPatternRecipientType = Record<string, unknown> &
   {
@@ -257,10 +257,10 @@ export interface ListPatternRecipient extends ListPatternRecipientType {
   data?: MessageData;
 }
 
-type InvalidUserRecipient = {
+interface InvalidUserRecipient {
   list_id: string;
   list_pattern: string;
-};
+}
 
 type UserRecipientType = Record<string, unknown> &
   {
