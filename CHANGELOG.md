@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v3.6.0] - 2022-02-10
+
+- adds additional type's for the recipient property (`message.to`)
+
 ## [v3.5.0] - 2022-02-10
 
 - adds type for unroutable status
