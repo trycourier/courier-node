@@ -402,8 +402,6 @@ export interface ContentMessageMetadata extends BaseMessageMetadata {
   event?: string;
 }
 
-export interface TemplateMessageMetadata extends BaseMessageMetadata {}
-
 export interface ContentMessage extends BaseMessage {
   content: Content;
   metadata?: ContentMessageMetadata;
@@ -411,7 +409,7 @@ export interface ContentMessage extends BaseMessage {
 
 export interface TemplateMessage extends BaseMessage {
   brand?: string;
-  metadata?: TemplateMessageMetadata;
+  metadata?: BaseMessageMetadata;
   template: string;
 }
 
