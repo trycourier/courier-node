@@ -6,9 +6,8 @@ import {
   ICourierSendMessageResponse,
   ICourierSendParameters,
   ICourierSendResponse,
-  SendResponse,
+  SendResponse
 } from "../types";
-import { Message } from "./types";
 
 const sendCall = async (
   options: ICourierClientConfiguration,
@@ -24,7 +23,7 @@ const sendCall = async (
       override: params.override,
       preferences: params.preferences,
       profile: params.profile,
-      recipient: params.recipientId,
+      recipient: params.recipientId
     },
     config
   );
@@ -40,7 +39,7 @@ const sendMessageCall = async (
   const res = await options.httpClient.post<ICourierSendMessageResponse>(
     "/send",
     {
-      message: params.message,
+      message: params.message
     },
     config
   );
@@ -56,7 +55,7 @@ export const send = (options: ICourierClientConfiguration) => {
     config?: ICourierSendConfig
   ): Promise<SendResponse<T>> => {
     const axiosConfig: AxiosRequestConfig = {
-      headers: {},
+      headers: {}
     };
 
     if (config && config.idempotencyKey) {
