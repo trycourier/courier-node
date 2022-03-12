@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [v3.7.0] - 2022-03-11
 
 - adds additional types for the tags property (`message.tags`)
+- adds support for searching message by tags
 
 ## [v3.6.0] - 2022-02-10
 
