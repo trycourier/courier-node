@@ -383,9 +383,26 @@ export interface RoutingStrategyProvider<T = Record<string, any>> {
   if?: string;
 }
 
-export interface ContentMessageMetadata {
+export interface BaseMessageMetadata {
+  // tags may be an array of up to nine strings (30 characters in length)
+  tags?: [
+    string?,
+    string?,
+    string?,
+    string?,
+    string?,
+    string?,
+    string?,
+    string?,
+    string?
+  ];
+}
+
+export interface ContentMessageMetadata extends BaseMessageMetadata {
   event?: string;
 }
+
+export interface TemplateMessageMetadata extends BaseMessageMetadata {}
 
 export interface ContentMessage extends BaseMessage {
   content: Content;
@@ -394,6 +411,7 @@ export interface ContentMessage extends BaseMessage {
 
 export interface TemplateMessage extends BaseMessage {
   brand?: string;
+  metadata?: TemplateMessageMetadata;
   template: string;
 }
 
