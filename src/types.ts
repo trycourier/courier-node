@@ -136,6 +136,7 @@ export interface ICourierMessagesGetParameters {
   notificationId?: string;
   recipientId?: string;
   status?: string | string[];
+  tags?: string | string[];
 }
 
 export interface ICourierMessagesGetResponse {
@@ -148,6 +149,7 @@ export interface ICourierMessagesGetResponse {
     recipient: string;
     sent?: number;
     status: string;
+    tags?: string[];
   }>;
 }
 
