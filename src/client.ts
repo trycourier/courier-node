@@ -4,7 +4,7 @@ import {
   deleteBrand,
   getBrand,
   getBrands,
-  replaceBrand,
+  replaceBrand
 } from "./brands";
 import { bulk } from "./bulk";
 import { lists } from "./lists";
@@ -17,7 +17,7 @@ import {
   getRecipientSubscriptions,
   mergeProfile,
   removeRecipientFromAllLists,
-  replaceProfile,
+  replaceProfile
 } from "./profile";
 import { send } from "./send";
 
@@ -28,7 +28,7 @@ import {
   ICourierMessageGetOutputResponse,
   ICourierMessageGetResponse,
   ICourierMessagesGetParameters,
-  ICourierMessagesGetResponse,
+  ICourierMessagesGetResponse
 } from "./types";
 
 const getMessage = (options: ICourierClientConfiguration) => {
@@ -110,6 +110,6 @@ export const client = (
     removeRecipientFromAllLists: removeRecipientFromAllLists(options),
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
-    send: send(options),
+    send: send(options)
   };
 };
