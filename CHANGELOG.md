@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v4.0.0] - 2022-03-14
+
+- Bumping TypeScript to the latest version
+
 ## [v3.7.0] - 2022-03-11
 
 - adds additional types for the tags property (`message.tags`)
