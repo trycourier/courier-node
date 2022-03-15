@@ -288,12 +288,13 @@ export interface ElementalContentSugar {
 export type Content = ElementalContentSugar | ElementalContent;
 
 export interface BaseMessage {
-  to: MessageRecipient;
-  data?: MessageData;
   // brands?: MessageBrands; TODO: https://linear.app/trycourier/issue/C-4476/add-brand-level-overrides-to-v2-request
   channels?: MessageChannels;
+  data?: MessageData;
+  metadata?: MessageMetadata;
   providers?: MessageProviders;
   routing?: Routing;
+  to: MessageRecipient;
 }
 
 interface TrackingOverride {
@@ -383,33 +384,24 @@ export interface RoutingStrategyProvider<T = Record<string, any>> {
   if?: string;
 }
 
-export interface BaseMessageMetadata {
-  // tags may be an array of up to nine strings (30 characters in length)
-  tags?: [
-    string?,
-    string?,
-    string?,
-    string?,
-    string?,
-    string?,
-    string?,
-    string?,
-    string?
-  ];
-}
 
-export interface ContentMessageMetadata extends BaseMessageMetadata {
+export interface MessageMetadata {
   event?: string;
+  tags?: string[];
+  utm?: {
+    source?: string;
+    medium?: string;
+    campaign?: string;
+    term?: string;
+    content?: string;
+  };
 }
 
 export interface ContentMessage extends BaseMessage {
   content: Content;
-  metadata?: ContentMessageMetadata;
 }
 
 export interface TemplateMessage extends BaseMessage {
-  brand?: string;
-  metadata?: BaseMessageMetadata;
   template: string;
 }
 
