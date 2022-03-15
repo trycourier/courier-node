@@ -387,7 +387,7 @@ export interface RoutingStrategyProvider<T = Record<string, any>> {
 
 export interface MessageMetadata {
   event?: string;
-  tags?: Array<string>;
+  tags?: string[];
   utm?: {
     source?: string;
     medium?: string;
