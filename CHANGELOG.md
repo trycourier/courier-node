@@ -5,13 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
-## [3.8.0] - 2022-03-14
-
-- adds additional types for utm property (`message.metadata.utm`)
-
 ## [v3.7.0] - 2022-03-11
 
-- adds additional types for the tags property (`message.metadata.tags`)
+- adds additional types for the tags property (`message.tags`)
 - adds support for searching message by tags
 
 ## [v3.6.0] - 2022-02-10
