@@ -77,8 +77,8 @@ const getMessages = (options: ICourierClientConfiguration) => {
           notification: params?.notificationId,
           recipient: params?.recipientId,
           status: params?.status,
-          tags: params?.tags,
-        },
+          tags: params?.tags
+        }
       }
     );
     return res.data;

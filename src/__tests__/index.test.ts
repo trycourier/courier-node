@@ -232,37 +232,37 @@ describe("CourierClient - send with V2 schema", () => {
               user_id: "<USER_ID>", // usually your system's User ID associated to a Courier profile
               email: "test@email.com",
               data: {
-                name: "some user's name",
-              },
+                name: "some user's name"
+              }
             },
             {
               email: "marty@email.com",
               data: {
-                name: "Marty",
-              },
+                name: "Marty"
+              }
             },
             {
               email: "doc_brown@email.com",
               data: {
-                name: "Doc",
-              },
+                name: "Doc"
+              }
             },
             {
               phone_number: "8675309",
               data: {
-                name: "Jenny",
-              },
-            },
+                name: "Jenny"
+              }
+            }
           ],
           content: {
             title: "Back to the Future",
-            body: "Oh my {{name}}, we need 1.21 Gigawatts!",
+            body: "Oh my {{name}}, we need 1.21 Gigawatts!"
           },
           routing: {
             method: "all",
-            channels: ["sms", "email"],
-          },
-        },
+            channels: ["sms", "email"]
+          }
+        }
       })
     ).resolves.toMatchObject(mockSendV2Response);
   });

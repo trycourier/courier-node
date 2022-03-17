@@ -384,7 +384,6 @@ export interface RoutingStrategyProvider<T = Record<string, any>> {
   if?: string;
 }
 
-
 export interface MessageMetadata {
   event?: string;
   tags?: string[];

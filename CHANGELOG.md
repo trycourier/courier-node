@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.9.0] - 2022-03-17
+
+- adds support for bulk messaging API v2 support
+
 ## [3.8.0] - 2022-03-14
 
 - adds additional types for utm property (`message.metadata.utm`)
@@ -214,7 +218,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-node/compare/v3.5.0...HEAD
+[unreleased]: https://github.com/trycourier/courier-node/compare/v3.9.0...HEAD
+[v3.9.0]: https://github.com/trycourier/courier-node/compare/v3.8.0...v3.9.0
+[v3.8.0]: https://github.com/trycourier/courier-node/compare/v3.7.0...v3.8.0
+[v3.7.0]: https://github.com/trycourier/courier-node/compare/v3.6.0...v3.7.0
+[v3.6.0]: https://github.com/trycourier/courier-node/compare/v3.5.0...v3.6.0
 [v3.5.0]: https://github.com/trycourier/courier-node/compare/v3.4.0...v3.5.0
 [v3.4.0]: https://github.com/trycourier/courier-node/compare/v3.3.0...v3.4.0
 [v3.3.0]: https://github.com/trycourier/courier-node/compare/v3.2.1...v3.3.0

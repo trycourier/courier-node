@@ -1,12 +1,20 @@
 import { IRecipientPreferences } from "../preferences/types";
-
-export interface IInboundBulkMessage {
+import { Message, UserRecipient } from "../send/types";
+interface IInboundBulkMessageApiV1 {
   brand?: string;
   data?: object;
   event: string;
   locale?: string;
   override?: object;
 }
+
+type InboundBulkMessageApiV2 = Omit<Message, "to">;
+
+export interface IInboundBulkMessage extends IInboundBulkMessageApiV1 {
+  message?: InboundBulkMessageApiV2;
+}
+
+export type InboundBulkMessage = IInboundBulkMessage;
 
 export interface ICourierBulkConfig {
   idempotencyKey?: string;
@@ -26,6 +34,7 @@ export interface IInboundBulkMessageUser {
   profile?: object;
   recipient?: string;
   data?: object;
+  to?: UserRecipient;
 }
 
 export type InboundBulkMessageUser = IInboundBulkMessageUser;

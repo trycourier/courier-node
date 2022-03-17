@@ -497,10 +497,20 @@ async function run() {
   await courier.notifications.cancelSubmission("notification1", "submission1");
 
   // Bulk Processing
-  // Example: create a job
+  // Example: create a job (API v1 semantics)
   const response = await courier.bulk.createJob({
     message: {
       event: "RR4NDQ7NZ24A8TKPWVBEDGE15E9A",
+    },
+  });
+  console.log(response);
+
+  // Example: create a job (API v2 semantics)
+  const response = await courier.bulk.createJob({
+    message: {
+      message: {
+        template: "RR4NDQ7NZ24A8TKPWVBEDGE15E9A",
+      },
     },
   });
   console.log(response);
@@ -511,12 +521,25 @@ async function run() {
   });
   console.log(response);
 
-  // Example: Ingest users in a job
+  // Example: Ingest users in a job (API v1 semantics)
   const response = await courier.bulk.ingestUsers({
     jobId: "1-61efe386-6ff57552409e311b7a1f371f",
     users: [
       {
         profile: {
+          email: "tejas@courier.com",
+        },
+      },
+    ],
+  });
+  console.log(response);
+
+  // Example: Ingest users in a job (API v2 semantics)
+  const response = await courier.bulk.ingestUsers({
+    jobId: "1-61efe386-6ff57552409e311b7a1f371f",
+    users: [
+      {
+        to: {
           email: "tejas@courier.com",
         },
       },
