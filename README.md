@@ -160,6 +160,29 @@ const { requestId } = await courier.send({
     },
   },
 });
+
+// Example: send a basic message that expires after the specified timeout
+const { requestId } = await courier.send({
+  message: {
+    to: {
+      data: {
+        name: "Marty",
+      },
+      email: "marty_mcfly@email.com",
+    },
+    content: {
+      title: "Back to the Future",
+      body: "Oh my {{name}}, we need 1.21 Gigawatts!",
+    },
+    routing: {
+      method: "single",
+      channels: ["email"],
+    },
+    "timeouts": {
+				"message": 3600000 // 1 hour in milliseconds
+			}
+  },
+});
 ```
 
 ## Environment Variables
