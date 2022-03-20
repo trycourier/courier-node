@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.10.0] - 2022-03-20
+- adds support for messages timeouts (`message.timeouts`)
+
 ## [3.9.0] - 2022-03-17
 
 - adds support for bulk messaging API v2 support
