@@ -178,7 +178,7 @@ const { requestId } = await courier.send({
       method: "single",
       channels: ["email"],
     },
-    timeouts: {
+    timeout: {
       message: 3600000 // 1 hour in milliseconds
     },
   },

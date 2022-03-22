@@ -285,7 +285,7 @@ export interface ElementalContentSugar {
   title?: string;
 }
 
-export interface Timeouts {
+export interface Timeout {
   provider?: number;
   channel?: number;
   message?: number;
@@ -302,7 +302,7 @@ export interface BaseMessage {
   metadata?: MessageMetadata;
   providers?: MessageProviders;
   routing?: Routing;
-  timeouts?: Timeouts;
+  timeout?: Timeout;
   to: MessageRecipient;
 }
 
