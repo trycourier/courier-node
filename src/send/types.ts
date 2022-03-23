@@ -285,6 +285,14 @@ export interface ElementalContentSugar {
   title?: string;
 }
 
+export interface Timeout {
+  provider?: number;
+  channel?: number;
+  message?: number;
+  escalation?: number;
+  criteria?: "no-escalation" | "delivered" | "viewed" | "engaged";
+}
+
 export type Content = ElementalContentSugar | ElementalContent;
 
 export interface BaseMessage {
@@ -294,6 +302,7 @@ export interface BaseMessage {
   metadata?: MessageMetadata;
   providers?: MessageProviders;
   routing?: Routing;
+  timeout?: Timeout;
   to: MessageRecipient;
 }
 
