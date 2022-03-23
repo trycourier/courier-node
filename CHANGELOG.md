@@ -5,7 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.11.0] - 2022-03-23
+
+- adds support for `audiences`
+
 ## [3.10.0] - 2022-03-20
+
 - adds support for messages timeout (`message.timeout`)
 
 ## [3.9.0] - 2022-03-17
@@ -221,7 +226,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-node/compare/v3.9.0...HEAD
+[unreleased]: https://github.com/trycourier/courier-node/compare/v3.11.0...HEAD
+[v3.10.0]: https://github.com/trycourier/courier-node/compare/v3.10.0...v3.11.0
+[v3.10.0]: https://github.com/trycourier/courier-node/compare/v3.9.0...v3.10.0
 [v3.9.0]: https://github.com/trycourier/courier-node/compare/v3.8.0...v3.9.0
 [v3.8.0]: https://github.com/trycourier/courier-node/compare/v3.7.0...v3.8.0
 [v3.7.0]: https://github.com/trycourier/courier-node/compare/v3.6.0...v3.7.0

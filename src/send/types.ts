@@ -266,6 +266,10 @@ type UserRecipientType = Record<string, unknown> &
   {
     [key in keyof InvalidUserRecipient]?: never;
   };
+export interface AudienceRecipient {
+  audience_id: string;
+  data?: MessageData;
+}
 
 export interface UserRecipient extends UserRecipientType {
   data?: MessageData;
@@ -276,7 +280,11 @@ export interface UserRecipient extends UserRecipientType {
   preferences?: IProfilePreferences;
 }
 
-export type Recipient = ListRecipient | ListPatternRecipient | UserRecipient;
+export type Recipient =
+  | AudienceRecipient
+  | ListRecipient
+  | ListPatternRecipient
+  | UserRecipient;
 
 export type MessageRecipient = Recipient | Recipient[];
 
