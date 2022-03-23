@@ -619,6 +619,42 @@ async function run() {
 run();
 ```
 
+### Audiences
+
+Audiences APIs are used to create, get, update, and delete audiences. A Courier Audience is a dynamic group of users (created using Courier's Profile API) that matches a set of criteria. Audience is reactive to changes in the user's profile. As you change user profile using `profiles` API, the audience will be updated accordingly. You will not have to maintain a list of users in your audience. Courier takes care of that for you. If you have potentially large set of users, you first create an audience and then use the audience's id to retrieve the list of users. Once you satified with the calculated list of users, you can use the `audienceId` to send notification using `send` API.
+
+```ts
+// Example: create audience which would allow sending notification to all users that match the given filter criteria
+const { audienceId } = await courier.audiences.put({
+  id: "<AUDIENCE_ID>",
+  filter: {
+    "operator": "EQ",
+    "path": "title",
+    "value": "Software Engineer",
+  },
+});
+
+// To retrieve list of members in a given audience, you can use the following:
+const { items: audienceMembers } = await courier.audiences.listMembers(
+  audienceId
+);
+
+// To send a notification to all users that match the given filter criteria, you can use the following:
+const { requestId } = await courier.send({
+  message: {
+    template: "<TEMPLATE_OR_EVENT_ID>", // This can be inline content as well
+    to: {
+      audience_id: audienceId,
+    },
+    data: {}, // optional
+    brand_id: "<BRAND_ID>", //optional
+    routing: {},
+    channels: {}, // optional
+    providers: {}, // optional
+  },
+});
+```
+
 ## License
 
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
