@@ -147,8 +147,6 @@ describe("CourierAudiences", () => {
       authorizationToken: "AUTH_TOKEN",
     });
 
-    await expect(audiences.delete(mockAudienceId)).resolves.toMatchObject(
-      mockAudienceMembersResponse
-    );
+    await expect(audiences.delete(mockAudienceId)).resolves.not.toThrow();
   });
 });
