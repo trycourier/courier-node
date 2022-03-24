@@ -296,7 +296,7 @@ export interface Timeout {
 export type Content = ElementalContentSugar | ElementalContent;
 
 export interface BaseMessage {
-  // brands?: MessageBrands; TODO: https://linear.app/trycourier/issue/C-4476/add-brand-level-overrides-to-v2-request
+  brand_id?: string;
   channels?: MessageChannels;
   data?: MessageData;
   metadata?: MessageMetadata;
