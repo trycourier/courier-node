@@ -9,9 +9,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - adds support for `audiences`
 
-## [3.10.0] - 2022-03-20
 
+## [3.10.1] - 2022-03-20
 - adds support for messages timeout (`message.timeout`)
+
+## [3.10.0] - 2020-03-24
+- adds support for messages brand_id (`message.brand_id`)
 
 ## [3.9.0] - 2022-03-17
 
