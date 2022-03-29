@@ -1,16 +1,16 @@
 import { AxiosRequestConfig } from "axios";
-
+import { ICourierClientAudiences } from "./audiences/types";
 import { ICourierClientAutomations } from "./automations/types";
 import { ICourierClientBulk } from "./bulk/types";
 import {
   ICourierClientLists,
   ICourierList,
-  ICourierRecipientSubscriptionsResponse
+  ICourierRecipientSubscriptionsResponse,
 } from "./lists/types";
 import { ICourierClientNotifications } from "./notifications/types";
 import {
   ICourierClientPreferences,
-  IRecipientPreferences
+  IRecipientPreferences,
 } from "./preferences/types";
 import { Message } from "./send/types";
 
@@ -395,6 +395,7 @@ export interface ICourierClient {
   addRecipientToLists: (
     params: ICourierProfileListsPostParameters
   ) => Promise<ICourierProfilePostResponse>;
+  audiences: ICourierClientAudiences;
   automations: ICourierClientAutomations;
   bulk: ICourierClientBulk;
   createBrand: (
