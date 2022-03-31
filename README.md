@@ -183,6 +183,29 @@ const { requestId } = await courier.send({
     },
   },
 });
+
+// Example: send a basic message with a trace id
+const { requestId } = await courier.send({
+  message: {
+    to: {
+      data: {
+        name: "Marty",
+      },
+      email: "marty_mcfly@email.com",
+    },
+    content: {
+      title: "Back to the Future",
+      body: "Oh my {{name}}, we need 1.21 Gigawatts!",
+    },
+    routing: {
+      method: "single",
+      channels: ["email"],
+    },
+    metadata: {
+      trace_id: "ravenclaw-for-the-win"
+    },
+  },
+});
 ```
 
 ## Environment Variables
