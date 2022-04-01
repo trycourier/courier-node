@@ -411,6 +411,7 @@ export interface MessageMetadata {
     term?: string;
     content?: string;
   };
+  trace_id?: string;
 }
 
 export interface ContentMessage extends BaseMessage {

@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.12.0] - 2022-03-31
+
+- adds support for message trace id (`message.metadata.trace_id`)
+
 ## [3.11.0] - 2022-03-23
 
 - adds support for `audiences`
