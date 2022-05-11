@@ -373,6 +373,9 @@ export interface MessageChannels {
       channel?: number;
     };
     override?: MessageChannelEmailOverride | MessageChannelPushOverride;
+    metadata?: {
+      utm?: UTM;
+    };
   };
 }
 
@@ -399,18 +402,23 @@ export interface RoutingStrategyProvider<T = Record<string, any>> {
   name: string;
   config?: T;
   if?: string;
+  metadata?: {
+    utm?: UTM;
+  };
+}
+
+export interface UTM {
+  source?: string;
+  medium?: string;
+  campaign?: string;
+  term?: string;
+  content?: string;
 }
 
 export interface MessageMetadata {
   event?: string;
   tags?: string[];
-  utm?: {
-    source?: string;
-    medium?: string;
-    campaign?: string;
-    term?: string;
-    content?: string;
-  };
+  utm?: UTM;
   trace_id?: string;
 }
 

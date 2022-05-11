@@ -240,6 +240,59 @@ async function run() {
   });
   console.log(requestId);
 
+  // Example: send message with utm metadata
+  const { requestId } = await courier.send({
+    message: {
+      template: "<TEMPLATE_OR_EVENT_ID>",
+      to: {...},
+      routing: {
+        method: "single",
+        channels: ["email"],
+      },
+      channels: {
+        email: {
+          routing_method: "all",
+          providers: ["sendgrid", "sns"],
+          metadata: {
+            utm: {
+              medium: "f",
+              campaign: "g",
+            },
+          },
+        },
+      },
+      providers: {
+        sns: {
+          metadata: {
+            utm: {
+              medium: "h",
+            },
+          },
+        },
+      }, // optional
+      metadata: {
+        utm: {
+          source: "a",
+          medium: "b",
+          campaign: "c",
+        },
+      },
+    },
+  });
+
+/**
+ * If the template or content contains any action blocks, the hyperlinks will be augmented with utm compliant query parameters.
+ * 
+ * The resulting link of an action block sent through sendgrid would be:
+ * www.example.com?utm_source=a&utm_medium=f&utm_campaign=g
+ * 
+ * While the resulting link of an action block sent through sns would be:
+ * www.example.com?utm_source=a&utm_medium=h&utm_campaign=g
+ * 
+ * Notice that provider metadata supersedes channel metadata and channel metadata supersedes message metadata
+ * 
+ **/
+
   // Example: get a message status
   const messageStatus = await courier.getMessage(requestId);
   console.log(messageStatus);
@@ -651,9 +704,9 @@ Audiences APIs are used to create, get, update, and delete audiences. A Courier 
 const { audienceId } = await courier.audiences.put({
   id: "<AUDIENCE_ID>",
   filter: {
-    "operator": "EQ",
-    "path": "title",
-    "value": "Software Engineer",
+    operator: "EQ",
+    path: "title",
+    value: "Software Engineer",
   },
 });
 
