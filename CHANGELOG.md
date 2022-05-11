@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+- adds support for change and provider utm metadata (`channels.metadata.utm` and `providers.metadata.utm`) that augments action blocks links
+
 ## [3.12.0] - 2022-03-31
 
 - adds support for message trace id (`message.metadata.trace_id`)
