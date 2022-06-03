@@ -277,20 +277,31 @@ async function run() {
           campaign: "c",
         },
       },
+      timeout: {
+        message: 300000,
+        channel: {
+          email: 1000 // 1 second
+        }
+      }
     },
   });
 
 /**
  * If the template or content contains any action blocks, the hyperlinks will be augmented with utm compliant query parameters.
- * 
+ *
  * The resulting link of an action block sent through sendgrid would be:
  * www.example.com?utm_source=a&utm_medium=f&utm_campaign=g
- * 
+ *
  * While the resulting link of an action block sent through sns would be:
  * www.example.com?utm_source=a&utm_medium=h&utm_campaign=g
- * 
+ *
  * Notice that provider metadata supersedes channel metadata and channel metadata supersedes message metadata
- * 
+ *
+ **/
+
+/**
+ * If the message includes a timeout property we will start timing out messages after the first attempt.
+ * We are able to timeout complete channels or specific providers.
  **/
 
   // Example: get a message status

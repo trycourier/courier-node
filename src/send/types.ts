@@ -294,8 +294,8 @@ export interface ElementalContentSugar {
 }
 
 export interface Timeout {
-  provider?: number;
-  channel?: number;
+  provider?: { [provider: string]: number };
+  channel?: { [channel: string]: number };
   message?: number;
   escalation?: number;
   criteria?: "no-escalation" | "delivered" | "viewed" | "engaged";
