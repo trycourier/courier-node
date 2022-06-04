@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
-## [3.13.0] - 2022-06-03
+## [3.13.1] - 2022-06-03
 
 - adds provider and channel timeout
 
