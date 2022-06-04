@@ -5,8 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
-- adds support for granular timeouts for channel and providers
-- adds support for change and provider utm metadata (`channels.metadata.utm` and `providers.metadata.utm`) that augments action blocks links
+## [3.13.0] - 2022-06-03
+
+- adds provider and channel timeout
 
 ## [3.12.0] - 2022-03-31
 
@@ -16,11 +17,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - adds support for `audiences`
 
-
 ## [3.10.1] - 2022-03-20
+
 - adds support for messages timeout (`message.timeout`)
 
 ## [3.10.0] - 2020-03-24
+
 - adds support for messages brand_id (`message.brand_id`)
 
 ## [3.9.0] - 2022-03-17
