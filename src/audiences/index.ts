@@ -52,5 +52,5 @@ export const audiences = (options: ICourierClientConfiguration) => ({
   get: getAudience(options),
   listAudiences: listAudiences(options),
   listMembers: listMembers(options),
-  put: putAudience(options),
+  put: putAudience(options)
 });
