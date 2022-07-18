@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.14.0]
+
+- adds support for token management
+
 ## [3.13.1] - 2022-06-03
 
 - adds provider and channel timeout
