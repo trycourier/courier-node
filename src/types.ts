@@ -13,6 +13,7 @@ import {
   IRecipientPreferences,
 } from "./preferences/types";
 import { Message } from "./send/types";
+import { tokenManagement } from "./token-management";
 
 export type HttpMethodClient = <T>(
   url: string,
@@ -442,4 +443,5 @@ export interface ICourierClient {
     params: T,
     config?: ICourierSendConfig
   ) => Promise<SendResponse<T>>;
+  tokenManagement: ReturnType<typeof tokenManagement>;
 }

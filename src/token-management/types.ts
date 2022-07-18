@@ -47,7 +47,7 @@ export interface PatchUserTokenOpts {
   patch: {
     op: "replace" | "add" | "remove" | "copy" | "move" | "test";
     path: string;
-    value: string;
+    value?: string;
   }[];
 }
 
