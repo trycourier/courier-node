@@ -1,4 +1,4 @@
-export interface UserToken {
+export interface IUserToken {
   token: string;
 
   provider_key: "firebase-fcm" | "apn" | "expo" | "onesignal";
@@ -26,41 +26,41 @@ export interface UserToken {
   };
 }
 
-export interface GetUserTokenResponse extends UserToken {
+export interface IGetUserTokenResponse extends IUserToken {
   status: "active" | "unknown" | "failed" | "revoked";
   status_reason?: string;
 }
 
-export interface PutUserTokensOpts {
+export interface IPutUserTokensOpts {
   user_id: string;
-  tokens: UserToken[];
+  tokens: IUserToken[];
 }
 
-export interface PutUserTokenOpts {
+export interface IPutUserTokenOpts {
   user_id: string;
-  token: UserToken;
+  token: IUserToken;
 }
 
-export interface PatchUserTokenOpts {
+export interface IPatchUserTokenOpts {
   user_id: string;
   token: string;
-  patch: {
+  patch: Array<{
     op: "replace" | "add" | "remove" | "copy" | "move" | "test";
     path: string;
     value?: string;
-  }[];
+  }>;
 }
 
-export interface GetUserTokenOpts {
+export interface IGetUserTokenOpts {
   user_id: string;
   token: string;
 }
 
-export interface GetUserTokensOpts {
+export interface IGetUserTokensOpts {
   user_id: string;
 }
 
-export interface DeleteUserTokenOpts {
+export interface IDeleteUserTokenOpts {
   user_id: string;
   token: string;
 }
