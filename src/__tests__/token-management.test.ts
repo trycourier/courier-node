@@ -1,12 +1,12 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { CourierClient } from "..";
-import { UserToken } from "../token-management/types";
+import { IUserToken } from "../token-management/types";
 
 const mock = new MockAdapter(axios);
-const mockToken: UserToken = {
+const mockToken: IUserToken = {
   token: "abc",
-  provider_key: "apn",
+  provider_key: "apn"
 };
 
 describe("CourierAudiences", () => {
@@ -16,7 +16,7 @@ describe("CourierAudiences", () => {
   });
 
   const { tokenManagement } = CourierClient({
-    authorizationToken: "AUTH_TOKEN",
+    authorizationToken: "AUTH_TOKEN"
   });
 
   describe("putUserTokens", () => {
@@ -26,7 +26,7 @@ describe("CourierAudiences", () => {
       mock.onPut("/users/me/tokens").reply(204);
       const prom = tokenManagement.putUserTokens({
         user_id: "me",
-        tokens: [mockToken],
+        tokens: [mockToken]
       });
       await expect(prom).resolves.not.toThrow();
     });
@@ -39,7 +39,7 @@ describe("CourierAudiences", () => {
       mock.onPut("/users/me/tokens/abc").reply(204);
       const prom = tokenManagement.putUserToken({
         user_id: "me",
-        token: mockToken,
+        token: mockToken
       });
       await expect(prom).resolves.not.toThrow();
     });
@@ -53,7 +53,7 @@ describe("CourierAudiences", () => {
       const prom = tokenManagement.patchUserToken({
         user_id: "me",
         token: "abc",
-        patch: [{ op: "replace", path: "status", value: "revoked" }],
+        patch: [{ op: "replace", path: "status", value: "revoked" }]
       });
       await expect(prom).resolves.not.toThrow();
     });
@@ -66,7 +66,7 @@ describe("CourierAudiences", () => {
       mock.onGet("/users/me/tokens/abc").reply(200, mockToken);
       const result = await tokenManagement.getUserToken({
         user_id: "me",
-        token: "abc",
+        token: "abc"
       });
       expect(result).toMatchObject(mockToken);
     });
@@ -78,7 +78,7 @@ describe("CourierAudiences", () => {
 
       mock.onGet("/users/me/tokens").reply(200, { tokens: [mockToken] });
       const result = await tokenManagement.getUserTokens({
-        user_id: "me",
+        user_id: "me"
       });
       expect(result).toMatchObject({ tokens: [mockToken] });
     });
@@ -91,7 +91,7 @@ describe("CourierAudiences", () => {
       mock.onDelete("/users/me/tokens/abc").reply(204);
       const prom = tokenManagement.deleteUserToken({
         user_id: "me",
-        token: "abc",
+        token: "abc"
       });
       await expect(prom).resolves.not.toThrow();
     });

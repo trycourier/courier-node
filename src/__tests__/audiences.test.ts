@@ -6,9 +6,9 @@ import { CourierClient } from "../index";
 const mockAudienceId = "software-engineers-from-sf";
 const mockAudienceName = "List of people who are software engineers";
 const mockFilter: AudienceTypes.FilterConfig = {
-  "operator": "EQ",
-  "path": "title",
-  "value": "Software Engineer",
+  operator: "EQ",
+  path: "title",
+  value: "Software Engineer"
 };
 
 const mockPutAudienceResponse: AudienceTypes.IAudiencePutResponse = {
@@ -18,8 +18,8 @@ const mockPutAudienceResponse: AudienceTypes.IAudiencePutResponse = {
     filter: mockFilter,
     id: mockAudienceId,
     name: mockAudienceName,
-    updated_at: "2020-01-01T00:00:00.000Z",
-  },
+    updated_at: "2020-01-01T00:00:00.000Z"
+  }
 };
 
 const mockGetAudienceResponse: AudienceTypes.IAudience = {
@@ -28,40 +28,40 @@ const mockGetAudienceResponse: AudienceTypes.IAudience = {
   filter: mockFilter,
   id: mockAudienceId,
   name: mockAudienceName,
-  updated_at: "2020-01-01T00:00:00.000Z",
+  updated_at: "2020-01-01T00:00:00.000Z"
 };
 
 const mockAudienceMembersResponse: AudienceTypes.IAudienceMemberListResponse = {
-  "items": [
+  items: [
     {
-      "added_at": "2022-03-22T19:13:13.137Z",
-      "audience_id": "software-engineers-from-sf",
-      "audience_version": 3,
-      "member_id": "courier-profile-id-1",
-      "reason": "EQ('title', 'Software Engineer') => true",
-    },
+      added_at: "2022-03-22T19:13:13.137Z",
+      audience_id: "software-engineers-from-sf",
+      audience_version: 3,
+      member_id: "courier-profile-id-1",
+      reason: "EQ('title', 'Software Engineer') => true"
+    }
   ],
-  "paging": {
-    "cursor": "",
-    "more": false,
-  },
+  paging: {
+    cursor: "",
+    more: false
+  }
 };
 
 const mockAudiencesResponse: AudienceTypes.IAudienceListResponse = {
-  "items": [
+  items: [
     {
-      "created_at": "2022-03-21T00:56:14.860Z",
-      "description": "Updated descriptionss",
-      "filter": mockFilter,
-      "id": mockAudienceId,
-      "name": mockAudienceName,
-      "updated_at": "2022-03-21T05:16:57.031Z",
-    },
+      created_at: "2022-03-21T00:56:14.860Z",
+      description: "Updated descriptionss",
+      filter: mockFilter,
+      id: mockAudienceId,
+      name: mockAudienceName,
+      updated_at: "2022-03-21T05:16:57.031Z"
+    }
   ],
-  "paging": {
-    "cursor": "",
-    "more": false,
-  },
+  paging: {
+    cursor: "",
+    more: false
+  }
 };
 
 describe("CourierAudiences", () => {
@@ -75,7 +75,7 @@ describe("CourierAudiences", () => {
     mock.onDelete(`/audiences/${mockAudienceId}`).reply(204);
 
     mock.onGet(`/audiences/${mockAudienceId}`).reply(200, {
-      audience: mockGetAudienceResponse,
+      audience: mockGetAudienceResponse
     });
     mock
       .onGet(`/audiences/${mockAudienceId}/members`)
@@ -86,7 +86,7 @@ describe("CourierAudiences", () => {
 
   test(".putAudience", async () => {
     const { audiences } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -94,17 +94,17 @@ describe("CourierAudiences", () => {
         filter: {
           operator: "EQ",
           path: "title",
-          value: "Software Engineer",
+          value: "Software Engineer"
         },
         id: mockAudienceId,
-        name: "My favorite software engineers",
+        name: "My favorite software engineers"
       })
     ).resolves.toMatchObject(mockPutAudienceResponse.audience);
   });
 
   test(".getAudience", async () => {
     const { audiences } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(audiences.get(mockAudienceId)).resolves.toMatchObject(
@@ -114,7 +114,7 @@ describe("CourierAudiences", () => {
 
   test(".listAudiences", async () => {
     const { audiences } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(audiences.listAudiences()).resolves.toMatchObject(
@@ -124,7 +124,7 @@ describe("CourierAudiences", () => {
 
   test(".listMembers", async () => {
     const { audiences } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(audiences.listMembers(mockAudienceId)).resolves.toMatchObject(
@@ -134,7 +134,7 @@ describe("CourierAudiences", () => {
 
   test(".listMembers", async () => {
     const { audiences } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(audiences.listMembers(mockAudienceId)).resolves.toMatchObject(
@@ -144,7 +144,7 @@ describe("CourierAudiences", () => {
 
   test(".delete", async () => {
     const { audiences } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(audiences.delete(mockAudienceId)).resolves.not.toThrow();
