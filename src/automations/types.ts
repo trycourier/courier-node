@@ -1,3 +1,5 @@
+import { Message } from "../send/types";
+
 export type AutomationStepAction =
   | "cancel"
   | "delay"
@@ -34,6 +36,11 @@ export interface IAutomationSendStep extends IAutomationStep {
   template?: string;
 }
 
+export interface IAutomationV2SendStep extends IAutomationStep {
+  action: "send";
+  message: Message;
+}
+
 export interface IAutomationSendListStep extends IAutomationStep {
   action: "send-list";
   brand?: string;
@@ -54,6 +61,7 @@ export type AutomationStep =
   | IAutomationCancelStep
   | IAutomationDelayStep
   | IAutomationSendStep
+  | IAutomationV2SendStep
   | IAutomationSendListStep
   | IAutomationUpdateProfileStep;
 
