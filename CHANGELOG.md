@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.15.0]
+
+- adds support for audit events
+
 ## [3.14.0]
 
 - adds support for token management

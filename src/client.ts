@@ -1,4 +1,5 @@
 import { audiences } from "./audiences";
+import { auditEvents } from "./audit-events";
 import { automations } from "./automations";
 import {
   createBrand,
@@ -93,6 +94,7 @@ export const client = (
   return {
     addRecipientToLists: addRecipientToLists(options),
     audiences: audiences(options),
+    auditEvents: auditEvents(options),
     automations: automations(options),
     bulk: bulk(options),
     createBrand: createBrand(options),
