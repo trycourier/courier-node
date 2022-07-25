@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import { ICourierClientAudiences } from "./audiences/types";
+import { auditEvents } from "./audit-events";
 import { ICourierClientAutomations } from "./automations/types";
 import { ICourierClientBulk } from "./bulk/types";
 import {
@@ -397,6 +398,7 @@ export interface ICourierClient {
     params: ICourierProfileListsPostParameters
   ) => Promise<ICourierProfilePostResponse>;
   audiences: ICourierClientAudiences;
+  auditEvents: ReturnType<typeof auditEvents>;
   automations: ICourierClientAutomations;
   bulk: ICourierClientBulk;
   createBrand: (
