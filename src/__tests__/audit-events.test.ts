@@ -8,8 +8,7 @@ const mockAuditEvent: IAuditEvent = {
   auditEventId: "foo",
   source: "studio",
   timestamp: "123",
-  type: "mock",
-  workspaceId: "my-workspace"
+  type: "mock"
 };
 
 describe("CourierAudiences", () => {
