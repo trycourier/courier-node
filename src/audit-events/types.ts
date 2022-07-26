@@ -27,5 +27,4 @@ export interface IAuditEvent {
   source: string;
   timestamp: string;
   type: string;
-  workspaceId: string;
 }
