@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import { ICourierClientConfiguration } from "../types";
 import {
   ICourierBulkConfig,
@@ -19,17 +18,14 @@ const createJob = (options: ICourierClientConfiguration) => {
     params: ICourierBulkCreateJobParams,
     config?: ICourierBulkConfig
   ): Promise<ICourierBulkCreateJobResponse> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
+    const headers: Record<string, string> = {};
 
     if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
+      headers["Idempotency-Key"] = config.idempotencyKey;
     }
 
     if (config && config.idempotencyExpiry) {
-      axiosConfig.headers["x-idempotency-expiration"] =
-        config.idempotencyExpiry;
+      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
     }
 
     const res = await options.httpClient.post<ICourierBulkCreateJobResponse>(
@@ -37,7 +33,7 @@ const createJob = (options: ICourierClientConfiguration) => {
       {
         message: params.message
       },
-      axiosConfig
+      { headers }
     );
 
     return res.data;
@@ -49,17 +45,14 @@ const ingestUsers = (options: ICourierClientConfiguration) => {
     params: ICourierBulkIngestUsersParams,
     config?: ICourierBulkConfig
   ): Promise<ICourierBulkIngestUsersResponse> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
+    const headers: Record<string, string> = {};
 
     if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
+      headers["Idempotency-Key"] = config.idempotencyKey;
     }
 
     if (config && config.idempotencyExpiry) {
-      axiosConfig.headers["x-idempotency-expiration"] =
-        config.idempotencyExpiry;
+      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
     }
 
     const res = await options.httpClient.post<ICourierBulkIngestUsersResponse>(
@@ -67,7 +60,7 @@ const ingestUsers = (options: ICourierClientConfiguration) => {
       {
         users: params.users
       },
-      axiosConfig
+      { headers }
     );
 
     return res.data;
@@ -79,23 +72,20 @@ const runJob = (options: ICourierClientConfiguration) => {
     params: ICourierBulkRunJobParams,
     config?: ICourierBulkConfig
   ): Promise<void> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
+    const headers: Record<string, string> = {};
 
     if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
+      headers["Idempotency-Key"] = config.idempotencyKey;
     }
 
     if (config && config.idempotencyExpiry) {
-      axiosConfig.headers["x-idempotency-expiration"] =
-        config.idempotencyExpiry;
+      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
     }
 
     await options.httpClient.post<void>(
       `/bulk/${params.jobId}/run`,
       {},
-      axiosConfig
+      { headers }
     );
   };
 };

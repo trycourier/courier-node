@@ -1,5 +1,5 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+import mockRequests from "./lib/mock-requests";
+
 import * as AudienceTypes from "../audiences/types";
 import { CourierClient } from "../index";
 
@@ -65,23 +65,34 @@ const mockAudiencesResponse: AudienceTypes.IAudienceListResponse = {
 };
 
 describe("CourierAudiences", () => {
-  let mock: MockAdapter;
-
-  beforeEach(() => {
-    mock = new MockAdapter(axios);
-    mock
-      .onPut(`/audiences/${mockAudienceId}`)
-      .reply(200, mockPutAudienceResponse);
-    mock.onDelete(`/audiences/${mockAudienceId}`).reply(204);
-
-    mock.onGet(`/audiences/${mockAudienceId}`).reply(200, {
-      audience: mockGetAudienceResponse
-    });
-    mock
-      .onGet(`/audiences/${mockAudienceId}/members`)
-      .reply(200, mockAudienceMembersResponse);
-
-    mock.onGet("/audiences").reply(200, mockAudiencesResponse);
+  beforeAll(() => {
+    mockRequests([
+      {
+        method: "PUT",
+        path: `/audiences/${mockAudienceId}`,
+        body: mockPutAudienceResponse
+      },
+      {
+        method: "DELETE",
+        path: `/audiences/${mockAudienceId}`,
+        status: 204
+      },
+      {
+        method: "GET",
+        path: `/audiences/${mockAudienceId}`,
+        body: { audience: mockGetAudienceResponse }
+      },
+      {
+        method: "GET",
+        path: `/audiences/${mockAudienceId}/members`,
+        body: mockAudienceMembersResponse
+      },
+      {
+        method: "GET",
+        path: `/audiences`,
+        body: mockAudiencesResponse
+      }
+    ]);
   });
 
   test(".putAudience", async () => {

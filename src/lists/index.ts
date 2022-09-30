@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import {
   ICourierClientConfiguration,
   ICourierSendConfig,
@@ -134,23 +133,20 @@ const send = (options: ICourierClientConfiguration) => {
     params: ICourierSendListOrPatternParams,
     config?: ICourierSendConfig
   ): Promise<ICourierSendResponse> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
+    const headers: Record<string, string> = {};
 
     if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
+      headers["Idempotency-Key"] = config.idempotencyKey;
     }
 
     if (config && config.idempotencyExpiry) {
-      axiosConfig.headers["x-idempotency-expiration"] =
-        config.idempotencyExpiry;
+      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
     }
 
     const res = await options.httpClient.post<ICourierSendResponse>(
       `/send/list`,
       params,
-      axiosConfig
+      { headers }
     );
     return res.data;
   };

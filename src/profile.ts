@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import { ICourierRecipientSubscriptionsResponse } from "./lists/types";
 import {
   ICourierClientConfiguration,
@@ -32,19 +31,16 @@ export const mergeProfile = (options: ICourierClientConfiguration) => {
     params: ICourierProfilePostParameters,
     config?: ICourierProfilePostConfig
   ): Promise<ICourierProfilePostResponse> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
-
+    const headers: Record<string, string> = {};
     if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
+      headers["Idempotency-Key"] = config.idempotencyKey;
     }
     const res = await options.httpClient.post<ICourierProfilePostResponse>(
       `/profiles/${params.recipientId}`,
       {
         profile: params.profile
       },
-      axiosConfig
+      { headers }
     );
     return res.data;
   };

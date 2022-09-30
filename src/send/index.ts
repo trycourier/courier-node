@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import {
   ICourierClientConfiguration,
   ICourierSendConfig,
@@ -11,7 +10,7 @@ import {
 
 const sendCall = async (
   options: ICourierClientConfiguration,
-  config: AxiosRequestConfig,
+  headers: object,
   params: ICourierSendParameters
 ) => {
   const res = await options.httpClient.post<ICourierSendResponse>(
@@ -25,7 +24,7 @@ const sendCall = async (
       profile: params.profile,
       recipient: params.recipientId
     },
-    config
+    { headers }
   );
 
   return res.data;
@@ -33,7 +32,7 @@ const sendCall = async (
 
 const sendMessageCall = async (
   options: ICourierClientConfiguration,
-  config: AxiosRequestConfig,
+  headers: object,
   params: ICourierSendMessageParameters
 ) => {
   const res = await options.httpClient.post<ICourierSendMessageResponse>(
@@ -41,7 +40,7 @@ const sendMessageCall = async (
     {
       message: params.message
     },
-    config
+    { headers }
   );
 
   return res.data;
@@ -54,23 +53,20 @@ export const send = (options: ICourierClientConfiguration) => {
     params: T,
     config?: ICourierSendConfig
   ): Promise<SendResponse<T>> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
+    const headers: Record<string, string> = {};
 
     if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
+      headers["Idempotency-Key"] = config.idempotencyKey;
     }
 
     if (config && config.idempotencyExpiry) {
-      axiosConfig.headers["x-idempotency-expiration"] =
-        config.idempotencyExpiry;
+      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
     }
 
     if ((params as ICourierSendMessageParameters).message) {
       const v2Response = await sendMessageCall(
         options,
-        axiosConfig,
+        headers,
         params as ICourierSendMessageParameters
       );
       return v2Response as SendResponse<T>;
@@ -78,7 +74,7 @@ export const send = (options: ICourierClientConfiguration) => {
 
     const v1Response = await sendCall(
       options,
-      axiosConfig,
+      headers,
       params as ICourierSendParameters
     );
     return v1Response as SendResponse<T>;

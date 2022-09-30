@@ -1,5 +1,5 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+import mockRequests from "./lib/mock-requests";
+
 import { CourierClient } from "../index";
 
 import {
@@ -47,12 +47,24 @@ const mockPutResponse: ICourierPreferencesPutResponse = {
 };
 
 describe("CourierPreference", () => {
-  let mock: MockAdapter;
-  beforeEach(() => {
-    mock = new MockAdapter(axios);
-    mock.onPut(/\/preferences\/.*/).reply(200, mockPutResponse);
-    mock.onGet(/\/preferences\/.*/).reply(200, mockGetResponse);
-    mock.onGet("/preferences").reply(200, mockListResponse);
+  beforeAll(() => {
+    mockRequests([
+      {
+        method: "PUT",
+        path: /\/preferences\/.*/,
+        body: mockPutResponse
+      },
+      {
+        method: "GET",
+        path: /\/preferences\/.*/,
+        body: mockGetResponse
+      },
+      {
+        method: "GET",
+        path: "/preferences",
+        body: mockListResponse
+      }
+    ]);
   });
 
   test(".get", async () => {

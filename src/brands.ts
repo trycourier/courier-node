@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import {
   ICourierBrand,
   ICourierBrandGetAllResponse,
@@ -34,17 +33,15 @@ export const createBrand = (options: ICourierClientConfiguration) => {
     params: ICourierBrandParameters,
     config?: ICourierBrandPostConfig
   ): Promise<ICourierBrand> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
+    const headers: Record<string, string> = {};
 
     if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
+      headers["Idempotency-Key"] = config.idempotencyKey;
     }
     const res = await options.httpClient.post<ICourierBrand>(
       `/brands`,
       params,
-      axiosConfig
+      { headers }
     );
     return res.data;
   };

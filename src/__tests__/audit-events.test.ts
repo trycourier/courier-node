@@ -1,9 +1,8 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+import mockRequests from "./lib/mock-requests";
+
 import { CourierClient } from "..";
 import { IAuditEvent } from "../audit-events/types";
 
-const mock = new MockAdapter(axios);
 const mockAuditEvent: IAuditEvent = {
   auditEventId: "foo",
   source: "studio",
@@ -12,9 +11,19 @@ const mockAuditEvent: IAuditEvent = {
 };
 
 describe("CourierAudiences", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    mock.reset();
+  beforeAll(() => {
+    mockRequests([
+      {
+        method: "GET",
+        path: "/audit-events",
+        body: { paging: { more: false }, results: [mockAuditEvent] }
+      },
+      {
+        method: "GET",
+        path: "/audit-events/foo",
+        body: mockAuditEvent
+      }
+    ]);
   });
 
   const { auditEvents } = CourierClient({
@@ -25,9 +34,6 @@ describe("CourierAudiences", () => {
     it("resolves with a list of audit events", async () => {
       expect.assertions(1);
 
-      mock
-        .onGet("/audit-events")
-        .reply(200, { paging: { more: false }, results: [mockAuditEvent] });
       const response = await auditEvents.list({});
       expect(response).toMatchObject({
         paging: { more: false },
@@ -40,7 +46,6 @@ describe("CourierAudiences", () => {
     it("resolves with an audit event", async () => {
       expect.assertions(1);
 
-      mock.onGet("/audit-events/foo").reply(200, mockAuditEvent);
       const response = await auditEvents.get({ auditEventId: "foo" });
       expect(response).toMatchObject(mockAuditEvent);
     });
