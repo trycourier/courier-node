@@ -199,13 +199,13 @@ describe("CourierClient - send with V2 schema", () => {
         method: "POST",
         path: "/send",
         headers: { "Idempotency-Key": null },
-        body: mockSendV2Response
+        response: { body: mockSendV2Response }
       },
       {
         method: "POST",
         path: "/send",
         headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
-        body: mockSendV2Response
+        response: { body: mockSendV2Response }
       }
     ]);
   });
@@ -311,87 +311,87 @@ describe("CourierClient", () => {
         method: "POST",
         path: "/send",
         headers: { "Idempotency-Key": null },
-        body: mockSendResponse
+        response: { body: mockSendResponse }
       },
       {
         method: "POST",
         path: "/send",
         headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
-        body: mockSendResponse
+        response: { body: mockSendResponse }
       },
       {
         method: "PUT",
         path: /\/profiles\/.*/,
-        body: mockReplaceProfileResponse
+        response: { body: mockReplaceProfileResponse }
       },
       {
         method: "POST",
         path: /\/profiles\/.*/,
         headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
-        body: mockMergeProfileResponse
+        response: { body: mockMergeProfileResponse }
       },
       {
         method: "POST",
         path: /\/profiles\/.*/,
-        body: mockMergeProfileResponse,
-        headers: { "Idempotency-Key": null }
+        headers: { "Idempotency-Key": null },
+        response: { body: mockMergeProfileResponse }
       },
       {
         method: "GET",
         path: /\/profiles\/.*/,
-        body: mockGetProfileResponse
+        response: { body: mockGetProfileResponse }
       },
       {
         method: "GET",
         path: /\/messages\/.*\/history/,
-        body: mockGetMessageHistoryResponse
+        response: { body: mockGetMessageHistoryResponse }
       },
       {
         method: "GET",
         path: /\/messages\/.*\/output/,
-        body: mockGetMessageOutputResponse
+        response: { body: mockGetMessageOutputResponse }
       },
       {
         method: "GET",
         path: /\/messages\/.*/,
-        body: mockGetMessageResponse
+        response: { body: mockGetMessageResponse }
       },
       {
         method: "GET",
         path: "/messages",
-        body: mockGetMessagesResponse
+        response: { body: mockGetMessagesResponse }
       },
       {
         method: "GET",
         path: "/brands",
-        body: mockGetBrandsResponse
+        response: { body: mockGetBrandsResponse }
       },
       {
         method: "GET",
         path: /\/brands\/.*/,
-        body: mockBrandResponse
+        response: { body: mockBrandResponse }
       },
       {
         method: "POST",
         path: "/brands",
-        body: mockBrandResponse,
-        headers: { "Idempotency-Key": null }
+        headers: { "Idempotency-Key": null },
+        response: { body: mockBrandResponse }
       },
       {
         method: "POST",
         path: "/brands",
         headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
-        body: mockBrandResponse
+        response: { body: mockBrandResponse }
       },
       {
         method: "PUT",
         path: /\/brands\/.*/,
-        body: mockBrandResponse
+        response: { body: mockBrandResponse }
       },
       {
         method: "DELETE",
         path: /\/brands\/.*/,
-        status: 204
+        response: { status: 204 }
       }
     ]);
   });

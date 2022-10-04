@@ -13,7 +13,7 @@ describe("CourierAutomations", () => {
       {
         method: "POST",
         path: /\/automations\/(.+\/)?invoke/,
-        body: mockAutomationInvokeResponse
+        response: { body: mockAutomationInvokeResponse }
       }
     ]);
   });

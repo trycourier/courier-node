@@ -52,22 +52,22 @@ describe("Courier Recipient Profile", () => {
       {
         method: "GET",
         path: /\/profiles\/.*\/lists/,
-        body: mockGetProfileListResponse
+        response: { body: mockGetProfileListResponse }
       },
       {
         method: "POST",
         path: /\/profiles\/.*\/lists/,
-        body: mockPostResponse
+        response: { body: mockPostResponse }
       },
       {
         method: "DELETE",
         path: /\/profiles\/.*\/lists/,
-        body: mockPostResponse
+        response: { body: mockPostResponse }
       },
       {
         method: "DELETE",
         path: /\/profiles\/.*/,
-        status: 200
+        response: { status: 200 }
       }
     ]);
   });

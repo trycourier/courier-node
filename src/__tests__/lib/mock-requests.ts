@@ -4,8 +4,10 @@ interface MockConfig {
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   path: string | RegExp;
   headers?: Record<string, string | null>;
-  status?: number;
-  body?: any;
+  response: {
+    status?: number;
+    body?: any;
+  };
 }
 
 const mockRequests = (configs: MockConfig[]) => {
@@ -38,9 +40,9 @@ const mockRequests = (configs: MockConfig[]) => {
       const config = findMatchingConfig(request)!;
 
       return {
-        status: config.status || 200,
-        body: config.body ? JSON.stringify(config.body) : "",
-        headers: config.body
+        status: config.response.status || 200,
+        body: config.response.body ? JSON.stringify(config.response.body) : "",
+        headers: config.response.body
           ? { "content-type": "application/json" }
           : undefined
       };

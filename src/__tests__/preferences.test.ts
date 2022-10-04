@@ -52,17 +52,17 @@ describe("CourierPreference", () => {
       {
         method: "PUT",
         path: /\/preferences\/.*/,
-        body: mockPutResponse
+        response: { body: mockPutResponse }
       },
       {
         method: "GET",
         path: /\/preferences\/.*/,
-        body: mockGetResponse
+        response: { body: mockGetResponse }
       },
       {
         method: "GET",
         path: "/preferences",
-        body: mockListResponse
+        response: { body: mockListResponse }
       }
     ]);
   });

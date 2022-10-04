@@ -64,62 +64,62 @@ describe("CourierLists", () => {
       {
         method: "GET",
         path: "/lists",
-        body: mockGetListsResponse
+        response: { body: mockGetListsResponse }
       },
       {
         method: "GET",
         path: /\/lists\/.*\/subscriptions/,
-        body: mockGetListSubscriptionsResponse
+        response: { body: mockGetListSubscriptionsResponse }
       },
       {
         method: "GET",
         path: /\/lists\/.*/,
-        body: mockListResponse
+        response: { body: mockListResponse }
       },
       {
         method: "PUT",
         path: /\/lists\/.*\/subscriptions/,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "PUT",
         path: /\/lists\/.*\/subscriptions\/.*/,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "POST",
         path: /\/lists\/.*\/subscriptions/,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "PUT",
         path: /\/lists\/.*\/restore/,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "PUT",
         path: /\/lists\/.*/,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "DELETE",
         path: /\/lists\/.*\/subscriptions\/.*/,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "DELETE",
         path: /\/lists\/.*/,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "POST",
         path: "/send/list",
-        body: mockSendResponse
+        response: { body: mockSendResponse }
       },
       {
         method: "GET",
         path: /\/profiles\/.*\/lists/,
-        body: mockFindByRecipientIdResponse
+        response: { body: mockFindByRecipientIdResponse }
       }
     ]);
   });

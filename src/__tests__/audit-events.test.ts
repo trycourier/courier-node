@@ -16,12 +16,14 @@ describe("CourierAudiences", () => {
       {
         method: "GET",
         path: "/audit-events",
-        body: { paging: { more: false }, results: [mockAuditEvent] }
+        response: {
+          body: { paging: { more: false }, results: [mockAuditEvent] }
+        }
       },
       {
         method: "GET",
         path: "/audit-events/foo",
-        body: mockAuditEvent
+        response: { body: mockAuditEvent }
       }
     ]);
   });

@@ -14,32 +14,32 @@ describe("CourierAudiences", () => {
       {
         method: "PUT",
         path: "/users/me/tokens",
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "PUT",
         path: "/users/me/tokens/abc",
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "PATCH",
         path: "/users/me/tokens/abc",
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "GET",
         path: "/users/me/tokens/abc",
-        body: mockToken
+        response: { body: mockToken }
       },
       {
         method: "GET",
         path: "/users/me/tokens",
-        body: { tokens: [mockToken] }
+        response: { body: { tokens: [mockToken] } }
       },
       {
         method: "DELETE",
         path: "/users/me/tokens/abc",
-        status: 204
+        response: { status: 204 }
       }
     ]);
   });

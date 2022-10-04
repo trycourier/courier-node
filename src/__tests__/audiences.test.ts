@@ -70,27 +70,27 @@ describe("CourierAudiences", () => {
       {
         method: "PUT",
         path: `/audiences/${mockAudienceId}`,
-        body: mockPutAudienceResponse
+        response: { body: mockPutAudienceResponse }
       },
       {
         method: "DELETE",
         path: `/audiences/${mockAudienceId}`,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "GET",
         path: `/audiences/${mockAudienceId}`,
-        body: { audience: mockGetAudienceResponse }
+        response: { body: { audience: mockGetAudienceResponse } }
       },
       {
         method: "GET",
         path: `/audiences/${mockAudienceId}/members`,
-        body: mockAudienceMembersResponse
+        response: { body: mockAudienceMembersResponse }
       },
       {
         method: "GET",
         path: `/audiences`,
-        body: mockAudiencesResponse
+        response: { body: mockAudiencesResponse }
       }
     ]);
   });

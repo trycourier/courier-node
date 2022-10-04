@@ -125,42 +125,42 @@ describe("CourierNotifications", () => {
       {
         method: "GET",
         path: "/notifications",
-        body: mockListNotificationsResponse
+        response: { body: mockListNotificationsResponse }
       },
       {
         method: "GET",
         path: /\/notifications\/.*\/content/,
-        body: mockGetNotificationContentResponse
+        response: { body: mockGetNotificationContentResponse }
       },
       {
         method: "GET",
         path: /\/notifications\/.*\/draft\/content/,
-        body: mockGetNotificationDraftContentResponse
+        response: { body: mockGetNotificationDraftContentResponse }
       },
       {
         method: "POST",
         path: /\/notifications\/.*\/variations/,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "POST",
         path: /\/notifications\/.*\/draft\/variations/,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "GET",
         path: /\/notifications\/.*\/.*\/checks/,
-        body: mockGetNotificationSubmissionChecksResponse
+        response: { body: mockGetNotificationSubmissionChecksResponse }
       },
       {
         method: "PUT",
         path: /\/notifications\/.*\/.*\/checks/,
-        body: mockPutNotificationSubmissionChecksResponse
+        response: { body: mockPutNotificationSubmissionChecksResponse }
       },
       {
         method: "DELETE",
         path: /\/notifications\/.*\/.*\/checks/,
-        status: 204
+        response: { status: 204 }
       }
     ]);
   });

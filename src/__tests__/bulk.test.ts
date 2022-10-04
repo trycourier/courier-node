@@ -53,28 +53,27 @@ describe("CourierBulk", () => {
       {
         method: "POST",
         path: "/bulk",
-        status: 201,
-        body: mockCreateJobResponse
+        response: { status: 201, body: mockCreateJobResponse }
       },
       {
         method: "POST",
         path: /\/bulk\/.*/,
-        body: mockIngestUsersResponse
+        response: { body: mockIngestUsersResponse }
       },
       {
         method: "POST",
         path: /\/bulk\/.*\/run/,
-        status: 204
+        response: { status: 204 }
       },
       {
         method: "GET",
         path: /\/bulk\/.*\/users/,
-        body: mockGetJobUsersResponse
+        response: { body: mockGetJobUsersResponse }
       },
       {
         method: "GET",
         path: /\/bulk\/.*/,
-        body: mockGetJobResponse
+        response: { body: mockGetJobResponse }
       }
     ]);
   });
