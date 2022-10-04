@@ -24,7 +24,11 @@ export interface IInitHttpClientOptions {
 export type HttpMethodClient = <T>(
   url: string,
   body?: object,
-  config?: { params?: any; headers?: object }
+  config?: {
+    params?: Record<string, string>;
+    idempotencyKey?: string;
+    idempotencyExpiry?: number;
+  }
 ) => Promise<{ data: T }>;
 
 export interface IHttpClient {

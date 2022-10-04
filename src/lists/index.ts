@@ -133,20 +133,13 @@ const send = (options: ICourierClientConfiguration) => {
     params: ICourierSendListOrPatternParams,
     config?: ICourierSendConfig
   ): Promise<ICourierSendResponse> => {
-    const headers: Record<string, string> = {};
-
-    if (config && config.idempotencyKey) {
-      headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-
-    if (config && config.idempotencyExpiry) {
-      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
-    }
-
     const res = await options.httpClient.post<ICourierSendResponse>(
       `/send/list`,
       params,
-      { headers }
+      {
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
+      }
     );
     return res.data;
   };

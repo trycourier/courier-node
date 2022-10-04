@@ -31,16 +31,12 @@ export const mergeProfile = (options: ICourierClientConfiguration) => {
     params: ICourierProfilePostParameters,
     config?: ICourierProfilePostConfig
   ): Promise<ICourierProfilePostResponse> => {
-    const headers: Record<string, string> = {};
-    if (config && config.idempotencyKey) {
-      headers["Idempotency-Key"] = config.idempotencyKey;
-    }
     const res = await options.httpClient.post<ICourierProfilePostResponse>(
       `/profiles/${params.recipientId}`,
       {
         profile: params.profile
       },
-      { headers }
+      { idempotencyKey: config?.idempotencyKey }
     );
     return res.data;
   };

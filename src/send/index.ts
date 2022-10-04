@@ -10,8 +10,8 @@ import {
 
 const sendCall = async (
   options: ICourierClientConfiguration,
-  headers: object,
-  params: ICourierSendParameters
+  params: ICourierSendParameters,
+  config?: ICourierSendConfig
 ) => {
   const res = await options.httpClient.post<ICourierSendResponse>(
     "/send",
@@ -24,7 +24,10 @@ const sendCall = async (
       profile: params.profile,
       recipient: params.recipientId
     },
-    { headers }
+    {
+      idempotencyExpiry: config?.idempotencyExpiry,
+      idempotencyKey: config?.idempotencyKey
+    }
   );
 
   return res.data;
@@ -32,15 +35,18 @@ const sendCall = async (
 
 const sendMessageCall = async (
   options: ICourierClientConfiguration,
-  headers: object,
-  params: ICourierSendMessageParameters
+  params: ICourierSendMessageParameters,
+  config?: ICourierSendConfig
 ) => {
   const res = await options.httpClient.post<ICourierSendMessageResponse>(
     "/send",
     {
       message: params.message
     },
-    { headers }
+    {
+      idempotencyExpiry: config?.idempotencyExpiry,
+      idempotencyKey: config?.idempotencyKey
+    }
   );
 
   return res.data;
@@ -53,29 +59,19 @@ export const send = (options: ICourierClientConfiguration) => {
     params: T,
     config?: ICourierSendConfig
   ): Promise<SendResponse<T>> => {
-    const headers: Record<string, string> = {};
-
-    if (config && config.idempotencyKey) {
-      headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-
-    if (config && config.idempotencyExpiry) {
-      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
-    }
-
     if ((params as ICourierSendMessageParameters).message) {
       const v2Response = await sendMessageCall(
         options,
-        headers,
-        params as ICourierSendMessageParameters
+        params as ICourierSendMessageParameters,
+        config
       );
       return v2Response as SendResponse<T>;
     }
 
     const v1Response = await sendCall(
       options,
-      headers,
-      params as ICourierSendParameters
+      params as ICourierSendParameters,
+      config
     );
     return v1Response as SendResponse<T>;
   };

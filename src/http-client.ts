@@ -1,10 +1,10 @@
 import fetch from "cross-fetch";
 
-import { IInitHttpClientOptions, IHttpClient, HttpMethodClient } from "./types";
+import { HttpMethodClient, IHttpClient, IInitHttpClientOptions } from "./types";
 
 export class CourierHttpClientError extends Error {
-  response?: Response;
-  data?: any;
+  public response?: Response;
+  public data?: any;
 
   constructor(
     message: string,
@@ -24,26 +24,30 @@ export const initHttpClient = ({
   authorizationToken
 }: IInitHttpClientOptions): IHttpClient => {
   const createHttpMethodClient = (method: string): HttpMethodClient => {
-    return async <T>(
-      url: string,
-      body?: object,
-      config?: { params?: any; headers?: object }
-    ) => {
+    return async <T>(...[url, body, config]: Parameters<HttpMethodClient>) => {
       const searchParams = String(new URLSearchParams(config?.params));
       const searchQueryString = searchParams && `?${searchParams}`;
       const fullUrl = String(new URL(`${url}${searchQueryString}`, baseUrl));
       const contentTypeHeader =
         body == null ? null : { "Content-Type": "application/json" };
+      const idempotencyKeyHeader = config?.idempotencyKey
+        ? { "Idempotency-Key": config.idempotencyKey }
+        : null;
+      const idempotencyExpiryHeader =
+        config?.idempotencyExpiry == null
+          ? null
+          : { "x-idempotency-expiration": String(config.idempotencyExpiry) };
 
       const response = await fetch(fullUrl, {
-        method,
         body: body != null ? JSON.stringify(body) : undefined,
         headers: {
           Authorization: `Bearer ${authorizationToken}`,
           "User-Agent": `courier-node/${version}`,
           ...contentTypeHeader,
-          ...config?.headers
-        }
+          ...idempotencyKeyHeader,
+          ...idempotencyExpiryHeader
+        },
+        method
       });
       const parseAsJson =
         response.headers.get("content-type") === "application/json";
@@ -62,10 +66,10 @@ export const initHttpClient = ({
   };
 
   return {
-    post: createHttpMethodClient("post"),
-    patch: createHttpMethodClient("patch"),
-    put: createHttpMethodClient("put"),
+    delete: createHttpMethodClient("delete"),
     get: (url, config) => createHttpMethodClient("get")(url, undefined, config),
-    delete: createHttpMethodClient("delete")
+    patch: createHttpMethodClient("patch"),
+    post: createHttpMethodClient("post"),
+    put: createHttpMethodClient("put")
   };
 };

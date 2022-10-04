@@ -25,8 +25,8 @@ export const CourierClient = (options: ICourierClientOptions = {}) => {
     options.baseUrl || getEnvVariable("COURIER_BASE_URL") || DEFAULTS.BASE_URL;
 
   const httpClient = initHttpClient({
-    baseUrl,
     authorizationToken,
+    baseUrl,
     version
   });
 

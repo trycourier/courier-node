@@ -12,15 +12,6 @@ const invokeAdHocAutomation = (options: ICourierClientConfiguration) => {
     params: ICourierAutomationAdHocInvokeParams,
     config?: ICourierAutomationConfig
   ): Promise<ICourierAutomationInvokeResponse> => {
-    const headers: Record<string, string> = {};
-
-    if (config && config.idempotencyKey) {
-      headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-
-    if (config && config.idempotencyExpiry) {
-      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
-    }
     const res = await options.httpClient.post<ICourierAutomationInvokeResponse>(
       "/automations/invoke",
       {
@@ -31,7 +22,10 @@ const invokeAdHocAutomation = (options: ICourierClientConfiguration) => {
         recipient: params.recipient,
         template: params.template
       },
-      { headers }
+      {
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
+      }
     );
 
     return res.data;
@@ -43,13 +37,6 @@ const invokeAutomationTemplate = (options: ICourierClientConfiguration) => {
     params: ICourierAutomationInvokeTemplateParams,
     config?: ICourierAutomationConfig
   ): Promise<ICourierAutomationInvokeResponse> => {
-    const headers: Record<string, string> = {};
-
-    if (config && config.idempotencyKey) {
-      headers["Idempotency-Key"] = config.idempotencyKey;
-      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
-    }
-
     const res = await options.httpClient.post<ICourierAutomationInvokeResponse>(
       `/automations/${params.templateId}/invoke`,
       {
@@ -59,7 +46,10 @@ const invokeAutomationTemplate = (options: ICourierClientConfiguration) => {
         recipient: params.recipient,
         template: params.template
       },
-      { headers }
+      {
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
+      }
     );
 
     return res.data;

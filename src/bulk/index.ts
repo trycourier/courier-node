@@ -18,22 +18,15 @@ const createJob = (options: ICourierClientConfiguration) => {
     params: ICourierBulkCreateJobParams,
     config?: ICourierBulkConfig
   ): Promise<ICourierBulkCreateJobResponse> => {
-    const headers: Record<string, string> = {};
-
-    if (config && config.idempotencyKey) {
-      headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-
-    if (config && config.idempotencyExpiry) {
-      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
-    }
-
     const res = await options.httpClient.post<ICourierBulkCreateJobResponse>(
       "/bulk",
       {
         message: params.message
       },
-      { headers }
+      {
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
+      }
     );
 
     return res.data;
@@ -45,22 +38,15 @@ const ingestUsers = (options: ICourierClientConfiguration) => {
     params: ICourierBulkIngestUsersParams,
     config?: ICourierBulkConfig
   ): Promise<ICourierBulkIngestUsersResponse> => {
-    const headers: Record<string, string> = {};
-
-    if (config && config.idempotencyKey) {
-      headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-
-    if (config && config.idempotencyExpiry) {
-      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
-    }
-
     const res = await options.httpClient.post<ICourierBulkIngestUsersResponse>(
       `/bulk/${params.jobId}`,
       {
         users: params.users
       },
-      { headers }
+      {
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
+      }
     );
 
     return res.data;
@@ -72,20 +58,13 @@ const runJob = (options: ICourierClientConfiguration) => {
     params: ICourierBulkRunJobParams,
     config?: ICourierBulkConfig
   ): Promise<void> => {
-    const headers: Record<string, string> = {};
-
-    if (config && config.idempotencyKey) {
-      headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-
-    if (config && config.idempotencyExpiry) {
-      headers["x-idempotency-expiration"] = String(config.idempotencyExpiry);
-    }
-
     await options.httpClient.post<void>(
       `/bulk/${params.jobId}/run`,
       {},
-      { headers }
+      {
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
+      }
     );
   };
 };
