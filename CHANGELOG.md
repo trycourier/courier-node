@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [3.16.0]
+
+- adds support for idempotency expiry to be passed in profiles and brands POST
+
 ## [3.15.0]
 
 - adds support for audit events

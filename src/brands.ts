@@ -41,6 +41,10 @@ export const createBrand = (options: ICourierClientConfiguration) => {
     if (config && config.idempotencyKey) {
       axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
     }
+    if (config && config.idempotencyExpiry) {
+      axiosConfig.headers["x-idempotency-expiration"] =
+        config.idempotencyExpiry;
+    }
     const res = await options.httpClient.post<ICourierBrand>(
       `/brands`,
       params,
