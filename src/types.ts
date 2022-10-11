@@ -114,6 +114,7 @@ export interface ICourierProfileListsPostParameters {
 
 export interface ICourierProfilePostConfig {
   idempotencyKey?: string;
+  idempotencyExpiry?: number;
 }
 
 export interface ICourierProfilePostResponse {
@@ -376,6 +377,7 @@ export interface ICourierBrandParameters {
 
 export interface ICourierBrandPostConfig {
   idempotencyKey?: string;
+  idempotencyExpiry?: number;
 }
 
 export interface ICourierBrandPutParameters extends ICourierBrandParameters {
