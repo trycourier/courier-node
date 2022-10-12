@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import {
   ICourierBrand,
   ICourierBrandGetAllResponse,
@@ -34,21 +33,13 @@ export const createBrand = (options: ICourierClientConfiguration) => {
     params: ICourierBrandParameters,
     config?: ICourierBrandPostConfig
   ): Promise<ICourierBrand> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
-
-    if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-    if (config && config.idempotencyExpiry) {
-      axiosConfig.headers["x-idempotency-expiration"] =
-        config.idempotencyExpiry;
-    }
     const res = await options.httpClient.post<ICourierBrand>(
       `/brands`,
       params,
-      axiosConfig
+      {
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
+      }
     );
     return res.data;
   };

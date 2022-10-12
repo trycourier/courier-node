@@ -1,7 +1,6 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
-import { CourierClient } from "../index";
+import mockRequests from "./lib/mock-requests";
 
+import { CourierClient } from "../index";
 import { ICourierAutomationInvokeResponse } from "../automations/types";
 
 const mockAutomationInvokeResponse: ICourierAutomationInvokeResponse = {
@@ -9,14 +8,14 @@ const mockAutomationInvokeResponse: ICourierAutomationInvokeResponse = {
 };
 
 describe("CourierAutomations", () => {
-  let mock: MockAdapter;
-
-  beforeEach(() => {
-    mock = new MockAdapter(axios);
-    mock.onPost("/automations/invoke").reply(200, mockAutomationInvokeResponse);
-    mock
-      .onPost(/\/automations\/.*\/invoke/)
-      .reply(200, mockAutomationInvokeResponse);
+  beforeAll(() => {
+    mockRequests([
+      {
+        method: "POST",
+        path: /\/automations\/(.+\/)?invoke/,
+        response: { body: mockAutomationInvokeResponse }
+      }
+    ]);
   });
 
   test(".invokeAdHocAutomation", async () => {

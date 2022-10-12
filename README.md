@@ -672,6 +672,36 @@ async function run() {
 run();
 ```
 
+### Error Handling
+
+This package tries to use the native `fetch` client to make requests or falls back to a polyfill if the client doesn't exist in the environment it's running in.
+
+All network related promise rejections are not handled in any way. All successfully made requests that produce errors on the server side are resulting in promise rejections with custom `CourierHttpClientError` error type.
+
+`CourierHttpClientError` extends native `Error` interface with two extra properties:
+
+* `response`: this is the `fetch` response as is
+* `data`: this is the parsed body of the response
+
+```javascript
+// Error handling example
+import { CourierClient, CourierHttpClientError } from '@trycourier/courier';
+
+const courier = CourierClient();
+
+try {
+  await courier.send(/* ... */);
+} catch (error) {
+  if (error instanceof CourierHttpClientError) {
+    console.log("Failed to send with status code:", error.response.status);
+    console.log("The Courier response is:", error.data);
+    console.log("The error message is:", error.message);
+  } else {
+    console.log('There was a problem making that request. Make sure you are online.');
+  }
+}
+```
+
 ### Idempotency
 
 For `POST` methods, you can supply an `idempotencyKey` in the config parameter to ensure the idempotency of the API Call. We recommend that you use a `V4 UUID` for the key. Keys are eligible to be removed from the system after they're at least 24 hours old, and a new request is generated if a key is reused after the original has been removed. For more info, see [Idempotent Requests](https://docs.courier.com/reference/idempotent-requests) in the Courier documentation.

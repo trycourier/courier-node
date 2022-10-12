@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import { ICourierClientConfiguration } from "../types";
 import {
   ICourierAutomationAdHocInvokeParams,
@@ -13,18 +12,6 @@ const invokeAdHocAutomation = (options: ICourierClientConfiguration) => {
     params: ICourierAutomationAdHocInvokeParams,
     config?: ICourierAutomationConfig
   ): Promise<ICourierAutomationInvokeResponse> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
-
-    if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
-    }
-
-    if (config && config.idempotencyExpiry) {
-      axiosConfig.headers["x-idempotency-expiration"] =
-        config.idempotencyExpiry;
-    }
     const res = await options.httpClient.post<ICourierAutomationInvokeResponse>(
       "/automations/invoke",
       {
@@ -35,7 +22,10 @@ const invokeAdHocAutomation = (options: ICourierClientConfiguration) => {
         recipient: params.recipient,
         template: params.template
       },
-      axiosConfig
+      {
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
+      }
     );
 
     return res.data;
@@ -47,16 +37,6 @@ const invokeAutomationTemplate = (options: ICourierClientConfiguration) => {
     params: ICourierAutomationInvokeTemplateParams,
     config?: ICourierAutomationConfig
   ): Promise<ICourierAutomationInvokeResponse> => {
-    const axiosConfig: AxiosRequestConfig = {
-      headers: {}
-    };
-
-    if (config && config.idempotencyKey) {
-      axiosConfig.headers["Idempotency-Key"] = config.idempotencyKey;
-      axiosConfig.headers["x-idempotency-expiration"] =
-        config.idempotencyExpiry;
-    }
-
     const res = await options.httpClient.post<ICourierAutomationInvokeResponse>(
       `/automations/${params.templateId}/invoke`,
       {
@@ -66,7 +46,10 @@ const invokeAutomationTemplate = (options: ICourierClientConfiguration) => {
         recipient: params.recipient,
         template: params.template
       },
-      axiosConfig
+      {
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
+      }
     );
 
     return res.data;

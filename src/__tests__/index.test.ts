@@ -1,5 +1,5 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+import mockRequests from "./lib/mock-requests";
+
 import { CourierClient } from "../index";
 import {
   ICourierBrand,
@@ -193,10 +193,21 @@ const mockGetBrandsResponse: ICourierBrandGetAllResponse = {
 };
 
 describe("CourierClient - send with V2 schema", () => {
-  let mock: MockAdapter;
-  beforeEach(() => {
-    mock = new MockAdapter(axios);
-    mock.onPost("/send").reply(200, mockSendV2Response);
+  beforeAll(() => {
+    mockRequests([
+      {
+        method: "POST",
+        path: "/send",
+        headers: { "Idempotency-Key": null },
+        response: { body: mockSendV2Response }
+      },
+      {
+        method: "POST",
+        path: "/send",
+        headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
+        response: { body: mockSendV2Response }
+      }
+    ]);
   });
 
   test(".send", async () => {
@@ -272,11 +283,6 @@ describe("CourierClient - send with V2 schema", () => {
       authorizationToken: "AUTH_TOKEN"
     });
 
-    mock.onPost("/send").reply(async config => {
-      expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
-      return [200];
-    });
-
     await send(
       {
         message: {
@@ -299,26 +305,95 @@ describe("CourierClient - send with V2 schema", () => {
 });
 
 describe("CourierClient", () => {
-  let mock: MockAdapter;
-  beforeEach(() => {
-    mock = new MockAdapter(axios);
-    mock.onPost("/send").reply(200, mockSendResponse);
-    mock.onPut(/\/profiles\/.*/).reply(200, mockReplaceProfileResponse);
-    mock.onPost(/\/profiles\/.*/).reply(200, mockMergeProfileResponse);
-    mock.onGet(/\/profiles\/.*/).reply(200, mockGetProfileResponse);
-    mock
-      .onGet(/\/messages\/.*\/history/)
-      .reply(200, mockGetMessageHistoryResponse);
-    mock
-      .onGet(/\/messages\/.*\/output/)
-      .reply(200, mockGetMessageOutputResponse);
-    mock.onGet(/\/messages\/.*/).reply(200, mockGetMessageResponse);
-    mock.onGet("/messages").reply(200, mockGetMessagesResponse);
-    mock.onGet("/brands").reply(200, mockGetBrandsResponse);
-    mock.onGet(/\/brands\/.*/).reply(200, mockBrandResponse);
-    mock.onPost("/brands").reply(200, mockBrandResponse);
-    mock.onPut(/\/brands\/.*/).reply(200, mockBrandResponse);
-    mock.onDelete(/\/brands\/.*/).reply(204);
+  beforeAll(() => {
+    mockRequests([
+      {
+        method: "POST",
+        path: "/send",
+        headers: { "Idempotency-Key": null },
+        response: { body: mockSendResponse }
+      },
+      {
+        method: "POST",
+        path: "/send",
+        headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
+        response: { body: mockSendResponse }
+      },
+      {
+        method: "PUT",
+        path: /\/profiles\/.*/,
+        response: { body: mockReplaceProfileResponse }
+      },
+      {
+        method: "POST",
+        path: /\/profiles\/.*/,
+        headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
+        response: { body: mockMergeProfileResponse }
+      },
+      {
+        method: "POST",
+        path: /\/profiles\/.*/,
+        headers: { "Idempotency-Key": null },
+        response: { body: mockMergeProfileResponse }
+      },
+      {
+        method: "GET",
+        path: /\/profiles\/.*/,
+        response: { body: mockGetProfileResponse }
+      },
+      {
+        method: "GET",
+        path: /\/messages\/.*\/history/,
+        response: { body: mockGetMessageHistoryResponse }
+      },
+      {
+        method: "GET",
+        path: /\/messages\/.*\/output/,
+        response: { body: mockGetMessageOutputResponse }
+      },
+      {
+        method: "GET",
+        path: /\/messages\/.*/,
+        response: { body: mockGetMessageResponse }
+      },
+      {
+        method: "GET",
+        path: "/messages",
+        response: { body: mockGetMessagesResponse }
+      },
+      {
+        method: "GET",
+        path: "/brands",
+        response: { body: mockGetBrandsResponse }
+      },
+      {
+        method: "GET",
+        path: /\/brands\/.*/,
+        response: { body: mockBrandResponse }
+      },
+      {
+        method: "POST",
+        path: "/brands",
+        headers: { "Idempotency-Key": null },
+        response: { body: mockBrandResponse }
+      },
+      {
+        method: "POST",
+        path: "/brands",
+        headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
+        response: { body: mockBrandResponse }
+      },
+      {
+        method: "PUT",
+        path: /\/brands\/.*/,
+        response: { body: mockBrandResponse }
+      },
+      {
+        method: "DELETE",
+        path: /\/brands\/.*/,
+        response: { status: 204 }
+      }
+    ]);
   });
 
   test(".send", async () => {
@@ -343,11 +418,6 @@ describe("CourierClient", () => {
   test(".send with Idempotency Key", async () => {
     const { send } = CourierClient({
       authorizationToken: "AUTH_TOKEN"
-    });
-
-    mock.onPost("/send").reply(async config => {
-      expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
-      return [200];
     });
 
     await send(
@@ -442,11 +512,6 @@ describe("CourierClient", () => {
       authorizationToken: "AUTH_TOKEN"
     });
 
-    mock.onPost(/\/profiles\/.*/).reply(async config => {
-      expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
-      return [200];
-    });
-
     await mergeProfile(
       {
         profile: {
@@ -514,11 +579,6 @@ describe("CourierClient", () => {
   test(".createBrand with Idempotency Key", async () => {
     const { createBrand } = CourierClient({
       authorizationToken: "AUTH_TOKEN"
-    });
-
-    mock.onPost("/brands").reply(async config => {
-      expect(config.headers["Idempotency-Key"]).toBe("IDEMPOTENCY_KEY_UUID");
-      return [200];
     });
 
     await createBrand(

@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import { ICourierClientAudiences } from "./audiences/types";
 import { auditEvents } from "./audit-events";
 import { ICourierClientAutomations } from "./automations/types";
@@ -16,10 +15,20 @@ import {
 import { Message } from "./send/types";
 import { tokenManagement } from "./token-management";
 
+export interface IInitHttpClientOptions {
+  baseUrl: string;
+  version: string;
+  authorizationToken: string;
+}
+
 export type HttpMethodClient = <T>(
   url: string,
   body?: object,
-  config?: AxiosRequestConfig
+  config?: {
+    params?: Record<string, string>;
+    idempotencyKey?: string;
+    idempotencyExpiry?: number;
+  }
 ) => Promise<{ data: T }>;
 
 export interface IHttpClient {

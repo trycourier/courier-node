@@ -1,5 +1,5 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+import mockRequests from "./lib/mock-requests";
+
 import { CourierClient } from "../index";
 import { ICourierRecipientSubscriptionsResponse } from "../lists/types";
 import { ICourierProfilePostResponse, List } from "../types";
@@ -47,14 +47,29 @@ const additionalMocklists: List[] = [
 ];
 
 describe("Courier Recipient Profile", () => {
-  let mock: MockAdapter;
-
   beforeEach(() => {
-    mock = new MockAdapter(axios);
-    mock.onGet(/\/profiles\/.*\/lists/).reply(200, mockGetProfileListResponse);
-    mock.onPost(/\/profiles\/.*\/lists/).reply(200, mockPostResponse);
-    mock.onDelete(/\/profiles\/.*\/lists/).reply(200, mockPostResponse);
-    mock.onDelete(/\/profiles\/.*/).reply(200);
+    mockRequests([
+      {
+        method: "GET",
+        path: /\/profiles\/.*\/lists/,
+        response: { body: mockGetProfileListResponse }
+      },
+      {
+        method: "POST",
+        path: /\/profiles\/.*\/lists/,
+        response: { body: mockPostResponse }
+      },
+      {
+        method: "DELETE",
+        path: /\/profiles\/.*\/lists/,
+        response: { body: mockPostResponse }
+      },
+      {
+        method: "DELETE",
+        path: /\/profiles\/.*/,
+        response: { status: 200 }
+      }
+    ]);
   });
 
   test("should delete profile", async () => {

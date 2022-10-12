@@ -1,18 +1,47 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+import mockRequests from "./lib/mock-requests";
+
 import { CourierClient } from "..";
 import { IUserToken } from "../token-management/types";
 
-const mock = new MockAdapter(axios);
 const mockToken: IUserToken = {
   token: "abc",
   provider_key: "apn"
 };
 
 describe("CourierAudiences", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    mock.reset();
+  beforeAll(() => {
+    mockRequests([
+      {
+        method: "PUT",
+        path: "/users/me/tokens",
+        response: { status: 204 }
+      },
+      {
+        method: "PUT",
+        path: "/users/me/tokens/abc",
+        response: { status: 204 }
+      },
+      {
+        method: "PATCH",
+        path: "/users/me/tokens/abc",
+        response: { status: 204 }
+      },
+      {
+        method: "GET",
+        path: "/users/me/tokens/abc",
+        response: { body: mockToken }
+      },
+      {
+        method: "GET",
+        path: "/users/me/tokens",
+        response: { body: { tokens: [mockToken] } }
+      },
+      {
+        method: "DELETE",
+        path: "/users/me/tokens/abc",
+        response: { status: 204 }
+      }
+    ]);
   });
 
   const { tokenManagement } = CourierClient({
@@ -23,7 +52,6 @@ describe("CourierAudiences", () => {
     it("resolves void when the put call succeeds", async () => {
       expect.assertions(1);
 
-      mock.onPut("/users/me/tokens").reply(204);
       const prom = tokenManagement.putUserTokens({
         user_id: "me",
         tokens: [mockToken]
@@ -36,7 +64,6 @@ describe("CourierAudiences", () => {
     it("resolves void when the put call succeeds", async () => {
       expect.assertions(1);
 
-      mock.onPut("/users/me/tokens/abc").reply(204);
       const prom = tokenManagement.putUserToken({
         user_id: "me",
         token: mockToken
@@ -49,7 +76,6 @@ describe("CourierAudiences", () => {
     it("resolves void when the put call succeeds", async () => {
       expect.assertions(1);
 
-      mock.onPatch("/users/me/tokens/abc").reply(204);
       const prom = tokenManagement.patchUserToken({
         user_id: "me",
         token: "abc",
@@ -63,7 +89,6 @@ describe("CourierAudiences", () => {
     it("resolves with the token when the get call succeeds", async () => {
       expect.assertions(1);
 
-      mock.onGet("/users/me/tokens/abc").reply(200, mockToken);
       const result = await tokenManagement.getUserToken({
         user_id: "me",
         token: "abc"
@@ -76,7 +101,6 @@ describe("CourierAudiences", () => {
     it("resolves with the tokens when the get call succeeds", async () => {
       expect.assertions(1);
 
-      mock.onGet("/users/me/tokens").reply(200, { tokens: [mockToken] });
       const result = await tokenManagement.getUserTokens({
         user_id: "me"
       });
@@ -88,7 +112,6 @@ describe("CourierAudiences", () => {
     it("resolves with the token when the delete call succeeds", async () => {
       expect.assertions(1);
 
-      mock.onDelete("/users/me/tokens/abc").reply(204);
       const prom = tokenManagement.deleteUserToken({
         user_id: "me",
         token: "abc"

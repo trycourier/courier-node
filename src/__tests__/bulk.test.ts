@@ -1,5 +1,5 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+import mockRequests from "./lib/mock-requests";
+
 import { CourierClient } from "../index";
 import {
   ICourierBulkCreateJobResponse,
@@ -48,15 +48,34 @@ const mockGetJobUsersResponse: ICourierBulkGetJobUsersResponse = {
 };
 
 describe("CourierBulk", () => {
-  let mock: MockAdapter;
-
-  beforeEach(() => {
-    mock = new MockAdapter(axios);
-    mock.onPost("/bulk").reply(201, mockCreateJobResponse);
-    mock.onPost(/\/bulk\/.*/).reply(200, mockIngestUsersResponse);
-    mock.onPost(/\/bulk\/.*\/run/).reply(204);
-    mock.onGet(/\/bulk\/.*\/users/).reply(200, mockGetJobUsersResponse);
-    mock.onGet(/\/bulk\/.*/).reply(200, mockGetJobResponse);
+  beforeAll(() => {
+    mockRequests([
+      {
+        method: "POST",
+        path: "/bulk",
+        response: { status: 201, body: mockCreateJobResponse }
+      },
+      {
+        method: "POST",
+        path: /\/bulk\/.*/,
+        response: { body: mockIngestUsersResponse }
+      },
+      {
+        method: "POST",
+        path: /\/bulk\/.*\/run/,
+        response: { status: 204 }
+      },
+      {
+        method: "GET",
+        path: /\/bulk\/.*\/users/,
+        response: { body: mockGetJobUsersResponse }
+      },
+      {
+        method: "GET",
+        path: /\/bulk\/.*/,
+        response: { body: mockGetJobResponse }
+      }
+    ]);
   });
 
   test(".createJob", async () => {

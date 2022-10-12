@@ -1,5 +1,5 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+import mockRequests from "./lib/mock-requests";
+
 import { CourierClient } from "../index";
 
 import {
@@ -59,36 +59,69 @@ const mockGetListSubscriptionsResponse: ICourierListGetSubscriptionsResponse = {
 };
 
 describe("CourierLists", () => {
-  let mock: MockAdapter;
-  beforeEach(() => {
-    mock = new MockAdapter(axios);
-    // GET /lists
-    mock.onGet("/lists").reply(200, mockGetListsResponse);
-    // GET /lists/{list_id}/subscriptions
-    mock
-      .onGet(/\/lists\/.*\/subscriptions/)
-      .reply(200, mockGetListSubscriptionsResponse);
-    // GET /lists/{list_id}
-    mock.onGet(/\/lists\/.*/).reply(200, mockListResponse);
-    // PUT /lists/{list_id}/subscriptions
-    mock.onPut(/\/lists\/.*\/subscriptions/).reply(204);
-    // PUT /lists/{list_id}/subscriptions/{recipient_id}
-    mock.onPut(/\/lists\/.*\/subscriptions\/.*/).reply(204);
-    mock.onPost(/\/lists\/.*\/subscriptions/).reply(204);
-    // PUT /lists/{list_id}/restore
-    mock.onPut(/\/lists\/.*\/restore/).reply(204);
-    // PUT /lists/{list_id}
-    mock.onPut(/\/lists\/.*/).reply(204);
-    // DELETE /lists/{list_id}/subscriptions/{recipient_id}
-    mock.onDelete(/\/lists\/.*\/subscriptions\/.*/).reply(204);
-    // DELETE /lists/{list_id}
-    mock.onDelete(/\/lists\/.*/).reply(204);
-    // POST /send/list
-    mock.onPost("/send/list").reply(200, mockSendResponse);
-    // GET /profiles/{recipient_id}/lists
-    mock
-      .onGet(/\/profiles\/.*\/lists/)
-      .reply(200, mockFindByRecipientIdResponse);
+  beforeAll(() => {
+    mockRequests([
+      {
+        method: "GET",
+        path: "/lists",
+        response: { body: mockGetListsResponse }
+      },
+      {
+        method: "GET",
+        path: /\/lists\/.*\/subscriptions/,
+        response: { body: mockGetListSubscriptionsResponse }
+      },
+      {
+        method: "GET",
+        path: /\/lists\/.*/,
+        response: { body: mockListResponse }
+      },
+      {
+        method: "PUT",
+        path: /\/lists\/.*\/subscriptions/,
+        response: { status: 204 }
+      },
+      {
+        method: "PUT",
+        path: /\/lists\/.*\/subscriptions\/.*/,
+        response: { status: 204 }
+      },
+      {
+        method: "POST",
+        path: /\/lists\/.*\/subscriptions/,
+        response: { status: 204 }
+      },
+      {
+        method: "PUT",
+        path: /\/lists\/.*\/restore/,
+        response: { status: 204 }
+      },
+      {
+        method: "PUT",
+        path: /\/lists\/.*/,
+        response: { status: 204 }
+      },
+      {
+        method: "DELETE",
+        path: /\/lists\/.*\/subscriptions\/.*/,
+        response: { status: 204 }
+      },
+      {
+        method: "DELETE",
+        path: /\/lists\/.*/,
+        response: { status: 204 }
+      },
+      {
+        method: "POST",
+        path: "/send/list",
+        response: { body: mockSendResponse }
+      },
+      {
+        method: "GET",
+        path: /\/profiles\/.*\/lists/,
+        response: { body: mockFindByRecipientIdResponse }
+      }
+    ]);
   });
 
   test(".send with List", async () => {

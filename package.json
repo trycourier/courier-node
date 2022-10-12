@@ -14,8 +14,8 @@
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "@types/node": "^12.6.2",
-    "axios-mock-adapter": "^1.17.0",
     "jest": "^24.8.0",
+    "jest-fetch-mock": "^3.0.3",
     "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
     "tslint": "^5.18.0",
@@ -31,6 +31,6 @@
     "prepublishOnly": "yarn lint && yarn test"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "cross-fetch": "^3.1.5"
   }
 }

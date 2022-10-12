@@ -1,5 +1,5 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+import mockRequests from "./lib/mock-requests";
+
 import { CourierClient } from "../index";
 
 import {
@@ -120,26 +120,49 @@ const mockPutNotificationSubmissionChecksResponse: ICourierNotificationPutSubmis
 };
 
 describe("CourierNotifications", () => {
-  let mock: MockAdapter;
-
-  beforeEach(() => {
-    mock = new MockAdapter(axios);
-    mock.onGet("/notifications").reply(200, mockListNotificationsResponse);
-    mock
-      .onGet(/\/notifications\/.*\/content/)
-      .reply(200, mockGetNotificationContentResponse);
-    mock
-      .onGet(/\/notifications\/.*\/draft\/content/)
-      .reply(200, mockGetNotificationDraftContentResponse);
-    mock.onPost(/\/notifications\/.*\/variations/).reply(204);
-    mock.onPost(/\/notifications\/.*\/draft\/variations/).reply(204);
-    mock
-      .onGet(/\/notifications\/.*\/.*\/checks/)
-      .reply(200, mockGetNotificationSubmissionChecksResponse);
-    mock
-      .onPut(/\/notifications\/.*\/.*\/checks/)
-      .reply(200, mockPutNotificationSubmissionChecksResponse);
-    mock.onDelete(/\/notifications\/.*\/.*\/checks/).reply(204);
+  beforeAll(() => {
+    mockRequests([
+      {
+        method: "GET",
+        path: "/notifications",
+        response: { body: mockListNotificationsResponse }
+      },
+      {
+        method: "GET",
+        path: /\/notifications\/.*\/content/,
+        response: { body: mockGetNotificationContentResponse }
+      },
+      {
+        method: "GET",
+        path: /\/notifications\/.*\/draft\/content/,
+        response: { body: mockGetNotificationDraftContentResponse }
+      },
+      {
+        method: "POST",
+        path: /\/notifications\/.*\/variations/,
+        response: { status: 204 }
+      },
+      {
+        method: "POST",
+        path: /\/notifications\/.*\/draft\/variations/,
+        response: { status: 204 }
+      },
+      {
+        method: "GET",
+        path: /\/notifications\/.*\/.*\/checks/,
+        response: { body: mockGetNotificationSubmissionChecksResponse }
+      },
+      {
+        method: "PUT",
+        path: /\/notifications\/.*\/.*\/checks/,
+        response: { body: mockPutNotificationSubmissionChecksResponse }
+      },
+      {
+        method: "DELETE",
+        path: /\/notifications\/.*\/.*\/checks/,
+        response: { status: 204 }
+      }
+    ]);
   });
 
   test(".list notifications", async () => {

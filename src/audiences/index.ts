@@ -40,7 +40,7 @@ const putAudience = (options: ICourierClientConfiguration) => {
   return async (
     audience: Omit<AudienceTypes.IAudience, "created_at" | "updated_at">
   ): Promise<AudienceTypes.IAudience> => {
-    const response = await options.httpClient.get<{
+    const response = await options.httpClient.put<{
       audience: AudienceTypes.IAudience;
     }>(`/audiences/${audience.id}`);
     return response.data.audience;
