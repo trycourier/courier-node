@@ -37,8 +37,8 @@ export const createBrand = (options: ICourierClientConfiguration) => {
       `/brands`,
       params,
       {
-        idempotencyKey: config?.idempotencyKey,
-        idempotencyExpiry: config?.idempotencyExpiry
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
       }
     );
     return res.data;

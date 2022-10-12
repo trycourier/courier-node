@@ -37,8 +37,8 @@ export const mergeProfile = (options: ICourierClientConfiguration) => {
         profile: params.profile
       },
       {
-        idempotencyKey: config?.idempotencyKey,
-        idempotencyExpiry: config?.idempotencyExpiry
+        idempotencyExpiry: config?.idempotencyExpiry,
+        idempotencyKey: config?.idempotencyKey
       }
     );
     return res.data;
