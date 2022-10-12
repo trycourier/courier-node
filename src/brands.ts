@@ -36,7 +36,10 @@ export const createBrand = (options: ICourierClientConfiguration) => {
     const res = await options.httpClient.post<ICourierBrand>(
       `/brands`,
       params,
-      { idempotencyKey: config?.idempotencyKey }
+      {
+        idempotencyKey: config?.idempotencyKey,
+        idempotencyExpiry: config?.idempotencyExpiry
+      }
     );
     return res.data;
   };
