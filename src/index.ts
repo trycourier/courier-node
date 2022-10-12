@@ -2,6 +2,7 @@ import { client } from "./client";
 import { ICourierClientOptions } from "./types";
 export { ICourierClient } from "./types";
 import { initHttpClient } from "./http-client";
+export { CourierHttpClientError } from "./http-client";
 
 // cannot be `import` as it's not under TS root dir
 // tslint:disable-next-line:no-var-requires
