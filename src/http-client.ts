@@ -1,6 +1,8 @@
-import fetch from "cross-fetch";
+import crossFetch from "cross-fetch";
 
 import { HttpMethodClient, IHttpClient, IInitHttpClientOptions } from "./types";
+
+const fetch = globalThis.fetch ?? crossFetch;
 
 export class CourierHttpClientError extends Error {
   public response?: Response;
