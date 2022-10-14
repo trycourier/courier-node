@@ -52,8 +52,8 @@ export const initHttpClient = ({
         method
       });
       const parseAsJson =
-        response.headers.get("content-type") === "application/json";
-
+        response.headers.get("content-type") === "application/json" && await response.text();
+      
       const data = await (parseAsJson ? response.json() : response.text());
 
       if (!response.ok) {
