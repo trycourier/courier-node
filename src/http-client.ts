@@ -52,11 +52,15 @@ export const initHttpClient = ({
         method
       });
 
-      const responseText = await response.text();
       const parseAsJson =
-        response.headers.get("content-type") === "application/json" && responseText;
-      
-      const data = await (parseAsJson ? response.json() : responseText);
+        response.headers.get("content-type") === "application/json";
+
+      let data: string | any;
+      try {
+        data = await (parseAsJson ? response.json() : response.text())
+      } catch(e) {
+        data = ''
+      }
 
       if (!response.ok) {
         throw new CourierHttpClientError(
