@@ -51,20 +51,12 @@ export const initHttpClient = ({
         },
         method
       });
+
       const parseAsJson =
+        response.headers.get("content-length") !== "0" &&
         response.headers.get("content-type") === "application/json";
 
-      let data: any;
-      try {
-        data = await (parseAsJson ? response.json() : response.text())
-      } catch(e) {
-        const error = e as Error;
-        if (error.message?.includes('invalid json response')) {
-          data = '';
-        } else {
-          throw e;
-        }
-      }
+      const data = await (parseAsJson ? response.json() : response.text());
 
       if (!response.ok) {
         throw new CourierHttpClientError(
