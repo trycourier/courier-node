@@ -51,14 +51,16 @@ export const initHttpClient = ({
         },
         method
       });
+
       const parseAsJson =
+        response.headers.get("content-length") !== "0" &&
         response.headers.get("content-type") === "application/json";
 
       const data = await (parseAsJson ? response.json() : response.text());
 
       if (!response.ok) {
         throw new CourierHttpClientError(
-          data.message || "Un unexpected error has occurred",
+          data.message || "An unexpected error has occurred",
           { response, data }
         );
       }
