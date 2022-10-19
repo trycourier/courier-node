@@ -23,9 +23,9 @@ describe('HttpClient', () => {
     const client = initHttpClient({
       baseUrl: '', version: '1', authorizationToken: 'auth-token'
     })
-    await client.put('https://api.courier.com/lists/list-1/subscriptions/subscriber|some-value+other-value');
+    await client.put('https://api.courier.com/lists/list-1/subscriptions/subscriber|some-value+other-value?query=param');
     expect(fetchMock.mock.calls.length).toEqual(1);
-    expect(fetchMock.mock.calls[0][0]).toEqual('https://api.courier.com/lists/list-1/subscriptions/subscriber%7Csome-value+other-value');
+    expect(fetchMock.mock.calls[0][0]).toEqual('https://api.courier.com/lists/list-1/subscriptions/subscriber%7Csome-value+other-value?query=param');
   })
 
   test('should prepend baseURL', async () => {
