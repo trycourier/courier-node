@@ -29,7 +29,7 @@ export const initHttpClient = ({
     return async <T>(...[url, body, config]: Parameters<HttpMethodClient>) => {
       const searchParams = String(new URLSearchParams(config?.params));
       const searchQueryString = searchParams && `?${searchParams}`;
-      const fullUrl = encodeURI(String(new URL(`${url}${searchQueryString}`, baseUrl)));
+      const fullUrl = encodeURI(`${baseUrl ?? ''}${url}${searchQueryString}`);
       const contentTypeHeader =
         body == null ? null : { "Content-Type": "application/json" };
       const idempotencyKeyHeader = config?.idempotencyKey
