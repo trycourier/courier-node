@@ -29,7 +29,16 @@ export const initHttpClient = ({
     return async <T>(...[url, body, config]: Parameters<HttpMethodClient>) => {
       const searchParams = String(new URLSearchParams(config?.params));
       const searchQueryString = searchParams && `?${searchParams}`;
-      const fullUrl = String(new URL(`${url}${searchQueryString}`, baseUrl));
+      const urlWithNoLeadingSlash = url.startsWith("/") ? url.slice(1) : url;
+      const baseUrlWithTrailingSlash = baseUrl.endsWith("/")
+        ? baseUrl
+        : `${baseUrl}/`;
+      const fullUrl = String(
+        new URL(
+          `${urlWithNoLeadingSlash}${searchQueryString}`,
+          baseUrlWithTrailingSlash
+        )
+      );
       const contentTypeHeader =
         body == null ? null : { "Content-Type": "application/json" };
       const idempotencyKeyHeader = config?.idempotencyKey
