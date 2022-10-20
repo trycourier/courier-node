@@ -20,7 +20,7 @@ You will need to get a Courier API key to get started. You can sign up and creat
 
 ### v3 to v4
 
-v4 uses native fetch client to make requests or falls back to a polyfill if the client doesn't exist in the environment it's running in. Check [Error Handling](###Error-Handling) out.
+v4 uses native fetch client to make requests or falls back to a polyfill if the client doesn't exist in the environment it's running in. Check [Error Handling](#Error-Handling) out.
 
 ## Getting Started
 
