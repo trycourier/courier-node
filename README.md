@@ -16,6 +16,12 @@ npm install @trycourier/courier
 
 You will need to get a Courier API key to get started. You can sign up and create one for free at [courier.com](https://courier.com).
 
+## Upgrade Guides
+
+### v3 to v4
+
+v4 uses native fetch client to make requests or falls back to a polyfill if the client doesn't exist in the environment it's running in. Check [Error Handling](###Error-Handling) out.
+
 ## Getting Started
 
 ```javascript
@@ -680,12 +686,12 @@ All network related promise rejections are not handled in any way. All successfu
 
 `CourierHttpClientError` extends native `Error` interface with two extra properties:
 
-* `response`: this is the `fetch` response as is
-* `data`: this is the parsed body of the response
+- `response`: this is the `fetch` response as is
+- `data`: this is the parsed body of the response
 
 ```javascript
 // Error handling example
-import { CourierClient, CourierHttpClientError } from '@trycourier/courier';
+import { CourierClient, CourierHttpClientError } from "@trycourier/courier";
 
 const courier = CourierClient();
 
@@ -697,7 +703,9 @@ try {
     console.log("The Courier response is:", error.data);
     console.log("The error message is:", error.message);
   } else {
-    console.log('There was a problem making that request. Make sure you are online.');
+    console.log(
+      "There was a problem making that request. Make sure you are online."
+    );
   }
 }
 ```
