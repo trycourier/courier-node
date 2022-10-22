@@ -43,6 +43,21 @@ describe("CourierAutomations", () => {
                 action: "delay"
               },
               {
+                action: "invoke",
+                template: "my-template",
+                context: {
+                  brand: "brand-1",
+                  data: {
+                    foo: "bar"
+                  },
+                  profile: {
+                    email: "foo@bar.com"
+                  },
+                  recipient: "foobar",
+                  template: "another-template"
+                }
+              },
+              {
                 action: "update-profile",
                 recipient_id: "RECIPIENT_ID",
                 profile: {
