@@ -3,12 +3,20 @@ import { Message } from "../send/types";
 export type AutomationStepAction =
   | "cancel"
   | "delay"
+  | "invoke"
   | "send"
   | "send-list"
   | "update-profile";
 
 export type MergeAlgorithm = "replace" | "none" | "overwrite" | "soft-merge";
 
+export interface IAutomationRunContext {
+  brand?: string;
+  data?: any;
+  profile?: any;
+  template?: string;
+  recipient?: string;
+}
 export interface IAutomationStep {
   action: AutomationStepAction;
   if?: string;
@@ -24,6 +32,14 @@ export interface IAutomationDelayStep extends IAutomationStep {
   action: "delay";
   duration?: string;
   until?: string;
+}
+
+export interface IAutomationInvokeStep extends IAutomationStep {
+  action: "invoke";
+  context?: IAutomationRunContext;
+  template: string;
+  if?: string;
+  ref?: string;
 }
 
 export interface IAutomationSendStep extends IAutomationStep {
@@ -60,6 +76,7 @@ export interface IAutomationUpdateProfileStep extends IAutomationStep {
 export type AutomationStep =
   | IAutomationCancelStep
   | IAutomationDelayStep
+  | IAutomationInvokeStep
   | IAutomationSendStep
   | IAutomationV2SendStep
   | IAutomationSendListStep

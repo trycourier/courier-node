@@ -5,10 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v4.0.2] - 2022-10-21
+
+- adds support for invoke step via `client.automations.invokeAdHocAutomation({...})`
+
 ## [v4.0.2] - 2022-10-19
 
 - Fix `unexpected error` in Node 18.x
-- Fix baseURLs getting chopped off   
+- Fix baseURLs getting chopped off
 
 ## [v4.0.1] - 2022-10-13
 
