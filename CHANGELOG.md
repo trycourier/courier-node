@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
-## [v4.0.2] - 2022-10-21
+## [v4.0.3] - 2022-10-21
 
 - adds support for invoke step via `client.automations.invokeAdHocAutomation({...})`
 
