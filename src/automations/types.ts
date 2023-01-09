@@ -114,7 +114,33 @@ export interface ICourierAutomationInvokeResponse {
   runId: string;
 }
 
+export interface ICourierAutomationGetRunParams {
+  runId: string;
+}
+
+export enum AutomationRunStatus {
+  canceled = "CANCELED",
+  error = "ERROR",
+  processed = "PROCESSED",
+  processing = "PROCESSING",
+  notProcessed = "NOT PROCESSED",
+  waiting = "WAITING",
+}
+
+export interface IAutomationRun {
+  cancelation_token?: string;
+  createdAt: string;
+  source: string[];
+  status: AutomationRunStatus;
+  steps: AutomationStep[];
+  updatedAt?: string;
+}
+
 export interface ICourierClientAutomations {
+  getRun: (
+    params: ICourierAutomationGetRunParams,
+    config?: ICourierAutomationConfig
+  ) => Promise<IAutomationRun>;
   invokeAdHocAutomation: (
     params: ICourierAutomationAdHocInvokeParams,
     config?: ICourierAutomationConfig

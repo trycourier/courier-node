@@ -1,7 +1,9 @@
 import { ICourierClientConfiguration } from "../types";
 import {
+  IAutomationRun,
   ICourierAutomationAdHocInvokeParams,
   ICourierAutomationConfig,
+  ICourierAutomationGetRunParams,
   ICourierAutomationInvokeResponse,
   ICourierAutomationInvokeTemplateParams,
   ICourierClientAutomations
@@ -56,10 +58,22 @@ const invokeAutomationTemplate = (options: ICourierClientConfiguration) => {
   };
 };
 
+const getRun = (options: ICourierClientConfiguration) => {
+  return async (
+    params: ICourierAutomationGetRunParams
+  ): Promise<IAutomationRun> => {
+    const res = await options.httpClient.get<IAutomationRun>(
+      `/automations/runs/${params.runId}`
+    );
+    return res.data;
+  };
+};
+
 export const automations = (
   options: ICourierClientConfiguration
 ): ICourierClientAutomations => {
   return {
+    getRun: getRun(options),
     invokeAdHocAutomation: invokeAdHocAutomation(options),
     invokeAutomationTemplate: invokeAutomationTemplate(options)
   };
