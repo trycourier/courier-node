@@ -42,7 +42,7 @@ const putAudience = (options: ICourierClientConfiguration) => {
   ): Promise<AudienceTypes.IAudience> => {
     const response = await options.httpClient.put<{
       audience: AudienceTypes.IAudience;
-    }>(`/audiences/${audience.id}`);
+    }>(`/audiences/${audience.id}`, audience);
     return response.data.audience;
   };
 };
