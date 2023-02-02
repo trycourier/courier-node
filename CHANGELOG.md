@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [v4.1.1] - 2023-02-02
+
+- fix audience put request
+
 ## [v4.1.0] - 2022-10-21
 
 - adds support for invoke step via `client.automations.invokeAdHocAutomation({...})`
@@ -267,7 +271,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v1.0.1 - 2019-07-12
 
-[unreleased]: https://github.com/trycourier/courier-node/compare/v4.0.1...HEAD
+[unreleased]: https://github.com/trycourier/courier-node/compare/v4.1.1...HEAD
+[v4.1.1]: https://github.com/trycourier/courier-node/compare/v4.1.1...v4.1.0
 [v4.0.2]: https://github.com/trycourier/courier-node/compare/v4.0.1...v4.0.2
 [v4.0.1]: https://github.com/trycourier/courier-node/compare/v4.0.0...v4.0.1
 [v4.0.0]: https://github.com/trycourier/courier-node/compare/v3.16.0...v4.0.0
