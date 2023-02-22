@@ -1,10 +1,23 @@
 import { ICourierPaging } from "../types";
 
+export type MessageRoutingMethod = "all" | "single";
+export type MessageRoutingChannel = string | IMessageRouting;
+export interface IMessageRouting {
+  method: MessageRoutingMethod;
+  channels: MessageRoutingChannel[];
+}
+
 export interface ICourierNotificationListResponse {
   paging: ICourierPaging;
   results: Array<{
+    created_at: number;
     id: string;
+    routing: IMessageRouting;
+    tags: {
+      data: string[];
+    };
     title: string;
+    updated_at: number;
   }>;
 }
 
