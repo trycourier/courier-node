@@ -14,7 +14,10 @@ export interface ICourierNotificationListResponse {
     id: string;
     routing: IMessageRouting;
     tags: {
-      data: string[];
+      data: {
+        id: string;
+        name: string;
+      }[];
     };
     title: string;
     updated_at: number;
