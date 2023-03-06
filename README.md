@@ -25,7 +25,7 @@ v4 uses native fetch client to make requests or falls back to a polyfill if the 
 ## Getting Started
 
 ```javascript
-import { CourierClient } from "@trycourier/courier";
+const { CourierClient } = require("@trycourier/courier");
 
 const courier = CourierClient({ authorizationToken: "<AUTH_TOKEN>" }); // get from the Courier UI
 
@@ -223,8 +223,7 @@ If you need to use a base url other than the default https://api.courier.com, yo
 ## Advanced Usage
 
 ```javascript
-import { CourierClient } from "@trycourier/courier";
-// const { CourierClient } = require("@trycourier/courier");
+const { CourierClient } = require("@trycourier/courier");
 
 const courier = CourierClient({ authorizationToken: "<AUTH_TOKEN>" });
 
@@ -691,7 +690,7 @@ All network related promise rejections are not handled in any way. All successfu
 
 ```javascript
 // Error handling example
-import { CourierClient, CourierHttpClientError } from "@trycourier/courier";
+const { CourierClient, CourierHttpClientError } = require("@trycourier/courier");
 
 const courier = CourierClient();
 
@@ -715,7 +714,7 @@ try {
 For `POST` methods, you can supply an `idempotencyKey` in the config parameter to ensure the idempotency of the API Call. We recommend that you use a `V4 UUID` for the key. Keys are eligible to be removed from the system after they're at least 24 hours old, and a new request is generated if a key is reused after the original has been removed. For more info, see [Idempotent Requests](https://docs.courier.com/reference/idempotent-requests) in the Courier documentation.
 
 ```javascript
-import { CourierClient } from "@trycourier/courier";
+const { CourierClient } = require("@trycourier/courier");
 import uuid4 from "uuid4";
 
 const courier = CourierClient();
