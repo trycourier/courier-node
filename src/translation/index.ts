@@ -18,7 +18,7 @@ const putTranslation = (options: ICourierClientConfiguration) => {
   return async (opts: IPutTranslationOpts): Promise<ITranslation> => {
     const res = await options.httpClient.put(
       `/translations/${opts.app}/${opts.locale}`,
-      opts.translation
+      Object(opts.translation)
     );
     return res.data as ITranslation;
   };

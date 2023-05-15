@@ -9,7 +9,7 @@ export interface ITranslation {
   app: string; // "default" initially
   createdAt: string;
   locale: string;
-  json: Object;
+  json: object;
   po: string;
   status: TranslationStatus;
   version: string;
