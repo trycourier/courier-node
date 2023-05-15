@@ -12,7 +12,6 @@ const mockTranslation: ITranslation = {
   status: "DRAFT",
   updatedAt: "",
   version: "",
-  workspaceId: "my-workspace",
 };
 
 describe("CourierTranslations", () => {

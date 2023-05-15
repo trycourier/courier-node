@@ -13,7 +13,6 @@ export interface ITranslation {
   po: string;
   status: TranslationStatus;
   version: string;
-  workspaceId: string;
   updatedAt: string;
 }
 
