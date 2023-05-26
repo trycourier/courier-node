@@ -1,26 +1,22 @@
 import { ICourierClientConfiguration } from "../types";
-import {
-  IGetTranslationOpts,
-  IPutTranslationOpts,
-  ITranslation,
-} from "./types";
+import { IGetTranslationOpts, IPutTranslationOpts } from "./types";
 
 const getTranslation = (options: ICourierClientConfiguration) => {
-  return async (opts: IGetTranslationOpts): Promise<ITranslation> => {
+  return async (opts: IGetTranslationOpts): Promise<string> => {
     const res = await options.httpClient.get(
-      `/translations/${opts.app}/${opts.locale}`
+      `/translations/${opts.domain}/${opts.locale}`
     );
-    return res.data as ITranslation;
+    return res.data as string;
   };
 };
 
 const putTranslation = (options: ICourierClientConfiguration) => {
-  return async (opts: IPutTranslationOpts): Promise<ITranslation> => {
+  return async (opts: IPutTranslationOpts): Promise<string> => {
     const res = await options.httpClient.put(
-      `/translations/${opts.app}/${opts.locale}`,
+      `/translations/${opts.domain}/${opts.locale}`,
       Object(opts.translation)
     );
-    return res.data as ITranslation;
+    return res.data as string;
   };
 };
 

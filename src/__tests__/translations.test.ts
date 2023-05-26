@@ -1,18 +1,8 @@
 import mockRequests from "./lib/mock-requests";
 
 import { CourierClient } from "..";
-import { ITranslation } from "../translation/types";
 
-const mockTranslation: ITranslation = {
-  app: "default",
-  createdAt: "",
-  json: {},
-  locale: "en_US",
-  po: "",
-  status: "DRAFT",
-  updatedAt: "",
-  version: "",
-};
+const mockTranslation = "po content";
 
 describe("CourierTranslations", () => {
   beforeAll(() => {
@@ -21,7 +11,7 @@ describe("CourierTranslations", () => {
         method: "GET",
         path: "/translations/default/en_US",
         response: {
-          body: mockTranslation,
+          body: "po content",
         },
       },
       {
@@ -41,7 +31,7 @@ describe("CourierTranslations", () => {
       expect.assertions(1);
 
       const response = await translation.getTranslation({
-        app: "default",
+        domain: "default",
         locale: "en_US",
       });
       expect(response).toMatchObject(mockTranslation);
@@ -53,7 +43,7 @@ describe("CourierTranslations", () => {
       expect.assertions(1);
 
       const response = await translation.getTranslation({
-        app: "default",
+        domain: "default",
         locale: "en_US",
       });
       expect(response).toMatchObject(mockTranslation);
