@@ -24,8 +24,8 @@ const listAccounts = (options: ICourierClientConfiguration) => {
       AccountTypes.IPaginatedResult<AccountTypes.IAccount>
     >("/accounts", undefined, {
       params: {
-        limit: listOptions?.limit || "20",
         cursor: listOptions?.cursor || "",
+        limit: listOptions?.limit || "20",
       },
     });
     return response.data;
