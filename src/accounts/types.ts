@@ -9,9 +9,9 @@ export interface IAccount {
 }
 
 export interface IPaginatedResult<T> {
+  cursor?: string;
   has_more: boolean;
   items: T[];
-  cursor?: string;
   type: "list";
 }
 
