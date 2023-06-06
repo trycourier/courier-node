@@ -25,7 +25,7 @@ const listAccounts = (options: ICourierClientConfiguration) => {
     >("/accounts", undefined, {
       params: {
         limit: listOptions?.limit || "20",
-        start_after: listOptions?.startAfter || "",
+        cursor: listOptions?.cursor || "",
       },
     });
     return response.data;

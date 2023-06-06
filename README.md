@@ -830,7 +830,3 @@ const { items: accounts, has_more, next_page } = await courier.accounts.list();
 ## Author
 
 [Courier](https://github.com/trycourier) ([support@courier.com](mailto:support@courier.com))
-
-```
-
-```

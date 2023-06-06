@@ -16,7 +16,7 @@ export interface IPaginatedResult<T> {
 }
 
 export interface IAccountListOptions {
-  startAfter?: string;
+  cursor?: string;
   limit?: string;
 }
 
