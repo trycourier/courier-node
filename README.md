@@ -690,7 +690,10 @@ All network related promise rejections are not handled in any way. All successfu
 
 ```javascript
 // Error handling example
-const { CourierClient, CourierHttpClientError } = require("@trycourier/courier");
+const {
+  CourierClient,
+  CourierHttpClientError,
+} = require("@trycourier/courier");
 
 const courier = CourierClient();
 
@@ -777,6 +780,47 @@ const { requestId } = await courier.send({
     providers: {}, // optional
   },
 });
+```
+
+### Accounts
+
+The Accounts API is designed to enable multi-tenant notification workflows. This is useful for defining user to account level relationships, especially in the context of B2B applications.
+
+Use Cases:
+
+- Sending branded notifications on behalf of an organization
+- Creating slack-bots on behalf of an organization
+
+#### Creating an Account
+
+```ts
+const { accountId } = await courier.accounts.put({
+  id: "<ACCOUNT_ID>",
+  name: "Courier",
+  user_profile: {
+    slack: {
+      access_token: "<SLACK_ACCESS_TOKEN_SCOPED_TO_THE_ACCOUNT>",
+    },
+  },
+});
+```
+
+#### Retrieving an Account
+
+```ts
+const account = await courier.accounts.get("<ACCOUNT_ID>");
+```
+
+#### Deleting an Account
+
+```ts
+await courier.accounts.delete("<ACCOUNT_ID>");
+```
+
+#### Listing Accounts
+
+```ts
+const { items: accounts, has_more, next_page } = await courier.accounts.list();
 ```
 
 ## License
