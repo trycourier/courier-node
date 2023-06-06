@@ -11,7 +11,7 @@ export interface IAccount {
 export interface IPaginatedResult<T> {
   has_more: boolean;
   items: T[];
-  next_page?: string;
+  cursor?: string;
   type: "list";
 }
 
