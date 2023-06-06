@@ -272,6 +272,7 @@ export interface AudienceRecipient {
 }
 
 export interface UserRecipient extends UserRecipientType {
+  account_id?: string;
   data?: MessageData;
   email?: string;
   locale?: string;
