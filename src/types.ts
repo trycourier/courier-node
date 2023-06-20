@@ -6,12 +6,12 @@ import { ICourierClientBulk } from "./bulk/types";
 import {
   ICourierClientLists,
   ICourierList,
-  ICourierRecipientSubscriptionsResponse,
+  ICourierRecipientSubscriptionsResponse
 } from "./lists/types";
 import { ICourierClientNotifications } from "./notifications/types";
 import {
   ICourierClientPreferences,
-  IRecipientPreferences,
+  IRecipientPreferences
 } from "./preferences/types";
 import { Message } from "./send/types";
 import { tokenManagement } from "./token-management";

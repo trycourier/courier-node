@@ -6,12 +6,12 @@ import {
   ICourierNotificationGetContentResponse,
   ICourierNotificationGetSubmissionChecksResponse,
   ICourierNotificationListResponse,
-  ICourierNotificationPutSubmissionChecksResponse,
+  ICourierNotificationPutSubmissionChecksResponse
 } from "../notifications/types";
 
 const mockListNotificationsResponse: ICourierNotificationListResponse = {
   paging: {
-    more: false,
+    more: false
   },
   results: [
     {
@@ -19,28 +19,28 @@ const mockListNotificationsResponse: ICourierNotificationListResponse = {
       id: "notification1",
       routing: {
         channels: ["email"],
-        method: "single",
+        method: "single"
       },
       tags: {
-        data: [],
+        data: []
       },
       title: "Hello, World",
-      updated_at: 1677027399190,
+      updated_at: 1677027399190
     },
     {
       created_at: 1677027447248,
       id: "notification2",
       routing: {
         channels: ["email"],
-        method: "single",
+        method: "single"
       },
       tags: {
-        data: [],
+        data: []
       },
       title: "Goodbye, World",
-      updated_at: 1677027447248,
-    },
-  ],
+      updated_at: 1677027447248
+    }
+  ]
 };
 
 const mockGetNotificationContentResponse: ICourierNotificationGetContentResponse = {
@@ -51,8 +51,8 @@ const mockGetNotificationContentResponse: ICourierNotificationGetContentResponse
       content: "block 1",
       checksum: "64e9e6003f89e45da9eba83c34549e7c",
       locales: {
-        fr_FR: "block fr 1",
-      },
+        fr_FR: "block fr 1"
+      }
     },
     {
       id: "block_6d50a6e3-ecc3-4815-bf51-0202c6bf54e2",
@@ -60,26 +60,26 @@ const mockGetNotificationContentResponse: ICourierNotificationGetContentResponse
       content: "block 2",
       checksum: "82206013038af7af93e9eab07b2ae536",
       locales: {
-        fr_FR: "block fr 2",
-      },
-    },
+        fr_FR: "block fr 2"
+      }
+    }
   ],
   channels: [
     {
       id: "channel_1ba46024-f156-4ed7-893b-cb1cdcfbd36e",
       type: "email",
       content: {
-        subject: "New Subject",
+        subject: "New Subject"
       },
       checksum: "440b32881f59bdf5af1a5db71f2aa433",
       locales: {
         fr_FR: {
-          subject: "French Subject",
-        },
-      },
-    },
+          subject: "French Subject"
+        }
+      }
+    }
   ],
-  checksum: "b7345b0e9e6391a0b19a350165e421c9",
+  checksum: "b7345b0e9e6391a0b19a350165e421c9"
 };
 
 const mockGetNotificationDraftContentResponse: ICourierNotificationGetContentResponse = {
@@ -90,8 +90,8 @@ const mockGetNotificationDraftContentResponse: ICourierNotificationGetContentRes
       content: "block 1",
       checksum: "64e9e6003f89e45da9eba83c34549e7c",
       locales: {
-        fr_FR: "block fr 1",
-      },
+        fr_FR: "block fr 1"
+      }
     },
     {
       id: "block_6d50a6e3-ecc3-4815-bf51-0202c6bf54e2",
@@ -99,26 +99,26 @@ const mockGetNotificationDraftContentResponse: ICourierNotificationGetContentRes
       content: "block 2",
       checksum: "82206013038af7af93e9eab07b2ae536",
       locales: {
-        fr_FR: "block fr 2",
-      },
-    },
+        fr_FR: "block fr 2"
+      }
+    }
   ],
   channels: [
     {
       id: "channel_1ba46024-f156-4ed7-893b-cb1cdcfbd36e",
       type: "email",
       content: {
-        subject: "New Subject",
+        subject: "New Subject"
       },
       checksum: "440b32881f59bdf5af1a5db71f2aa433",
       locales: {
         fr_FR: {
-          subject: "French Subject",
-        },
-      },
-    },
+          subject: "French Subject"
+        }
+      }
+    }
   ],
-  checksum: "b7345b0e9e6391a0b19a350165e421c9",
+  checksum: "b7345b0e9e6391a0b19a350165e421c9"
 };
 
 const mockGetNotificationSubmissionChecksResponse: ICourierNotificationGetSubmissionChecksResponse = {
@@ -127,9 +127,9 @@ const mockGetNotificationSubmissionChecksResponse: ICourierNotificationGetSubmis
       id: "check1",
       status: "PENDING",
       type: "custom",
-      updated: 1629169195778,
-    },
-  ],
+      updated: 1629169195778
+    }
+  ]
 };
 
 const mockPutNotificationSubmissionChecksResponse: ICourierNotificationPutSubmissionChecksResponse = {
@@ -138,9 +138,9 @@ const mockPutNotificationSubmissionChecksResponse: ICourierNotificationPutSubmis
       id: "check1",
       status: "RESOLVED",
       type: "custom",
-      updated: 1629169195779,
-    },
-  ],
+      updated: 1629169195779
+    }
+  ]
 };
 
 describe("CourierNotifications", () => {
@@ -149,49 +149,49 @@ describe("CourierNotifications", () => {
       {
         method: "GET",
         path: "/notifications",
-        response: { body: mockListNotificationsResponse },
+        response: { body: mockListNotificationsResponse }
       },
       {
         method: "GET",
         path: /\/notifications\/.*\/content/,
-        response: { body: mockGetNotificationContentResponse },
+        response: { body: mockGetNotificationContentResponse }
       },
       {
         method: "GET",
         path: /\/notifications\/.*\/draft\/content/,
-        response: { body: mockGetNotificationDraftContentResponse },
+        response: { body: mockGetNotificationDraftContentResponse }
       },
       {
         method: "POST",
         path: /\/notifications\/.*\/variations/,
-        response: { status: 204 },
+        response: { status: 204 }
       },
       {
         method: "POST",
         path: /\/notifications\/.*\/draft\/variations/,
-        response: { status: 204 },
+        response: { status: 204 }
       },
       {
         method: "GET",
         path: /\/notifications\/.*\/.*\/checks/,
-        response: { body: mockGetNotificationSubmissionChecksResponse },
+        response: { body: mockGetNotificationSubmissionChecksResponse }
       },
       {
         method: "PUT",
         path: /\/notifications\/.*\/.*\/checks/,
-        response: { body: mockPutNotificationSubmissionChecksResponse },
+        response: { body: mockPutNotificationSubmissionChecksResponse }
       },
       {
         method: "DELETE",
         path: /\/notifications\/.*\/.*\/checks/,
-        response: { status: 204 },
-      },
+        response: { status: 204 }
+      }
     ]);
   });
 
   test(".list notifications", async () => {
     const { notifications } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(notifications.list({})).resolves.toMatchObject(
@@ -201,7 +201,7 @@ describe("CourierNotifications", () => {
 
   test(".get notification content", async () => {
     const { notifications } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -211,7 +211,7 @@ describe("CourierNotifications", () => {
 
   test(".get notification draft content", async () => {
     const { notifications } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -221,7 +221,7 @@ describe("CourierNotifications", () => {
 
   test(".post notification variations", async () => {
     const { notifications } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -231,16 +231,16 @@ describe("CourierNotifications", () => {
             id: "block_1d4c32e0-bca8-43f6-b5d5-8c043199bce6",
             type: "text",
             locales: {
-              fr_FR: "block fr 1",
-            },
+              fr_FR: "block fr 1"
+            }
           },
           {
             id: "block_6d50a6e3-ecc3-4815-bf51-0202c6bf54e2",
             type: "text",
             locales: {
-              fr_FR: "block fr 2",
-            },
-          },
+              fr_FR: "block fr 2"
+            }
+          }
         ],
         channels: [
           {
@@ -248,27 +248,27 @@ describe("CourierNotifications", () => {
             type: "email",
             locales: {
               fr_FR: {
-                subject: "French Subject",
-              },
-            },
+                subject: "French Subject"
+              }
+            }
           },
           {
             id: "channel_2c2aad1c-30f0-4a55-8d8f-d213f32147bc",
             type: "push",
             locales: {
               fr_FR: {
-                title: "French Title",
-              },
-            },
-          },
-        ],
+                title: "French Title"
+              }
+            }
+          }
+        ]
       })
     ).resolves.toBeUndefined();
   });
 
   test(".post notification draft variations", async () => {
     const { notifications } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -278,16 +278,16 @@ describe("CourierNotifications", () => {
             id: "block_1d4c32e0-bca8-43f6-b5d5-8c043199bce6",
             type: "text",
             locales: {
-              fr_FR: "block fr 1",
-            },
+              fr_FR: "block fr 1"
+            }
           },
           {
             id: "block_6d50a6e3-ecc3-4815-bf51-0202c6bf54e2",
             type: "text",
             locales: {
-              fr_FR: "block fr 2",
-            },
-          },
+              fr_FR: "block fr 2"
+            }
+          }
         ],
         channels: [
           {
@@ -295,27 +295,27 @@ describe("CourierNotifications", () => {
             type: "email",
             locales: {
               fr_FR: {
-                subject: "French Subject",
-              },
-            },
+                subject: "French Subject"
+              }
+            }
           },
           {
             id: "channel_2c2aad1c-30f0-4a55-8d8f-d213f32147bc",
             type: "push",
             locales: {
               fr_FR: {
-                title: "French Title",
-              },
-            },
-          },
-        ],
+                title: "French Title"
+              }
+            }
+          }
+        ]
       })
     ).resolves.toBeUndefined();
   });
 
   test(".get notification submission checks", async () => {
     const { notifications } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -325,7 +325,7 @@ describe("CourierNotifications", () => {
 
   test(".put notification submission checks", async () => {
     const { notifications } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
@@ -334,16 +334,16 @@ describe("CourierNotifications", () => {
           {
             id: "check1",
             status: "RESOLVED",
-            type: "custom",
-          },
-        ],
+            type: "custom"
+          }
+        ]
       })
     ).resolves.toMatchObject(mockPutNotificationSubmissionChecksResponse);
   });
 
   test(".cancel notification submission", async () => {
     const { notifications } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(

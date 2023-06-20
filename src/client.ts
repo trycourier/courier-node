@@ -7,7 +7,7 @@ import {
   deleteBrand,
   getBrand,
   getBrands,
-  replaceBrand,
+  replaceBrand
 } from "./brands";
 import { bulk } from "./bulk";
 import { lists } from "./lists";
@@ -20,7 +20,7 @@ import {
   getRecipientSubscriptions,
   mergeProfile,
   removeRecipientFromAllLists,
-  replaceProfile,
+  replaceProfile
 } from "./profile";
 import { send } from "./send";
 import { tokenManagement } from "./token-management";
@@ -33,7 +33,7 @@ import {
   ICourierMessageGetOutputResponse,
   ICourierMessageGetResponse,
   ICourierMessagesGetParameters,
-  ICourierMessagesGetResponse,
+  ICourierMessagesGetResponse
 } from "./types";
 
 const cancelMessage = (options: ICourierClientConfiguration) => {
@@ -92,8 +92,8 @@ const getMessages = (options: ICourierClientConfiguration) => {
           notification: params?.notificationId,
           recipient: params?.recipientId,
           status: params?.status,
-          tags: params?.tags,
-        },
+          tags: params?.tags
+        }
       }
     );
     return res.data;
@@ -130,6 +130,6 @@ export const client = (
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
     send: send(options),
-    tokenManagement: tokenManagement(options),
+    tokenManagement: tokenManagement(options)
   };
 };
