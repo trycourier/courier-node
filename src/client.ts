@@ -28,12 +28,23 @@ import { tokenManagement } from "./token-management";
 import {
   ICourierClient,
   ICourierClientConfiguration,
+  ICourierMessageCancelResponse,
   ICourierMessageGetHistoryResponse,
   ICourierMessageGetOutputResponse,
   ICourierMessageGetResponse,
   ICourierMessagesGetParameters,
   ICourierMessagesGetResponse,
 } from "./types";
+
+const cancelMessage = (options: ICourierClientConfiguration) => {
+  return async (messageId: string): Promise<ICourierMessageCancelResponse> => {
+    const res = await options.httpClient.post<ICourierMessageCancelResponse>(
+      `/messages/${messageId}/cancel`
+    );
+
+    return res.data;
+  };
+};
 
 const getMessage = (options: ICourierClientConfiguration) => {
   return async (messageId: string): Promise<ICourierMessageGetResponse> => {
@@ -99,6 +110,7 @@ export const client = (
     auditEvents: auditEvents(options),
     automations: automations(options),
     bulk: bulk(options),
+    cancelMessage: cancelMessage(options),
     createBrand: createBrand(options),
     deleteBrand: deleteBrand(options),
     deleteProfile: deleteProfile(options),

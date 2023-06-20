@@ -166,6 +166,27 @@ export interface ICourierMessagesGetResponse {
   }>;
 }
 
+export interface ICourierMessageCancelResponse {
+  canceledAt: number; // the milli second timestamp of the successful cancelation request
+  event: string; // event id of the notification
+  id: string; // the message id
+  recipient: string; // the recipient email or id
+  status: string; // the message status
+
+  // optional
+  clicked?: number; // the milli-second timestamp of the clicked event
+  delivered?: number; // the milli-second timestamp of the deleivered event
+  enqueued?: number; // the milli-second timestamp of the enqueued event
+  error?: string; // the error message
+  jobId?: string; // the bulk job id
+  listId?: string; // the list id of the list
+  listMessageId?: string; // the request id from the sucessful list send request
+  notification?: string; // the notification id
+  opened?: number; // the milli-second timestamp of the opened event
+  runId?: string; // the automation run id
+  sent?: number; // the milli-second timestamp of the sent event
+}
+
 export interface ICourierMessageGetResponse {
   clicked?: number;
   delivered?: number;
@@ -414,6 +435,7 @@ export interface ICourierClient {
   auditEvents: ReturnType<typeof auditEvents>;
   automations: ICourierClientAutomations;
   bulk: ICourierClientBulk;
+  cancelMessage: (messageId: string) => Promise<ICourierMessageCancelResponse>;
   createBrand: (
     params: ICourierBrandParameters,
     config?: ICourierBrandPostConfig

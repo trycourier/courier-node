@@ -12,35 +12,36 @@ import {
   ICourierProfilePostResponse,
   ICourierProfilePutResponse,
   ICourierSendResponse,
-  ICourierSendMessageResponse
+  ICourierSendMessageResponse,
+  ICourierMessageCancelResponse,
 } from "../types";
 
 const mockSendResponse: ICourierSendResponse = {
-  messageId: "1234"
+  messageId: "1234",
 };
 
 const mockSendV2Response: ICourierSendMessageResponse = {
-  requestId: "1234"
+  requestId: "1234",
 };
 
 const mockReplaceProfileResponse: ICourierProfilePutResponse = {
-  status: "SUCCESS"
+  status: "SUCCESS",
 };
 
 const mockMergeProfileResponse: ICourierProfilePostResponse = {
-  status: "SUCCESS"
+  status: "SUCCESS",
 };
 
 const mockGetProfileResponse: ICourierProfileGetResponse = {
   profile: {
-    name: "Troy"
-  }
+    name: "Troy",
+  },
 };
 
 const mockGetMessageResponse: ICourierMessageGetResponse = {
   id: "mockMessageId",
   recipient: "mockRecipient",
-  status: "SENT"
+  status: "SENT",
 };
 
 const mockGetMessageHistoryResponse: ICourierMessageGetHistoryResponse = {
@@ -50,13 +51,13 @@ const mockGetMessageHistoryResponse: ICourierMessageGetHistoryResponse = {
       event: "courier-quickstart",
       recipient: "Google_107913066099530916297",
       ts: 1621286334939,
-      type: "ENQUEUED"
+      type: "ENQUEUED",
     },
     {
       event_id: "courier-quickstart",
       notification_id: "courier-quickstart",
       ts: 1621286335117,
-      type: "MAPPED"
+      type: "MAPPED",
     },
     {
       merged_profile: {
@@ -65,7 +66,7 @@ const mockGetMessageHistoryResponse: ICourierMessageGetHistoryResponse = {
         family_name: "K",
         given_name: "Tejas",
         name: "Tejas K",
-        sub: "Google_107913066099530916297"
+        sub: "Google_107913066099530916297",
       },
       stored_profile: {
         email: "tejas.kumthekar26@gmail.com",
@@ -73,18 +74,18 @@ const mockGetMessageHistoryResponse: ICourierMessageGetHistoryResponse = {
         family_name: "K",
         given_name: "Tejas",
         name: "Tejas K",
-        sub: "Google_107913066099530916297"
+        sub: "Google_107913066099530916297",
       },
       ts: 1621286335173,
-      type: "PROFILE_LOADED"
+      type: "PROFILE_LOADED",
     },
     {
       channel: {
-        id: "5371fee1-8d74-4e00-bf45-037637168a07"
+        id: "5371fee1-8d74-4e00-bf45-037637168a07",
       },
       integration: {
         id: "courier-internal-sendgrid",
-        provider: "sendgrid"
+        provider: "sendgrid",
       },
       output: {
         html:
@@ -92,35 +93,35 @@ const mockGetMessageHistoryResponse: ICourierMessageGetHistoryResponse = {
         subject:
           "/messages/1-60a2ddbe-51a48d9c5fd0866e2495ce11/output/ffdc6d0d-2fc8-4447-a3b3-7d7e07e10689/subject",
         text:
-          "/messages/1-60a2ddbe-51a48d9c5fd0866e2495ce11/output/ffdc6d0d-2fc8-4447-a3b3-7d7e07e10689/text"
+          "/messages/1-60a2ddbe-51a48d9c5fd0866e2495ce11/output/ffdc6d0d-2fc8-4447-a3b3-7d7e07e10689/text",
       },
       ts: 1621286335562,
-      type: "RENDERED"
+      type: "RENDERED",
     },
     {
       channel: {
-        id: "5371fee1-8d74-4e00-bf45-037637168a07"
+        id: "5371fee1-8d74-4e00-bf45-037637168a07",
       },
       integration: {
         id: "courier-internal-sendgrid",
-        provider: "sendgrid"
+        provider: "sendgrid",
       },
       ts: 1621286335715,
-      type: "SENT"
+      type: "SENT",
     },
     {
       channel: {
-        id: "5371fee1-8d74-4e00-bf45-037637168a07"
+        id: "5371fee1-8d74-4e00-bf45-037637168a07",
       },
       integration: {
         id: "courier-internal-sendgrid",
-        provider: "sendgrid"
+        provider: "sendgrid",
       },
       reference: {},
       ts: 1621286337000,
-      type: "DELIVERED"
-    }
-  ]
+      type: "DELIVERED",
+    },
+  ],
 };
 
 const mockGetMessageOutputResponse: ICourierMessageGetOutputResponse = {
@@ -131,8 +132,8 @@ const mockGetMessageOutputResponse: ICourierMessageGetOutputResponse = {
       content: {
         html: "",
         subject: "foo bar",
-        text: "Lorem ipsum dolor, sit amet"
-      }
+        text: "Lorem ipsum dolor, sit amet",
+      },
     },
     {
       channel: "push",
@@ -141,19 +142,27 @@ const mockGetMessageOutputResponse: ICourierMessageGetOutputResponse = {
         blocks: [
           {
             text: "Lorem ipsum dolor, sit amet.",
-            type: "text"
-          }
+            type: "text",
+          },
         ],
         body: "Lorem ipsum dolor, sit amet",
-        title: "foo bar"
-      }
-    }
-  ]
+        title: "foo bar",
+      },
+    },
+  ],
+};
+
+const mockCancelMessageResponse: ICourierMessageCancelResponse = {
+  canceledAt: 0,
+  event: "",
+  id: "",
+  recipient: "",
+  status: "",
 };
 
 const mockGetMessagesResponse: ICourierMessagesGetResponse = {
   paging: {
-    more: false
+    more: false,
   },
   results: [
     {
@@ -163,9 +172,9 @@ const mockGetMessagesResponse: ICourierMessagesGetResponse = {
       recipient: "mockRecipient",
       status: "SENT",
       event: "mockEvent",
-      notification: "mockNotification"
-    }
-  ]
+      notification: "mockNotification",
+    },
+  ],
 };
 
 const mockBrandResponse: ICourierBrand = {
@@ -177,19 +186,19 @@ const mockBrandResponse: ICourierBrand = {
     email: {
       footer: {},
       header: {
-        barColor: "#9D3789"
-      }
-    }
+        barColor: "#9D3789",
+      },
+    },
   },
   updated: 1591814489143,
-  version: "2020-06-10T18:41:29.093Z"
+  version: "2020-06-10T18:41:29.093Z",
 };
 
 const mockGetBrandsResponse: ICourierBrandGetAllResponse = {
   paging: {
-    more: false
+    more: false,
   },
-  results: [mockBrandResponse]
+  results: [mockBrandResponse],
 };
 
 describe("CourierClient - send with V2 schema", () => {
@@ -199,40 +208,40 @@ describe("CourierClient - send with V2 schema", () => {
         method: "POST",
         path: "/send",
         headers: { "Idempotency-Key": null },
-        response: { body: mockSendV2Response }
+        response: { body: mockSendV2Response },
       },
       {
         method: "POST",
         path: "/send",
         headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
-        response: { body: mockSendV2Response }
-      }
+        response: { body: mockSendV2Response },
+      },
     ]);
   });
 
   test(".send", async () => {
     const { send } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
       send({
         message: {
           data: {
-            example: "EXAMPLE_DATA"
+            example: "EXAMPLE_DATA",
           },
           template: "EVENT_ID",
           to: {
-            phone_number: "PHONE_NUMBER"
-          }
-        }
+            phone_number: "PHONE_NUMBER",
+          },
+        },
       })
     ).resolves.toMatchObject(mockSendV2Response);
   });
 
   test(".send ad hoc list", async () => {
     const { send } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
@@ -243,62 +252,62 @@ describe("CourierClient - send with V2 schema", () => {
               user_id: "<USER_ID>", // usually your system's User ID associated to a Courier profile
               email: "test@email.com",
               data: {
-                name: "some user's name"
-              }
+                name: "some user's name",
+              },
             },
             {
               email: "marty@email.com",
               data: {
-                name: "Marty"
-              }
+                name: "Marty",
+              },
             },
             {
               email: "doc_brown@email.com",
               data: {
-                name: "Doc"
-              }
+                name: "Doc",
+              },
             },
             {
               phone_number: "8675309",
               data: {
-                name: "Jenny"
-              }
-            }
+                name: "Jenny",
+              },
+            },
           ],
           content: {
             title: "Back to the Future",
-            body: "Oh my {{name}}, we need 1.21 Gigawatts!"
+            body: "Oh my {{name}}, we need 1.21 Gigawatts!",
           },
           routing: {
             method: "all",
-            channels: ["sms", "email"]
-          }
-        }
+            channels: ["sms", "email"],
+          },
+        },
       })
     ).resolves.toMatchObject(mockSendV2Response);
   });
 
   test(".send with Idempotency Key", async () => {
     const { send } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await send(
       {
         message: {
           data: {
-            example: "EXAMPLE_DATA"
+            example: "EXAMPLE_DATA",
           },
           template: "EVENT_ID",
           to: {
-            phone_number: "PHONE_NUMBER"
-          }
-        }
+            phone_number: "PHONE_NUMBER",
+          },
+        },
       },
       {
         idempotencyKey: "IDEMPOTENCY_KEY_UUID",
         // e.g. expiration date in epoch time, 30 mins from now
-        idempotencyExpiry: Date.now() + 30 * 60 * 1000
+        idempotencyExpiry: Date.now() + 30 * 60 * 1000,
       }
     );
   });
@@ -311,137 +320,152 @@ describe("CourierClient", () => {
         method: "POST",
         path: "/send",
         headers: { "Idempotency-Key": null },
-        response: { body: mockSendResponse }
+        response: { body: mockSendResponse },
       },
       {
         method: "POST",
         path: "/send",
         headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
-        response: { body: mockSendResponse }
+        response: { body: mockSendResponse },
       },
       {
         method: "PUT",
         path: /\/profiles\/.*/,
-        response: { body: mockReplaceProfileResponse }
+        response: { body: mockReplaceProfileResponse },
       },
       {
         method: "POST",
         path: /\/profiles\/.*/,
         headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
-        response: { body: mockMergeProfileResponse }
+        response: { body: mockMergeProfileResponse },
       },
       {
         method: "POST",
         path: /\/profiles\/.*/,
         headers: { "Idempotency-Key": null },
-        response: { body: mockMergeProfileResponse }
+        response: { body: mockMergeProfileResponse },
       },
       {
         method: "GET",
         path: /\/profiles\/.*/,
-        response: { body: mockGetProfileResponse }
+        response: { body: mockGetProfileResponse },
+      },
+      {
+        method: "POST",
+        path: /\/messages\/.*\/cancel/,
+        response: { body: mockCancelMessageResponse },
       },
       {
         method: "GET",
         path: /\/messages\/.*\/history/,
-        response: { body: mockGetMessageHistoryResponse }
+        response: { body: mockGetMessageHistoryResponse },
       },
       {
         method: "GET",
         path: /\/messages\/.*\/output/,
-        response: { body: mockGetMessageOutputResponse }
+        response: { body: mockGetMessageOutputResponse },
       },
       {
         method: "GET",
         path: /\/messages\/.*/,
-        response: { body: mockGetMessageResponse }
+        response: { body: mockGetMessageResponse },
       },
       {
         method: "GET",
         path: "/messages",
-        response: { body: mockGetMessagesResponse }
+        response: { body: mockGetMessagesResponse },
       },
       {
         method: "GET",
         path: "/brands",
-        response: { body: mockGetBrandsResponse }
+        response: { body: mockGetBrandsResponse },
       },
       {
         method: "GET",
         path: /\/brands\/.*/,
-        response: { body: mockBrandResponse }
+        response: { body: mockBrandResponse },
       },
       {
         method: "POST",
         path: "/brands",
         headers: { "Idempotency-Key": null },
-        response: { body: mockBrandResponse }
+        response: { body: mockBrandResponse },
       },
       {
         method: "POST",
         path: "/brands",
         headers: { "Idempotency-Key": "IDEMPOTENCY_KEY_UUID" },
-        response: { body: mockBrandResponse }
+        response: { body: mockBrandResponse },
       },
       {
         method: "PUT",
         path: /\/brands\/.*/,
-        response: { body: mockBrandResponse }
+        response: { body: mockBrandResponse },
       },
       {
         method: "DELETE",
         path: /\/brands\/.*/,
-        response: { status: 204 }
-      }
+        response: { status: 204 },
+      },
     ]);
   });
 
   test(".send", async () => {
     const { send } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
       send({
         data: {
-          example: "EXAMPLE_DATA"
+          example: "EXAMPLE_DATA",
         },
         eventId: "EVENT_ID",
         profile: {
-          sms: "PHONE_NUMBER"
+          sms: "PHONE_NUMBER",
         },
-        recipientId: "RECIPIENT_ID"
+        recipientId: "RECIPIENT_ID",
       })
     ).resolves.toMatchObject(mockSendResponse);
   });
 
   test(".send with Idempotency Key", async () => {
     const { send } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await send(
       {
         data: {
-          example: "EXAMPLE_DATA"
+          example: "EXAMPLE_DATA",
         },
         eventId: "EVENT_ID",
         profile: {
-          sms: "PHONE_NUMBER"
+          sms: "PHONE_NUMBER",
         },
-        recipientId: "RECIPIENT_ID"
+        recipientId: "RECIPIENT_ID",
       },
       {
         idempotencyKey: "IDEMPOTENCY_KEY_UUID",
         // e.g. expiration date in epoch time, 30 mins from now
-        idempotencyExpiry: Date.now() + 30 * 60 * 1000
+        idempotencyExpiry: Date.now() + 30 * 60 * 1000,
       }
     );
   });
 
+  test(".cancelMessage", async () => {
+    const { cancelMessage } = CourierClient({
+      authorizationToken: "AUTH_TOKEN",
+    });
+
+    await expect(
+      cancelMessage(mockCancelMessageResponse.id)
+    ).resolves.toMatchObject(mockCancelMessageResponse);
+  });
+
   test(".getMessage", async () => {
     const { getMessage } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(getMessage(mockGetMessageResponse.id)).resolves.toMatchObject(
@@ -451,7 +475,7 @@ describe("CourierClient", () => {
 
   test(".getMessageHistory", async () => {
     const { getMessageHistory } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(getMessageHistory("MESSAGE_ID")).resolves.toMatchObject(
@@ -461,7 +485,7 @@ describe("CourierClient", () => {
 
   test(".getMessageOutput", async () => {
     const { getMessageOutput } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(getMessageOutput("MESSAGE_ID")).resolves.toMatchObject(
@@ -471,7 +495,7 @@ describe("CourierClient", () => {
 
   test(".getMessages", async () => {
     const { getMessages } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(getMessages()).resolves.toMatchObject(mockGetMessagesResponse);
@@ -479,67 +503,67 @@ describe("CourierClient", () => {
 
   test(".replaceProfile", async () => {
     const { replaceProfile } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
       replaceProfile({
         profile: {
-          foo: "bar"
+          foo: "bar",
         },
-        recipientId: "RECIPIENT_ID"
+        recipientId: "RECIPIENT_ID",
       })
     ).resolves.toMatchObject(mockReplaceProfileResponse);
   });
 
   test(".mergeProfile", async () => {
     const { mergeProfile } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
       mergeProfile({
         profile: {
-          foo: "bar"
+          foo: "bar",
         },
-        recipientId: "RECIPIENT_ID"
+        recipientId: "RECIPIENT_ID",
       })
     ).resolves.toMatchObject(mockMergeProfileResponse);
   });
 
   test(".mergeProfile with Idempotency Key", async () => {
     const { mergeProfile } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await mergeProfile(
       {
         profile: {
-          foo: "bar"
+          foo: "bar",
         },
-        recipientId: "RECIPIENT_ID"
+        recipientId: "RECIPIENT_ID",
       },
       {
-        idempotencyKey: "IDEMPOTENCY_KEY_UUID"
+        idempotencyKey: "IDEMPOTENCY_KEY_UUID",
       }
     );
   });
 
   test(".getProfile", async () => {
     const { getProfile } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
       getProfile({
-        recipientId: "RECIPIENT_ID"
+        recipientId: "RECIPIENT_ID",
       })
     ).resolves.toMatchObject(mockGetProfileResponse);
   });
 
   test(".getBrands", async () => {
     const { getBrands } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(getBrands()).resolves.toMatchObject(mockGetBrandsResponse);
@@ -547,7 +571,7 @@ describe("CourierClient", () => {
 
   test(".getBrand", async () => {
     const { getBrand } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
@@ -557,7 +581,7 @@ describe("CourierClient", () => {
 
   test(".createBrand", async () => {
     const { createBrand } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
@@ -568,17 +592,17 @@ describe("CourierClient", () => {
           email: {
             footer: {},
             header: {
-              barColor: "#9D3789"
-            }
-          }
-        }
+              barColor: "#9D3789",
+            },
+          },
+        },
       })
     ).resolves.toMatchObject(mockBrandResponse);
   });
 
   test(".createBrand with Idempotency Key", async () => {
     const { createBrand } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await createBrand(
@@ -589,20 +613,20 @@ describe("CourierClient", () => {
           email: {
             footer: {},
             header: {
-              barColor: "#9D3789"
-            }
-          }
-        }
+              barColor: "#9D3789",
+            },
+          },
+        },
       },
       {
-        idempotencyKey: "IDEMPOTENCY_KEY_UUID"
+        idempotencyKey: "IDEMPOTENCY_KEY_UUID",
       }
     );
   });
 
   test(".replaceBrand", async () => {
     const { replaceBrand } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
@@ -613,17 +637,17 @@ describe("CourierClient", () => {
           email: {
             footer: {},
             header: {
-              barColor: "#9D3789"
-            }
-          }
-        }
+              barColor: "#9D3789",
+            },
+          },
+        },
       })
     ).resolves.toMatchObject(mockBrandResponse);
   });
 
   test(".deleteBrand", async () => {
     const { deleteBrand } = CourierClient({
-      authorizationToken: "AUTH_TOKEN"
+      authorizationToken: "AUTH_TOKEN",
     });
 
     await expect(
