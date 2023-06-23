@@ -797,14 +797,6 @@ Use Cases:
 const { accountId } = await courier.accounts.put({
   id: "<ACCOUNT_ID>",
   name: "Courier",
-  preferences: {
-    topics: [
-      {
-        default_status: "OPTED_OUT",
-        id: "foo"
-      }
-    ]
-  },
   user_profile: {
     slack: {
       access_token: "<SLACK_ACCESS_TOKEN_SCOPED_TO_THE_ACCOUNT>",
