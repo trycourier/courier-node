@@ -13,28 +13,8 @@ export type ChannelClassification = "direct_message" | "email" | "push";
 
 export type Rule = ISnoozeRule;
 
-export type PreferenceStatus = "OPTED_OUT" | "OPTED_IN" | "REQUIRED";
+export type PreferenceStatus = "OPTED_OUT" | "OPTED_IN";
 
-export interface IPreference {
-  status: PreferenceStatus;
-  rules?: Rule[];
-  channel_preferences?: Array<{
-    channel: ChannelClassification;
-  }>;
-  routingPreferences?: ChannelClassification[];
-  hasCustomRouting?: boolean;
-  source?: "subscription" | "list" | "recipient";
-}
-
-export interface ISubscriptionTopic
-  extends Pick<
-    IPreference,
-    "status" | "hasCustomRouting" | "routingPreferences"
-  > {
-  topicId: string;
-  topicName: string;
-  defaultStatus: IPreference["status"];
-}
 export interface ICourierNotificationPreferences {
   [id: string]: {
     status: PreferenceStatus;
