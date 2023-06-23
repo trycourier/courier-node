@@ -1,4 +1,3 @@
-import { ISubscriptionTopic } from "../preferences/types";
 
 export interface IAccount {
   brand_id?: string;
