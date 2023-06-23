@@ -797,6 +797,14 @@ Use Cases:
 const { accountId } = await courier.accounts.put({
   id: "<ACCOUNT_ID>",
   name: "Courier",
+  preferences: {
+    topics: [
+      {
+        default_status: "OPTED_OUT",
+        id: "foo"
+      }
+    ]
+  },
   user_profile: {
     slack: {
       access_token: "<SLACK_ACCESS_TOKEN_SCOPED_TO_THE_ACCOUNT>",
@@ -821,6 +829,25 @@ await courier.accounts.delete("<ACCOUNT_ID>");
 
 ```ts
 const { items: accounts, has_more, next_page } = await courier.accounts.list();
+```
+
+### Users
+
+#### Updating user
+
+```ts
+await courier.users.put("<USER_ID>", {
+  accounts: [{ account_id: "ACCOUNT_ID", profile: { foo: "bar" } }],
+  profile: { name: "John Doe" },
+});
+```
+
+#### Updating user accounts
+
+```ts
+await courier.users.putAccounts("<USER_ID>", {
+  accounts: [{ account_id: "ACCOUNT_ID", profile: { foo: "bar" } }],
+});
 ```
 
 ## License
