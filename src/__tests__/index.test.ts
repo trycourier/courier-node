@@ -12,7 +12,8 @@ import {
   ICourierProfilePostResponse,
   ICourierProfilePutResponse,
   ICourierSendResponse,
-  ICourierSendMessageResponse
+  ICourierSendMessageResponse,
+  ICourierMessageCancelResponse
 } from "../types";
 
 const mockSendResponse: ICourierSendResponse = {
@@ -149,6 +150,14 @@ const mockGetMessageOutputResponse: ICourierMessageGetOutputResponse = {
       }
     }
   ]
+};
+
+const mockCancelMessageResponse: ICourierMessageCancelResponse = {
+  canceledAt: 0,
+  event: "",
+  id: "",
+  recipient: "",
+  status: ""
 };
 
 const mockGetMessagesResponse: ICourierMessagesGetResponse = {
@@ -342,6 +351,11 @@ describe("CourierClient", () => {
         response: { body: mockGetProfileResponse }
       },
       {
+        method: "POST",
+        path: /\/messages\/.*\/cancel/,
+        response: { body: mockCancelMessageResponse }
+      },
+      {
         method: "GET",
         path: /\/messages\/.*\/history/,
         response: { body: mockGetMessageHistoryResponse }
@@ -437,6 +451,16 @@ describe("CourierClient", () => {
         idempotencyExpiry: Date.now() + 30 * 60 * 1000
       }
     );
+  });
+
+  test(".cancelMessage", async () => {
+    const { cancelMessage } = CourierClient({
+      authorizationToken: "AUTH_TOKEN"
+    });
+
+    await expect(
+      cancelMessage(mockCancelMessageResponse.id)
+    ).resolves.toMatchObject(mockCancelMessageResponse);
   });
 
   test(".getMessage", async () => {

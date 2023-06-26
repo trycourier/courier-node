@@ -7,7 +7,7 @@ import {
   deleteBrand,
   getBrand,
   getBrands,
-  replaceBrand,
+  replaceBrand
 } from "./brands";
 import { bulk } from "./bulk";
 import { lists } from "./lists";
@@ -20,7 +20,7 @@ import {
   getRecipientSubscriptions,
   mergeProfile,
   removeRecipientFromAllLists,
-  replaceProfile,
+  replaceProfile
 } from "./profile";
 import { send } from "./send";
 import { tokenManagement } from "./token-management";
@@ -29,12 +29,23 @@ import { users } from "./users";
 import {
   ICourierClient,
   ICourierClientConfiguration,
+  ICourierMessageCancelResponse,
   ICourierMessageGetHistoryResponse,
   ICourierMessageGetOutputResponse,
   ICourierMessageGetResponse,
   ICourierMessagesGetParameters,
-  ICourierMessagesGetResponse,
+  ICourierMessagesGetResponse
 } from "./types";
+
+const cancelMessage = (options: ICourierClientConfiguration) => {
+  return async (messageId: string): Promise<ICourierMessageCancelResponse> => {
+    const res = await options.httpClient.post<ICourierMessageCancelResponse>(
+      `/messages/${messageId}/cancel`
+    );
+
+    return res.data;
+  };
+};
 
 const getMessage = (options: ICourierClientConfiguration) => {
   return async (messageId: string): Promise<ICourierMessageGetResponse> => {
@@ -82,8 +93,8 @@ const getMessages = (options: ICourierClientConfiguration) => {
           notification: params?.notificationId,
           recipient: params?.recipientId,
           status: params?.status,
-          tags: params?.tags,
-        },
+          tags: params?.tags
+        }
       }
     );
     return res.data;
@@ -100,6 +111,7 @@ export const client = (
     auditEvents: auditEvents(options),
     automations: automations(options),
     bulk: bulk(options),
+    cancelMessage: cancelMessage(options),
     createBrand: createBrand(options),
     deleteBrand: deleteBrand(options),
     deleteProfile: deleteProfile(options),
@@ -120,6 +132,6 @@ export const client = (
     replaceProfile: replaceProfile(options),
     send: send(options),
     tokenManagement: tokenManagement(options),
-    users: users(options),
+    users: users(options)
   };
 };
