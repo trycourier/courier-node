@@ -25,8 +25,8 @@ const listAccounts = (options: ICourierClientConfiguration) => {
     >("/accounts", undefined, {
       params: {
         cursor: listOptions?.cursor || "",
-        limit: listOptions?.limit || "20",
-      },
+        limit: listOptions?.limit || "20"
+      }
     });
     return response.data;
   };
@@ -48,5 +48,5 @@ export const accounts = (options: ICourierClientConfiguration) => ({
   delete: deleteAccount(options),
   get: getAccount(options),
   listAccounts: listAccounts(options),
-  put: putAccount(options),
+  put: putAccount(options)
 });
