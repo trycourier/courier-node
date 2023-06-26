@@ -15,6 +15,7 @@ import {
 } from "./preferences/types";
 import { Message } from "./send/types";
 import { tokenManagement } from "./token-management";
+import { users } from "./users";
 
 export interface IInitHttpClientOptions {
   baseUrl: string;
@@ -481,4 +482,5 @@ export interface ICourierClient {
     config?: ICourierSendConfig
   ) => Promise<SendResponse<T>>;
   tokenManagement: ReturnType<typeof tokenManagement>;
+  users: ReturnType<typeof users>;
 }

@@ -24,6 +24,7 @@ import {
 } from "./profile";
 import { send } from "./send";
 import { tokenManagement } from "./token-management";
+import { users } from "./users";
 
 import {
   ICourierClient,
@@ -130,6 +131,7 @@ export const client = (
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
     send: send(options),
-    tokenManagement: tokenManagement(options)
+    tokenManagement: tokenManagement(options),
+    users: users(options)
   };
 };

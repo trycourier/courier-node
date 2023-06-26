@@ -14,6 +14,7 @@ export type ChannelClassification = "direct_message" | "email" | "push";
 export type Rule = ISnoozeRule;
 
 export type PreferenceStatus = "OPTED_OUT" | "OPTED_IN";
+
 export interface ICourierNotificationPreferences {
   [id: string]: {
     status: PreferenceStatus;

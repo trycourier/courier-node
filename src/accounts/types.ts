@@ -1,3 +1,4 @@
+
 export interface IAccount {
   brand_id?: string;
   id: string;
@@ -19,7 +20,6 @@ export interface IAccountListOptions {
   cursor?: string;
   limit?: string;
 }
-
 export interface ICourierClientAccounts {
   delete: (id: string) => Promise<void>;
   get: (id: string) => Promise<IAccount>;
