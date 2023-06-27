@@ -1,9 +1,14 @@
-
 export interface IAccount {
   brand_id?: string;
   id: string;
   name: string;
   parent_account_id?: string;
+  preferences?: {
+    topics: Array<{
+      defaultStatus: "OPTED_IN" | "OPTED_OUT" | "REQUIRED";
+      id: string;
+    }>;
+  };
   properties?: { [key: string]: any };
   user_profile?: Record<string, any>;
   type: "account";
