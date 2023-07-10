@@ -1,6 +1,6 @@
 {
   "name": "@trycourier/courier",
-  "version": "4.7.0",
+  "version": "4.8.0",
   "description": "A node.js module for communicating with the Courier REST API.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

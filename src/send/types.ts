@@ -238,9 +238,16 @@ type ListRecipientType = Record<string, unknown> &
   {
     [key in keyof InvalidListRecipient]?: never;
   };
+
+export interface ListFilter {
+  operator: "MEMBER_OF"; // send to users only if they are member of the account
+  path: "account_id";
+  value: string;
+}
 export interface ListRecipient extends ListRecipientType {
   list_id?: string;
   data?: MessageData;
+  filters?: ListFilter[];
 }
 
 interface InvalidListPatternRecipient {
@@ -266,9 +273,16 @@ type UserRecipientType = Record<string, unknown> &
   {
     [key in keyof InvalidUserRecipient]?: never;
   };
+
+export interface AudienceFilter {
+  operator: "MEMBER_OF"; // send to users only if they are member of the account
+  path: "account_id";
+  value: string;
+}
 export interface AudienceRecipient {
   audience_id: string;
   data?: MessageData;
+  filters?: AudienceFilter[];
 }
 
 export interface UserRecipient extends UserRecipientType {
