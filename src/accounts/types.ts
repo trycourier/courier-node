@@ -3,10 +3,11 @@ export interface IAccount {
   id: string;
   name: string;
   parent_account_id?: string;
-  preferences?: {
-    topics: Array<{
-      defaultStatus: "OPTED_IN" | "OPTED_OUT" | "REQUIRED";
+  default_preferences?: {
+    items: Array<{
       id: string;
+      status: "OPTED_IN" | "OPTED_OUT" | "REQUIRED";
+      type: "subscription_topic";
     }>;
   };
   properties?: { [key: string]: any };
