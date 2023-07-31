@@ -26,7 +26,8 @@ const mockAccountListResponse: AccountTypes.IPaginatedResult<AccountTypes.IAccou
     }
   ],
   has_more: false,
-  type: "list"
+  type: "list",
+  url: "/accounts"
 };
 
 describe("CourierAccounts", () => {
@@ -95,7 +96,8 @@ describe("CourierAccounts", () => {
           }
         ],
         has_more: false,
-        type: "list"
+        type: "list",
+        url: "/accounts"
       }
     );
   });
