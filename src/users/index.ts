@@ -16,5 +16,5 @@ const putAccounts = (options: ICourierClientConfiguration) => {
 
 export const users = (options: ICourierClientConfiguration) => ({
   put: put(options),
-  putAccounts: putAccounts(options),
+  putAccounts: putAccounts(options)
 });

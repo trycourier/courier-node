@@ -19,7 +19,9 @@ export interface IPaginatedResult<T> {
   cursor?: string;
   has_more: boolean;
   items: T[];
+  next_url?: string;
   type: "list";
+  url: string;
 }
 
 export interface IAccountListOptions {
