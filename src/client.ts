@@ -1,4 +1,3 @@
-import { tenants } from "./tenants";
 import { audiences } from "./audiences";
 import { auditEvents } from "./audit-events";
 import { automations } from "./automations";
@@ -23,6 +22,7 @@ import {
   replaceProfile,
 } from "./profile";
 import { send } from "./send";
+import { tenants } from "./tenants";
 import { tokenManagement } from "./token-management";
 import { users } from "./users";
 
@@ -105,7 +105,6 @@ export const client = (
   options: ICourierClientConfiguration
 ): ICourierClient => {
   return {
-    tenants: tenants(options),
     addRecipientToLists: addRecipientToLists(options),
     audiences: audiences(options),
     auditEvents: auditEvents(options),
@@ -131,6 +130,7 @@ export const client = (
     replaceBrand: replaceBrand(options),
     replaceProfile: replaceProfile(options),
     send: send(options),
+    tenants: tenants(options),
     tokenManagement: tokenManagement(options),
     users: users(options),
   };

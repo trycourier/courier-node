@@ -1,4 +1,3 @@
-import { ICourierClientTenants } from "./tenants/types";
 import { ICourierClientAudiences } from "./audiences/types";
 import { auditEvents } from "./audit-events";
 import { ICourierClientAutomations } from "./automations/types";
@@ -14,6 +13,7 @@ import {
   IRecipientPreferences,
 } from "./preferences/types";
 import { Message } from "./send/types";
+import { ICourierClientTenants } from "./tenants/types";
 import { tokenManagement } from "./token-management";
 import { users } from "./users";
 

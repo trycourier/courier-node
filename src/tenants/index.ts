@@ -10,7 +10,7 @@ const deleteTenant = (options: ICourierClientConfiguration) => async (
 const getTenant = (options: ICourierClientConfiguration) => {
   return async (tenantId: string): Promise<TenantTypes.ITenant> => {
     const response = await options.httpClient.get<TenantTypes.ITenant>(
-      `/accounts/${tenantId}`
+      `/tenants/${tenantId}`
     );
     return response.data;
   };
