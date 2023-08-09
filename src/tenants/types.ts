@@ -1,8 +1,8 @@
-export interface IAccount {
+export interface ITenant {
   brand_id?: string;
   id: string;
   name: string;
-  parent_account_id?: string;
+  parent_tenant_id?: string;
   default_preferences?: {
     items: Array<{
       id: string;
@@ -12,7 +12,7 @@ export interface IAccount {
   };
   properties?: { [key: string]: any };
   user_profile?: Record<string, any>;
-  type: "account";
+  type: "tenant";
 }
 
 export interface IPaginatedResult<T> {
@@ -24,15 +24,15 @@ export interface IPaginatedResult<T> {
   url: string;
 }
 
-export interface IAccountListOptions {
+export interface ITenantListOptions {
   cursor?: string;
   limit?: string;
 }
-export interface ICourierClientAccounts {
+export interface ICourierClientTenants {
   delete: (id: string) => Promise<void>;
-  get: (id: string) => Promise<IAccount>;
-  listAccounts: (
-    options?: IAccountListOptions
-  ) => Promise<IPaginatedResult<IAccount>>;
-  put: (account: Omit<IAccount, "type">) => Promise<IAccount>;
+  get: (id: string) => Promise<ITenant>;
+  listTenants: (
+    options?: ITenantListOptions
+  ) => Promise<IPaginatedResult<ITenant>>;
+  put: (tenant: Omit<ITenant, "type">) => Promise<ITenant>;
 }

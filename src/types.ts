@@ -1,4 +1,3 @@
-import { ICourierClientAccounts } from "./accounts/types";
 import { ICourierClientAudiences } from "./audiences/types";
 import { auditEvents } from "./audit-events";
 import { ICourierClientAutomations } from "./automations/types";
@@ -6,14 +5,15 @@ import { ICourierClientBulk } from "./bulk/types";
 import {
   ICourierClientLists,
   ICourierList,
-  ICourierRecipientSubscriptionsResponse
+  ICourierRecipientSubscriptionsResponse,
 } from "./lists/types";
 import { ICourierClientNotifications } from "./notifications/types";
 import {
   ICourierClientPreferences,
-  IRecipientPreferences
+  IRecipientPreferences,
 } from "./preferences/types";
 import { Message } from "./send/types";
+import { ICourierClientTenants } from "./tenants/types";
 import { tokenManagement } from "./token-management";
 import { users } from "./users";
 
@@ -431,7 +431,7 @@ export interface ICourierClient {
   addRecipientToLists: (
     params: ICourierProfileListsPostParameters
   ) => Promise<ICourierProfilePostResponse>;
-  accounts: ICourierClientAccounts;
+  tenants: ICourierClientTenants;
   audiences: ICourierClientAudiences;
   auditEvents: ReturnType<typeof auditEvents>;
   automations: ICourierClientAutomations;
