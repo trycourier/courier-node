@@ -191,9 +191,9 @@ interface ElementalBaseNode {
   loop?: string;
 }
 
-export type MessageContext = {
+export interface MessageContext {
   tenant_id?: string;
-};
+}
 
 export interface MessageData extends Record<string, any> {}
 
