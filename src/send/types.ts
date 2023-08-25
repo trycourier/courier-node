@@ -191,6 +191,10 @@ interface ElementalBaseNode {
   loop?: string;
 }
 
+export type MessageContext = {
+  tenant_id?: string;
+};
+
 export interface MessageData extends Record<string, any> {}
 
 export type RuleType = "snooze" | "channel_preferences" | "status";
@@ -286,13 +290,16 @@ export interface AudienceRecipient {
 }
 
 export interface UserRecipient extends UserRecipientType {
+  // @deprecated - use tenant_id
   account_id?: string;
+  context?: MessageContext;
   data?: MessageData;
   email?: string;
   locale?: string;
   user_id?: string;
   phone_number?: string;
   preferences?: IProfilePreferences;
+  tenant_id?: string;
 }
 
 export type Recipient =
@@ -321,6 +328,7 @@ export type Content = ElementalContentSugar | ElementalContent;
 export interface BaseMessage {
   brand_id?: string;
   channels?: MessageChannels;
+  context?: MessageContext;
   data?: MessageData;
   metadata?: MessageMetadata;
   providers?: MessageProviders;
