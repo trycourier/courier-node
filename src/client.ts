@@ -9,6 +9,7 @@ import {
   replaceBrand,
 } from "./brands";
 import { bulk } from "./bulk";
+import { postIssueToken } from "./issue-token";
 import { lists } from "./lists";
 import { notifications } from "./notifications";
 import { preferences } from "./preferences";
@@ -122,6 +123,7 @@ export const client = (
     getMessages: getMessages(options),
     getProfile: getProfile(options),
     getRecipientSubscriptions: getRecipientSubscriptions(options),
+    issueToken: postIssueToken(options),
     lists: lists(options),
     mergeProfile: mergeProfile(options),
     notifications: notifications(options),
@@ -135,3 +137,4 @@ export const client = (
     users: users(options),
   };
 };
+

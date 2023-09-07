@@ -2,6 +2,7 @@ import { ICourierClientAudiences } from "./audiences/types";
 import { auditEvents } from "./audit-events";
 import { ICourierClientAutomations } from "./automations/types";
 import { ICourierClientBulk } from "./bulk/types";
+import { ICourierAuthIssueTokenParameters, ICourierAuthIssueTokenResponse } from "./issue-token/types";
 import {
   ICourierClientLists,
   ICourierList,
@@ -483,4 +484,7 @@ export interface ICourierClient {
   ) => Promise<SendResponse<T>>;
   tokenManagement: ReturnType<typeof tokenManagement>;
   users: ReturnType<typeof users>;
+  issueToken: (
+    params: ICourierAuthIssueTokenParameters
+  ) => Promise<ICourierAuthIssueTokenResponse>;
 }
