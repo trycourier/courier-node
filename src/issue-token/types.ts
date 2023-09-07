@@ -1,6 +1,6 @@
 export interface ICourierAuthIssueTokenParameters {
   scope: string;
-  expires_in: string;
+  expiresIn: string;
 }
 
 export interface ICourierAuthIssueTokenResponse {
@@ -10,6 +10,6 @@ export interface ICourierAuthIssueTokenResponse {
 export interface ICourierClientAuth {
   postIssueToken: (
     scope: string,
-    expires_in?: string
+    expiresIn?: string
   ) => Promise<ICourierAuthIssueTokenResponse>;
 }

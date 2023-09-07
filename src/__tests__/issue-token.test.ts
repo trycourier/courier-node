@@ -4,7 +4,7 @@ import mockRequests from "./lib/mock-requests";
 
 const mockRequest: ICourierAuthIssueTokenParameters = {
   scope: "user_id:example_user_id read:messages",
-  expires_in: "2 days"
+  expiresIn: "2 days"
 }
 
 const mockResponse: ICourierAuthIssueTokenResponse = {
