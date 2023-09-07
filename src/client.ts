@@ -36,6 +36,7 @@ import {
   ICourierMessagesGetParameters,
   ICourierMessagesGetResponse,
 } from "./types";
+import { postIssueToken } from "./issue-token";
 
 const cancelMessage = (options: ICourierClientConfiguration) => {
   return async (messageId: string): Promise<ICourierMessageCancelResponse> => {
@@ -133,5 +134,7 @@ export const client = (
     tenants: tenants(options),
     tokenManagement: tokenManagement(options),
     users: users(options),
+    issueToken: postIssueToken(options),
   };
 };
+
