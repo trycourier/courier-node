@@ -25,8 +25,8 @@ const listTenants = (options: ICourierClientConfiguration) => {
     >("/tenants", undefined, {
       params: {
         cursor: listOptions?.cursor || "",
-        limit: listOptions?.limit || "20",
-      },
+        limit: listOptions?.limit || "20"
+      }
     });
     return response.data;
   };
@@ -48,5 +48,5 @@ export const tenants = (options: ICourierClientConfiguration) => ({
   delete: deleteTenant(options),
   get: getTenant(options),
   listTenants: listTenants(options),
-  put: putTenant(options),
+  put: putTenant(options)
 });
