@@ -8,13 +8,13 @@ const mockTenantId = "a83b4d91-fe15-4f9d-b049-16e47d177312";
 const mockPutAccountResponse: TenantTypes.ITenant = {
   id: mockTenantId,
   name: "test tenant",
-  type: "tenant",
+  type: "tenant"
 };
 
 const mockGetAccountResponse: TenantTypes.ITenant = {
   id: mockTenantId,
   name: "test tenant",
-  type: "tenant",
+  type: "tenant"
 };
 
 const mockTenantListResponse: TenantTypes.IPaginatedResult<TenantTypes.ITenant> = {
@@ -22,12 +22,12 @@ const mockTenantListResponse: TenantTypes.IPaginatedResult<TenantTypes.ITenant> 
     {
       id: mockTenantId,
       name: "test tenant",
-      type: "tenant",
-    },
+      type: "tenant"
+    }
   ],
   has_more: false,
   type: "list",
-  url: "/tenants",
+  url: "/tenants"
 };
 
 describe("CourierTenants", () => {
@@ -36,54 +36,54 @@ describe("CourierTenants", () => {
       {
         method: "PUT",
         path: `/tenants/${mockTenantId}`,
-        response: { body: mockPutAccountResponse },
+        response: { body: mockPutAccountResponse }
       },
       {
         method: "DELETE",
         path: `/tenants/${mockTenantId}`,
-        response: { status: 204 },
+        response: { status: 204 }
       },
       {
         method: "GET",
         path: `/tenants/${mockTenantId}`,
-        response: { body: mockGetAccountResponse },
+        response: { body: mockGetAccountResponse }
       },
       {
         method: "GET",
         path: `/tenants`,
-        response: { body: mockTenantListResponse },
-      },
+        response: { body: mockTenantListResponse }
+      }
     ]);
   });
 
   test(".putTenant", async () => {
     const { tenants } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(
       tenants.put({
         id: mockTenantId,
-        name: "My favorite software engineers",
+        name: "My favorite software engineers"
       })
     ).resolves.toMatchObject({});
   });
 
   test(".getTenant", async () => {
     const { tenants } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(tenants.get(mockTenantId)).resolves.toMatchObject({
       id: mockTenantId,
       name: "test tenant",
-      type: "tenant",
+      type: "tenant"
     });
   });
 
   test(".listTenants", async () => {
     const { tenants } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(tenants.listTenants({ limit: "10" })).resolves.toMatchObject({
@@ -91,18 +91,18 @@ describe("CourierTenants", () => {
         {
           id: mockTenantId,
           name: "test tenant",
-          type: "tenant",
-        },
+          type: "tenant"
+        }
       ],
       has_more: false,
       type: "list",
-      url: "/tenants",
+      url: "/tenants"
     });
   });
 
   test(".deleteTenant", async () => {
     const { tenants } = CourierClient({
-      authorizationToken: "AUTH_TOKEN",
+      authorizationToken: "AUTH_TOKEN"
     });
 
     await expect(tenants.delete(mockTenantId)).resolves.not.toThrow();
