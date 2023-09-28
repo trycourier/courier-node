@@ -70,10 +70,10 @@ export const initHttpClient = ({
   };
 
   return {
-    delete: createHttpMethodClient("delete"),
-    get: (url, config) => createHttpMethodClient("get")(url, undefined, config),
-    patch: createHttpMethodClient("patch"),
-    post: createHttpMethodClient("post"),
-    put: createHttpMethodClient("put")
+    delete: createHttpMethodClient("DELETE"),
+    get: (url, config) => createHttpMethodClient("GET")(url, undefined, config),
+    patch: createHttpMethodClient("PATCH"),
+    post: createHttpMethodClient("POST"),
+    put: createHttpMethodClient("PUT")
   };
 };
