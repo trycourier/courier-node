@@ -766,45 +766,45 @@ const { requestId } = await courier.send({
 });
 ```
 
-### Accounts
+### Tenants
 
-The Accounts API is designed to enable multi-tenant notification workflows. This is useful for defining user to account level relationships, especially in the context of B2B applications.
+The Tenants API is designed to enable multi-tenant notification workflows. This is useful for defining user to tenant level relationships, especially in the context of B2B applications.
 
 Use Cases:
 
 - Sending branded notifications on behalf of an organization
 - Creating slack-bots on behalf of an organization
 
-#### Creating an Account
+#### Creating a Tenant
 
 ```ts
-const { accountId } = await courier.accounts.put({
-  id: "<ACCOUNT_ID>",
+const { tenantId } = await courier.tenants.put({
+  id: "<TENANT_ID>",
   name: "Courier",
   user_profile: {
     slack: {
-      access_token: "<SLACK_ACCESS_TOKEN_SCOPED_TO_THE_ACCOUNT>",
+      access_token: "<SLACK_ACCESS_TOKEN_SCOPED_TO_THE_TENANT>",
     },
   },
 });
 ```
 
-#### Retrieving an Account
+#### Retrieving a Tenant
 
 ```ts
-const account = await courier.accounts.get("<ACCOUNT_ID>");
+const account = await courier.tenants.get("<TENANT_ID>");
 ```
 
-#### Deleting an Account
+#### Deleting a Tenant
 
 ```ts
-await courier.accounts.delete("<ACCOUNT_ID>");
+await courier.tenants.delete("<TENANT_ID>");
 ```
 
-#### Listing Accounts
+#### Listing Tenants
 
 ```ts
-const { items: accounts, has_more, next_page } = await courier.accounts.list();
+const { items: tenants, has_more, next_page } = await courier.tenants.list();
 ```
 
 ### Users
