@@ -434,22 +434,6 @@ async function run() {
   );
   console.log(items);
 
-  // Example: Notification Preferences
-  await courier.preferences.put(recipientId, {
-    notifications: {
-      "<NOTIFICATION_ID>": { status: "<OPT_IN_STATUS>" },
-    },
-  });
-  // Where OPT_IN_STATUS = "OPTED_IN" | "OPTED_OUT"
-
-  // Example: Get a list of existing notifications and categories
-  const prefs = await courier.preferences.list();
-  console.log(prefs);
-
-  // Example: Get the preferences stored under a specified recipient ID.
-  const profilePrefs = await courier.preferences.get(recipientId);
-  console.log(profilePrefs);
-
   // Example: Automation Ad-Hoc Invoke
   const { runId } = await courier.automations.invokeAdHocAutomation({
     automation: {
@@ -840,6 +824,36 @@ await courier.users.put("<USER_ID>", {
 await courier.users.putAccounts("<USER_ID>", {
   accounts: [{ account_id: "ACCOUNT_ID", profile: { foo: "bar" } }],
 });
+```
+
+#### Updating user preferences
+
+Courier currently does not allow creating new topics via the API. You must create topics via the Courier UI. Once a topic is created, you can update a user's preferences for that topic via the API.
+
+```ts
+await courier.users.putUserPreferenceByTopic(mockUserId, "<VALID_TOPIC_ID>", {
+  default_status: "OPTED_IN",
+  status: "OPTED_OUT",
+});
+```
+
+#### Getting user preferences
+
+- Get all topic level preferences for a user
+
+```ts
+const { items: userPreferences } = await courier.users.getUserPreferences(
+  "<USER_ID>"
+);
+```
+
+- Get a specific topic level preference for a user
+
+```ts
+const userPreference = await courier.users.getUserPreferenceByTopic(
+  "<USER_ID>",
+  "<VALID_TOPIC_ID>"
+);
 ```
 
 ## License
