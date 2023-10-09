@@ -197,6 +197,10 @@ export interface MessageContext {
 
 export interface MessageData extends Record<string, any> {}
 
+export interface MessageDelay {
+  duration?: number;
+}
+
 export type RuleType = "snooze" | "channel_preferences" | "status";
 
 export interface IRule<T extends RuleType> {
@@ -330,6 +334,7 @@ export interface BaseMessage {
   channels?: MessageChannels;
   context?: MessageContext;
   data?: MessageData;
+  delay?: MessageDelay;
   metadata?: MessageMetadata;
   providers?: MessageProviders;
   routing?: Routing;
