@@ -76,8 +76,12 @@ export interface IAudiencePutResponse {
 export interface ICourierClientAudiences {
   delete: (id: string) => Promise<void>;
   get: (id: string) => Promise<IAudience>;
-  listAudiences: () => Promise<IAudienceListResponse>;
-  listMembers: (id: string) => Promise<IAudienceMemberListResponse>;
+  listAudiences: (params?: {
+    cursor: string;
+  }) => Promise<IAudienceListResponse>;
+  listMembers: (id: string, params?: {
+    cursor: string;
+  }) => Promise<IAudienceMemberListResponse>;
   put: (
     audience: Omit<IAudience, "created_at" | "updated_at">
   ) => Promise<IAudience>;
