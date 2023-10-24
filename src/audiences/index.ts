@@ -17,21 +17,30 @@ const getAudience = (options: ICourierClientConfiguration) => {
 };
 
 const listAudiences = (options: ICourierClientConfiguration) => {
-  return async (): Promise<AudienceTypes.IAudienceListResponse> => {
+  return async (params?: {
+    cursor: string;
+  }): Promise<AudienceTypes.IAudienceListResponse> => {
     const response = await options.httpClient.get<
-      AudienceTypes.IAudienceListResponse
-    >("/audiences");
+      AudienceTypes.IAudienceListResponse>(
+        "/audiences",
+        params
+    );
     return response.data;
   };
 };
 
 const listMembers = (options: ICourierClientConfiguration) => {
   return async (
-    audienceId: string
+    audienceId: string,
+    params?: {
+      cursor: string;
+    }
   ): Promise<AudienceTypes.IAudienceMemberListResponse> => {
     const response = await options.httpClient.get<
       AudienceTypes.IAudienceMemberListResponse
-    >(`/audiences/${audienceId}/members`);
+    >(
+      `/audiences/${audienceId}/members`,
+      params);
     return response.data;
   };
 };

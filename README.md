@@ -748,6 +748,7 @@ const { audienceId } = await courier.audiences.put({
 // To retrieve list of members in a given audience, you can use the following:
 const { items: audienceMembers } = await courier.audiences.listMembers(
   audienceId
+  cursor: "<CURSOR>", // optional
 );
 
 // To send a notification to all users that match the given filter criteria, you can use the following:
