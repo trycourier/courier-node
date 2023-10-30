@@ -23,7 +23,11 @@ const listAudiences = (options: ICourierClientConfiguration) => {
     const response = await options.httpClient.get<
       AudienceTypes.IAudienceListResponse>(
         "/audiences",
-        params
+        {
+          params: {
+            cursor: params?.cursor
+          }
+        }
     );
     return response.data;
   };
@@ -40,7 +44,12 @@ const listMembers = (options: ICourierClientConfiguration) => {
       AudienceTypes.IAudienceMemberListResponse
     >(
       `/audiences/${audienceId}/members`,
-      params);
+      {
+        params: {
+          cursor: params?.cursor
+        }
+      }
+    );
     return response.data;
   };
 };
