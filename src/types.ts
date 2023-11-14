@@ -155,6 +155,7 @@ export interface ICourierMessagesGetParameters {
   recipientId?: string;
   status?: string | string[];
   tags?: string | string[];
+  traceId?: string;
 }
 
 export interface ICourierMessagesGetResponse {
