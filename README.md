@@ -1,6 +1,7 @@
 [![Courier: Your Complete Communication Stack](https://marketing-assets-public.s3.us-west-1.amazonaws.com/github_nodejs.png)](https://courier.com)
 
-[![npm version](https://badge.fury.io/js/%40trycourier%2Fcourier.svg)](https://badge.fury.io/js/%40trycourier%2Fcourier)
+[![npm shield](https://img.shields.io/npm/v/@trycourier/courier)](https://www.npmjs.com/package/@trycourier/courier)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://buildwithfern.com/?utm_source=trycourier/courier-node/readme)
 
 This is the official node.js module for sending notifications with node.js with the [Courier](https://courier.com) REST API.
 
@@ -856,6 +857,12 @@ const userPreference = await courier.users.getUserPreferenceByTopic(
   "<VALID_TOPIC_ID>"
 );
 ```
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically. Additions made directly to this library would have to be moved over to our generation code, otherwise they would be overwritten upon the next generated release. Feel free to open a PR as a proof of concept, but know that we will not be able to merge it as-is. We suggest opening an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!
 
 ## License
 
