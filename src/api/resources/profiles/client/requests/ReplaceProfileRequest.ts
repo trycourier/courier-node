@@ -3,6 +3,5 @@
  */
 
 export interface ReplaceProfileRequest {
-    recipientId: string;
     profile: Record<string, any>;
 }
