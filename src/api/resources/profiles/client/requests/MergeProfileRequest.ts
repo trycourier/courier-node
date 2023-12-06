@@ -3,6 +3,5 @@
  */
 
 export interface MergeProfileRequest {
-    recipientId: string;
     profile: Record<string, any>;
 }
