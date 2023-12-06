@@ -43,7 +43,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.0",
+                "X-Fern-SDK-Version": "6.0.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -84,7 +84,7 @@ export class Profiles {
      * Merge the supplied values with an existing profile or create a new profile if one doesn't already exist.
      * @throws {@link Courier.BadRequestError}
      */
-    public async merge(
+    public async create(
         userId: string,
         request: Courier.MergeProfileRequest,
         requestOptions?: Profiles.IdempotentRequestOptions
@@ -99,7 +99,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.0",
+                "X-Fern-SDK-Version": "6.0.1",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -165,7 +165,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.0",
+                "X-Fern-SDK-Version": "6.0.1",
             },
             contentType: "application/json",
             body: request,
@@ -218,7 +218,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.0",
+                "X-Fern-SDK-Version": "6.0.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -280,7 +280,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.0",
+                "X-Fern-SDK-Version": "6.0.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -337,7 +337,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.0",
+                "X-Fern-SDK-Version": "6.0.1",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -398,7 +398,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.0",
+                "X-Fern-SDK-Version": "6.0.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
