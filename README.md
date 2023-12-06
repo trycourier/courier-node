@@ -9,6 +9,11 @@ This is the official node.js module for sending notifications with node.js with 
 
 ## Installation (via [npm](https://www.npmjs.com/package/@trycourier/courier))
 
+
+### Note
+
+Recent version v6 can be unstable, its recommended to use version `v5.7.0`. We are actively working on making v6 stable and will be updating the README accordingly soon.
+
 ```bash
 npm install @trycourier/courier
 ```
