@@ -4,6 +4,6 @@
 
 import * as Courier from "../../..";
 
-export interface InboundBulkMessage extends Courier.InboundBulkMessageApiV1 {
-    message?: Courier.InboundBulkMessageApiV2 | undefined;
+export interface InboundBulkMessage extends Courier.InboundBulkMessageV1 {
+    message?: Courier.InboundBulkMessageV2;
 }

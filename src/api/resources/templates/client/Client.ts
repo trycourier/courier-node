@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 export declare namespace Templates {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
-        authorizationToken: core.Supplier<core.BearerToken | undefined>;
+        authorizationToken?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -21,7 +21,7 @@ export declare namespace Templates {
 }
 
 export class Templates {
-    constructor(protected readonly _options: Templates.Options) {}
+    constructor(protected readonly _options: Templates.Options = {}) {}
 
     /**
      * Returns a list of notification templates
@@ -46,7 +46,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

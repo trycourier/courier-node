@@ -4,6 +4,4 @@
 
 import * as Courier from "../../..";
 
-export interface BulkCreateJobParams {
-    message: Courier.InboundBulkMessage;
-}
+export type MessageRoutingChannel = string | Courier.MessageRouting;

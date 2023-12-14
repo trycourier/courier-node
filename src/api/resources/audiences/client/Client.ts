@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 export declare namespace Audiences {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
-        authorizationToken: core.Supplier<core.BearerToken | undefined>;
+        authorizationToken?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -21,7 +21,7 @@ export declare namespace Audiences {
 }
 
 export class Audiences {
-    constructor(protected readonly _options: Audiences.Options) {}
+    constructor(protected readonly _options: Audiences.Options = {}) {}
 
     /**
      * Returns the specified audience by id.
@@ -37,7 +37,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -87,7 +87,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             body: request,
@@ -134,7 +134,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -191,7 +191,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -253,7 +253,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
