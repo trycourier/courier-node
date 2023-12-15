@@ -4,7 +4,7 @@
 
 import * as Courier from "../../..";
 
-export interface CreateOrReplaceTenantResponse {
+export interface Tenant {
     /** Id of the tenant. */
     id: string;
     /** Name of the tenant. */
@@ -16,7 +16,7 @@ export interface CreateOrReplaceTenantResponse {
     /** Arbitrary properties accessible to a template. */
     properties?: Courier.TemplateProperty | undefined;
     /** A user profile object merged with user profile on send. */
-    user_profile?: any;
+    user_profile?: Record<string, any>;
     /** Brand to be used for the account when one is not specified by the send call. */
-    brand_id: string;
+    brand_id?: string;
 }

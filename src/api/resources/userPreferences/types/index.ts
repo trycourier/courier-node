@@ -1,4 +1,4 @@
-export * from "./UserPreferences";
+export * from "./UserPreferencesListResponse";
+export * from "./UserPreferencesGetResponse";
 export * from "./TopicPreference";
-export * from "./UpdateSubscriptionTopicRequest";
-export * from "./UpdateSubscriptionTopicResponse";
+export * from "./UserPreferencesUpdateResponse";

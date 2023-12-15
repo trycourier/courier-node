@@ -1,6 +1,5 @@
 export * from "./Brand";
 export * from "./BrandParameters";
-export * from "./BrandPutParameters";
 export * from "./BrandGetAllResponse";
 export * from "./BrandsResponse";
 export * from "./BrandSnippet";

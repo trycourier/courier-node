@@ -5,8 +5,6 @@
 import * as Courier from "../../..";
 
 export interface BaseMessage {
-    /** The recipient or a list of recipients of the message */
-    to: Courier.MessageRecipient;
     /**
      * An arbitrary object that includes any data you want to pass to the message.
      * The data will populate the corresponding template or elements variables.

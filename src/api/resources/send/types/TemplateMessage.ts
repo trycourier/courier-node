@@ -11,4 +11,6 @@ export interface TemplateMessage extends Courier.BaseMessage {
      *
      */
     template: string;
+    /** The recipient or a list of recipients of the message */
+    to: Courier.MessageRecipient;
 }
