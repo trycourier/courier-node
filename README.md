@@ -32,7 +32,7 @@ with several improvements that we describe below:
 - **Resource-scoped SDK methods**: Endpoints are scoped under their resource. For 
   example, instead of `courier.deleteBrands` the SDK now reads `courier.brands.delete(...)`  
 - **Docs on Hover**: All endpoint and parameter level documentation that you see 
-  on our docs website now also embedded directly within the SDKs.
+  on our docs website is now embedded directly within the SDKs.
 - **Retries with exponential backoff**: The SDK will automatically retry failures with 
   exponential backoff. You can configure the retries by setting `maxRetries`. 
   ```typescript
@@ -40,7 +40,7 @@ with several improvements that we describe below:
     maxReries: 0 // set to 0 if you want to disable retries
   })
   ```
-- **Configurable Timeouts**: The SDK defaults to 60 second timeout. You can also 
+- **Configurable Timeouts**: The SDK defaults to a 60 second timeout. You can also 
   configure this value per-request. 
   ```typescript
   const response = courier.send(..., {
@@ -48,7 +48,7 @@ with several improvements that we describe below:
   })
   ```
 - **Support for multiple runtimes**: The SDK uses global fetch when available, otherwise
-  defaults to nod-fetch. This means you can use Courier in multiple runtimes; Node.js, 
+  defaults to node-fetch. This means you can use Courier in multiple runtimes; Node.js, 
   Vercel, and Cloudflare Workers. 
 
 ### v3 to v4
