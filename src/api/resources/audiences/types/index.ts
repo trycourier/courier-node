@@ -1,4 +1,3 @@
-export * from "./AudienceRequest";
 export * from "./Filter";
 export * from "./Operator";
 export * from "./BaseFilterConfig";
@@ -12,4 +11,4 @@ export * from "./AudienceMember";
 export * from "./AudienceListResponse";
 export * from "./AudienceMemberGetResponse";
 export * from "./AudienceMemberListResponse";
-export * from "./AudiencePutResponse";
+export * from "./AudienceUpdateResponse";

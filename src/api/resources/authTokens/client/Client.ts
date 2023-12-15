@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 export declare namespace AuthTokens {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
-        authorizationToken: core.Supplier<core.BearerToken | undefined>;
+        authorizationToken?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -26,7 +26,7 @@ export declare namespace AuthTokens {
 }
 
 export class AuthTokens {
-    constructor(protected readonly _options: AuthTokens.Options) {}
+    constructor(protected readonly _options: AuthTokens.Options = {}) {}
 
     /**
      * Returns a new access token.
@@ -45,7 +45,7 @@ export class AuthTokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null

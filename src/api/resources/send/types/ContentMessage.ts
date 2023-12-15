@@ -16,4 +16,6 @@ export interface ContentMessage extends Courier.BaseMessage {
      *
      */
     content: Courier.Content;
+    /** The recipient or a list of recipients of the message */
+    to: Courier.MessageRecipient;
 }

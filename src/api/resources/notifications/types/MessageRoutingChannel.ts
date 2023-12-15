@@ -4,6 +4,4 @@
 
 import * as Courier from "../../..";
 
-export interface AudiencePutResponse {
-    audience: Courier.Audience;
-}
+export type MessageRoutingChannel = string | Courier.MessageRouting;

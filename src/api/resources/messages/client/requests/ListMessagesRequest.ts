@@ -42,7 +42,7 @@ export interface ListMessagesRequest {
     /**
      * The enqueued datetime of a message to filter out messages received before.
      */
-    enqueuedAfter?: string;
+    enqueued_after?: string;
     /**
      * The unique identifier used to trace the requests
      */

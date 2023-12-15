@@ -4,6 +4,6 @@
 
 import * as Courier from "../../..";
 
-export interface BulkCreateJobParams {
-    message: Courier.InboundBulkMessage;
+export interface AudienceUpdateResponse {
+    audience: Courier.Audience;
 }

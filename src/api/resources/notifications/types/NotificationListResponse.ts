@@ -4,8 +4,7 @@
 
 import * as Courier from "../../..";
 
-export interface UserPreferences {
+export interface NotificationListResponse {
     paging: Courier.Paging;
-    /** The Preferences associated with the user_id. */
-    items: Courier.TopicPreference[];
+    results: Courier.Notification[];
 }

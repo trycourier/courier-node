@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 export declare namespace Audiences {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
-        authorizationToken: core.Supplier<core.BearerToken | undefined>;
+        authorizationToken?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -21,7 +21,7 @@ export declare namespace Audiences {
 }
 
 export class Audiences {
-    constructor(protected readonly _options: Audiences.Options) {}
+    constructor(protected readonly _options: Audiences.Options = {}) {}
 
     /**
      * Returns the specified audience by id.
@@ -37,7 +37,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -74,9 +74,9 @@ export class Audiences {
      */
     public async update(
         audienceId: string,
-        request: Courier.AudienceRequest,
+        request: Courier.AudienceUpdateParams = {},
         requestOptions?: Audiences.RequestOptions
-    ): Promise<Courier.Audience> {
+    ): Promise<Courier.AudienceUpdateResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
@@ -87,7 +87,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             body: request,
@@ -95,7 +95,7 @@ export class Audiences {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return _response.body as Courier.Audience;
+            return _response.body as Courier.AudienceUpdateResponse;
         }
 
         if (_response.error.reason === "status-code") {
@@ -134,7 +134,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -172,7 +172,7 @@ export class Audiences {
      */
     public async listMembers(
         audienceId: string,
-        request: Courier.ListAudienceMembersRequest = {},
+        request: Courier.AudienceMembersListParams = {},
         requestOptions?: Audiences.RequestOptions
     ): Promise<Courier.AudienceMemberListResponse> {
         const { cursor } = request;
@@ -191,7 +191,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -234,7 +234,7 @@ export class Audiences {
      * @throws {@link Courier.BadRequestError}
      */
     public async listAudiences(
-        request: Courier.ListAudiencesRequest = {},
+        request: Courier.AudiencesListParams = {},
         requestOptions?: Audiences.RequestOptions
     ): Promise<Courier.AudienceListResponse> {
         const { cursor } = request;
@@ -253,7 +253,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

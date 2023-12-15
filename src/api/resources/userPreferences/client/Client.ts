@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 export declare namespace UserPreferences {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
-        authorizationToken: core.Supplier<core.BearerToken | undefined>;
+        authorizationToken?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -21,16 +21,16 @@ export declare namespace UserPreferences {
 }
 
 export class UserPreferences {
-    constructor(protected readonly _options: UserPreferences.Options) {}
+    constructor(protected readonly _options: UserPreferences.Options = {}) {}
 
     /**
      * Fetch all user preferences.
      * @throws {@link Courier.BadRequestError}
      */
-    public async getPreferences(
+    public async list(
         userId: string,
         requestOptions?: UserPreferences.RequestOptions
-    ): Promise<Courier.UserPreferences> {
+    ): Promise<Courier.UserPreferencesListResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
@@ -41,14 +41,14 @@ export class UserPreferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return _response.body as Courier.UserPreferences;
+            return _response.body as Courier.UserPreferencesListResponse;
         }
 
         if (_response.error.reason === "status-code") {
@@ -82,11 +82,11 @@ export class UserPreferences {
      * Fetch user preferences for a specific subscription topic.
      * @throws {@link Courier.NotFoundError}
      */
-    public async getSubscriptionTopic(
+    public async get(
         userId: string,
         topicId: string,
         requestOptions?: UserPreferences.RequestOptions
-    ): Promise<Courier.TopicPreference> {
+    ): Promise<Courier.UserPreferencesGetResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
@@ -97,14 +97,14 @@ export class UserPreferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return _response.body as Courier.TopicPreference;
+            return _response.body as Courier.UserPreferencesGetResponse;
         }
 
         if (_response.error.reason === "status-code") {
@@ -138,12 +138,12 @@ export class UserPreferences {
      * Fetch user preferences for a specific subscription topic.
      * @throws {@link Courier.BadRequestError}
      */
-    public async updateSubscriptionTopic(
+    public async update(
         userId: string,
         topicId: string,
-        request: Courier.UpdateSubscriptionTopicRequest,
+        request: Courier.UserPreferencesUpdateParams,
         requestOptions?: UserPreferences.RequestOptions
-    ): Promise<Courier.UpdateSubscriptionTopicResponse> {
+    ): Promise<Courier.UserPreferencesUpdateResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
@@ -154,7 +154,7 @@ export class UserPreferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "6.0.2",
             },
             contentType: "application/json",
             body: request,
@@ -162,7 +162,7 @@ export class UserPreferences {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return _response.body as Courier.UpdateSubscriptionTopicResponse;
+            return _response.body as Courier.UserPreferencesUpdateResponse;
         }
 
         if (_response.error.reason === "status-code") {
