@@ -840,7 +840,7 @@ const { items: tenants, has_more } = await courier.tenants.list();
 Courier currently does not allow creating new topics via the API. You must create topics via the Courier UI. Once a topic is created, you can update a user's preferences for that topic via the API.
 
 ```ts
-  await courier.userPreferences.update("<USER_ID>", "<VALID_TOPIC_ID>", {
+  await courier.users.preferences.update("<USER_ID>", "<VALID_TOPIC_ID>", {
     default_status: "OPTED_IN",
     status: "OPTED_OUT",
   });
@@ -851,7 +851,7 @@ Courier currently does not allow creating new topics via the API. You must creat
 - Get all topic level preferences for a user
 
 ```ts
-  const { items: userPreferences } = await courier.userPreferences.list(
+  const { items: userPreferences } = await courier.users.preferences.list(
     "<USER_ID>"
   );
 ```
@@ -859,7 +859,7 @@ Courier currently does not allow creating new topics via the API. You must creat
 - Get a specific topic level preference for a user
 
 ```ts
-  const userPreference = await courier.userPreferences.get(
+  const userPreference = await courier.users.preferences.get(
     "<USER_ID>",
     "<VALID_TOPIC_ID>"
   );
