@@ -4,14 +4,14 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
+import * as Courier from "../../..";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
-import * as Courier from "../../..";
 
 export declare namespace Automations {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
-        authorizationToken: core.Supplier<core.BearerToken | undefined>;
+        authorizationToken?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -26,15 +26,16 @@ export declare namespace Automations {
 }
 
 export class Automations {
-    constructor(protected readonly _options: Automations.Options) {}
+    constructor(protected readonly _options: Automations.Options = {}) {}
 
     /**
      * Invoke an automation run from an automation template.
      */
     public async invokeAutomationTemplate(
         templateId: string,
+        request: Courier.AutomationInvokeParams,
         requestOptions?: Automations.IdempotentRequestOptions
-    ): Promise<void> {
+    ): Promise<Courier.AutomationInvokeResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
@@ -45,7 +46,7 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -53,11 +54,12 @@ export class Automations {
                         : undefined,
             },
             contentType: "application/json",
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return;
+            return _response.body as Courier.AutomationInvokeResponse;
         }
 
         if (_response.error.reason === "status-code") {
@@ -99,7 +101,7 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null

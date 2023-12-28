@@ -11,7 +11,6 @@ export interface MessageProvidersType {
      * A JavaScript conditional expression to determine if the message should be sent
      * through the channel. Has access to the data and profile object. For example,
      * `data.name === profile.name`
-     *
      */
     if?: string;
     timeouts?: number;

@@ -11,7 +11,6 @@ export interface ElementalTextNode extends Courier.ElementalBaseNode {
     /**
      * The text content displayed in the notification. Either this
      * field must be specified, or the elements field
-     *
      */
     content: string;
     /** Text alignment. */

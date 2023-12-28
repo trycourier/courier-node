@@ -5,6 +5,5 @@
 import * as Courier from "../../..";
 
 export interface BulkIngestUsersParams {
-    jobId: string;
     users: Courier.InboundBulkMessageUser[];
 }

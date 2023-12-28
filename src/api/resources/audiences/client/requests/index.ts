@@ -1,2 +1,3 @@
-export { ListAudienceMembersRequest } from "./ListAudienceMembersRequest";
-export { ListAudiencesRequest } from "./ListAudiencesRequest";
+export { AudienceUpdateParams } from "./AudienceUpdateParams";
+export { AudienceMembersListParams } from "./AudienceMembersListParams";
+export { AudiencesListParams } from "./AudiencesListParams";

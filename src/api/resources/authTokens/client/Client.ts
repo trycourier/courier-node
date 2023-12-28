@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 export declare namespace AuthTokens {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
-        authorizationToken: core.Supplier<core.BearerToken | undefined>;
+        authorizationToken?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -26,15 +26,15 @@ export declare namespace AuthTokens {
 }
 
 export class AuthTokens {
-    constructor(protected readonly _options: AuthTokens.Options) {}
+    constructor(protected readonly _options: AuthTokens.Options = {}) {}
 
     /**
      * Returns a new access token.
      */
     public async issueToken(
-        request: Courier.AuthIssueTokenParameters,
+        request: Courier.IssueTokenParams,
         requestOptions?: AuthTokens.IdempotentRequestOptions
-    ): Promise<Courier.AuthIssueTokenResponse> {
+    ): Promise<Courier.IssueTokenResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
@@ -45,7 +45,7 @@ export class AuthTokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -58,7 +58,7 @@ export class AuthTokens {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return _response.body as Courier.AuthIssueTokenResponse;
+            return _response.body as Courier.IssueTokenResponse;
         }
 
         if (_response.error.reason === "status-code") {

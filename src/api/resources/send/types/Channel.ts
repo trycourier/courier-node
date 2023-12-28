@@ -8,27 +8,23 @@ export interface Channel {
     /**
      * Id of the brand that should be used for rendering the message.
      * If not specified, the brand configured as default brand will be used.
-     *
      */
     brand_id?: string;
     /**
      * A list of providers enabled for this channel. Courier will select
      * one provider to send through unless routing_method is set to all.
-     *
      */
     providers?: string[];
     /**
      * The method for selecting the providers to send the message with.
      * Single will send to one of the available providers for this channel,
      * all will send the message through all channels. Defaults to `single`.
-     *
      */
     routing_method?: Courier.RoutingMethod;
     /**
      * A JavaScript conditional expression to determine if the message should
      * be sent through the channel. Has access to the data and profile object.
      * For example, `data.name === profile.name`
-     *
      */
     if?: string;
     timeouts?: Courier.Timeouts;

@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 export declare namespace Lists {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
-        authorizationToken: core.Supplier<core.BearerToken | undefined>;
+        authorizationToken?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -26,7 +26,7 @@ export declare namespace Lists {
 }
 
 export class Lists {
-    constructor(protected readonly _options: Lists.Options) {}
+    constructor(protected readonly _options: Lists.Options = {}) {}
 
     /**
      * Returns all of the lists, with the ability to filter based on a pattern.
@@ -56,7 +56,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -123,7 +123,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -179,7 +179,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
             },
             contentType: "application/json",
             body: request,
@@ -213,10 +213,102 @@ export class Lists {
     }
 
     /**
+     * Delete a list by list ID.
+     */
+    public async delete(listId: string, requestOptions?: Lists.RequestOptions): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
+                `/lists/${listId}`
+            ),
+            method: "DELETE",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@trycourier/courier",
+                "X-Fern-SDK-Version": "v6.0.2",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.CourierError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CourierError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CourierTimeoutError();
+            case "unknown":
+                throw new errors.CourierError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Restore a previously deleted list.
+     */
+    public async restore(listId: string, requestOptions?: Lists.RequestOptions): Promise<void> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
+                `/lists/${listId}/restore`
+            ),
+            method: "PUT",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@trycourier/courier",
+                "X-Fern-SDK-Version": "v6.0.2",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.CourierError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CourierError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CourierTimeoutError();
+            case "unknown":
+                throw new errors.CourierError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
      * Get the list's subscriptions.
      * @throws {@link Courier.NotFoundError}
      */
-    public async getSubscriptions(
+    public async getSubscribers(
         listId: string,
         request: Courier.GetSubscriptionForListRequest = {},
         requestOptions?: Lists.RequestOptions
@@ -237,7 +329,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -279,7 +371,7 @@ export class Lists {
      * Subscribes the users to the list, overwriting existing subscriptions. If the list does not exist, it will be automatically created.
      * @throws {@link Courier.BadRequestError}
      */
-    public async putSubscriptions(
+    public async updateSubscribers(
         listId: string,
         request: Courier.PutSubscriptionsRecipient[],
         requestOptions?: Lists.RequestOptions
@@ -294,7 +386,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
             },
             contentType: "application/json",
             body: request,
@@ -336,7 +428,7 @@ export class Lists {
      * Subscribes additional users to the list, without modifying existing subscriptions. If the list does not exist, it will be automatically created.
      * @throws {@link Courier.BadRequestError}
      */
-    public async postSubscriptions(
+    public async addSubscribers(
         listId: string,
         request: Courier.PutSubscriptionsRecipient[],
         requestOptions?: Lists.IdempotentRequestOptions
@@ -351,7 +443,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -400,7 +492,7 @@ export class Lists {
     public async subscribe(
         listId: string,
         userId: string,
-        request: Courier.SubscribeUserToListRequest,
+        request: Courier.SubscribeUserToListRequest = {},
         requestOptions?: Lists.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
@@ -413,7 +505,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
             },
             contentType: "application/json",
             body: request,
@@ -461,7 +553,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
