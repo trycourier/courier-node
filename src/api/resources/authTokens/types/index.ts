@@ -1,2 +1,1 @@
-export * from "./AuthIssueTokenParameters";
-export * from "./AuthIssueTokenResponse";
+export * from "./IssueTokenResponse";

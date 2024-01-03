@@ -15,17 +15,17 @@ import { Brands } from "./api/resources/brands/client/Client";
 import { Bulk } from "./api/resources/bulk/client/Client";
 import { Lists } from "./api/resources/lists/client/Client";
 import { Messages } from "./api/resources/messages/client/Client";
+import { Notifications } from "./api/resources/notifications/client/Client";
 import { Profiles } from "./api/resources/profiles/client/Client";
 import { Templates } from "./api/resources/templates/client/Client";
 import { Tenants } from "./api/resources/tenants/client/Client";
-import { TokenManagement } from "./api/resources/tokenManagement/client/Client";
 import { Translations } from "./api/resources/translations/client/Client";
-import { UserPreferences } from "./api/resources/userPreferences/client/Client";
+import { Users } from "./api/resources/users/client/Client";
 
 export declare namespace CourierClient {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
-        authorizationToken: core.Supplier<core.BearerToken | undefined>;
+        authorizationToken?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -40,7 +40,7 @@ export declare namespace CourierClient {
 }
 
 export class CourierClient {
-    constructor(protected readonly _options: CourierClient.Options) {}
+    constructor(protected readonly _options: CourierClient.Options = {}) {}
 
     /**
      * Use the send API to send a message to one or more recipients.
@@ -59,7 +59,7 @@ export class CourierClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -145,6 +145,12 @@ export class CourierClient {
         return (this._messages ??= new Messages(this._options));
     }
 
+    protected _notifications: Notifications | undefined;
+
+    public get notifications(): Notifications {
+        return (this._notifications ??= new Notifications(this._options));
+    }
+
     protected _profiles: Profiles | undefined;
 
     public get profiles(): Profiles {
@@ -163,22 +169,16 @@ export class CourierClient {
         return (this._tenants ??= new Tenants(this._options));
     }
 
-    protected _tokenManagement: TokenManagement | undefined;
-
-    public get tokenManagement(): TokenManagement {
-        return (this._tokenManagement ??= new TokenManagement(this._options));
-    }
-
     protected _translations: Translations | undefined;
 
     public get translations(): Translations {
         return (this._translations ??= new Translations(this._options));
     }
 
-    protected _userPreferences: UserPreferences | undefined;
+    protected _users: Users | undefined;
 
-    public get userPreferences(): UserPreferences {
-        return (this._userPreferences ??= new UserPreferences(this._options));
+    public get users(): Users {
+        return (this._users ??= new Users(this._options));
     }
 
     protected async _getAuthorizationHeader() {

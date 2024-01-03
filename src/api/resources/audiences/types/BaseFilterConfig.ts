@@ -5,9 +5,6 @@
 import * as Courier from "../../..";
 
 export interface BaseFilterConfig {
-    /**
-     * The operator to use for filtering
-     *
-     */
+    /** The operator to use for filtering */
     operator: Courier.Operator;
 }

@@ -13,25 +13,21 @@ import * as Courier from "../../..";
  * Note: As an alternative, most elements support a `channel` property. Which allows you to selectively
  * display an individual element on a per channel basis. See the
  * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/) for more details.
- *
  */
 export interface ElementalChannelNode extends Courier.ElementalBaseNode {
     /**
      * The channel the contents of this element should be applied to. Can be `email`,
      * `push`, `direct_message`, `sms` or a provider such as slack
-     *
      */
     channel: string;
     /**
      * An array of elements to apply to the channel. If `raw` has not been
      * specified, `elements` is `required`.
-     *
      */
     elements?: Courier.ElementalNode[];
     /**
      * Raw data to apply to the channel. If `elements` has not been
      * specified, `raw` is `required`.
-     *
      */
     raw?: Record<string, any>;
 }

@@ -8,7 +8,8 @@ export interface TemplateMessage extends Courier.BaseMessage {
     /**
      * The id of the notification template to be rendered and sent to the recipient(s).
      * This field or the content field must be supplied.
-     *
      */
     template: string;
+    /** The recipient or a list of recipients of the message */
+    to: Courier.MessageRecipient;
 }

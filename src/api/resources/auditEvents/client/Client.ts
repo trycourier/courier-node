@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 export declare namespace AuditEvents {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
-        authorizationToken: core.Supplier<core.BearerToken | undefined>;
+        authorizationToken?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -21,7 +21,7 @@ export declare namespace AuditEvents {
 }
 
 export class AuditEvents {
-    constructor(protected readonly _options: AuditEvents.Options) {}
+    constructor(protected readonly _options: AuditEvents.Options = {}) {}
 
     /**
      * Fetch the list of audit events
@@ -46,7 +46,7 @@ export class AuditEvents {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -93,7 +93,7 @@ export class AuditEvents {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.0.1",
+                "X-Fern-SDK-Version": "v6.0.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

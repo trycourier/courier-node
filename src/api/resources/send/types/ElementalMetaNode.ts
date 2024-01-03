@@ -8,7 +8,6 @@ import * as Courier from "../../..";
  * The meta element contains information describing the notification that may
  * be used by a particular channel or provider. One important field is the title
  * field which will be used as the title for channels that support it.
- *
  */
 export interface ElementalMetaNode extends Courier.ElementalBaseNode {
     /** The title to be displayed by supported channels. For example, the email subject. */
