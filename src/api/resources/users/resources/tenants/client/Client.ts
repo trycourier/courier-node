@@ -38,14 +38,14 @@ export class Tenants {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/users/${userId}/tenants`
+                `users/${userId}/tenants`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.2",
+                "X-Fern-SDK-Version": "6.0.3",
             },
             contentType: "application/json",
             body: request,
@@ -94,14 +94,14 @@ export class Tenants {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/users/${userId}/tenants/${tenantId}`
+                `users/${userId}/tenants/${tenantId}`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.2",
+                "X-Fern-SDK-Version": "6.0.3",
             },
             contentType: "application/json",
             body: request,
@@ -141,14 +141,14 @@ export class Tenants {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/users/${userId}/tenants/${tenantId}`
+                `users/${userId}/tenants/${tenantId}`
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.2",
+                "X-Fern-SDK-Version": "6.0.3",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -201,14 +201,14 @@ export class Tenants {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/users/${userId}/tenants`
+                `users/${userId}/tenants`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.2",
+                "X-Fern-SDK-Version": "6.0.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
