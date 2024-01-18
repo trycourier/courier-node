@@ -6,5 +6,6 @@ import * as Courier from "../../..";
 
 export interface BrandSettings {
     colors?: Courier.BrandColors;
+    inapp?: any;
     email?: Courier.Email;
 }

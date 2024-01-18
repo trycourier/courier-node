@@ -46,7 +46,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.4",
+                "X-Fern-SDK-Version": "v6.0.5",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
