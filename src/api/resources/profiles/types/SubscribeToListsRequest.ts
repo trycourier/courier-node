@@ -5,6 +5,5 @@
 import * as Courier from "../../..";
 
 export interface SubscribeToListsRequest {
-    lists?: Courier.List[];
-    preferences?: Courier.RecipientPreferences;
+    lists: Courier.SubscribeToListsRequestListObject[];
 }

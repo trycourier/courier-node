@@ -43,7 +43,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.3",
+                "X-Fern-SDK-Version": "v6.0.4",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -99,7 +99,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.3",
+                "X-Fern-SDK-Version": "v6.0.4",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -164,7 +164,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.3",
+                "X-Fern-SDK-Version": "v6.0.4",
             },
             contentType: "application/json",
             body: request,
@@ -217,7 +217,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.3",
+                "X-Fern-SDK-Version": "v6.0.4",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -262,7 +262,7 @@ export class Profiles {
         userId: string,
         request: Courier.GetListSubscriptionsRequest = {},
         requestOptions?: Profiles.RequestOptions
-    ): Promise<void> {
+    ): Promise<Courier.GetListSubscriptionsResponse> {
         const { cursor } = request;
         const _queryParams: Record<string, string | string[]> = {};
         if (cursor != null) {
@@ -279,7 +279,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.3",
+                "X-Fern-SDK-Version": "v6.0.4",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -287,7 +287,7 @@ export class Profiles {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return;
+            return _response.body as Courier.GetListSubscriptionsResponse;
         }
 
         if (_response.error.reason === "status-code") {
@@ -336,7 +336,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.3",
+                "X-Fern-SDK-Version": "v6.0.4",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -397,7 +397,7 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.3",
+                "X-Fern-SDK-Version": "v6.0.4",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
