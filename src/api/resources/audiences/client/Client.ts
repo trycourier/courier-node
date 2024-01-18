@@ -37,7 +37,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.4",
+                "X-Fern-SDK-Version": "v6.0.5",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -87,7 +87,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.4",
+                "X-Fern-SDK-Version": "v6.0.5",
             },
             contentType: "application/json",
             body: request,
@@ -121,7 +121,7 @@ export class Audiences {
     }
 
     /**
-     * Deletes the specified recipient Profile.
+     * Deletes the specified audience.
      */
     public async delete(audienceId: string, requestOptions?: Audiences.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -134,7 +134,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.4",
+                "X-Fern-SDK-Version": "v6.0.5",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -191,7 +191,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.4",
+                "X-Fern-SDK-Version": "v6.0.5",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -253,7 +253,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.4",
+                "X-Fern-SDK-Version": "v6.0.5",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
