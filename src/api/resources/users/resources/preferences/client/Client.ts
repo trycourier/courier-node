@@ -41,7 +41,7 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.4",
+                "X-Fern-SDK-Version": "v6.0.5",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -97,7 +97,7 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.4",
+                "X-Fern-SDK-Version": "v6.0.5",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -135,7 +135,7 @@ export class Preferences {
     }
 
     /**
-     * Fetch user preferences for a specific subscription topic.
+     * Update or Create user preferences for a specific subscription topic.
      * @throws {@link Courier.BadRequestError}
      */
     public async update(
@@ -154,7 +154,7 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.4",
+                "X-Fern-SDK-Version": "v6.0.5",
             },
             contentType: "application/json",
             body: request,
