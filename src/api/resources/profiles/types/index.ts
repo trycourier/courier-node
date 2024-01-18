@@ -21,5 +21,8 @@ export * from "./ProfileGetResponse";
 export * from "./MergeProfileResponse";
 export * from "./ReplaceProfileResponse";
 export * from "./SubscribeToListsRequest";
+export * from "./SubscribeToListsRequestListObject";
 export * from "./SubscribeToListsResponse";
 export * from "./DeleteListSubscriptionResponse";
+export * from "./GetListSubscriptionsList";
+export * from "./GetListSubscriptionsResponse";
