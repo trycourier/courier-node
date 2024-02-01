@@ -3,7 +3,10 @@
  */
 
 export interface UserTenantAssociation {
-    /** Tenant ID the user association is tied to. */
+    /** User ID for the assocation between tenant and user */
+    user_id: string;
+    type: "user";
+    /** Tenant ID for the assocation between tenant and user */
     tenant_id: string;
     profile: Record<string, any>;
 }

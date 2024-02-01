@@ -14,3 +14,4 @@ export * from "./NotificationPreferences";
 export * from "./NotificationPreferenceDetails";
 export * from "./RecipientPreferences";
 export * from "./Email";
+export * from "./UserTenantAssociation";

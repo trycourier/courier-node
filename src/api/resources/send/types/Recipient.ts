@@ -8,4 +8,6 @@ export type Recipient =
     | Courier.AudienceRecipient
     | Courier.ListRecipient
     | Courier.ListPatternRecipient
-    | Courier.UserRecipient;
+    | Courier.UserRecipient
+    | Courier.Slack
+    | Courier.MsTeams;

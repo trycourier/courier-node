@@ -4,7 +4,6 @@
 
 import * as Courier from "../../..";
 
-export interface Intercom {
-    from: string;
-    to: Courier.IntercomRecipient;
+export interface SendToSlackEmail extends Courier.SlackBaseProperties {
+    email: string;
 }

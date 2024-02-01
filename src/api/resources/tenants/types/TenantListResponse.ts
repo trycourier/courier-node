@@ -5,7 +5,7 @@
 import * as Courier from "../../..";
 
 export interface TenantListResponse {
-    /** A pointer to the next page of results. Defined only whenhas_more is set to true. */
+    /** A pointer to the next page of results. Defined only when has_more is set to true. */
     cursor?: string;
     /** Set to true when there are more pages that can be retrieved. */
     has_more: boolean;
@@ -13,7 +13,7 @@ export interface TenantListResponse {
     items: Courier.Tenant[];
     /**
      * A url that may be used to generate fetch the next set of results.
-     * Defined only whenhas_more is set to true
+     * Defined only when has_more is set to true
      */
     next_url?: string;
     /** A url that may be used to generate these results. */

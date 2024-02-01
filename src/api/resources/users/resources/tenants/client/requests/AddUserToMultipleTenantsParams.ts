@@ -5,5 +5,5 @@
 import * as Courier from "../../../../../..";
 
 export interface AddUserToMultipleTenantsParams {
-    tenants: Courier.users.UserTenantAssociation[];
+    tenants: Courier.UserTenantAssociation[];
 }
