@@ -46,7 +46,7 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.5",
+                "X-Fern-SDK-Version": "v6.0.6",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -101,7 +101,7 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.5",
+                "X-Fern-SDK-Version": "v6.0.6",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null

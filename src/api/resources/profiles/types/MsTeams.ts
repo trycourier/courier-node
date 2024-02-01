@@ -4,4 +4,9 @@
 
 import * as Courier from "../../..";
 
-export type MsTeams = Courier.SendToMsTeamsChannel | Courier.SendToMsTeamsUser;
+export type MsTeams =
+    | Courier.SendToMsTeamsUserId
+    | Courier.SendToMsTeamsEmail
+    | Courier.SendToMsTeamsChannelId
+    | Courier.SendToMsTeamsConversationId
+    | Courier.SendToMsTeamsChannelName;

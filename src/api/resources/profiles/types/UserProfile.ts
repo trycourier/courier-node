@@ -35,5 +35,6 @@ export interface UserProfile {
     facebookPSID: string;
     firebaseToken: string;
     intercom: Courier.Intercom;
+    slack: Courier.Slack;
     ms_teams: Courier.MsTeams;
 }
