@@ -12,6 +12,7 @@ export declare namespace Tokens {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
@@ -28,7 +29,7 @@ export class Tokens {
      * @throws {@link Courier.BadRequestError}
      */
     public async addMultiple(userId: string, requestOptions?: Tokens.RequestOptions): Promise<void> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `/users/${userId}/tokens`
@@ -38,7 +39,7 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -85,7 +86,7 @@ export class Tokens {
         request: Courier.users.UserToken,
         requestOptions?: Tokens.RequestOptions
     ): Promise<void> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `/users/${userId}/tokens/${token}`
@@ -95,7 +96,7 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             body: request,
@@ -143,7 +144,7 @@ export class Tokens {
         request: Courier.users.PatchUserTokenOpts,
         requestOptions?: Tokens.RequestOptions
     ): Promise<void> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `/users/${userId}/tokens/${token}`
@@ -153,7 +154,7 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             body: request,
@@ -200,7 +201,7 @@ export class Tokens {
         token: string,
         requestOptions?: Tokens.RequestOptions
     ): Promise<Courier.users.GetUserTokenResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `/users/${userId}/tokens/${token}`
@@ -210,7 +211,7 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -255,7 +256,7 @@ export class Tokens {
         userId: string,
         requestOptions?: Tokens.RequestOptions
     ): Promise<Courier.users.GetAllTokensResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `/users/${userId}/tokens`
@@ -265,7 +266,7 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

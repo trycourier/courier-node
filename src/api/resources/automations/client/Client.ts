@@ -12,6 +12,7 @@ export declare namespace Automations {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
@@ -36,7 +37,7 @@ export class Automations {
         request: Courier.AutomationInvokeParams,
         requestOptions?: Automations.IdempotentRequestOptions
     ): Promise<Courier.AutomationInvokeResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `/automations/${templateId}/invoke`
@@ -46,7 +47,7 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -91,7 +92,7 @@ export class Automations {
         request: Courier.AutomationAdHocInvokeParams,
         requestOptions?: Automations.IdempotentRequestOptions
     ): Promise<Courier.AutomationInvokeResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 "/automations/invoke"
@@ -101,7 +102,7 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null

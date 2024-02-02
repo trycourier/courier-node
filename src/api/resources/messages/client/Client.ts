@@ -12,6 +12,7 @@ export declare namespace Messages {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
@@ -93,7 +94,7 @@ export class Messages {
             _queryParams["traceId"] = traceId;
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 "messages"
@@ -103,7 +104,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -142,7 +143,7 @@ export class Messages {
      * @throws {@link Courier.MessageNotFoundError}
      */
     public async get(messageId: string, requestOptions?: Messages.RequestOptions): Promise<Courier.MessageDetails> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `messages/${messageId}`
@@ -152,7 +153,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -198,7 +199,7 @@ export class Messages {
         messageId: string,
         requestOptions?: Messages.IdempotentRequestOptions
     ): Promise<Courier.MessageDetails> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `messages/${messageId}/cancel`
@@ -208,7 +209,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -261,7 +262,7 @@ export class Messages {
             _queryParams["type"] = type_;
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `messages/${messageId}/history`
@@ -271,7 +272,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -319,7 +320,7 @@ export class Messages {
         messageId: string,
         requestOptions?: Messages.RequestOptions
     ): Promise<Courier.RenderOutputResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `messages/${messageId}/output`
@@ -329,7 +330,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -369,7 +370,7 @@ export class Messages {
     }
 
     public async archive(requestId: string, requestOptions?: Messages.RequestOptions): Promise<void> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `requests/${requestId}/archive`
@@ -379,7 +380,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

@@ -26,6 +26,7 @@ export declare namespace CourierClient {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
@@ -49,7 +50,7 @@ export class CourierClient {
         request: Courier.SendMessageRequest,
         requestOptions?: CourierClient.IdempotentRequestOptions
     ): Promise<Courier.SendMessageResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 "/send"
@@ -59,7 +60,7 @@ export class CourierClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null

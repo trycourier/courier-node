@@ -12,6 +12,7 @@ export declare namespace Audiences {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
@@ -27,7 +28,7 @@ export class Audiences {
      * Returns the specified audience by id.
      */
     public async get(audienceId: string, requestOptions?: Audiences.RequestOptions): Promise<Courier.Audience> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `/audiences/${audienceId}`
@@ -37,7 +38,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -77,7 +78,7 @@ export class Audiences {
         request: Courier.AudienceUpdateParams = {},
         requestOptions?: Audiences.RequestOptions
     ): Promise<Courier.AudienceUpdateResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `/audiences/${audienceId}`
@@ -87,7 +88,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             body: request,
@@ -124,7 +125,7 @@ export class Audiences {
      * Deletes the specified audience.
      */
     public async delete(audienceId: string, requestOptions?: Audiences.RequestOptions): Promise<void> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `/audiences/${audienceId}`
@@ -134,7 +135,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -181,7 +182,7 @@ export class Audiences {
             _queryParams["cursor"] = cursor;
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 `/audiences/${audienceId}/members`
@@ -191,7 +192,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -243,7 +244,7 @@ export class Audiences {
             _queryParams["cursor"] = cursor;
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
                 "/audiences"
@@ -253,7 +254,7 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.7",
+                "X-Fern-SDK-Version": "v6.0.8",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
