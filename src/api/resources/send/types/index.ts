@@ -4,6 +4,8 @@ export * from "./ContentMessage";
 export * from "./BaseMessage";
 export * from "./MessageRecipient";
 export * from "./Recipient";
+export * from "./SlackRecipient";
+export * from "./MsTeamsRecipient";
 export * from "./AudienceRecipient";
 export * from "./InvalidListPatternRecipient";
 export * from "./ListPatternRecipientType";
