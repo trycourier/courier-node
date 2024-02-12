@@ -57,7 +57,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -99,21 +99,7 @@ export class Lists {
      * Returns a list based on the list ID provided.
      * @throws {@link Courier.NotFoundError}
      */
-    public async get(
-        listId: string,
-        request: Courier.GetListRequest = {},
-        requestOptions?: Lists.RequestOptions
-    ): Promise<Courier.List> {
-        const { cursor, pattern } = request;
-        const _queryParams: Record<string, string | string[]> = {};
-        if (cursor != null) {
-            _queryParams["cursor"] = cursor;
-        }
-
-        if (pattern != null) {
-            _queryParams["pattern"] = pattern;
-        }
-
+    public async get(listId: string, requestOptions?: Lists.RequestOptions): Promise<Courier.List> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
@@ -124,10 +110,9 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -180,7 +165,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             body: request,
@@ -227,7 +212,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -273,7 +258,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -330,7 +315,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -387,7 +372,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             body: request,
@@ -444,7 +429,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -506,7 +491,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             body: request,
@@ -554,7 +539,7 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

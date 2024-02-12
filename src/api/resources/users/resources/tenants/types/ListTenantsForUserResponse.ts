@@ -5,7 +5,7 @@
 import * as Courier from "../../../../..";
 
 export interface ListTenantsForUserResponse {
-    items?: Courier.UserTenantAssociation;
+    items?: Courier.UserTenantAssociation[];
     /** Set to true when there are more pages that can be retrieved. */
     has_more: boolean;
     /** A url that may be used to generate these results. */
