@@ -46,7 +46,7 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             body: request,
@@ -102,7 +102,7 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             body: request,
@@ -149,7 +149,7 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -195,7 +195,7 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -235,14 +235,14 @@ export class Tenants {
         request: Courier.users.ListTenantsForUserParams = {},
         requestOptions?: Tenants.RequestOptions
     ): Promise<Courier.users.ListTenantsForUserResponse> {
-        const { limit, starting_after: startingAfter } = request;
+        const { limit, cursor } = request;
         const _queryParams: Record<string, string | string[]> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
 
-        if (startingAfter != null) {
-            _queryParams["starting_after"] = startingAfter.toString();
+        if (cursor != null) {
+            _queryParams["cursor"] = cursor;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -255,7 +255,7 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.0.8",
+                "X-Fern-SDK-Version": "v6.1.0",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
