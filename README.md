@@ -696,12 +696,12 @@ run();
 
 This package tries to use the native `fetch` client to make requests or falls back to a polyfill if the client doesn't exist in the environment it's running in.
 
-All network related promise rejections are not handled in any way. All successfully made requests that produce errors on the server side are resulting in promise rejections with custom `CourierHttpClientError` error type.
+All network related promise rejections are not handled in any way. All successfully made requests that produce errors on the server side are resulting in promise rejections with custom `CourierError` error type.
 
-`CourierHttpClientError` extends native `Error` interface with two extra properties:
+`CourierError` extends native `Error` interface with two extra properties:
 
-- `response`: this is the `fetch` response as is
-- `data`: this is the parsed body of the response
+- `statusCode`: this is the status code of the response
+- `body`: this is the body of the response
 
 ```javascript
 // Error handling example
@@ -714,7 +714,7 @@ try {
 } catch (error) {
   if (error instanceof CourierError) {
     console.log("Failed to send with status code:", error.statusCode);
-    console.log("The Courier response is:", error.data);
+    console.log("The Courier body is:", error.body);
     console.log("The error message is:", error.message);
   } else {
     console.log(
