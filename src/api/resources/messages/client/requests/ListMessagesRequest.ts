@@ -34,7 +34,7 @@ export interface ListMessagesRequest {
     /**
      * An indicator of the current status of the message. Multiple status values can be passed in.
      */
-    status?: string;
+    status?: string | string[];
     /**
      * A comma delimited list of 'tags'. Messages will be returned if they match any of the tags passed in.
      */
