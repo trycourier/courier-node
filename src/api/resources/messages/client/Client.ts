@@ -41,13 +41,18 @@ export class Messages {
             cursor,
             event,
             list,
-            messageId,
+            message_id: messageId,
+            messageId: messageId_,
             notification,
+            provider,
             recipient,
             status,
+            tag,
             tags,
+            tenant_id: tenantId,
             enqueued_after: enqueuedAfter,
-            traceId,
+            trace_id: traceId,
+            traceId: traceId_,
         } = request;
         const _queryParams: Record<string, string | string[]> = {};
         if (archived != null) {
@@ -66,12 +71,24 @@ export class Messages {
             _queryParams["list"] = list;
         }
 
-        if (messageId != null) {
-            _queryParams["messageId"] = messageId;
+        if (messageId_ != null) {
+            _queryParams["message_id"] = messageId_;
+        }
+
+        if (messageId_ != null) {
+            _queryParams["messageId"] = messageId_;
         }
 
         if (notification != null) {
             _queryParams["notification"] = notification;
+        }
+
+        if (provider != null) {
+            if (Array.isArray(provider)) {
+                _queryParams["provider"] = provider.map((item) => item);
+            } else {
+                _queryParams["provider"] = provider;
+            }
         }
 
         if (recipient != null) {
@@ -79,19 +96,39 @@ export class Messages {
         }
 
         if (status != null) {
-            _queryParams["status"] = status;
+            if (Array.isArray(status)) {
+                _queryParams["status"] = status.map((item) => item);
+            } else {
+                _queryParams["status"] = status;
+            }
+        }
+
+        if (tag != null) {
+            if (Array.isArray(tag)) {
+                _queryParams["tag"] = tag.map((item) => item);
+            } else {
+                _queryParams["tag"] = tag;
+            }
         }
 
         if (tags != null) {
             _queryParams["tags"] = tags;
         }
 
+        if (tenantId != null) {
+            _queryParams["tenant_id"] = tenantId;
+        }
+
         if (enqueuedAfter != null) {
             _queryParams["enqueued_after"] = enqueuedAfter;
         }
 
-        if (traceId != null) {
-            _queryParams["traceId"] = traceId;
+        if (traceId_ != null) {
+            _queryParams["trace_id"] = traceId_;
+        }
+
+        if (traceId_ != null) {
+            _queryParams["traceId"] = traceId_;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -104,7 +141,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -153,7 +190,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -209,7 +246,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -272,7 +309,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -330,7 +367,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -380,7 +417,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

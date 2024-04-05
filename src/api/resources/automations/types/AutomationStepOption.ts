@@ -5,8 +5,12 @@
 import * as Courier from "../../..";
 
 export type AutomationStepOption =
+    | Courier.AutomationAddToDigestStep
+    | Courier.AutomationAddToBatchStep
+    | Courier.AutomationThrottleStep
     | Courier.AutomationCancelStep
     | Courier.AutomationDelayStep
+    | Courier.AutomationFetchDataStep
     | Courier.AutomationInvokeStep
     | Courier.AutomationSendStep
     | Courier.AutomationV2SendStep

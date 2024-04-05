@@ -42,7 +42,7 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -98,7 +98,7 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -138,6 +138,15 @@ export class Preferences {
     /**
      * Update or Create user preferences for a specific subscription topic.
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.users.preferences.update("abc-123", "74Q4QGFBEX481DP6JRPMV751H4XT", {
+     *         topic: {
+     *             status: Courier.PreferenceStatus.OptedIn,
+     *             has_custom_routing: true,
+     *             custom_routing: [Courier.ChannelClassification.Inbox, Courier.ChannelClassification.Email]
+     *         }
+     *     })
      */
     public async update(
         userId: string,
@@ -155,7 +164,7 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
             },
             contentType: "application/json",
             body: request,

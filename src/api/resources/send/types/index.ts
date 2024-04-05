@@ -1,6 +1,7 @@
 export * from "./Message";
 export * from "./TemplateMessage";
 export * from "./ContentMessage";
+export * from "./BaseMessageSendTo";
 export * from "./BaseMessage";
 export * from "./MessageRecipient";
 export * from "./Recipient";
@@ -17,6 +18,7 @@ export * from "./InvalidUserRecipient";
 export * from "./UserRecipientType";
 export * from "./UserRecipient";
 export * from "./MessageData";
+export * from "./RecipientData";
 export * from "./AudienceFilter";
 export * from "./MessageContext";
 export * from "./ListFilter";

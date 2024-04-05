@@ -6,5 +6,8 @@ import * as Courier from "../../..";
 
 export interface AutomationDelayStep extends Courier.AutomationStep {
     action: "delay";
+    /** The [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) string for how long to delay for */
+    duration?: string;
+    /** The ISO 8601 timestamp for when the delay should end */
     until?: string;
 }
