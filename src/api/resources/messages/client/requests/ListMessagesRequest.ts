@@ -8,7 +8,7 @@ export interface ListMessagesRequest {
      */
     archived?: boolean;
     /**
-     * A unique identifier that allows for fetching the next set of message statuses.
+     * A unique identifier that allows for fetching the next set of messages.
      */
     cursor?: string;
     /**
@@ -22,27 +22,47 @@ export interface ListMessagesRequest {
     /**
      * A unique identifier representing the message_id returned from either /send or /send/list.
      */
+    message_id?: string;
+    /**
+     * A unique identifier representing the message_id returned from either /send or /send/list.
+     */
     messageId?: string;
     /**
      * A unique identifier representing the notification that was used to send the event.
      */
     notification?: string;
     /**
+     * The key assocated to the provider you want to filter on. E.g., sendgrid, inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
+     */
+    provider?: string | string[];
+    /**
      * A unique identifier representing the recipient associated with the requested profile.
      */
     recipient?: string;
     /**
-     * An indicator of the current status of the message. Multiple status values can be passed in.
+     * An indicator of the current status of the message. Allows multiple values to be set in query parameters.
      */
-    status?: string;
+    status?: string | string[];
+    /**
+     * A tag placed in the metadata.tags during a notification send. Allows multiple values to be set in query parameters.
+     */
+    tag?: string | string[];
     /**
      * A comma delimited list of 'tags'. Messages will be returned if they match any of the tags passed in.
      */
     tags?: string;
     /**
+     * Messages sent with the context of a Tenant
+     */
+    tenant_id?: string;
+    /**
      * The enqueued datetime of a message to filter out messages received before.
      */
     enqueued_after?: string;
+    /**
+     * The unique identifier used to trace the requests
+     */
+    trace_id?: string;
     /**
      * The unique identifier used to trace the requests
      */

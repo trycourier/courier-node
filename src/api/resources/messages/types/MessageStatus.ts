@@ -22,6 +22,9 @@ export type MessageStatus =
      * The message has been accepted by the provider. */
     | "SENT"
     /**
+     * The message was throttled by Courier. */
+    | "THROTTLED"
+    /**
      * The message could not be delivered to at least one provider, or the provider could not deliver the message to the recipient. This can happen for multiple reasons: an error, insufficient profile data, invalid notification setup, invalid integration configuration, etc. */
     | "UNDELIVERABLE"
     /**
@@ -38,6 +41,7 @@ export const MessageStatus = {
     Opened: "OPENED",
     Canceled: "CANCELED",
     Sent: "SENT",
+    Throttled: "THROTTLED",
     Undeliverable: "UNDELIVERABLE",
     Unmapped: "UNMAPPED",
     Unroutable: "UNROUTABLE",

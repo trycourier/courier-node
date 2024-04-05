@@ -47,7 +47,7 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
@@ -87,6 +87,21 @@ export class Automations {
 
     /**
      * Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a series of automation steps. For information about what steps are available, checkout the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).
+     *
+     * @example
+     *     await courier.automations.invokeAdHocAutomation({
+     *         data: {
+     *             "name": "Foo"
+     *         },
+     *         profile: {
+     *             "tenant_id": "abc-123"
+     *         },
+     *         recipient: "user-yes",
+     *         automation: {
+     *             cancelation_token: "delay-send--user-yes--abc-123",
+     *             steps: []
+     *         }
+     *     })
      */
     public async invokeAdHocAutomation(
         request: Courier.AutomationAdHocInvokeParams,
@@ -102,7 +117,7 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.0",
+                "X-Fern-SDK-Version": "v6.1.1",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null
