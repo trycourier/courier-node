@@ -4,10 +4,16 @@
 
 import * as Courier from "../../../../../..";
 
+/**
+ * @example
+ *     {
+ *         topic: {
+ *             status: Courier.PreferenceStatus.OptedIn,
+ *             has_custom_routing: true,
+ *             custom_routing: [Courier.ChannelClassification.Inbox, Courier.ChannelClassification.Email]
+ *         }
+ *     }
+ */
 export interface UserPreferencesUpdateParams {
-    status: Courier.PreferenceStatus;
-    /** The Channels a user has chosen to receive notifications through for this topic */
-    custom_routing?: Courier.ChannelClassification[];
-    default_status: Courier.PreferenceStatus;
-    has_custom_routing?: boolean;
+    topic: Courier.users.TopicPreferenceUpdate;
 }
