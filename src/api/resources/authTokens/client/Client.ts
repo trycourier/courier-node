@@ -22,7 +22,7 @@ export declare namespace AuthTokens {
 
     interface IdempotentRequestOptions extends RequestOptions {
         idempotencyKey?: string | undefined;
-        idempotencyExpiry?: number | undefined;
+        idempotencyExpiry?: string | undefined;
     }
 }
 
@@ -46,12 +46,10 @@ export class AuthTokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             body: request,

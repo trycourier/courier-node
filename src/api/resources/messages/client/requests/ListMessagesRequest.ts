@@ -22,10 +22,6 @@ export interface ListMessagesRequest {
     /**
      * A unique identifier representing the message_id returned from either /send or /send/list.
      */
-    message_id?: string;
-    /**
-     * A unique identifier representing the message_id returned from either /send or /send/list.
-     */
     messageId?: string;
     /**
      * A unique identifier representing the notification that was used to send the event.
@@ -59,10 +55,6 @@ export interface ListMessagesRequest {
      * The enqueued datetime of a message to filter out messages received before.
      */
     enqueued_after?: string;
-    /**
-     * The unique identifier used to trace the requests
-     */
-    trace_id?: string;
     /**
      * The unique identifier used to trace the requests
      */

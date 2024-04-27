@@ -22,7 +22,7 @@ export declare namespace Messages {
 
     interface IdempotentRequestOptions extends RequestOptions {
         idempotencyKey?: string | undefined;
-        idempotencyExpiry?: number | undefined;
+        idempotencyExpiry?: string | undefined;
     }
 }
 
@@ -41,8 +41,7 @@ export class Messages {
             cursor,
             event,
             list,
-            message_id: messageId,
-            messageId: messageId_,
+            messageId,
             notification,
             provider,
             recipient,
@@ -51,8 +50,7 @@ export class Messages {
             tags,
             tenant_id: tenantId,
             enqueued_after: enqueuedAfter,
-            trace_id: traceId,
-            traceId: traceId_,
+            traceId,
         } = request;
         const _queryParams: Record<string, string | string[]> = {};
         if (archived != null) {
@@ -71,12 +69,8 @@ export class Messages {
             _queryParams["list"] = list;
         }
 
-        if (messageId_ != null) {
-            _queryParams["message_id"] = messageId_;
-        }
-
-        if (messageId_ != null) {
-            _queryParams["messageId"] = messageId_;
+        if (messageId != null) {
+            _queryParams["messageId"] = messageId;
         }
 
         if (notification != null) {
@@ -123,12 +117,8 @@ export class Messages {
             _queryParams["enqueued_after"] = enqueuedAfter;
         }
 
-        if (traceId_ != null) {
-            _queryParams["trace_id"] = traceId_;
-        }
-
-        if (traceId_ != null) {
-            _queryParams["traceId"] = traceId_;
+        if (traceId != null) {
+            _queryParams["traceId"] = traceId;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -141,7 +131,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -190,7 +180,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -246,12 +236,10 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -309,7 +297,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -367,7 +355,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -417,7 +405,7 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
