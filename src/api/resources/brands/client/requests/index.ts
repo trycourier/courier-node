@@ -1,2 +1,2 @@
-export { ListBrandsRequest } from "./ListBrandsRequest";
-export { BrandUpdateParameters } from "./BrandUpdateParameters";
+export { type ListBrandsRequest } from "./ListBrandsRequest";
+export { type BrandUpdateParameters } from "./BrandUpdateParameters";

@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Courier from "../../..";
+import * as Courier from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Notifications {
     interface Options {
@@ -24,12 +24,21 @@ export declare namespace Notifications {
 export class Notifications {
     constructor(protected readonly _options: Notifications.Options = {}) {}
 
+    /**
+     * @param {Courier.NotificationListParams} request
+     * @param {Notifications.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.notifications.list({
+     *         cursor: "string"
+     *     })
+     */
     public async list(
         request: Courier.NotificationListParams = {},
         requestOptions?: Notifications.RequestOptions
     ): Promise<Courier.NotificationListResponse> {
         const { cursor } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (cursor != null) {
             _queryParams["cursor"] = cursor;
         }
@@ -44,7 +53,9 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -77,6 +88,13 @@ export class Notifications {
         }
     }
 
+    /**
+     * @param {string} id
+     * @param {Notifications.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.notifications.getContent("string")
+     */
     public async getContent(
         id: string,
         requestOptions?: Notifications.RequestOptions
@@ -84,14 +102,16 @@ export class Notifications {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/notifications/${id}/content`
+                `/notifications/${encodeURIComponent(id)}/content`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -123,6 +143,13 @@ export class Notifications {
         }
     }
 
+    /**
+     * @param {string} id
+     * @param {Notifications.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.notifications.getDraftContent("string")
+     */
     public async getDraftContent(
         id: string,
         requestOptions?: Notifications.RequestOptions
@@ -130,14 +157,16 @@ export class Notifications {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/notifications/${id}/draft/content`
+                `/notifications/${encodeURIComponent(id)}/draft/content`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -169,6 +198,35 @@ export class Notifications {
         }
     }
 
+    /**
+     * @param {string} id
+     * @param {Courier.NotificationUpdateVariationsParams} request
+     * @param {Notifications.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.notifications.updateVariations("string", {
+     *         blocks: [{
+     *                 alias: "string",
+     *                 context: "string",
+     *                 id: "string",
+     *                 type: Courier.BlockType.Action,
+     *                 content: "string",
+     *                 locales: {
+     *                     "string": "string"
+     *                 },
+     *                 checksum: "string"
+     *             }],
+     *         channels: [{
+     *                 id: "string",
+     *                 type: "string",
+     *                 content: {},
+     *                 locales: {
+     *                     "string": {}
+     *                 },
+     *                 checksum: "string"
+     *             }]
+     *     })
+     */
     public async updateVariations(
         id: string,
         request: Courier.NotificationUpdateVariationsParams = {},
@@ -177,14 +235,16 @@ export class Notifications {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/notifications/${id}/variations`
+                `/notifications/${encodeURIComponent(id)}/variations`
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -217,6 +277,35 @@ export class Notifications {
         }
     }
 
+    /**
+     * @param {string} id
+     * @param {Courier.NotificationDraftUpdateVariationsParams} request
+     * @param {Notifications.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.notifications.updateDraftVariations("string", {
+     *         blocks: [{
+     *                 alias: "string",
+     *                 context: "string",
+     *                 id: "string",
+     *                 type: Courier.BlockType.Action,
+     *                 content: "string",
+     *                 locales: {
+     *                     "string": "string"
+     *                 },
+     *                 checksum: "string"
+     *             }],
+     *         channels: [{
+     *                 id: "string",
+     *                 type: "string",
+     *                 content: {},
+     *                 locales: {
+     *                     "string": {}
+     *                 },
+     *                 checksum: "string"
+     *             }]
+     *     })
+     */
     public async updateDraftVariations(
         id: string,
         request: Courier.NotificationDraftUpdateVariationsParams = {},
@@ -225,14 +314,16 @@ export class Notifications {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/notifications/${id}/draft/variations`
+                `/notifications/${encodeURIComponent(id)}/draft/variations`
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -265,6 +356,14 @@ export class Notifications {
         }
     }
 
+    /**
+     * @param {string} id
+     * @param {string} submissionId
+     * @param {Notifications.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.notifications.getSubmissionChecks("string", "string")
+     */
     public async getSubmissionChecks(
         id: string,
         submissionId: string,
@@ -273,14 +372,16 @@ export class Notifications {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/notifications/${id}/${submissionId}/checks`
+                `/notifications/${encodeURIComponent(id)}/${encodeURIComponent(submissionId)}/checks`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -312,6 +413,21 @@ export class Notifications {
         }
     }
 
+    /**
+     * @param {string} id
+     * @param {string} submissionId
+     * @param {Courier.SubmissionChecksReplaceParams} request
+     * @param {Notifications.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.notifications.replaceSubmissionChecks("string", "string", {
+     *         checks: [{
+     *                 id: "string",
+     *                 status: Courier.CheckStatus.Resolved,
+     *                 type: "custom"
+     *             }]
+     *     })
+     */
     public async replaceSubmissionChecks(
         id: string,
         submissionId: string,
@@ -321,14 +437,16 @@ export class Notifications {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/notifications/${id}/${submissionId}/checks`
+                `/notifications/${encodeURIComponent(id)}/${encodeURIComponent(submissionId)}/checks`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -361,6 +479,14 @@ export class Notifications {
         }
     }
 
+    /**
+     * @param {string} id
+     * @param {string} submissionId
+     * @param {Notifications.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.notifications.cancelSubmission("string", "string")
+     */
     public async cancelSubmission(
         id: string,
         submissionId: string,
@@ -369,14 +495,16 @@ export class Notifications {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/notifications/${id}/${submissionId}/checks`
+                `/notifications/${encodeURIComponent(id)}/${encodeURIComponent(submissionId)}/checks`
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -408,8 +536,9 @@ export class Notifications {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

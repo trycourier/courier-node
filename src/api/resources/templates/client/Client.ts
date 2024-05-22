@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Courier from "../../..";
+import * as Courier from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Templates {
     interface Options {
@@ -26,13 +26,21 @@ export class Templates {
 
     /**
      * Returns a list of notification templates
+     *
+     * @param {Courier.ListTemplatesRequest} request
+     * @param {Templates.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.templates.list({
+     *         cursor: "string"
+     *     })
      */
     public async list(
         request: Courier.ListTemplatesRequest = {},
         requestOptions?: Templates.RequestOptions
     ): Promise<Courier.ListTemplatesResponse> {
         const { cursor } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (cursor != null) {
             _queryParams["cursor"] = cursor;
         }
@@ -47,7 +55,9 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -80,8 +90,9 @@ export class Templates {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

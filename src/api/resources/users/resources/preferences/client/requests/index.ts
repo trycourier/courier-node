@@ -1,1 +1,1 @@
-export { UserPreferencesUpdateParams } from "./UserPreferencesUpdateParams";
+export { type UserPreferencesUpdateParams } from "./UserPreferencesUpdateParams";

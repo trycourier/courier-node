@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../../../environments";
 import * as core from "../../../../../../core";
-import * as Courier from "../../../../..";
+import * as Courier from "../../../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../../../errors";
+import * as errors from "../../../../../../errors/index";
 
 export declare namespace Preferences {
     interface Options {
@@ -26,7 +26,14 @@ export class Preferences {
 
     /**
      * Fetch all user preferences.
+     *
+     * @param {string} userId - A unique identifier associated with the user whose preferences you wish to retrieve.
+     * @param {Preferences.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.users.preferences.list("string")
      */
     public async list(
         userId: string,
@@ -35,14 +42,16 @@ export class Preferences {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${userId}/preferences`
+                `/users/${encodeURIComponent(userId)}/preferences`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -81,7 +90,15 @@ export class Preferences {
 
     /**
      * Fetch user preferences for a specific subscription topic.
+     *
+     * @param {string} userId - A unique identifier associated with the user whose preferences you wish to retrieve.
+     * @param {string} topicId - A unique identifier associated with a subscription topic.
+     * @param {Preferences.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.NotFoundError}
+     *
+     * @example
+     *     await courier.users.preferences.get("string", "string")
      */
     public async get(
         userId: string,
@@ -91,14 +108,16 @@ export class Preferences {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${userId}/preferences/${topicId}`
+                `/users/${encodeURIComponent(userId)}/preferences/${encodeURIComponent(topicId)}`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -137,6 +156,12 @@ export class Preferences {
 
     /**
      * Update or Create user preferences for a specific subscription topic.
+     *
+     * @param {string} userId - A unique identifier associated with the user whose preferences you wish to retrieve.
+     * @param {string} topicId - A unique identifier associated with a subscription topic.
+     * @param {Courier.users.UserPreferencesUpdateParams} request
+     * @param {Preferences.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
      *
      * @example
@@ -157,14 +182,16 @@ export class Preferences {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${userId}/preferences/${topicId}`
+                `/users/${encodeURIComponent(userId)}/preferences/${encodeURIComponent(topicId)}`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -202,8 +229,9 @@ export class Preferences {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

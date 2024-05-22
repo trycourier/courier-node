@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Courier from "../../..";
+import * as Courier from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Messages {
     interface Options {
@@ -22,7 +22,7 @@ export declare namespace Messages {
 
     interface IdempotentRequestOptions extends RequestOptions {
         idempotencyKey?: string | undefined;
-        idempotencyExpiry?: number | undefined;
+        idempotencyExpiry?: string | undefined;
     }
 }
 
@@ -31,6 +31,27 @@ export class Messages {
 
     /**
      * Fetch the statuses of messages you've previously sent.
+     *
+     * @param {Courier.ListMessagesRequest} request
+     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.messages.list({
+     *         archived: true,
+     *         cursor: "string",
+     *         event: "string",
+     *         list: "string",
+     *         messageId: "string",
+     *         notification: "string",
+     *         provider: "string",
+     *         recipient: "string",
+     *         status: "string",
+     *         tag: "string",
+     *         tags: "string",
+     *         tenant_id: "string",
+     *         enqueued_after: "string",
+     *         traceId: "string"
+     *     })
      */
     public async list(
         request: Courier.ListMessagesRequest = {},
@@ -41,8 +62,7 @@ export class Messages {
             cursor,
             event,
             list,
-            message_id: messageId,
-            messageId: messageId_,
+            messageId,
             notification,
             provider,
             recipient,
@@ -51,10 +71,9 @@ export class Messages {
             tags,
             tenant_id: tenantId,
             enqueued_after: enqueuedAfter,
-            trace_id: traceId,
-            traceId: traceId_,
+            traceId,
         } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (archived != null) {
             _queryParams["archived"] = archived.toString();
         }
@@ -71,12 +90,8 @@ export class Messages {
             _queryParams["list"] = list;
         }
 
-        if (messageId_ != null) {
-            _queryParams["message_id"] = messageId_;
-        }
-
-        if (messageId_ != null) {
-            _queryParams["messageId"] = messageId_;
+        if (messageId != null) {
+            _queryParams["messageId"] = messageId;
         }
 
         if (notification != null) {
@@ -123,12 +138,8 @@ export class Messages {
             _queryParams["enqueued_after"] = enqueuedAfter;
         }
 
-        if (traceId_ != null) {
-            _queryParams["trace_id"] = traceId_;
-        }
-
-        if (traceId_ != null) {
-            _queryParams["traceId"] = traceId_;
+        if (traceId != null) {
+            _queryParams["traceId"] = traceId;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -141,7 +152,9 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -176,21 +189,30 @@ export class Messages {
 
     /**
      * Fetch the status of a message you've previously sent.
+     *
+     * @param {string} messageId - A unique identifier associated with the message you wish to retrieve (results from a send).
+     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
      * @throws {@link Courier.MessageNotFoundError}
+     *
+     * @example
+     *     await courier.messages.get("string")
      */
     public async get(messageId: string, requestOptions?: Messages.RequestOptions): Promise<Courier.MessageDetails> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `messages/${messageId}`
+                `messages/${encodeURIComponent(messageId)}`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -231,6 +253,12 @@ export class Messages {
 
     /**
      * Cancel a message that is currently in the process of being delivered. A well-formatted API call to the cancel message API will return either `200` status code for a successful cancellation or `409` status code for an unsuccessful cancellation. Both cases will include the actual message record in the response body (see details below).
+     *
+     * @param {string} messageId - A unique identifier representing the message ID
+     * @param {Messages.IdempotentRequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.messages.cancel("string")
      */
     public async cancel(
         messageId: string,
@@ -239,19 +267,19 @@ export class Messages {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `messages/${messageId}/cancel`
+                `messages/${encodeURIComponent(messageId)}/cancel`
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -285,8 +313,18 @@ export class Messages {
 
     /**
      * Fetch the array of events of a message you've previously sent.
+     *
+     * @param {string} messageId - A unique identifier representing the message ID
+     * @param {Courier.GetMessageHistoryRequest} request
+     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
      * @throws {@link Courier.MessageNotFoundError}
+     *
+     * @example
+     *     await courier.messages.getHistory("string", {
+     *         type: "string"
+     *     })
      */
     public async getHistory(
         messageId: string,
@@ -294,7 +332,7 @@ export class Messages {
         requestOptions?: Messages.RequestOptions
     ): Promise<Courier.MessageHistoryResponse> {
         const { type: type_ } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (type_ != null) {
             _queryParams["type"] = type_;
         }
@@ -302,14 +340,16 @@ export class Messages {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `messages/${messageId}/history`
+                `messages/${encodeURIComponent(messageId)}/history`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -350,8 +390,14 @@ export class Messages {
     }
 
     /**
+     * @param {string} messageId - A unique identifier associated with the message you wish to retrieve (results from a send).
+     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
      * @throws {@link Courier.MessageNotFoundError}
+     *
+     * @example
+     *     await courier.messages.getContent("string")
      */
     public async getContent(
         messageId: string,
@@ -360,14 +406,16 @@ export class Messages {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `messages/${messageId}/output`
+                `messages/${encodeURIComponent(messageId)}/output`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -406,18 +454,27 @@ export class Messages {
         }
     }
 
+    /**
+     * @param {string} requestId - A unique identifier representing the request ID
+     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.messages.archive("string")
+     */
     public async archive(requestId: string, requestOptions?: Messages.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `requests/${requestId}/archive`
+                `requests/${encodeURIComponent(requestId)}/archive`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -449,8 +506,9 @@ export class Messages {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

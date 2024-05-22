@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Courier from "../../..";
+import * as Courier from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Bulk {
     interface Options {
@@ -22,7 +22,7 @@ export declare namespace Bulk {
 
     interface IdempotentRequestOptions extends RequestOptions {
         idempotencyKey?: string | undefined;
-        idempotencyExpiry?: number | undefined;
+        idempotencyExpiry?: string | undefined;
     }
 }
 
@@ -30,7 +30,32 @@ export class Bulk {
     constructor(protected readonly _options: Bulk.Options = {}) {}
 
     /**
+     * @param {Courier.BulkCreateJobParams} request
+     * @param {Bulk.IdempotentRequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.bulk.createJob({
+     *         message: {
+     *             message: {},
+     *             brand: "string",
+     *             data: {
+     *                 "string": {
+     *                     "key": "value"
+     *                 }
+     *             },
+     *             event: "string",
+     *             locale: {
+     *                 "string": {
+     *                     "key": "value"
+     *                 }
+     *             },
+     *             override: {
+     *                 "key": "value"
+     *             }
+     *         }
+     *     })
      */
     public async createJob(
         request: Courier.BulkCreateJobParams,
@@ -46,12 +71,12 @@ export class Bulk {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             body: request,
@@ -91,6 +116,25 @@ export class Bulk {
 
     /**
      * Ingest user data into a Bulk Job
+     *
+     * @param {string} jobId - A unique identifier representing the bulk job
+     * @param {Courier.BulkIngestUsersParams} request
+     * @param {Bulk.IdempotentRequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.bulk.ingestUsers("string", {
+     *         users: [{
+     *                 preferences: {},
+     *                 profile: {
+     *                     "key": "value"
+     *                 },
+     *                 recipient: "string",
+     *                 data: {
+     *                     "key": "value"
+     *                 },
+     *                 to: {}
+     *             }]
+     *     })
      */
     public async ingestUsers(
         jobId: string,
@@ -100,19 +144,19 @@ export class Bulk {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/bulk/${jobId}`
+                `/bulk/${encodeURIComponent(jobId)}`
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             body: request,
@@ -147,25 +191,32 @@ export class Bulk {
 
     /**
      * Run a bulk job
+     *
+     * @param {string} jobId - A unique identifier representing the bulk job
+     * @param {Bulk.IdempotentRequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.bulk.runJob("string")
      */
     public async runJob(jobId: string, requestOptions?: Bulk.IdempotentRequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/bulk/${jobId}/run`
+                `/bulk/${encodeURIComponent(jobId)}/run`
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -204,20 +255,29 @@ export class Bulk {
 
     /**
      * Get a bulk job
+     *
+     * @param {string} jobId - A unique identifier representing the bulk job
+     * @param {Bulk.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.bulk.getJob("string")
      */
     public async getJob(jobId: string, requestOptions?: Bulk.RequestOptions): Promise<Courier.BulkGetJobResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/bulk/${jobId}`
+                `/bulk/${encodeURIComponent(jobId)}`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -256,7 +316,14 @@ export class Bulk {
 
     /**
      * Get Bulk Job Users
+     *
+     * @param {string} jobId - A unique identifier representing the bulk job
+     * @param {Bulk.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.bulk.getUsers("string")
      */
     public async getUsers(
         jobId: string,
@@ -265,14 +332,16 @@ export class Bulk {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/bulk/${jobId}/users`
+                `/bulk/${encodeURIComponent(jobId)}/users`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -309,8 +378,9 @@ export class Bulk {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

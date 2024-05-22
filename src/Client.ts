@@ -4,9 +4,9 @@
 
 import * as environments from "./environments";
 import * as core from "./core";
-import * as Courier from "./api";
+import * as Courier from "./api/index";
 import urlJoin from "url-join";
-import * as errors from "./errors";
+import * as errors from "./errors/index";
 import { Audiences } from "./api/resources/audiences/client/Client";
 import { AuditEvents } from "./api/resources/auditEvents/client/Client";
 import { AuthTokens } from "./api/resources/authTokens/client/Client";
@@ -36,7 +36,7 @@ export declare namespace CourierClient {
 
     interface IdempotentRequestOptions extends RequestOptions {
         idempotencyKey?: string | undefined;
-        idempotencyExpiry?: number | undefined;
+        idempotencyExpiry?: string | undefined;
     }
 }
 
@@ -45,6 +45,35 @@ export class CourierClient {
 
     /**
      * Use the send API to send a message to one or more recipients.
+     *
+     * @param {Courier.SendMessageRequest} request
+     * @param {CourierClient.IdempotentRequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.send({
+     *         message: {
+     *             content: {},
+     *             data: {
+     *                 "string": {
+     *                     "key": "value"
+     *                 }
+     *             },
+     *             brand_id: "string",
+     *             channels: {
+     *                 "string": {}
+     *             },
+     *             context: {},
+     *             metadata: {},
+     *             providers: {
+     *                 "string": {}
+     *             },
+     *             routing: {},
+     *             timeout: {},
+     *             delay: {},
+     *             expiry: {},
+     *             to: {}
+     *         }
+     *     })
      */
     public async send(
         request: Courier.SendMessageRequest,
@@ -60,12 +89,12 @@ export class CourierClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             body: request,
@@ -182,8 +211,9 @@ export class CourierClient {
         return (this._users ??= new Users(this._options));
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

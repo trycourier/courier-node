@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Courier from "../../..";
+import * as Courier from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace AuditEvents {
     interface Options {
@@ -26,13 +26,21 @@ export class AuditEvents {
 
     /**
      * Fetch the list of audit events
+     *
+     * @param {Courier.ListAuditEventsRequest} request
+     * @param {AuditEvents.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.auditEvents.list({
+     *         cursor: "string"
+     *     })
      */
     public async list(
         request: Courier.ListAuditEventsRequest = {},
         requestOptions?: AuditEvents.RequestOptions
     ): Promise<Courier.ListAuditEventsResponse> {
         const { cursor } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (cursor != null) {
             _queryParams["cursor"] = cursor;
         }
@@ -47,7 +55,9 @@ export class AuditEvents {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -82,19 +92,27 @@ export class AuditEvents {
 
     /**
      * Fetch a specific audit event by ID.
+     *
+     * @param {string} auditEventId - A unique identifier associated with the audit event you wish to retrieve
+     * @param {AuditEvents.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.auditEvents.get("string")
      */
     public async get(auditEventId: string, requestOptions?: AuditEvents.RequestOptions): Promise<Courier.AuditEvent> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/audit-events/${auditEventId}`
+                `/audit-events/${encodeURIComponent(auditEventId)}`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -126,8 +144,9 @@ export class AuditEvents {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Courier from "../../..";
+import * as Courier from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Audiences {
     interface Options {
@@ -26,19 +26,27 @@ export class Audiences {
 
     /**
      * Returns the specified audience by id.
+     *
+     * @param {string} audienceId - A unique identifier representing the audience_id
+     * @param {Audiences.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.audiences.get("string")
      */
     public async get(audienceId: string, requestOptions?: Audiences.RequestOptions): Promise<Courier.Audience> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/audiences/${audienceId}`
+                `/audiences/${encodeURIComponent(audienceId)}`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -72,6 +80,21 @@ export class Audiences {
 
     /**
      * Creates or updates audience.
+     *
+     * @param {string} audienceId - A unique identifier representing the audience id
+     * @param {Courier.AudienceUpdateParams} request
+     * @param {Audiences.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.audiences.update("string", {
+     *         name: "string",
+     *         description: "string",
+     *         filter: {
+     *             value: "string",
+     *             path: "string",
+     *             operator: Courier.ComparisonOperator.EndsWith
+     *         }
+     *     })
      */
     public async update(
         audienceId: string,
@@ -81,14 +104,16 @@ export class Audiences {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/audiences/${audienceId}`
+                `/audiences/${encodeURIComponent(audienceId)}`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -123,19 +148,27 @@ export class Audiences {
 
     /**
      * Deletes the specified audience.
+     *
+     * @param {string} audienceId - A unique identifier representing the audience id
+     * @param {Audiences.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.audiences.delete("string")
      */
     public async delete(audienceId: string, requestOptions?: Audiences.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/audiences/${audienceId}`
+                `/audiences/${encodeURIComponent(audienceId)}`
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -169,7 +202,17 @@ export class Audiences {
 
     /**
      * Get list of members of an audience.
+     *
+     * @param {string} audienceId - A unique identifier representing the audience id
+     * @param {Courier.AudienceMembersListParams} request
+     * @param {Audiences.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.audiences.listMembers("string", {
+     *         cursor: "string"
+     *     })
      */
     public async listMembers(
         audienceId: string,
@@ -177,7 +220,7 @@ export class Audiences {
         requestOptions?: Audiences.RequestOptions
     ): Promise<Courier.AudienceMemberListResponse> {
         const { cursor } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (cursor != null) {
             _queryParams["cursor"] = cursor;
         }
@@ -185,14 +228,16 @@ export class Audiences {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/audiences/${audienceId}/members`
+                `/audiences/${encodeURIComponent(audienceId)}/members`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -232,14 +277,23 @@ export class Audiences {
 
     /**
      * Get the audiences associated with the authorization token.
+     *
+     * @param {Courier.AudiencesListParams} request
+     * @param {Audiences.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.audiences.listAudiences({
+     *         cursor: "string"
+     *     })
      */
     public async listAudiences(
         request: Courier.AudiencesListParams = {},
         requestOptions?: Audiences.RequestOptions
     ): Promise<Courier.AudienceListResponse> {
         const { cursor } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (cursor != null) {
             _queryParams["cursor"] = cursor;
         }
@@ -254,7 +308,9 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -292,8 +348,9 @@ export class Audiences {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

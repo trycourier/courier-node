@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Courier from "../../..";
+import * as Courier from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Translations {
     interface Options {
@@ -26,20 +26,30 @@ export class Translations {
 
     /**
      * Get translations by locale
+     *
+     * @param {string} domain - The domain you want to retrieve translations for. Only `default` is supported at the moment
+     * @param {string} locale - The locale you want to retrieve the translations for
+     * @param {Translations.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.NotFoundError}
+     *
+     * @example
+     *     await courier.translations.get("string", "string")
      */
     public async get(domain: string, locale: string, requestOptions?: Translations.RequestOptions): Promise<string> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/translations/${domain}/${locale}`
+                `/translations/${encodeURIComponent(domain)}/${encodeURIComponent(locale)}`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -78,7 +88,16 @@ export class Translations {
 
     /**
      * Update a translation
+     *
+     * @param {string} domain - The domain you want to retrieve translations for. Only `default` is supported at the moment
+     * @param {string} locale - The locale you want to retrieve the translations for
+     * @param {string} request
+     * @param {Translations.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.NotFoundError}
+     *
+     * @example
+     *     await courier.translations.update("string", "string", "string")
      */
     public async update(
         domain: string,
@@ -89,14 +108,16 @@ export class Translations {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/translations/${domain}/${locale}`
+                `/translations/${encodeURIComponent(domain)}/${encodeURIComponent(locale)}`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -134,8 +155,9 @@ export class Translations {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

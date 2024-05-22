@@ -1,3 +1,3 @@
-export { TenantCreateOrReplaceParams } from "./TenantCreateOrReplaceParams";
-export { ListTenantParams } from "./ListTenantParams";
-export { ListUsersForTenantParams } from "./ListUsersForTenantParams";
+export { type TenantCreateOrReplaceParams } from "./TenantCreateOrReplaceParams";
+export { type ListTenantParams } from "./ListTenantParams";
+export { type ListUsersForTenantParams } from "./ListUsersForTenantParams";

@@ -1,1 +1,1 @@
-export { BulkCreateJobParams } from "./BulkCreateJobParams";
+export { type BulkCreateJobParams } from "./BulkCreateJobParams";

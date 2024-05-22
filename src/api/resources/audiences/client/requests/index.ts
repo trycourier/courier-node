@@ -1,3 +1,3 @@
-export { AudienceUpdateParams } from "./AudienceUpdateParams";
-export { AudienceMembersListParams } from "./AudienceMembersListParams";
-export { AudiencesListParams } from "./AudiencesListParams";
+export { type AudienceUpdateParams } from "./AudienceUpdateParams";
+export { type AudienceMembersListParams } from "./AudienceMembersListParams";
+export { type AudiencesListParams } from "./AudiencesListParams";

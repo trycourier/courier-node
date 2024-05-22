@@ -1,1 +1,1 @@
-export { SendMessageRequest } from "./SendMessageRequest";
+export { type SendMessageRequest } from "./SendMessageRequest";
