@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Courier from "../../..";
+import * as Courier from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Profiles {
     interface Options {
@@ -22,7 +22,7 @@ export declare namespace Profiles {
 
     interface IdempotentRequestOptions extends RequestOptions {
         idempotencyKey?: string | undefined;
-        idempotencyExpiry?: number | undefined;
+        idempotencyExpiry?: string | undefined;
     }
 }
 
@@ -31,20 +31,29 @@ export class Profiles {
 
     /**
      * Returns the specified user profile.
+     *
+     * @param {string} userId - A unique identifier representing the user associated with the requested profile.
+     * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.profiles.get("string")
      */
     public async get(userId: string, requestOptions?: Profiles.RequestOptions): Promise<Courier.ProfileGetResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${userId}`
+                `/profiles/${encodeURIComponent(userId)}`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -83,7 +92,21 @@ export class Profiles {
 
     /**
      * Merge the supplied values with an existing profile or create a new profile if one doesn't already exist.
+     *
+     * @param {string} userId - A unique identifier representing the user associated with the requested profile.
+     * @param {Courier.MergeProfileRequest} request
+     * @param {Profiles.IdempotentRequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.profiles.create("string", {
+     *         profile: {
+     *             "string": {
+     *                 "key": "value"
+     *             }
+     *         }
+     *     })
      */
     public async create(
         userId: string,
@@ -93,19 +116,19 @@ export class Profiles {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${userId}`
+                `/profiles/${encodeURIComponent(userId)}`
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             body: request,
@@ -148,7 +171,21 @@ export class Profiles {
      * Any key-value pairs that exist in the profile but fail to be included in the `PUT` request will be
      * removed from the profile. Remember, a `PUT` update is a full replacement of the data. For partial updates,
      * use the [Patch](https://www.courier.com/docs/reference/profiles/patch/) request.
+     *
+     * @param {string} userId - A unique identifier representing the user associated with the requested profile.
+     * @param {Courier.ReplaceProfileRequest} request
+     * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.profiles.replace("string", {
+     *         profile: {
+     *             "string": {
+     *                 "key": "value"
+     *             }
+     *         }
+     *     })
      */
     public async replace(
         userId: string,
@@ -158,14 +195,16 @@ export class Profiles {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${userId}`
+                `/profiles/${encodeURIComponent(userId)}`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -205,20 +244,29 @@ export class Profiles {
 
     /**
      * Deletes the specified user profile.
+     *
+     * @param {string} userId - A unique identifier representing the user associated with the requested profile.
+     * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.profiles.delete("string")
      */
     public async delete(userId: string, requestOptions?: Profiles.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${userId}`
+                `/profiles/${encodeURIComponent(userId)}`
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -257,7 +305,17 @@ export class Profiles {
 
     /**
      * Returns the subscribed lists for a specified user.
+     *
+     * @param {string} userId - A unique identifier representing the user associated with the requested profile.
+     * @param {Courier.GetListSubscriptionsRequest} request
+     * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.profiles.getListSubscriptions("string", {
+     *         cursor: "string"
+     *     })
      */
     public async getListSubscriptions(
         userId: string,
@@ -265,7 +323,7 @@ export class Profiles {
         requestOptions?: Profiles.RequestOptions
     ): Promise<Courier.GetListSubscriptionsResponse> {
         const { cursor } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (cursor != null) {
             _queryParams["cursor"] = cursor;
         }
@@ -273,14 +331,16 @@ export class Profiles {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${userId}/lists`
+                `/profiles/${encodeURIComponent(userId)}/lists`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -320,7 +380,17 @@ export class Profiles {
 
     /**
      * Subscribes the given user to one or more lists. If the list does not exist, it will be created.
+     *
+     * @param {string} userId - A unique identifier representing the user associated with the requested profile.
+     * @param {Courier.SubscribeToListsRequest} request
+     * @param {Profiles.IdempotentRequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.profiles.subscribeToLists("string", {
+     *         lists: [{}]
+     *     })
      */
     public async subscribeToLists(
         userId: string,
@@ -330,19 +400,19 @@ export class Profiles {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${userId}/lists`
+                `/profiles/${encodeURIComponent(userId)}/lists`
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             body: request,
@@ -382,7 +452,14 @@ export class Profiles {
 
     /**
      * Removes all list subscriptions for given user.
+     *
+     * @param {string} userId - A unique identifier representing the user associated with the requested profile.
+     * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.profiles.deleteListSubscription("string")
      */
     public async deleteListSubscription(
         userId: string,
@@ -391,14 +468,16 @@ export class Profiles {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${userId}/lists`
+                `/profiles/${encodeURIComponent(userId)}/lists`
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -435,8 +514,9 @@ export class Profiles {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

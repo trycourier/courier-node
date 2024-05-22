@@ -1,2 +1,2 @@
-export { ListMessagesRequest } from "./ListMessagesRequest";
-export { GetMessageHistoryRequest } from "./GetMessageHistoryRequest";
+export { type ListMessagesRequest } from "./ListMessagesRequest";
+export { type GetMessageHistoryRequest } from "./GetMessageHistoryRequest";

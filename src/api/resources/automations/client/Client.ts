@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Courier from "../../..";
+import * as Courier from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Automations {
     interface Options {
@@ -22,7 +22,7 @@ export declare namespace Automations {
 
     interface IdempotentRequestOptions extends RequestOptions {
         idempotencyKey?: string | undefined;
-        idempotencyExpiry?: number | undefined;
+        idempotencyExpiry?: string | undefined;
     }
 }
 
@@ -31,6 +31,25 @@ export class Automations {
 
     /**
      * Invoke an automation run from an automation template.
+     *
+     * @param {string} templateId - A unique identifier representing the automation template to be invoked. This could be the Automation Template ID or the Automation Template Alias.
+     * @param {Courier.AutomationInvokeParams} request
+     * @param {Automations.IdempotentRequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.automations.invokeAutomationTemplate("string", {
+     *         brand: "string",
+     *         data: {
+     *             "string": {
+     *                 "key": "value"
+     *             }
+     *         },
+     *         profile: {
+     *             "key": "value"
+     *         },
+     *         recipient: "string",
+     *         template: "string"
+     *     })
      */
     public async invokeAutomationTemplate(
         templateId: string,
@@ -40,19 +59,19 @@ export class Automations {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/automations/${templateId}/invoke`
+                `/automations/${encodeURIComponent(templateId)}/invoke`
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             body: request,
@@ -88,6 +107,9 @@ export class Automations {
     /**
      * Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a series of automation steps. For information about what steps are available, checkout the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).
      *
+     * @param {Courier.AutomationAdHocInvokeParams} request
+     * @param {Automations.IdempotentRequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await courier.automations.invokeAdHocAutomation({
      *         data: {
@@ -99,7 +121,13 @@ export class Automations {
      *         recipient: "user-yes",
      *         automation: {
      *             cancelation_token: "delay-send--user-yes--abc-123",
-     *             steps: []
+     *             steps: [{
+     *                     action: "delay",
+     *                     until: "20240408T080910.123"
+     *                 }, {
+     *                     action: "send",
+     *                     template: "64TP5HKPFTM8VTK1Y75SJDQX9JK0"
+     *                 }]
      *         }
      *     })
      */
@@ -117,12 +145,12 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
-                    requestOptions?.idempotencyExpiry != null
-                        ? requestOptions?.idempotencyExpiry.toString()
-                        : undefined,
+                    requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
             },
             contentType: "application/json",
             body: request,
@@ -155,8 +183,9 @@ export class Automations {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

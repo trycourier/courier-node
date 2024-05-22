@@ -1,1 +1,1 @@
-export { IssueTokenParams } from "./IssueTokenParams";
+export { type IssueTokenParams } from "./IssueTokenParams";

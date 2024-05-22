@@ -1,1 +1,1 @@
-export { ListTemplatesRequest } from "./ListTemplatesRequest";
+export { type ListTemplatesRequest } from "./ListTemplatesRequest";

@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../../../environments";
 import * as core from "../../../../../../core";
-import * as Courier from "../../../../..";
+import * as Courier from "../../../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../../../errors";
+import * as errors from "../../../../../../errors/index";
 
 export declare namespace Tokens {
     interface Options {
@@ -26,20 +26,29 @@ export class Tokens {
 
     /**
      * Adds multiple tokens to a user and overwrites matching existing tokens.
+     *
+     * @param {string} userId - The user's ID. This can be any uniquely identifiable string.
+     * @param {Tokens.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.users.tokens.addMultiple("string")
      */
     public async addMultiple(userId: string, requestOptions?: Tokens.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${userId}/tokens`
+                `/users/${encodeURIComponent(userId)}/tokens`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -78,7 +87,37 @@ export class Tokens {
 
     /**
      * Adds a single token to a user and overwrites a matching existing token.
+     *
+     * @param {string} userId - The user's ID. This can be any uniquely identifiable string.
+     * @param {string} token - The full token string.
+     * @param {Courier.users.UserToken} request
+     * @param {Tokens.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.users.tokens.add("string", "string", {
+     *         token: "string",
+     *         provider_key: Courier.users.ProviderKey.FirebaseFcm,
+     *         expiry_date: "string",
+     *         properties: {
+     *             "key": "value"
+     *         },
+     *         device: {
+     *             app_id: "string",
+     *             ad_id: "string",
+     *             device_id: "string",
+     *             platform: "string",
+     *             manufacturer: "string",
+     *             model: "string"
+     *         },
+     *         tracking: {
+     *             os_version: "string",
+     *             ip: "string",
+     *             lat: "string",
+     *             long: "string"
+     *         }
+     *     })
      */
     public async add(
         userId: string,
@@ -89,14 +128,16 @@ export class Tokens {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${userId}/tokens/${token}`
+                `/users/${encodeURIComponent(userId)}/tokens/${encodeURIComponent(token)}`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -136,7 +177,18 @@ export class Tokens {
 
     /**
      * Apply a JSON Patch (RFC 6902) to the specified token.
+     *
+     * @param {string} userId - The user's ID. This can be any uniquely identifiable string.
+     * @param {string} token - The full token string.
+     * @param {Courier.users.PatchUserTokenOpts} request
+     * @param {Tokens.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.users.tokens.update("string", "string", {
+     *         patch: [{}]
+     *     })
      */
     public async update(
         userId: string,
@@ -147,14 +199,16 @@ export class Tokens {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${userId}/tokens/${token}`
+                `/users/${encodeURIComponent(userId)}/tokens/${encodeURIComponent(token)}`
             ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -194,7 +248,15 @@ export class Tokens {
 
     /**
      * Get single token available for a `:token`
+     *
+     * @param {string} userId - The user's ID. This can be any uniquely identifiable string.
+     * @param {string} token - The full token string.
+     * @param {Tokens.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.users.tokens.get("string", "string")
      */
     public async get(
         userId: string,
@@ -204,14 +266,16 @@ export class Tokens {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${userId}/tokens/${token}`
+                `/users/${encodeURIComponent(userId)}/tokens/${encodeURIComponent(token)}`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -250,7 +314,14 @@ export class Tokens {
 
     /**
      * Gets all tokens available for a :user_id
+     *
+     * @param {string} userId - The user's ID. This can be any uniquely identifiable string.
+     * @param {Tokens.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.users.tokens.list("string")
      */
     public async list(
         userId: string,
@@ -259,14 +330,16 @@ export class Tokens {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${userId}/tokens`
+                `/users/${encodeURIComponent(userId)}/tokens`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -303,8 +376,9 @@ export class Tokens {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

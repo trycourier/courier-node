@@ -1,3 +1,3 @@
-export { AddUserToMultipleTenantsParams } from "./AddUserToMultipleTenantsParams";
-export { AddUserToSingleTenantsParams } from "./AddUserToSingleTenantsParams";
-export { ListTenantsForUserParams } from "./ListTenantsForUserParams";
+export { type AddUserToMultipleTenantsParams } from "./AddUserToMultipleTenantsParams";
+export { type AddUserToSingleTenantsParams } from "./AddUserToSingleTenantsParams";
+export { type ListTenantsForUserParams } from "./ListTenantsForUserParams";

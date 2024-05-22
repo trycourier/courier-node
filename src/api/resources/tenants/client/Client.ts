@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Courier from "../../..";
+import * as Courier from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Tenants {
     interface Options {
@@ -25,7 +25,31 @@ export class Tenants {
     constructor(protected readonly _options: Tenants.Options = {}) {}
 
     /**
+     * @param {string} tenantId - A unique identifier representing the tenant to be returned.
+     * @param {Courier.TenantCreateOrReplaceParams} request
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.tenants.createOrReplace("string", {
+     *         name: "string",
+     *         parent_tenant_id: "string",
+     *         default_preferences: {
+     *             items: [{}]
+     *         },
+     *         properties: {
+     *             "string": {
+     *                 "key": "value"
+     *             }
+     *         },
+     *         user_profile: {
+     *             "string": {
+     *                 "key": "value"
+     *             }
+     *         },
+     *         brand_id: "string"
+     *     })
      */
     public async createOrReplace(
         tenantId: string,
@@ -35,14 +59,16 @@ export class Tenants {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/tenants/${tenantId}`
+                `/tenants/${encodeURIComponent(tenantId)}`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -81,20 +107,28 @@ export class Tenants {
     }
 
     /**
+     * @param {string} tenantId - A unique identifier representing the tenant to be returned.
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.tenants.get("string")
      */
     public async get(tenantId: string, requestOptions?: Tenants.RequestOptions): Promise<Courier.Tenant> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/tenants/${tenantId}`
+                `/tenants/${encodeURIComponent(tenantId)}`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -131,12 +165,27 @@ export class Tenants {
         }
     }
 
+    /**
+     * @param {Courier.ListTenantParams} request
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.tenants.list({
+     *         parent_tenant_id: "string",
+     *         limit: 1,
+     *         cursor: "string"
+     *     })
+     */
     public async list(
         request: Courier.ListTenantParams = {},
         requestOptions?: Tenants.RequestOptions
     ): Promise<Courier.TenantListResponse> {
-        const { limit, cursor } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const { parent_tenant_id: parentTenantId, limit, cursor } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (parentTenantId != null) {
+            _queryParams["parent_tenant_id"] = parentTenantId;
+        }
+
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
@@ -155,7 +204,9 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -188,18 +239,27 @@ export class Tenants {
         }
     }
 
+    /**
+     * @param {string} tenantId - Id of the tenant to be deleted.
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.tenants.delete("string")
+     */
     public async delete(tenantId: string, requestOptions?: Tenants.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/tenants/${tenantId}`
+                `/tenants/${encodeURIComponent(tenantId)}`
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -232,7 +292,17 @@ export class Tenants {
     }
 
     /**
+     * @param {string} tenantId - Id of the tenant for user membership.
+     * @param {Courier.ListUsersForTenantParams} request
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await courier.tenants.getUsersByTenant("string", {
+     *         limit: 1,
+     *         cursor: "string"
+     *     })
      */
     public async getUsersByTenant(
         tenantId: string,
@@ -240,7 +310,7 @@ export class Tenants {
         requestOptions?: Tenants.RequestOptions
     ): Promise<Courier.ListUsersForTenantResponse> {
         const { limit, cursor } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
@@ -252,14 +322,16 @@ export class Tenants {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/tenants/${tenantId}/users`
+                `/tenants/${encodeURIComponent(tenantId)}/users`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -297,8 +369,130 @@ export class Tenants {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    /**
+     * @param {string} tenantId - Id of the tenant to update the default preferences for.
+     * @param {string} topicId - Id fo the susbcription topic you want to have a default preference for.
+     * @param {Courier.SubscriptionTopicNew} request
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.tenants.createOrReplaceDefaultPreferencesForTopic("tenantABC", "HB529N49MD4D5PMX9WR5P4JH78NA", {
+     *         status: Courier.SubscriptionTopicStatus.OptedIn,
+     *         has_custom_routing: true,
+     *         custom_routing: [Courier.ChannelClassification.Inbox]
+     *     })
+     */
+    public async createOrReplaceDefaultPreferencesForTopic(
+        tenantId: string,
+        topicId: string,
+        request: Courier.SubscriptionTopicNew,
+        requestOptions?: Tenants.RequestOptions
+    ): Promise<void> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
+                `/tenants/${encodeURIComponent(tenantId)}/default_preferences/items/${encodeURIComponent(topicId)}`
+            ),
+            method: "PUT",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@trycourier/courier",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.CourierError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CourierError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CourierTimeoutError();
+            case "unknown":
+                throw new errors.CourierError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {string} tenantId - Id of the tenant to update the default preferences for.
+     * @param {string} topicId - Id fo the susbcription topic you want to have a default preference for.
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.tenants.removeDefaultPreferencesForTopic("string", "string")
+     */
+    public async removeDefaultPreferencesForTopic(
+        tenantId: string,
+        topicId: string,
+        requestOptions?: Tenants.RequestOptions
+    ): Promise<void> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
+                `/tenants/${encodeURIComponent(tenantId)}/default_preferences/items/${encodeURIComponent(topicId)}`
+            ),
+            method: "DELETE",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@trycourier/courier",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.CourierError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CourierError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CourierTimeoutError();
+            case "unknown":
+                throw new errors.CourierError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",

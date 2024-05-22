@@ -8,13 +8,10 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "declaration": true,
-        "noUnusedParameters": true,
         "outDir": "dist",
         "rootDir": "src",
         "baseUrl": "src"
     },
-    "include": [
-        "src"
-    ],
+    "include": ["src"],
     "exclude": []
 }

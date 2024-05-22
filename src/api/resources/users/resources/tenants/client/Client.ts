@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../../../environments";
 import * as core from "../../../../../../core";
-import * as Courier from "../../../../..";
+import * as Courier from "../../../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../../../errors";
+import * as errors from "../../../../../../errors/index";
 
 export declare namespace Tenants {
     interface Options {
@@ -30,6 +30,24 @@ export class Tenants {
      * A custom profile can also be supplied for each tenant.
      * This profile will be merged with the user's main
      * profile when sending to the user with that tenant.
+     *
+     * @param {string} userId - The user's ID. This can be any uniquely identifiable string.
+     * @param {Courier.users.AddUserToMultipleTenantsParams} request
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.users.tenants.addMultple("string", {
+     *         tenants: [{
+     *                 user_id: "string",
+     *                 type: "user",
+     *                 tenant_id: "string",
+     *                 profile: {
+     *                     "string": {
+     *                         "key": "value"
+     *                     }
+     *                 }
+     *             }]
+     *     })
      */
     public async addMultple(
         userId: string,
@@ -39,14 +57,16 @@ export class Tenants {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `users/${userId}/tenants`
+                `users/${encodeURIComponent(userId)}/tenants`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -85,24 +105,40 @@ export class Tenants {
      * A custom profile can also be supplied with the tenant.
      * This profile will be merged with the user's main profile
      * when sending to the user with that tenant.
+     *
+     * @param {string} userId - Id of the user to be added to the supplied tenant.
+     * @param {string} tenantId - Id of the tenant the user should be added to.
+     * @param {Courier.users.AddUserToSingleTenantsParams} request
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.users.tenants.add("string", "string", {
+     *         profile: {
+     *             "string": {
+     *                 "key": "value"
+     *             }
+     *         }
+     *     })
      */
     public async add(
         userId: string,
         tenantId: string,
-        request: Courier.users.AddUserToSingleTenantsParams,
+        request: Courier.users.AddUserToSingleTenantsParams = {},
         requestOptions?: Tenants.RequestOptions
     ): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `users/${userId}/tenants/${tenantId}`
+                `users/${encodeURIComponent(userId)}/tenants/${encodeURIComponent(tenantId)}`
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: request,
@@ -137,19 +173,27 @@ export class Tenants {
 
     /**
      * Removes a user from any tenants they may have been associated with.
+     *
+     * @param {string} userId - Id of the user to be removed from the supplied tenant.
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.users.tenants.removeAll("string")
      */
     public async removeAll(userId: string, requestOptions?: Tenants.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `users/${userId}/tenants`
+                `users/${encodeURIComponent(userId)}/tenants`
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -183,19 +227,28 @@ export class Tenants {
 
     /**
      * Removes a user from the supplied tenant.
+     *
+     * @param {string} userId - Id of the user to be removed from the supplied tenant.
+     * @param {string} tenantId - Id of the tenant the user should be removed from.
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.users.tenants.remove("string", "string")
      */
     public async remove(userId: string, tenantId: string, requestOptions?: Tenants.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `users/${userId}/tenants/${tenantId}`
+                `users/${encodeURIComponent(userId)}/tenants/${encodeURIComponent(tenantId)}`
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -229,6 +282,16 @@ export class Tenants {
 
     /**
      * Returns a paginated list of user tenant associations.
+     *
+     * @param {string} userId - Id of the user to retrieve all associated tenants for.
+     * @param {Courier.users.ListTenantsForUserParams} request
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await courier.users.tenants.list("string", {
+     *         limit: 1,
+     *         cursor: "string"
+     *     })
      */
     public async list(
         userId: string,
@@ -236,7 +299,7 @@ export class Tenants {
         requestOptions?: Tenants.RequestOptions
     ): Promise<Courier.users.ListTenantsForUserResponse> {
         const { limit, cursor } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
@@ -248,14 +311,16 @@ export class Tenants {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `users/${userId}/tenants`
+                `users/${encodeURIComponent(userId)}/tenants`
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.1",
+                "X-Fern-SDK-Version": "v6.1.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -288,8 +353,9 @@ export class Tenants {
         }
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.authorizationToken)) ?? process.env["COURIER_AUTH_TOKEN"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer =
+            (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
                 message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",
