@@ -8,7 +8,7 @@ import * as Courier from "../../../index";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
-export declare namespace Templates {
+export declare namespace Inbound {
     interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
@@ -21,36 +21,39 @@ export declare namespace Templates {
     }
 }
 
-export class Templates {
-    constructor(protected readonly _options: Templates.Options = {}) {}
+export class Inbound {
+    constructor(protected readonly _options: Inbound.Options = {}) {}
 
     /**
-     * Returns a list of notification templates
+     * @param {Courier.InboundTrackEvent} request
+     * @param {Inbound.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @param {Courier.ListTemplatesRequest} request
-     * @param {Templates.RequestOptions} requestOptions - Request-specific configuration.
+     * @throws {@link Courier.BadRequestError}
+     * @throws {@link Courier.ConflictError}
      *
      * @example
-     *     await courier.templates.list({
-     *         cursor: "string"
+     *     await courier.inbound.track({
+     *         event: "New Order Placed",
+     *         messageId: "4c62c457-b329-4bea-9bfc-17bba86c393f",
+     *         userId: "1234",
+     *         type: "track",
+     *         properties: {
+     *             "order_id": 123,
+     *             "total_orders": 5,
+     *             "last_order_id": 122
+     *         }
      *     })
      */
-    public async list(
-        request: Courier.ListTemplatesRequest = {},
-        requestOptions?: Templates.RequestOptions
-    ): Promise<Courier.ListTemplatesResponse> {
-        const { cursor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (cursor != null) {
-            _queryParams["cursor"] = cursor;
-        }
-
+    public async track(
+        request: Courier.InboundTrackEvent,
+        requestOptions?: Inbound.RequestOptions
+    ): Promise<Courier.TrackAcceptedResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                "/notifications"
+                "/inbound/courier"
             ),
-            method: "GET",
+            method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
@@ -60,19 +63,26 @@ export class Templates {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return _response.body as Courier.ListTemplatesResponse;
+            return _response.body as Courier.TrackAcceptedResponse;
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CourierError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                case 409:
+                    throw new Courier.ConflictError(_response.error.body as Courier.Conflict);
+                default:
+                    throw new errors.CourierError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {

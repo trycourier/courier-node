@@ -12,6 +12,8 @@ export * as commons from "./commons";
 export * from "./commons/types";
 export * as bulk from "./bulk";
 export * from "./bulk/types";
+export * as inbound from "./inbound";
+export * from "./inbound/types";
 export * as lists from "./lists";
 export * from "./lists/types";
 export * as messages from "./messages";

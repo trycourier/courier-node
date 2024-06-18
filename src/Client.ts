@@ -13,6 +13,7 @@ import { AuthTokens } from "./api/resources/authTokens/client/Client";
 import { Automations } from "./api/resources/automations/client/Client";
 import { Brands } from "./api/resources/brands/client/Client";
 import { Bulk } from "./api/resources/bulk/client/Client";
+import { Inbound } from "./api/resources/inbound/client/Client";
 import { Lists } from "./api/resources/lists/client/Client";
 import { Messages } from "./api/resources/messages/client/Client";
 import { Notifications } from "./api/resources/notifications/client/Client";
@@ -89,7 +90,7 @@ export class CourierClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.3",
+                "X-Fern-SDK-Version": "v6.2.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -161,6 +162,12 @@ export class CourierClient {
 
     public get bulk(): Bulk {
         return (this._bulk ??= new Bulk(this._options));
+    }
+
+    protected _inbound: Inbound | undefined;
+
+    public get inbound(): Inbound {
+        return (this._inbound ??= new Inbound(this._options));
     }
 
     protected _lists: Lists | undefined;

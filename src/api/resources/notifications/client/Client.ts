@@ -53,7 +53,7 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.3",
+                "X-Fern-SDK-Version": "v6.2.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -109,7 +109,7 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.3",
+                "X-Fern-SDK-Version": "v6.2.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -164,7 +164,7 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.3",
+                "X-Fern-SDK-Version": "v6.2.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -174,164 +174,6 @@ export class Notifications {
         });
         if (_response.ok) {
             return _response.body as Courier.NotificationGetContentResponse;
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.CourierError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.CourierError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.CourierTimeoutError();
-            case "unknown":
-                throw new errors.CourierError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * @param {string} id
-     * @param {Courier.NotificationUpdateVariationsParams} request
-     * @param {Notifications.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await courier.notifications.updateVariations("string", {
-     *         blocks: [{
-     *                 alias: "string",
-     *                 context: "string",
-     *                 id: "string",
-     *                 type: Courier.BlockType.Action,
-     *                 content: "string",
-     *                 locales: {
-     *                     "string": "string"
-     *                 },
-     *                 checksum: "string"
-     *             }],
-     *         channels: [{
-     *                 id: "string",
-     *                 type: "string",
-     *                 content: {},
-     *                 locales: {
-     *                     "string": {}
-     *                 },
-     *                 checksum: "string"
-     *             }]
-     *     })
-     */
-    public async updateVariations(
-        id: string,
-        request: Courier.NotificationUpdateVariationsParams = {},
-        requestOptions?: Notifications.RequestOptions
-    ): Promise<void> {
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/notifications/${encodeURIComponent(id)}/variations`
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.3",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            body: request,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-        });
-        if (_response.ok) {
-            return;
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.CourierError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.CourierError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.CourierTimeoutError();
-            case "unknown":
-                throw new errors.CourierError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * @param {string} id
-     * @param {Courier.NotificationDraftUpdateVariationsParams} request
-     * @param {Notifications.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await courier.notifications.updateDraftVariations("string", {
-     *         blocks: [{
-     *                 alias: "string",
-     *                 context: "string",
-     *                 id: "string",
-     *                 type: Courier.BlockType.Action,
-     *                 content: "string",
-     *                 locales: {
-     *                     "string": "string"
-     *                 },
-     *                 checksum: "string"
-     *             }],
-     *         channels: [{
-     *                 id: "string",
-     *                 type: "string",
-     *                 content: {},
-     *                 locales: {
-     *                     "string": {}
-     *                 },
-     *                 checksum: "string"
-     *             }]
-     *     })
-     */
-    public async updateDraftVariations(
-        id: string,
-        request: Courier.NotificationDraftUpdateVariationsParams = {},
-        requestOptions?: Notifications.RequestOptions
-    ): Promise<void> {
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/notifications/${encodeURIComponent(id)}/draft/variations`
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.3",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            body: request,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-        });
-        if (_response.ok) {
-            return;
         }
 
         if (_response.error.reason === "status-code") {
@@ -379,7 +221,7 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.3",
+                "X-Fern-SDK-Version": "v6.2.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -444,7 +286,7 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.3",
+                "X-Fern-SDK-Version": "v6.2.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -502,7 +344,7 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.1.3",
+                "X-Fern-SDK-Version": "v6.2.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
