@@ -33,7 +33,7 @@ export interface UserProfile {
     discord: Courier.Discord;
     expo: Courier.Expo;
     facebookPSID: string;
-    firebaseToken: string;
+    firebaseToken: Courier.UserProfileFirebaseToken;
     intercom: Courier.Intercom;
     slack: Courier.Slack;
     ms_teams: Courier.MsTeams;

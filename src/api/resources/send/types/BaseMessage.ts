@@ -17,6 +17,7 @@ export interface BaseMessage {
     context?: Courier.MessageContext;
     /** Metadata such as utm tracking attached with the notification through this channel. */
     metadata?: Courier.MessageMetadata;
+    preferences?: Courier.MessagePreferences;
     /** An object whose keys are valid provider identifiers which map to an object. */
     providers?: Courier.MessageProviders;
     routing?: Courier.Routing;

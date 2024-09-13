@@ -20,6 +20,7 @@ import * as Courier from "../../index";
  *             },
  *             context: {},
  *             metadata: {},
+ *             preferences: {},
  *             providers: {
  *                 "string": {}
  *             },

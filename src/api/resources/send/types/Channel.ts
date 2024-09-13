@@ -29,6 +29,6 @@ export interface Channel {
     if?: string;
     timeouts?: Courier.Timeouts;
     /** Channel specific overrides. */
-    override?: Courier.Override;
+    override?: Record<string, any>;
     metadata?: Courier.ChannelMetadata;
 }

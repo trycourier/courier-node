@@ -12,4 +12,5 @@ export interface Notification {
     tags?: Courier.NotificationTag;
     title?: string;
     topic_id: string;
+    note: string;
 }

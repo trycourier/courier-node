@@ -11,4 +11,6 @@ export type Recipient =
     | Courier.UserRecipient
     | Courier.SlackRecipient
     | Courier.MsTeamsRecipient
-    | Courier.RecipientData;
+    | Courier.RecipientData
+    | Courier.PagerdutyRecipient
+    | Courier.WebhookRecipient;
