@@ -38,7 +38,76 @@ export class Bulk {
      * @example
      *     await courier.bulk.createJob({
      *         message: {
-     *             message: {},
+     *             message: {
+     *                 template: "string",
+     *                 data: {
+     *                     "string": {
+     *                         "key": "value"
+     *                     }
+     *                 },
+     *                 brand_id: "string",
+     *                 channels: {
+     *                     "string": {
+     *                         brand_id: undefined,
+     *                         providers: undefined,
+     *                         routing_method: undefined,
+     *                         if: undefined,
+     *                         timeouts: undefined,
+     *                         override: undefined,
+     *                         metadata: undefined
+     *                     }
+     *                 },
+     *                 context: {
+     *                     tenant_id: "string"
+     *                 },
+     *                 metadata: {
+     *                     event: "string",
+     *                     tags: [],
+     *                     utm: {
+     *                         source: undefined,
+     *                         medium: undefined,
+     *                         campaign: undefined,
+     *                         term: undefined,
+     *                         content: undefined
+     *                     },
+     *                     trace_id: "string"
+     *                 },
+     *                 preferences: {
+     *                     subscription_topic_id: "string"
+     *                 },
+     *                 providers: {
+     *                     "string": {
+     *                         override: undefined,
+     *                         if: undefined,
+     *                         timeouts: undefined,
+     *                         metadata: undefined
+     *                     }
+     *                 },
+     *                 routing: {
+     *                     method: Courier.RoutingMethod.All,
+     *                     channels: [{
+     *                             channel: "string",
+     *                             config: undefined,
+     *                             method: undefined,
+     *                             providers: undefined,
+     *                             if: undefined
+     *                         }]
+     *                 },
+     *                 timeout: {
+     *                     provider: {},
+     *                     channel: {},
+     *                     message: 1,
+     *                     escalation: 1,
+     *                     criteria: Courier.Criteria.NoEscalation
+     *                 },
+     *                 delay: {
+     *                     duration: 1
+     *                 },
+     *                 expiry: {
+     *                     expires_at: "string",
+     *                     expires_in: "string"
+     *                 }
+     *             },
      *             brand: "string",
      *             data: {
      *                 "string": {
@@ -71,7 +140,7 @@ export class Bulk {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -124,7 +193,10 @@ export class Bulk {
      * @example
      *     await courier.bulk.ingestUsers("string", {
      *         users: [{
-     *                 preferences: {},
+     *                 preferences: {
+     *                     categories: {},
+     *                     notifications: {}
+     *                 },
      *                 profile: {
      *                     "key": "value"
      *                 },
@@ -132,7 +204,23 @@ export class Bulk {
      *                 data: {
      *                     "key": "value"
      *                 },
-     *                 to: {}
+     *                 to: {
+     *                     account_id: "string",
+     *                     context: {
+     *                         tenant_id: "string"
+     *                     },
+     *                     data: {},
+     *                     email: "string",
+     *                     locale: "string",
+     *                     user_id: "string",
+     *                     phone_number: "string",
+     *                     preferences: {
+     *                         categories: undefined,
+     *                         notifications: {},
+     *                         templateId: undefined
+     *                     },
+     *                     tenant_id: "string"
+     *                 }
      *             }]
      *     })
      */
@@ -151,7 +239,7 @@ export class Bulk {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -211,7 +299,7 @@ export class Bulk {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -275,7 +363,7 @@ export class Bulk {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -339,7 +427,7 @@ export class Bulk {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

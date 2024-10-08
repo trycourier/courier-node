@@ -9,11 +9,22 @@ import * as Courier from "../../../../index";
  *     {
  *         name: "string",
  *         settings: {
- *             colors: {},
+ *             colors: {
+ *                 primary: "string",
+ *                 secondary: "string",
+ *                 tertiary: "string"
+ *             },
  *             inapp: {
  *                 "key": "value"
  *             },
- *             email: {}
+ *             email: {
+ *                 footer: {
+ *                     "key": "value"
+ *                 },
+ *                 header: {
+ *                     "key": "value"
+ *                 }
+ *             }
  *         },
  *         snippets: {
  *             items: [{

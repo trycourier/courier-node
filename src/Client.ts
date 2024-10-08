@@ -53,7 +53,15 @@ export class CourierClient {
      * @example
      *     await courier.send({
      *         message: {
-     *             content: {},
+     *             content: {
+     *                 version: "string",
+     *                 brand: {
+     *                     "key": "value"
+     *                 },
+     *                 elements: [{
+     *                         type: "text"
+     *                     }]
+     *             },
      *             data: {
      *                 "string": {
      *                     "key": "value"
@@ -61,19 +69,71 @@ export class CourierClient {
      *             },
      *             brand_id: "string",
      *             channels: {
-     *                 "string": {}
+     *                 "string": {
+     *                     brand_id: undefined,
+     *                     providers: undefined,
+     *                     routing_method: undefined,
+     *                     if: undefined,
+     *                     timeouts: undefined,
+     *                     override: undefined,
+     *                     metadata: undefined
+     *                 }
      *             },
-     *             context: {},
-     *             metadata: {},
-     *             preferences: {},
+     *             context: {
+     *                 tenant_id: "string"
+     *             },
+     *             metadata: {
+     *                 event: "string",
+     *                 tags: [],
+     *                 utm: {
+     *                     source: undefined,
+     *                     medium: undefined,
+     *                     campaign: undefined,
+     *                     term: undefined,
+     *                     content: undefined
+     *                 },
+     *                 trace_id: "string"
+     *             },
+     *             preferences: {
+     *                 subscription_topic_id: "string"
+     *             },
      *             providers: {
-     *                 "string": {}
+     *                 "string": {
+     *                     override: undefined,
+     *                     if: undefined,
+     *                     timeouts: undefined,
+     *                     metadata: undefined
+     *                 }
      *             },
-     *             routing: {},
-     *             timeout: {},
-     *             delay: {},
-     *             expiry: {},
-     *             to: {}
+     *             routing: {
+     *                 method: Courier.RoutingMethod.All,
+     *                 channels: [{
+     *                         channel: "string",
+     *                         config: undefined,
+     *                         method: undefined,
+     *                         providers: undefined,
+     *                         if: undefined
+     *                     }]
+     *             },
+     *             timeout: {
+     *                 provider: {},
+     *                 channel: {},
+     *                 message: 1,
+     *                 escalation: 1,
+     *                 criteria: Courier.Criteria.NoEscalation
+     *             },
+     *             delay: {
+     *                 duration: 1
+     *             },
+     *             expiry: {
+     *                 expires_at: "string",
+     *                 expires_in: "string"
+     *             },
+     *             to: {
+     *                 audience_id: "string",
+     *                 data: {},
+     *                 filters: []
+     *             }
      *         }
      *     })
      */
@@ -91,7 +151,7 @@ export class CourierClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,

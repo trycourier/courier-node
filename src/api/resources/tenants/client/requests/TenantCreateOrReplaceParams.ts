@@ -10,7 +10,12 @@ import * as Courier from "../../../../index";
  *         name: "string",
  *         parent_tenant_id: "string",
  *         default_preferences: {
- *             items: [{}]
+ *             items: [{
+ *                     id: "string",
+ *                     status: Courier.SubscriptionTopicStatus.OptedOut,
+ *                     has_custom_routing: undefined,
+ *                     custom_routing: undefined
+ *                 }]
  *         },
  *         properties: {
  *             "string": {

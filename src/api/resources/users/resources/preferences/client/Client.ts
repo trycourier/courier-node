@@ -28,17 +28,27 @@ export class Preferences {
      * Fetch all user preferences.
      *
      * @param {string} userId - A unique identifier associated with the user whose preferences you wish to retrieve.
+     * @param {Courier.users.UserPreferencesParams} request
      * @param {Preferences.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.users.preferences.list("string")
+     *     await courier.users.preferences.list("string", {
+     *         tenant_id: "string"
+     *     })
      */
     public async list(
         userId: string,
+        request: Courier.users.UserPreferencesParams = {},
         requestOptions?: Preferences.RequestOptions
     ): Promise<Courier.users.UserPreferencesListResponse> {
+        const { tenant_id: tenantId } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (tenantId != null) {
+            _queryParams["tenant_id"] = tenantId;
+        }
+
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
@@ -49,11 +59,12 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -93,18 +104,28 @@ export class Preferences {
      *
      * @param {string} userId - A unique identifier associated with the user whose preferences you wish to retrieve.
      * @param {string} topicId - A unique identifier associated with a subscription topic.
+     * @param {Courier.users.UserPreferencesTopicParams} request
      * @param {Preferences.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Courier.NotFoundError}
      *
      * @example
-     *     await courier.users.preferences.get("string", "string")
+     *     await courier.users.preferences.get("string", "string", {
+     *         tenant_id: "string"
+     *     })
      */
     public async get(
         userId: string,
         topicId: string,
+        request: Courier.users.UserPreferencesTopicParams = {},
         requestOptions?: Preferences.RequestOptions
     ): Promise<Courier.users.UserPreferencesGetResponse> {
+        const { tenant_id: tenantId } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (tenantId != null) {
+            _queryParams["tenant_id"] = tenantId;
+        }
+
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
@@ -115,11 +136,12 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -179,6 +201,12 @@ export class Preferences {
         request: Courier.users.UserPreferencesUpdateParams,
         requestOptions?: Preferences.RequestOptions
     ): Promise<Courier.users.UserPreferencesUpdateResponse> {
+        const { tenant_id: tenantId, ..._body } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (tenantId != null) {
+            _queryParams["tenant_id"] = tenantId;
+        }
+
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
@@ -189,12 +217,13 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: request,
+            queryParameters: _queryParams,
+            body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });

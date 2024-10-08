@@ -41,8 +41,31 @@ export class Brands {
      *     await courier.brands.create({
      *         id: "string",
      *         name: "string",
-     *         settings: {},
-     *         snippets: {}
+     *         settings: {
+     *             colors: {
+     *                 primary: "string",
+     *                 secondary: "string",
+     *                 tertiary: "string"
+     *             },
+     *             inapp: {
+     *                 "key": "value"
+     *             },
+     *             email: {
+     *                 footer: {
+     *                     "key": "value"
+     *                 },
+     *                 header: {
+     *                     "key": "value"
+     *                 }
+     *             }
+     *         },
+     *         snippets: {
+     *             items: [{
+     *                     format: "handlebars",
+     *                     name: "string",
+     *                     value: "string"
+     *                 }]
+     *         }
      *     })
      */
     public async create(
@@ -59,7 +82,7 @@ export class Brands {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -126,7 +149,7 @@ export class Brands {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -191,7 +214,7 @@ export class Brands {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -248,7 +271,7 @@ export class Brands {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -298,11 +321,22 @@ export class Brands {
      *     await courier.brands.replace("string", {
      *         name: "string",
      *         settings: {
-     *             colors: {},
+     *             colors: {
+     *                 primary: "string",
+     *                 secondary: "string",
+     *                 tertiary: "string"
+     *             },
      *             inapp: {
      *                 "key": "value"
      *             },
-     *             email: {}
+     *             email: {
+     *                 footer: {
+     *                     "key": "value"
+     *                 },
+     *                 header: {
+     *                     "key": "value"
+     *                 }
+     *             }
      *         },
      *         snippets: {
      *             items: [{
@@ -328,7 +362,7 @@ export class Brands {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.2",
+                "X-Fern-SDK-Version": "v6.2.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

@@ -15,5 +15,9 @@ import * as Courier from "../../../../../../index";
  *     }
  */
 export interface UserPreferencesUpdateParams {
+    /**
+     * Update the preferences of a user for this specific tenant context.
+     */
+    tenant_id?: string;
     topic: Courier.users.TopicPreferenceUpdate;
 }

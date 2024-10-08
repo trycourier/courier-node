@@ -8,30 +8,8 @@ import * as Courier from "../../../../index";
  * @example
  *     {
  *         preferences: {
- *             categories: {
- *                 "string": {
- *                     status: Courier.PreferenceStatus.OptedIn,
- *                     rules: [{
- *                             start: "string",
- *                             until: "string"
- *                         }],
- *                     channel_preferences: [{
- *                             channel: Courier.ChannelClassification.DirectMessage
- *                         }]
- *                 }
- *             },
- *             notifications: {
- *                 "string": {
- *                     status: Courier.PreferenceStatus.OptedIn,
- *                     rules: [{
- *                             start: "string",
- *                             until: "string"
- *                         }],
- *                     channel_preferences: [{
- *                             channel: Courier.ChannelClassification.DirectMessage
- *                         }]
- *                 }
- *             }
+ *             categories: {},
+ *             notifications: {}
  *         }
  *     }
  */
