@@ -42,3 +42,4 @@ export * from "./WebhookMethod";
 export * from "./WebhookAuthentication";
 export * from "./WebhookAuthMode";
 export * from "./WebhookProfileType";
+export * from "./UserProfilePatch";

@@ -4,5 +4,7 @@
 
 export interface Delay {
     /** The duration of the delay in milliseconds. */
-    duration: number;
+    duration?: number;
+    /** An ISO 8601 timestamp that specifies when it should be delivered or an OpenStreetMap opening_hours-like format that specifies the [Delivery Window](https://www.courier.com/docs/platform/sending/failover/#delivery-window) (e.g., 'Mo-Fr 08:00-18:00pm') */
+    until?: string;
 }

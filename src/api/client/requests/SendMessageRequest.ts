@@ -78,7 +78,8 @@ import * as Courier from "../../index";
  *                 criteria: Courier.Criteria.NoEscalation
  *             },
  *             delay: {
- *                 duration: 1
+ *                 duration: 1,
+ *                 until: "string"
  *             },
  *             expiry: {
  *                 expires_at: "string",

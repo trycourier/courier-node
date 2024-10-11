@@ -123,7 +123,8 @@ export class CourierClient {
      *                 criteria: Courier.Criteria.NoEscalation
      *             },
      *             delay: {
-     *                 duration: 1
+     *                 duration: 1,
+     *                 until: "string"
      *             },
      *             expiry: {
      *                 expires_at: "string",
@@ -151,7 +152,7 @@ export class CourierClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.2.3",
+                "X-Fern-SDK-Version": "v6.3.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
