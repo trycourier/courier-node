@@ -3,7 +3,6 @@
  */
 
 export type Criteria = "no-escalation" | "delivered" | "viewed" | "engaged";
-
 export const Criteria = {
     NoEscalation: "no-escalation",
     Delivered: "delivered",

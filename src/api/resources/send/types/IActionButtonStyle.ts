@@ -3,7 +3,6 @@
  */
 
 export type IActionButtonStyle = "button" | "link";
-
 export const IActionButtonStyle = {
     Button: "button",
     Link: "link",

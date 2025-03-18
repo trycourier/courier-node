@@ -9,15 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Tenants {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -32,53 +40,44 @@ export class Tenants {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.tenants.createOrReplace("string", {
-     *         name: "string",
-     *         parent_tenant_id: "string",
-     *         default_preferences: {
-     *             items: [{
-     *                     id: "string",
-     *                     status: Courier.SubscriptionTopicStatus.OptedOut,
-     *                     has_custom_routing: undefined,
-     *                     custom_routing: undefined
-     *                 }]
-     *         },
-     *         properties: {
-     *             "string": {
-     *                 "key": "value"
-     *             }
-     *         },
-     *         user_profile: {
-     *             "string": {
-     *                 "key": "value"
-     *             }
-     *         },
-     *         brand_id: "string"
+     *     await client.tenants.createOrReplace("tenant_id", {
+     *         name: "name",
+     *         parent_tenant_id: undefined,
+     *         default_preferences: undefined,
+     *         properties: undefined,
+     *         user_profile: undefined,
+     *         brand_id: undefined
      *     })
      */
     public async createOrReplace(
         tenantId: string,
         request: Courier.TenantCreateOrReplaceParams,
-        requestOptions?: Tenants.RequestOptions
+        requestOptions?: Tenants.RequestOptions,
     ): Promise<Courier.Tenant> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/tenants/${encodeURIComponent(tenantId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/tenants/${encodeURIComponent(tenantId)}`,
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.Tenant;
@@ -103,7 +102,7 @@ export class Tenants {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling PUT /tenants/{tenant_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -118,26 +117,32 @@ export class Tenants {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.tenants.get("string")
+     *     await client.tenants.get("tenant_id")
      */
     public async get(tenantId: string, requestOptions?: Tenants.RequestOptions): Promise<Courier.Tenant> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/tenants/${encodeURIComponent(tenantId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/tenants/${encodeURIComponent(tenantId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.Tenant;
@@ -162,7 +167,7 @@ export class Tenants {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /tenants/{tenant_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -175,18 +180,14 @@ export class Tenants {
      * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.tenants.list({
-     *         parent_tenant_id: "string",
-     *         limit: 1,
-     *         cursor: "string"
-     *     })
+     *     await client.tenants.list()
      */
     public async list(
         request: Courier.ListTenantParams = {},
-        requestOptions?: Tenants.RequestOptions
+        requestOptions?: Tenants.RequestOptions,
     ): Promise<Courier.TenantListResponse> {
         const { parent_tenant_id: parentTenantId, limit, cursor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (parentTenantId != null) {
             _queryParams["parent_tenant_id"] = parentTenantId;
         }
@@ -201,22 +202,28 @@ export class Tenants {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                "/tenants"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                "/tenants",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.TenantListResponse;
@@ -236,7 +243,7 @@ export class Tenants {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /tenants.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -249,26 +256,32 @@ export class Tenants {
      * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.tenants.delete("string")
+     *     await client.tenants.delete("tenant_id")
      */
     public async delete(tenantId: string, requestOptions?: Tenants.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/tenants/${encodeURIComponent(tenantId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/tenants/${encodeURIComponent(tenantId)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -288,7 +301,7 @@ export class Tenants {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling DELETE /tenants/{tenant_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -304,18 +317,15 @@ export class Tenants {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.tenants.getUsersByTenant("string", {
-     *         limit: 1,
-     *         cursor: "string"
-     *     })
+     *     await client.tenants.getUsersByTenant("tenant_id")
      */
     public async getUsersByTenant(
         tenantId: string,
         request: Courier.ListUsersForTenantParams = {},
-        requestOptions?: Tenants.RequestOptions
+        requestOptions?: Tenants.RequestOptions,
     ): Promise<Courier.ListUsersForTenantResponse> {
         const { limit, cursor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
@@ -326,22 +336,28 @@ export class Tenants {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/tenants/${encodeURIComponent(tenantId)}/users`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/tenants/${encodeURIComponent(tenantId)}/users`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.ListUsersForTenantResponse;
@@ -366,7 +382,7 @@ export class Tenants {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /tenants/{tenant_id}/users.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -381,36 +397,42 @@ export class Tenants {
      * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.tenants.createOrReplaceDefaultPreferencesForTopic("tenantABC", "HB529N49MD4D5PMX9WR5P4JH78NA", {
-     *         status: Courier.SubscriptionTopicStatus.OptedIn,
+     *     await client.tenants.createOrReplaceDefaultPreferencesForTopic("tenantABC", "HB529N49MD4D5PMX9WR5P4JH78NA", {
+     *         status: "OPTED_IN",
      *         has_custom_routing: true,
-     *         custom_routing: [Courier.ChannelClassification.Inbox]
+     *         custom_routing: ["inbox"]
      *     })
      */
     public async createOrReplaceDefaultPreferencesForTopic(
         tenantId: string,
         topicId: string,
         request: Courier.SubscriptionTopicNew,
-        requestOptions?: Tenants.RequestOptions
+        requestOptions?: Tenants.RequestOptions,
     ): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/tenants/${encodeURIComponent(tenantId)}/default_preferences/items/${encodeURIComponent(topicId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/tenants/${encodeURIComponent(tenantId)}/default_preferences/items/${encodeURIComponent(topicId)}`,
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -430,7 +452,9 @@ export class Tenants {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling PUT /tenants/{tenant_id}/default_preferences/items/{topic_id}.",
+                );
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -444,30 +468,36 @@ export class Tenants {
      * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.tenants.removeDefaultPreferencesForTopic("string", "string")
+     *     await client.tenants.removeDefaultPreferencesForTopic("tenant_id", "topic_id")
      */
     public async removeDefaultPreferencesForTopic(
         tenantId: string,
         topicId: string,
-        requestOptions?: Tenants.RequestOptions
+        requestOptions?: Tenants.RequestOptions,
     ): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/tenants/${encodeURIComponent(tenantId)}/default_preferences/items/${encodeURIComponent(topicId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/tenants/${encodeURIComponent(tenantId)}/default_preferences/items/${encodeURIComponent(topicId)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -487,7 +517,9 @@ export class Tenants {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling DELETE /tenants/{tenant_id}/default_preferences/items/{topic_id}.",
+                );
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -500,7 +532,8 @@ export class Tenants {
             (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
-                message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a COURIER_AUTH_TOKEN environment variable",
             });
         }
 

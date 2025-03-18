@@ -4,10 +4,7 @@
 
 /**
  * @example
- *     {
- *         cursor: "string",
- *         notes: true
- *     }
+ *     {}
  */
 export interface NotificationListParams {
     cursor?: string;

@@ -9,20 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Messages {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
-    }
-
-    interface IdempotentRequestOptions extends RequestOptions {
-        idempotencyKey?: string | undefined;
-        idempotencyExpiry?: string | undefined;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -36,26 +39,11 @@ export class Messages {
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.messages.list({
-     *         archived: true,
-     *         cursor: "string",
-     *         event: "string",
-     *         list: "string",
-     *         messageId: "string",
-     *         notification: "string",
-     *         provider: "string",
-     *         recipient: "string",
-     *         status: "string",
-     *         tag: "string",
-     *         tags: "string",
-     *         tenant_id: "string",
-     *         enqueued_after: "string",
-     *         traceId: "string"
-     *     })
+     *     await client.messages.list()
      */
     public async list(
         request: Courier.ListMessagesRequest = {},
-        requestOptions?: Messages.RequestOptions
+        requestOptions?: Messages.RequestOptions,
     ): Promise<Courier.ListMessagesResponse> {
         const {
             archived,
@@ -73,7 +61,7 @@ export class Messages {
             enqueued_after: enqueuedAfter,
             traceId,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (archived != null) {
             _queryParams["archived"] = archived.toString();
         }
@@ -144,22 +132,28 @@ export class Messages {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                "messages"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                "messages",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.ListMessagesResponse;
@@ -179,7 +173,7 @@ export class Messages {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /messages.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -197,29 +191,38 @@ export class Messages {
      * @throws {@link Courier.MessageNotFoundError}
      *
      * @example
-     *     await courier.messages.get("string")
+     *     await client.messages.get("message_id")
      */
-    public async get(messageId: string, requestOptions?: Messages.RequestOptions): Promise<Courier.MessageDetails> {
+    public async get(
+        messageId: string,
+        requestOptions?: Messages.RequestOptions,
+    ): Promise<Courier.MessageDetailsExtended> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `messages/${encodeURIComponent(messageId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `messages/${encodeURIComponent(messageId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.MessageDetails;
+            return _response.body as Courier.MessageDetailsExtended;
         }
 
         if (_response.error.reason === "status-code") {
@@ -243,7 +246,7 @@ export class Messages {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /messages/{message_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -258,32 +261,38 @@ export class Messages {
      * @param {Messages.IdempotentRequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.messages.cancel("string")
+     *     await client.messages.cancel("message_id")
      */
     public async cancel(
         messageId: string,
-        requestOptions?: Messages.IdempotentRequestOptions
+        requestOptions?: Messages.IdempotentRequestOptions,
     ): Promise<Courier.MessageDetails> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `messages/${encodeURIComponent(messageId)}/cancel`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `messages/${encodeURIComponent(messageId)}/cancel`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.MessageDetails;
@@ -303,7 +312,9 @@ export class Messages {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling POST /messages/{message_id}/cancel.",
+                );
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -322,39 +333,43 @@ export class Messages {
      * @throws {@link Courier.MessageNotFoundError}
      *
      * @example
-     *     await courier.messages.getHistory("string", {
-     *         type: "string"
-     *     })
+     *     await client.messages.getHistory("message_id")
      */
     public async getHistory(
         messageId: string,
         request: Courier.GetMessageHistoryRequest = {},
-        requestOptions?: Messages.RequestOptions
+        requestOptions?: Messages.RequestOptions,
     ): Promise<Courier.MessageHistoryResponse> {
         const { type: type_ } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (type_ != null) {
             _queryParams["type"] = type_;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `messages/${encodeURIComponent(messageId)}/history`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `messages/${encodeURIComponent(messageId)}/history`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.MessageHistoryResponse;
@@ -381,7 +396,9 @@ export class Messages {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling GET /messages/{message_id}/history.",
+                );
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -397,29 +414,35 @@ export class Messages {
      * @throws {@link Courier.MessageNotFoundError}
      *
      * @example
-     *     await courier.messages.getContent("string")
+     *     await client.messages.getContent("message_id")
      */
     public async getContent(
         messageId: string,
-        requestOptions?: Messages.RequestOptions
+        requestOptions?: Messages.RequestOptions,
     ): Promise<Courier.RenderOutputResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `messages/${encodeURIComponent(messageId)}/output`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `messages/${encodeURIComponent(messageId)}/output`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.RenderOutputResponse;
@@ -446,7 +469,9 @@ export class Messages {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling GET /messages/{message_id}/output.",
+                );
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -459,26 +484,32 @@ export class Messages {
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.messages.archive("string")
+     *     await client.messages.archive("request_id")
      */
     public async archive(requestId: string, requestOptions?: Messages.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `requests/${encodeURIComponent(requestId)}/archive`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `requests/${encodeURIComponent(requestId)}/archive`,
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -498,7 +529,9 @@ export class Messages {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling PUT /requests/{request_id}/archive.",
+                );
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -511,7 +544,8 @@ export class Messages {
             (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
-                message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a COURIER_AUTH_TOKEN environment variable",
             });
         }
 

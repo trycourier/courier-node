@@ -9,20 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace AuthTokens {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
-    }
-
-    interface IdempotentRequestOptions extends RequestOptions {
-        idempotencyKey?: string | undefined;
-        idempotencyExpiry?: string | undefined;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -36,36 +39,42 @@ export class AuthTokens {
      * @param {AuthTokens.IdempotentRequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.authTokens.issueToken({
-     *         scope: "string",
-     *         expires_in: "string"
+     *     await client.authTokens.issueToken({
+     *         scope: "scope",
+     *         expires_in: "expires_in"
      *     })
      */
     public async issueToken(
         request: Courier.IssueTokenParams,
-        requestOptions?: AuthTokens.IdempotentRequestOptions
+        requestOptions?: AuthTokens.IdempotentRequestOptions,
     ): Promise<Courier.IssueTokenResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                "/auth/issue-token"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                "/auth/issue-token",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.IssueTokenResponse;
@@ -85,7 +94,7 @@ export class AuthTokens {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /auth/issue-token.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -98,7 +107,8 @@ export class AuthTokens {
             (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
-                message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a COURIER_AUTH_TOKEN environment variable",
             });
         }
 

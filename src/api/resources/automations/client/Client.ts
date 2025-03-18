@@ -9,20 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Automations {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
-    }
-
-    interface IdempotentRequestOptions extends RequestOptions {
-        idempotencyKey?: string | undefined;
-        idempotencyExpiry?: string | undefined;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -37,46 +40,46 @@ export class Automations {
      * @param {Automations.IdempotentRequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.automations.invokeAutomationTemplate("string", {
-     *         brand: "string",
-     *         data: {
-     *             "string": {
-     *                 "key": "value"
-     *             }
-     *         },
-     *         profile: {
-     *             "key": "value"
-     *         },
-     *         recipient: "string",
-     *         template: "string"
+     *     await client.automations.invokeAutomationTemplate("templateId", {
+     *         brand: undefined,
+     *         data: undefined,
+     *         profile: undefined,
+     *         recipient: undefined,
+     *         template: undefined
      *     })
      */
     public async invokeAutomationTemplate(
         templateId: string,
         request: Courier.AutomationInvokeParams,
-        requestOptions?: Automations.IdempotentRequestOptions
+        requestOptions?: Automations.IdempotentRequestOptions,
     ): Promise<Courier.AutomationInvokeResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/automations/${encodeURIComponent(templateId)}/invoke`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/automations/${encodeURIComponent(templateId)}/invoke`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.AutomationInvokeResponse;
@@ -96,7 +99,9 @@ export class Automations {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling POST /automations/{templateId}/invoke.",
+                );
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -111,7 +116,7 @@ export class Automations {
      * @param {Automations.IdempotentRequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.automations.invokeAdHocAutomation({
+     *     await client.automations.invokeAdHocAutomation({
      *         data: {
      *             "name": "Foo"
      *         },
@@ -133,29 +138,35 @@ export class Automations {
      */
     public async invokeAdHocAutomation(
         request: Courier.AutomationAdHocInvokeParams,
-        requestOptions?: Automations.IdempotentRequestOptions
+        requestOptions?: Automations.IdempotentRequestOptions,
     ): Promise<Courier.AutomationInvokeResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                "/automations/invoke"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                "/automations/invoke",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.AutomationInvokeResponse;
@@ -175,7 +186,7 @@ export class Automations {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /automations/invoke.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -188,7 +199,8 @@ export class Automations {
             (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
-                message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a COURIER_AUTH_TOKEN environment variable",
             });
         }
 

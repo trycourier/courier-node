@@ -3,7 +3,6 @@
  */
 
 export type AutomationFetchDataWebhookMethod = "GET" | "POST";
-
 export const AutomationFetchDataWebhookMethod = {
     Get: "GET",
     Post: "POST",

@@ -7,32 +7,9 @@ import * as Courier from "../../../../index";
 /**
  * @example
  *     {
- *         name: "string",
- *         settings: {
- *             colors: {
- *                 primary: "string",
- *                 secondary: "string",
- *                 tertiary: "string"
- *             },
- *             inapp: {
- *                 "key": "value"
- *             },
- *             email: {
- *                 footer: {
- *                     "key": "value"
- *                 },
- *                 header: {
- *                     "key": "value"
- *                 }
- *             }
- *         },
- *         snippets: {
- *             items: [{
- *                     format: "handlebars",
- *                     name: "string",
- *                     value: "string"
- *                 }]
- *         }
+ *         name: "name",
+ *         settings: undefined,
+ *         snippets: undefined
  *     }
  */
 export interface BrandUpdateParameters {

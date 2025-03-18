@@ -4,9 +4,7 @@
 
 /**
  * @example
- *     {
- *         type: "string"
- *     }
+ *     {}
  */
 export interface GetMessageHistoryRequest {
     /**

@@ -9,20 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Profiles {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
-    }
-
-    interface IdempotentRequestOptions extends RequestOptions {
-        idempotencyKey?: string | undefined;
-        idempotencyExpiry?: string | undefined;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -38,26 +41,32 @@ export class Profiles {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.profiles.get("string")
+     *     await client.profiles.get("user_id")
      */
     public async get(userId: string, requestOptions?: Profiles.RequestOptions): Promise<Courier.ProfileGetResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${encodeURIComponent(userId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/profiles/${encodeURIComponent(userId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.ProfileGetResponse;
@@ -82,7 +91,7 @@ export class Profiles {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /profiles/{user_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -100,9 +109,9 @@ export class Profiles {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.profiles.create("string", {
+     *     await client.profiles.create("user_id", {
      *         profile: {
-     *             "string": {
+     *             "profile": {
      *                 "key": "value"
      *             }
      *         }
@@ -111,29 +120,35 @@ export class Profiles {
     public async create(
         userId: string,
         request: Courier.MergeProfileRequest,
-        requestOptions?: Profiles.IdempotentRequestOptions
+        requestOptions?: Profiles.IdempotentRequestOptions,
     ): Promise<Courier.MergeProfileResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${encodeURIComponent(userId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/profiles/${encodeURIComponent(userId)}`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.MergeProfileResponse;
@@ -158,7 +173,7 @@ export class Profiles {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /profiles/{user_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -179,9 +194,9 @@ export class Profiles {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.profiles.replace("string", {
+     *     await client.profiles.replace("user_id", {
      *         profile: {
-     *             "string": {
+     *             "profile": {
      *                 "key": "value"
      *             }
      *         }
@@ -190,26 +205,32 @@ export class Profiles {
     public async replace(
         userId: string,
         request: Courier.ReplaceProfileRequest,
-        requestOptions?: Profiles.RequestOptions
+        requestOptions?: Profiles.RequestOptions,
     ): Promise<Courier.ReplaceProfileResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${encodeURIComponent(userId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/profiles/${encodeURIComponent(userId)}`,
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.ReplaceProfileResponse;
@@ -234,7 +255,7 @@ export class Profiles {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling PUT /profiles/{user_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -244,39 +265,51 @@ export class Profiles {
 
     /**
      * @param {string} userId - A unique identifier representing the user associated with the requested profile.
-     * @param {Courier.UserProfilePatch[]} request
+     * @param {Courier.ProfileUpdateRequest} request
      * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.profiles.mergeProfile("string", [{
-     *             op: "string",
-     *             path: "string",
-     *             value: "string"
-     *         }])
+     *     await client.profiles.mergeProfile("user_id", {
+     *         patch: [{
+     *                 op: "op",
+     *                 path: "path",
+     *                 value: "value"
+     *             }, {
+     *                 op: "op",
+     *                 path: "path",
+     *                 value: "value"
+     *             }]
+     *     })
      */
     public async mergeProfile(
         userId: string,
-        request: Courier.UserProfilePatch[],
-        requestOptions?: Profiles.RequestOptions
+        request: Courier.ProfileUpdateRequest,
+        requestOptions?: Profiles.RequestOptions,
     ): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${encodeURIComponent(userId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/profiles/${encodeURIComponent(userId)}`,
             ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -296,7 +329,7 @@ export class Profiles {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling PATCH /profiles/{user_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -313,26 +346,32 @@ export class Profiles {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.profiles.delete("string")
+     *     await client.profiles.delete("user_id")
      */
     public async delete(userId: string, requestOptions?: Profiles.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${encodeURIComponent(userId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/profiles/${encodeURIComponent(userId)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -357,7 +396,7 @@ export class Profiles {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling DELETE /profiles/{user_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -375,39 +414,43 @@ export class Profiles {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.profiles.getListSubscriptions("string", {
-     *         cursor: "string"
-     *     })
+     *     await client.profiles.getListSubscriptions("user_id")
      */
     public async getListSubscriptions(
         userId: string,
         request: Courier.GetListSubscriptionsRequest = {},
-        requestOptions?: Profiles.RequestOptions
+        requestOptions?: Profiles.RequestOptions,
     ): Promise<Courier.GetListSubscriptionsResponse> {
         const { cursor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
             _queryParams["cursor"] = cursor;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${encodeURIComponent(userId)}/lists`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/profiles/${encodeURIComponent(userId)}/lists`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.GetListSubscriptionsResponse;
@@ -432,7 +475,7 @@ export class Profiles {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /profiles/{user_id}/lists.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -450,42 +493,48 @@ export class Profiles {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.profiles.subscribeToLists("string", {
+     *     await client.profiles.subscribeToLists("user_id", {
      *         lists: [{
-     *                 listId: "string",
-     *                 preferences: {
-     *                     categories: {},
-     *                     notifications: {}
-     *                 }
+     *                 listId: "listId",
+     *                 preferences: undefined
+     *             }, {
+     *                 listId: "listId",
+     *                 preferences: undefined
      *             }]
      *     })
      */
     public async subscribeToLists(
         userId: string,
         request: Courier.SubscribeToListsRequest,
-        requestOptions?: Profiles.IdempotentRequestOptions
+        requestOptions?: Profiles.IdempotentRequestOptions,
     ): Promise<Courier.SubscribeToListsResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${encodeURIComponent(userId)}/lists`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/profiles/${encodeURIComponent(userId)}/lists`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.SubscribeToListsResponse;
@@ -510,7 +559,7 @@ export class Profiles {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /profiles/{user_id}/lists.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -527,29 +576,35 @@ export class Profiles {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.profiles.deleteListSubscription("string")
+     *     await client.profiles.deleteListSubscription("user_id")
      */
     public async deleteListSubscription(
         userId: string,
-        requestOptions?: Profiles.RequestOptions
+        requestOptions?: Profiles.RequestOptions,
     ): Promise<Courier.DeleteListSubscriptionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/profiles/${encodeURIComponent(userId)}/lists`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/profiles/${encodeURIComponent(userId)}/lists`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.DeleteListSubscriptionResponse;
@@ -574,7 +629,7 @@ export class Profiles {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling DELETE /profiles/{user_id}/lists.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -587,7 +642,8 @@ export class Profiles {
             (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
-                message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a COURIER_AUTH_TOKEN environment variable",
             });
         }
 

@@ -3,7 +3,6 @@
  */
 
 export type MessageRoutingMethod = "all" | "single";
-
 export const MessageRoutingMethod = {
     All: "all",
     Single: "single",

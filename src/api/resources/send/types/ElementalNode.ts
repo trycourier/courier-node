@@ -14,36 +14,36 @@ export type ElementalNode =
     | Courier.ElementalNode.Group
     | Courier.ElementalNode.Quote;
 
-export declare namespace ElementalNode {
-    interface Text extends Courier.ElementalTextNode {
+export namespace ElementalNode {
+    export interface Text extends Courier.ElementalTextNode {
         type: "text";
     }
 
-    interface Meta extends Courier.ElementalMetaNode {
+    export interface Meta extends Courier.ElementalMetaNode {
         type: "meta";
     }
 
-    interface Channel extends Courier.ElementalChannelNode {
+    export interface Channel extends Courier.ElementalChannelNode {
         type: "channel";
     }
 
-    interface Image extends Courier.ElementalImageNode {
+    export interface Image extends Courier.ElementalImageNode {
         type: "image";
     }
 
-    interface Action extends Courier.ElementalActionNode {
+    export interface Action extends Courier.ElementalActionNode {
         type: "action";
     }
 
-    interface Divider extends Courier.ElementalDividerNode {
+    export interface Divider extends Courier.ElementalDividerNode {
         type: "divider";
     }
 
-    interface Group extends Courier.ElementalGroupNode {
+    export interface Group extends Courier.ElementalGroupNode {
         type: "group";
     }
 
-    interface Quote extends Courier.ElementalQuoteNode {
+    export interface Quote extends Courier.ElementalQuoteNode {
         type: "quote";
     }
 }

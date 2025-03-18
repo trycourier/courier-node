@@ -4,22 +4,7 @@
 
 /**
  * @example
- *     {
- *         archived: true,
- *         cursor: "string",
- *         event: "string",
- *         list: "string",
- *         messageId: "string",
- *         notification: "string",
- *         provider: "string",
- *         recipient: "string",
- *         status: "string",
- *         tag: "string",
- *         tags: "string",
- *         tenant_id: "string",
- *         enqueued_after: "string",
- *         traceId: "string"
- *     }
+ *     {}
  */
 export interface ListMessagesRequest {
     /**

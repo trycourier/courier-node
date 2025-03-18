@@ -3,7 +3,6 @@
  */
 
 export type PreferenceStatus = "OPTED_IN" | "OPTED_OUT" | "REQUIRED";
-
 export const PreferenceStatus = {
     OptedIn: "OPTED_IN",
     OptedOut: "OPTED_OUT",

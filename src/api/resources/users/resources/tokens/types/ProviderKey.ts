@@ -3,7 +3,6 @@
  */
 
 export type ProviderKey = "firebase-fcm" | "apn" | "expo" | "onesignal";
-
 export const ProviderKey = {
     FirebaseFcm: "firebase-fcm",
     Apn: "apn",

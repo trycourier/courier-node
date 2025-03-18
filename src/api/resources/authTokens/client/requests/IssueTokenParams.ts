@@ -5,8 +5,8 @@
 /**
  * @example
  *     {
- *         scope: "string",
- *         expires_in: "string"
+ *         scope: "scope",
+ *         expires_in: "expires_in"
  *     }
  */
 export interface IssueTokenParams {

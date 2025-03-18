@@ -3,7 +3,6 @@
  */
 
 export type TextStyle = "text" | "h1" | "h2" | "subtext";
-
 export const TextStyle = {
     Text: "text",
     H1: "h1",

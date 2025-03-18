@@ -3,7 +3,6 @@
  */
 
 export type ChannelSource = "subscription" | "list" | "recipient";
-
 export const ChannelSource = {
     Subscription: "subscription",
     List: "list",

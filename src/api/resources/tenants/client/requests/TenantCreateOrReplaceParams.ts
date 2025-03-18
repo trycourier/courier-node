@@ -7,27 +7,12 @@ import * as Courier from "../../../../index";
 /**
  * @example
  *     {
- *         name: "string",
- *         parent_tenant_id: "string",
- *         default_preferences: {
- *             items: [{
- *                     id: "string",
- *                     status: Courier.SubscriptionTopicStatus.OptedOut,
- *                     has_custom_routing: undefined,
- *                     custom_routing: undefined
- *                 }]
- *         },
- *         properties: {
- *             "string": {
- *                 "key": "value"
- *             }
- *         },
- *         user_profile: {
- *             "string": {
- *                 "key": "value"
- *             }
- *         },
- *         brand_id: "string"
+ *         name: "name",
+ *         parent_tenant_id: undefined,
+ *         default_preferences: undefined,
+ *         properties: undefined,
+ *         user_profile: undefined,
+ *         brand_id: undefined
  *     }
  */
 export interface TenantCreateOrReplaceParams {

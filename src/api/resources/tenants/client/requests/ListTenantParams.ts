@@ -4,11 +4,7 @@
 
 /**
  * @example
- *     {
- *         parent_tenant_id: "string",
- *         limit: 1,
- *         cursor: "string"
- *     }
+ *     {}
  */
 export interface ListTenantParams {
     /**

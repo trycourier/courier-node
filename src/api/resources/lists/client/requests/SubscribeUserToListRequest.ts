@@ -7,10 +7,7 @@ import * as Courier from "../../../../index";
 /**
  * @example
  *     {
- *         preferences: {
- *             categories: {},
- *             notifications: {}
- *         }
+ *         preferences: undefined
  *     }
  */
 export interface SubscribeUserToListRequest {

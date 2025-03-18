@@ -4,9 +4,7 @@
 
 /**
  * @example
- *     {
- *         cursor: "string"
- *     }
+ *     {}
  */
 export interface AudienceMembersListParams {
     /**

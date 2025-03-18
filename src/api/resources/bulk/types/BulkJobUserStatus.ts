@@ -3,7 +3,6 @@
  */
 
 export type BulkJobUserStatus = "PENDING" | "ENQUEUED" | "ERROR";
-
 export const BulkJobUserStatus = {
     Pending: "PENDING",
     Enqueued: "ENQUEUED",

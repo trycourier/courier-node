@@ -3,7 +3,6 @@
  */
 
 export type WebhookAuthMode = "none" | "basic" | "bearer";
-
 export const WebhookAuthMode = {
     None: "none",
     Basic: "basic",

@@ -3,7 +3,6 @@
  */
 
 export type IAlignment = "center" | "left" | "right" | "full";
-
 export const IAlignment = {
     Center: "center",
     Left: "left",

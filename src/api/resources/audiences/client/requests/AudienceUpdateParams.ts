@@ -7,13 +7,9 @@ import * as Courier from "../../../../index";
 /**
  * @example
  *     {
- *         name: "string",
- *         description: "string",
- *         filter: {
- *             value: "string",
- *             path: "string",
- *             operator: Courier.ComparisonOperator.EndsWith
- *         }
+ *         name: undefined,
+ *         description: undefined,
+ *         filter: undefined
  *     }
  */
 export interface AudienceUpdateParams {

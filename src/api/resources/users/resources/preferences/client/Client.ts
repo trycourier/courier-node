@@ -9,15 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../../../errors/index";
 
 export declare namespace Preferences {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -34,39 +42,43 @@ export class Preferences {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.users.preferences.list("string", {
-     *         tenant_id: "string"
-     *     })
+     *     await client.users.preferences.list("user_id")
      */
     public async list(
         userId: string,
         request: Courier.users.UserPreferencesParams = {},
-        requestOptions?: Preferences.RequestOptions
+        requestOptions?: Preferences.RequestOptions,
     ): Promise<Courier.users.UserPreferencesListResponse> {
         const { tenant_id: tenantId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (tenantId != null) {
             _queryParams["tenant_id"] = tenantId;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${encodeURIComponent(userId)}/preferences`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/users/${encodeURIComponent(userId)}/preferences`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.users.UserPreferencesListResponse;
@@ -91,7 +103,7 @@ export class Preferences {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /users/{user_id}/preferences.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -110,40 +122,44 @@ export class Preferences {
      * @throws {@link Courier.NotFoundError}
      *
      * @example
-     *     await courier.users.preferences.get("string", "string", {
-     *         tenant_id: "string"
-     *     })
+     *     await client.users.preferences.get("user_id", "topic_id")
      */
     public async get(
         userId: string,
         topicId: string,
         request: Courier.users.UserPreferencesTopicParams = {},
-        requestOptions?: Preferences.RequestOptions
+        requestOptions?: Preferences.RequestOptions,
     ): Promise<Courier.users.UserPreferencesGetResponse> {
         const { tenant_id: tenantId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (tenantId != null) {
             _queryParams["tenant_id"] = tenantId;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${encodeURIComponent(userId)}/preferences/${encodeURIComponent(topicId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/users/${encodeURIComponent(userId)}/preferences/${encodeURIComponent(topicId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.users.UserPreferencesGetResponse;
@@ -168,7 +184,9 @@ export class Preferences {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling GET /users/{user_id}/preferences/{topic_id}.",
+                );
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -187,11 +205,11 @@ export class Preferences {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.users.preferences.update("abc-123", "74Q4QGFBEX481DP6JRPMV751H4XT", {
+     *     await client.users.preferences.update("abc-123", "74Q4QGFBEX481DP6JRPMV751H4XT", {
      *         topic: {
-     *             status: Courier.PreferenceStatus.OptedIn,
+     *             status: "OPTED_IN",
      *             has_custom_routing: true,
-     *             custom_routing: [Courier.ChannelClassification.Inbox, Courier.ChannelClassification.Email]
+     *             custom_routing: ["inbox", "email"]
      *         }
      *     })
      */
@@ -199,33 +217,39 @@ export class Preferences {
         userId: string,
         topicId: string,
         request: Courier.users.UserPreferencesUpdateParams,
-        requestOptions?: Preferences.RequestOptions
+        requestOptions?: Preferences.RequestOptions,
     ): Promise<Courier.users.UserPreferencesUpdateResponse> {
         const { tenant_id: tenantId, ..._body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (tenantId != null) {
             _queryParams["tenant_id"] = tenantId;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/users/${encodeURIComponent(userId)}/preferences/${encodeURIComponent(topicId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/users/${encodeURIComponent(userId)}/preferences/${encodeURIComponent(topicId)}`,
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.users.UserPreferencesUpdateResponse;
@@ -250,7 +274,9 @@ export class Preferences {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling PUT /users/{user_id}/preferences/{topic_id}.",
+                );
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -263,7 +289,8 @@ export class Preferences {
             (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
-                message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a COURIER_AUTH_TOKEN environment variable",
             });
         }
 

@@ -9,34 +9,29 @@ import { Tenants } from "../resources/tenants/client/Client";
 import { Tokens } from "../resources/tokens/client/Client";
 
 export declare namespace Users {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
-    }
-
-    interface RequestOptions {
-        timeoutInSeconds?: number;
-        maxRetries?: number;
     }
 }
 
 export class Users {
-    constructor(protected readonly _options: Users.Options = {}) {}
-
     protected _preferences: Preferences | undefined;
+    protected _tenants: Tenants | undefined;
+    protected _tokens: Tokens | undefined;
+
+    constructor(protected readonly _options: Users.Options = {}) {}
 
     public get preferences(): Preferences {
         return (this._preferences ??= new Preferences(this._options));
     }
 
-    protected _tenants: Tenants | undefined;
-
     public get tenants(): Tenants {
         return (this._tenants ??= new Tenants(this._options));
     }
-
-    protected _tokens: Tokens | undefined;
 
     public get tokens(): Tokens {
         return (this._tokens ??= new Tokens(this._options));

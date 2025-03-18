@@ -3,7 +3,6 @@
  */
 
 export type InAppPlacement = "top" | "bottom" | "left" | "right";
-
 export const InAppPlacement = {
     Top: "top",
     Bottom: "bottom",

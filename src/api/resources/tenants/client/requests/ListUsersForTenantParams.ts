@@ -4,10 +4,7 @@
 
 /**
  * @example
- *     {
- *         limit: 1,
- *         cursor: "string"
- *     }
+ *     {}
  */
 export interface ListUsersForTenantParams {
     /**

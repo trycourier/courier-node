@@ -24,25 +24,104 @@ import { Translations } from "./api/resources/translations/client/Client";
 import { Users } from "./api/resources/users/client/Client";
 
 export declare namespace CourierClient {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
-    }
-
-    interface IdempotentRequestOptions extends RequestOptions {
-        idempotencyKey?: string | undefined;
-        idempotencyExpiry?: string | undefined;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class CourierClient {
+    protected _audiences: Audiences | undefined;
+    protected _auditEvents: AuditEvents | undefined;
+    protected _authTokens: AuthTokens | undefined;
+    protected _automations: Automations | undefined;
+    protected _brands: Brands | undefined;
+    protected _bulk: Bulk | undefined;
+    protected _inbound: Inbound | undefined;
+    protected _lists: Lists | undefined;
+    protected _messages: Messages | undefined;
+    protected _notifications: Notifications | undefined;
+    protected _profiles: Profiles | undefined;
+    protected _templates: Templates | undefined;
+    protected _tenants: Tenants | undefined;
+    protected _translations: Translations | undefined;
+    protected _users: Users | undefined;
+
     constructor(protected readonly _options: CourierClient.Options = {}) {}
+
+    public get audiences(): Audiences {
+        return (this._audiences ??= new Audiences(this._options));
+    }
+
+    public get auditEvents(): AuditEvents {
+        return (this._auditEvents ??= new AuditEvents(this._options));
+    }
+
+    public get authTokens(): AuthTokens {
+        return (this._authTokens ??= new AuthTokens(this._options));
+    }
+
+    public get automations(): Automations {
+        return (this._automations ??= new Automations(this._options));
+    }
+
+    public get brands(): Brands {
+        return (this._brands ??= new Brands(this._options));
+    }
+
+    public get bulk(): Bulk {
+        return (this._bulk ??= new Bulk(this._options));
+    }
+
+    public get inbound(): Inbound {
+        return (this._inbound ??= new Inbound(this._options));
+    }
+
+    public get lists(): Lists {
+        return (this._lists ??= new Lists(this._options));
+    }
+
+    public get messages(): Messages {
+        return (this._messages ??= new Messages(this._options));
+    }
+
+    public get notifications(): Notifications {
+        return (this._notifications ??= new Notifications(this._options));
+    }
+
+    public get profiles(): Profiles {
+        return (this._profiles ??= new Profiles(this._options));
+    }
+
+    public get templates(): Templates {
+        return (this._templates ??= new Templates(this._options));
+    }
+
+    public get tenants(): Tenants {
+        return (this._tenants ??= new Tenants(this._options));
+    }
+
+    public get translations(): Translations {
+        return (this._translations ??= new Translations(this._options));
+    }
+
+    public get users(): Users {
+        return (this._users ??= new Users(this._options));
+    }
 
     /**
      * Use the send API to send a message to one or more recipients.
@@ -51,118 +130,91 @@ export class CourierClient {
      * @param {CourierClient.IdempotentRequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.send({
+     *     await client.send({
      *         message: {
+     *             data: undefined,
+     *             brand_id: undefined,
+     *             channels: undefined,
+     *             context: undefined,
+     *             metadata: undefined,
+     *             preferences: undefined,
+     *             providers: undefined,
+     *             routing: undefined,
+     *             timeout: undefined,
+     *             delay: undefined,
+     *             expiry: undefined,
+     *             to: undefined,
      *             content: {
-     *                 version: "string",
-     *                 brand: {
-     *                     "key": "value"
-     *                 },
+     *                 version: "version",
+     *                 brand: undefined,
      *                 elements: [{
-     *                         type: "text"
+     *                         type: "text",
+     *                         channels: undefined,
+     *                         ref: undefined,
+     *                         if: undefined,
+     *                         loop: undefined,
+     *                         content: "content",
+     *                         align: "left",
+     *                         text_style: undefined,
+     *                         color: undefined,
+     *                         bold: undefined,
+     *                         italic: undefined,
+     *                         strikethrough: undefined,
+     *                         underline: undefined,
+     *                         locales: undefined,
+     *                         format: undefined
+     *                     }, {
+     *                         type: "text",
+     *                         channels: undefined,
+     *                         ref: undefined,
+     *                         if: undefined,
+     *                         loop: undefined,
+     *                         content: "content",
+     *                         align: "left",
+     *                         text_style: undefined,
+     *                         color: undefined,
+     *                         bold: undefined,
+     *                         italic: undefined,
+     *                         strikethrough: undefined,
+     *                         underline: undefined,
+     *                         locales: undefined,
+     *                         format: undefined
      *                     }]
-     *             },
-     *             data: {
-     *                 "string": {
-     *                     "key": "value"
-     *                 }
-     *             },
-     *             brand_id: "string",
-     *             channels: {
-     *                 "string": {
-     *                     brand_id: undefined,
-     *                     providers: undefined,
-     *                     routing_method: undefined,
-     *                     if: undefined,
-     *                     timeouts: undefined,
-     *                     override: undefined,
-     *                     metadata: undefined
-     *                 }
-     *             },
-     *             context: {
-     *                 tenant_id: "string"
-     *             },
-     *             metadata: {
-     *                 event: "string",
-     *                 tags: [],
-     *                 utm: {
-     *                     source: undefined,
-     *                     medium: undefined,
-     *                     campaign: undefined,
-     *                     term: undefined,
-     *                     content: undefined
-     *                 },
-     *                 trace_id: "string"
-     *             },
-     *             preferences: {
-     *                 subscription_topic_id: "string"
-     *             },
-     *             providers: {
-     *                 "string": {
-     *                     override: undefined,
-     *                     if: undefined,
-     *                     timeouts: undefined,
-     *                     metadata: undefined
-     *                 }
-     *             },
-     *             routing: {
-     *                 method: Courier.RoutingMethod.All,
-     *                 channels: [{
-     *                         channel: "string",
-     *                         config: undefined,
-     *                         method: undefined,
-     *                         providers: undefined,
-     *                         if: undefined
-     *                     }]
-     *             },
-     *             timeout: {
-     *                 provider: {},
-     *                 channel: {},
-     *                 message: 1,
-     *                 escalation: 1,
-     *                 criteria: Courier.Criteria.NoEscalation
-     *             },
-     *             delay: {
-     *                 duration: 1,
-     *                 until: "string"
-     *             },
-     *             expiry: {
-     *                 expires_at: "string",
-     *                 expires_in: "string"
-     *             },
-     *             to: {
-     *                 audience_id: "string",
-     *                 data: {},
-     *                 filters: []
      *             }
      *         }
      *     })
      */
     public async send(
         request: Courier.SendMessageRequest,
-        requestOptions?: CourierClient.IdempotentRequestOptions
+        requestOptions?: CourierClient.IdempotentRequestOptions,
     ): Promise<Courier.SendMessageResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                "/send"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                "/send",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.SendMessageResponse;
@@ -182,7 +234,7 @@ export class CourierClient {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /send.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -190,102 +242,13 @@ export class CourierClient {
         }
     }
 
-    protected _audiences: Audiences | undefined;
-
-    public get audiences(): Audiences {
-        return (this._audiences ??= new Audiences(this._options));
-    }
-
-    protected _auditEvents: AuditEvents | undefined;
-
-    public get auditEvents(): AuditEvents {
-        return (this._auditEvents ??= new AuditEvents(this._options));
-    }
-
-    protected _authTokens: AuthTokens | undefined;
-
-    public get authTokens(): AuthTokens {
-        return (this._authTokens ??= new AuthTokens(this._options));
-    }
-
-    protected _automations: Automations | undefined;
-
-    public get automations(): Automations {
-        return (this._automations ??= new Automations(this._options));
-    }
-
-    protected _brands: Brands | undefined;
-
-    public get brands(): Brands {
-        return (this._brands ??= new Brands(this._options));
-    }
-
-    protected _bulk: Bulk | undefined;
-
-    public get bulk(): Bulk {
-        return (this._bulk ??= new Bulk(this._options));
-    }
-
-    protected _inbound: Inbound | undefined;
-
-    public get inbound(): Inbound {
-        return (this._inbound ??= new Inbound(this._options));
-    }
-
-    protected _lists: Lists | undefined;
-
-    public get lists(): Lists {
-        return (this._lists ??= new Lists(this._options));
-    }
-
-    protected _messages: Messages | undefined;
-
-    public get messages(): Messages {
-        return (this._messages ??= new Messages(this._options));
-    }
-
-    protected _notifications: Notifications | undefined;
-
-    public get notifications(): Notifications {
-        return (this._notifications ??= new Notifications(this._options));
-    }
-
-    protected _profiles: Profiles | undefined;
-
-    public get profiles(): Profiles {
-        return (this._profiles ??= new Profiles(this._options));
-    }
-
-    protected _templates: Templates | undefined;
-
-    public get templates(): Templates {
-        return (this._templates ??= new Templates(this._options));
-    }
-
-    protected _tenants: Tenants | undefined;
-
-    public get tenants(): Tenants {
-        return (this._tenants ??= new Tenants(this._options));
-    }
-
-    protected _translations: Translations | undefined;
-
-    public get translations(): Translations {
-        return (this._translations ??= new Translations(this._options));
-    }
-
-    protected _users: Users | undefined;
-
-    public get users(): Users {
-        return (this._users ??= new Users(this._options));
-    }
-
     protected async _getAuthorizationHeader(): Promise<string> {
         const bearer =
             (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
-                message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a COURIER_AUTH_TOKEN environment variable",
             });
         }
 

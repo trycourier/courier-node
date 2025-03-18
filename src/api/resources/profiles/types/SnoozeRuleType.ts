@@ -3,7 +3,6 @@
  */
 
 export type SnoozeRuleType = "snooze";
-
 export const SnoozeRuleType = {
     Snooze: "snooze",
 } as const;

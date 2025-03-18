@@ -4,23 +4,38 @@
 
 export type MessageStatus =
     /**
+     * The message has been canceled such that it will not be delivered. */
+    | "CANCELED"
+    /**
      * The recipient has clicked on any link in the message at least one time. */
     | "CLICKED"
+    /**
+     * The message has been delayed and will be attempted for delivery at a later time. */
+    | "DELAYED"
     /**
      * The provider successfully delivered the message to the recipient. */
     | "DELIVERED"
     /**
+     * The message has been aggregated into a digest and will be sent according to digest rules. */
+    | "DIGESTED"
+    /**
      * The request has been received to send a message, is waiting in the work queue. */
     | "ENQUEUED"
+    /**
+     * The message was filtered out based on configured rules or preferences. */
+    | "FILTERED"
     /**
      * The recipient has opened the message at least one time. */
     | "OPENED"
     /**
-     * The message has been canceled such that it will not be delivered. */
-    | "CANCELED"
+     * The message has been successfully routed to a specific channel or provider. */
+    | "ROUTED"
     /**
      * The message has been accepted by the provider. */
     | "SENT"
+    /**
+     * The message was sent with a mock key and Courier simulated the message lifecycle without sending to the downstream provider. */
+    | "SIMULATED"
     /**
      * The message was throttled by Courier. */
     | "THROTTLED"
@@ -33,14 +48,18 @@ export type MessageStatus =
     /**
      * The message could not be routed to any channel or provider. This can happen for multiple reasons: insufficient profile data, invalid notification setup, invalid integration configuration, etc. */
     | "UNROUTABLE";
-
 export const MessageStatus = {
-    Clicked: "CLICKED",
-    Delivered: "DELIVERED",
-    Enqueued: "ENQUEUED",
-    Opened: "OPENED",
     Canceled: "CANCELED",
+    Clicked: "CLICKED",
+    Delayed: "DELAYED",
+    Delivered: "DELIVERED",
+    Digested: "DIGESTED",
+    Enqueued: "ENQUEUED",
+    Filtered: "FILTERED",
+    Opened: "OPENED",
+    Routed: "ROUTED",
     Sent: "SENT",
+    Simulated: "SIMULATED",
     Throttled: "THROTTLED",
     Undeliverable: "UNDELIVERABLE",
     Unmapped: "UNMAPPED",

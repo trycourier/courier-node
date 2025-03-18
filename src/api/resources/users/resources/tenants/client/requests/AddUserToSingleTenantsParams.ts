@@ -5,11 +5,7 @@
 /**
  * @example
  *     {
- *         profile: {
- *             "string": {
- *                 "key": "value"
- *             }
- *         }
+ *         profile: undefined
  *     }
  */
 export interface AddUserToSingleTenantsParams {

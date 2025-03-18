@@ -3,7 +3,6 @@
  */
 
 export type WebhookProfileType = "limited" | "expanded";
-
 export const WebhookProfileType = {
     Limited: "limited",
     Expanded: "expanded",

@@ -12,7 +12,6 @@ export type BlockType =
     | "quote"
     | "template"
     | "text";
-
 export const BlockType = {
     Action: "action",
     Divider: "divider",

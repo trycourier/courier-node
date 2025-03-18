@@ -3,7 +3,6 @@
  */
 
 export type RuleType = "snooze" | "channel_preferences" | "status";
-
 export const RuleType = {
     Snooze: "snooze",
     ChannelPreferences: "channel_preferences",

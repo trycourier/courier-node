@@ -3,7 +3,6 @@
  */
 
 export type WebhookMethod = "POST" | "PUT";
-
 export const WebhookMethod = {
     Post: "POST",
     Put: "PUT",

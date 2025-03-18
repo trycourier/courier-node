@@ -6,7 +6,7 @@
  * @example
  *     {
  *         profile: {
- *             "string": {
+ *             "profile": {
  *                 "key": "value"
  *             }
  *         }

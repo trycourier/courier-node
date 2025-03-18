@@ -7,12 +7,10 @@ import * as Courier from "../../../index";
 export type InboundBulkMessageV2 =
     /**
      * Describes the content of the message in a way that will
-     * work for email, push, chat, or any channel.
-     *  */
+     * work for email, push, chat, or any channel. */
     | Courier.InboundBulkTemplateMessage
     /**
      * A template for a type of message that can be sent more than once.
      * For example, you might create an "Appointment Reminder" Notification or
-     * “Reset Password” Notifications.
-     *  */
+     * “Reset Password” Notifications. */
     | Courier.InboundBulkContentMessage;

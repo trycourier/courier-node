@@ -8,9 +8,9 @@ import * as Courier from "../../../../../../index";
  * @example
  *     {
  *         topic: {
- *             status: Courier.PreferenceStatus.OptedIn,
+ *             status: "OPTED_IN",
  *             has_custom_routing: true,
- *             custom_routing: [Courier.ChannelClassification.Inbox, Courier.ChannelClassification.Email]
+ *             custom_routing: ["inbox", "email"]
  *         }
  *     }
  */

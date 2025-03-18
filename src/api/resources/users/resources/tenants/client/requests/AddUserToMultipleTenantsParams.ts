@@ -8,14 +8,15 @@ import * as Courier from "../../../../../../index";
  * @example
  *     {
  *         tenants: [{
- *                 user_id: "string",
- *                 type: "user",
- *                 tenant_id: "string",
- *                 profile: {
- *                     "string": {
- *                         "key": "value"
- *                     }
- *                 }
+ *                 user_id: undefined,
+ *                 type: undefined,
+ *                 tenant_id: "tenant_id",
+ *                 profile: undefined
+ *             }, {
+ *                 user_id: undefined,
+ *                 type: undefined,
+ *                 tenant_id: "tenant_id",
+ *                 profile: undefined
  *             }]
  *     }
  */

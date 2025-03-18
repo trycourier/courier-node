@@ -16,7 +16,6 @@ export type ComparisonOperator =
     | "NEQ"
     | "OMIT"
     | "STARTS_WITH";
-
 export const ComparisonOperator = {
     EndsWith: "ENDS_WITH",
     Eq: "EQ",

@@ -3,7 +3,6 @@
  */
 
 export type AutomationThrottleScope = "user" | "global" | "dynamic";
-
 export const AutomationThrottleScope = {
     User: "user",
     Global: "global",

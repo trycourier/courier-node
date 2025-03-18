@@ -4,9 +4,7 @@
 
 /**
  * @example
- *     {
- *         tenant_id: "string"
- *     }
+ *     {}
  */
 export interface UserPreferencesParams {
     /**

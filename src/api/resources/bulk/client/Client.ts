@@ -9,20 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Bulk {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CourierEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         authorizationToken?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
-    }
-
-    interface IdempotentRequestOptions extends RequestOptions {
-        idempotencyKey?: string | undefined;
-        idempotencyExpiry?: string | undefined;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -36,122 +39,48 @@ export class Bulk {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.bulk.createJob({
+     *     await client.bulk.createJob({
      *         message: {
-     *             message: {
-     *                 template: "string",
-     *                 data: {
-     *                     "string": {
-     *                         "key": "value"
-     *                     }
-     *                 },
-     *                 brand_id: "string",
-     *                 channels: {
-     *                     "string": {
-     *                         brand_id: undefined,
-     *                         providers: undefined,
-     *                         routing_method: undefined,
-     *                         if: undefined,
-     *                         timeouts: undefined,
-     *                         override: undefined,
-     *                         metadata: undefined
-     *                     }
-     *                 },
-     *                 context: {
-     *                     tenant_id: "string"
-     *                 },
-     *                 metadata: {
-     *                     event: "string",
-     *                     tags: [],
-     *                     utm: {
-     *                         source: undefined,
-     *                         medium: undefined,
-     *                         campaign: undefined,
-     *                         term: undefined,
-     *                         content: undefined
-     *                     },
-     *                     trace_id: "string"
-     *                 },
-     *                 preferences: {
-     *                     subscription_topic_id: "string"
-     *                 },
-     *                 providers: {
-     *                     "string": {
-     *                         override: undefined,
-     *                         if: undefined,
-     *                         timeouts: undefined,
-     *                         metadata: undefined
-     *                     }
-     *                 },
-     *                 routing: {
-     *                     method: Courier.RoutingMethod.All,
-     *                     channels: [{
-     *                             channel: "string",
-     *                             config: undefined,
-     *                             method: undefined,
-     *                             providers: undefined,
-     *                             if: undefined
-     *                         }]
-     *                 },
-     *                 timeout: {
-     *                     provider: {},
-     *                     channel: {},
-     *                     message: 1,
-     *                     escalation: 1,
-     *                     criteria: Courier.Criteria.NoEscalation
-     *                 },
-     *                 delay: {
-     *                     duration: 1,
-     *                     until: "string"
-     *                 },
-     *                 expiry: {
-     *                     expires_at: "string",
-     *                     expires_in: "string"
-     *                 }
-     *             },
-     *             brand: "string",
-     *             data: {
-     *                 "string": {
-     *                     "key": "value"
-     *                 }
-     *             },
-     *             event: "string",
-     *             locale: {
-     *                 "string": {
-     *                     "key": "value"
-     *                 }
-     *             },
-     *             override: {
-     *                 "key": "value"
-     *             }
+     *             brand: undefined,
+     *             data: undefined,
+     *             event: undefined,
+     *             locale: undefined,
+     *             override: undefined,
+     *             message: undefined
      *         }
      *     })
      */
     public async createJob(
         request: Courier.BulkCreateJobParams,
-        requestOptions?: Bulk.IdempotentRequestOptions
+        requestOptions?: Bulk.IdempotentRequestOptions,
     ): Promise<Courier.BulkCreateJobResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                "/bulk"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                "/bulk",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.BulkCreateJobResponse;
@@ -176,7 +105,7 @@ export class Bulk {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /bulk.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -192,65 +121,54 @@ export class Bulk {
      * @param {Bulk.IdempotentRequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await courier.bulk.ingestUsers("string", {
+     *     await client.bulk.ingestUsers("job_id", {
      *         users: [{
-     *                 preferences: {
-     *                     categories: {},
-     *                     notifications: {}
-     *                 },
-     *                 profile: {
-     *                     "key": "value"
-     *                 },
-     *                 recipient: "string",
-     *                 data: {
-     *                     "key": "value"
-     *                 },
-     *                 to: {
-     *                     account_id: "string",
-     *                     context: {
-     *                         tenant_id: "string"
-     *                     },
-     *                     data: {},
-     *                     email: "string",
-     *                     locale: "string",
-     *                     user_id: "string",
-     *                     phone_number: "string",
-     *                     preferences: {
-     *                         categories: undefined,
-     *                         notifications: {},
-     *                         templateId: undefined
-     *                     },
-     *                     tenant_id: "string"
-     *                 }
+     *                 preferences: undefined,
+     *                 profile: undefined,
+     *                 recipient: undefined,
+     *                 data: undefined,
+     *                 to: undefined
+     *             }, {
+     *                 preferences: undefined,
+     *                 profile: undefined,
+     *                 recipient: undefined,
+     *                 data: undefined,
+     *                 to: undefined
      *             }]
      *     })
      */
     public async ingestUsers(
         jobId: string,
         request: Courier.BulkIngestUsersParams,
-        requestOptions?: Bulk.IdempotentRequestOptions
+        requestOptions?: Bulk.IdempotentRequestOptions,
     ): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/bulk/${encodeURIComponent(jobId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/bulk/${encodeURIComponent(jobId)}`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -270,7 +188,7 @@ export class Bulk {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /bulk/{job_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -287,29 +205,35 @@ export class Bulk {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.bulk.runJob("string")
+     *     await client.bulk.runJob("job_id")
      */
     public async runJob(jobId: string, requestOptions?: Bulk.IdempotentRequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/bulk/${encodeURIComponent(jobId)}/run`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/bulk/${encodeURIComponent(jobId)}/run`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
                 "X-Idempotency-Expiration":
                     requestOptions?.idempotencyExpiry != null ? requestOptions?.idempotencyExpiry : undefined,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -334,7 +258,7 @@ export class Bulk {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /bulk/{job_id}/run.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -351,26 +275,32 @@ export class Bulk {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.bulk.getJob("string")
+     *     await client.bulk.getJob("job_id")
      */
     public async getJob(jobId: string, requestOptions?: Bulk.RequestOptions): Promise<Courier.BulkGetJobResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/bulk/${encodeURIComponent(jobId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/bulk/${encodeURIComponent(jobId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.BulkGetJobResponse;
@@ -395,7 +325,7 @@ export class Bulk {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /bulk/{job_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -413,39 +343,43 @@ export class Bulk {
      * @throws {@link Courier.BadRequestError}
      *
      * @example
-     *     await courier.bulk.getUsers("string", {
-     *         cursor: "string"
-     *     })
+     *     await client.bulk.getUsers("job_id")
      */
     public async getUsers(
         jobId: string,
         request: Courier.BulkGetUsersParams = {},
-        requestOptions?: Bulk.RequestOptions
+        requestOptions?: Bulk.RequestOptions,
     ): Promise<Courier.BulkGetJobUsersResponse> {
         const { cursor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
             _queryParams["cursor"] = cursor;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CourierEnvironment.Production,
-                `/bulk/${encodeURIComponent(jobId)}/users`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/bulk/${encodeURIComponent(jobId)}/users`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "v6.3.1",
+                "X-Fern-SDK-Version": "6.4.0-alpha0",
+                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as Courier.BulkGetJobUsersResponse;
@@ -470,7 +404,7 @@ export class Bulk {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CourierTimeoutError();
+                throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /bulk/{job_id}/users.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
@@ -483,7 +417,8 @@ export class Bulk {
             (await core.Supplier.get(this._options.authorizationToken)) ?? process?.env["COURIER_AUTH_TOKEN"];
         if (bearer == null) {
             throw new errors.CourierError({
-                message: "Please specify COURIER_AUTH_TOKEN when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a COURIER_AUTH_TOKEN environment variable",
             });
         }
 

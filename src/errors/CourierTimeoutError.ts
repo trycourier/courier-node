@@ -3,8 +3,8 @@
  */
 
 export class CourierTimeoutError extends Error {
-    constructor() {
-        super("Timeout");
+    constructor(message: string) {
+        super(message);
         Object.setPrototypeOf(this, CourierTimeoutError.prototype);
     }
 }

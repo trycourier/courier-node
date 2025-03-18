@@ -3,7 +3,6 @@
  */
 
 export type ChannelClassification = "direct_message" | "email" | "push" | "sms" | "webhook" | "inbox";
-
 export const ChannelClassification = {
     DirectMessage: "direct_message",
     Email: "email",

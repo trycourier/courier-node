@@ -8,8 +8,12 @@ import * as Courier from "../../../../index";
  * @example
  *     {
  *         checks: [{
- *                 id: "string",
- *                 status: Courier.CheckStatus.Resolved,
+ *                 id: "id",
+ *                 status: "RESOLVED",
+ *                 type: "custom"
+ *             }, {
+ *                 id: "id",
+ *                 status: "RESOLVED",
  *                 type: "custom"
  *             }]
  *     }

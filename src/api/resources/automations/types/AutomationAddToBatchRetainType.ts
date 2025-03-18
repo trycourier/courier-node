@@ -3,7 +3,6 @@
  */
 
 export type AutomationAddToBatchRetainType = "first" | "last" | "highest" | "lowest";
-
 export const AutomationAddToBatchRetainType = {
     First: "first",
     Last: "last",

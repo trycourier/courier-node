@@ -21,7 +21,6 @@ export type Reason =
     /**
      * The recipient did not receive the notification because they chose to unsubscribe from it. */
     | "UNSUBSCRIBED";
-
 export const Reason = {
     Filtered: "FILTERED",
     NoChannels: "NO_CHANNELS",

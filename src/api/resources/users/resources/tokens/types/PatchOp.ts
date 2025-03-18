@@ -3,7 +3,6 @@
  */
 
 export type PatchOp = "replace" | "add" | "remove" | "copy" | "move" | "test";
-
 export const PatchOp = {
     Replace: "replace",
     Add: "add",

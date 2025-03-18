@@ -3,7 +3,6 @@
  */
 
 export type MergeAlgorithm = "replace" | "none" | "overwrite" | "soft-merge";
-
 export const MergeAlgorithm = {
     Replace: "replace",
     None: "none",

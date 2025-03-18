@@ -3,7 +3,6 @@
  */
 
 export type SubscriptionTopicStatus = "OPTED_OUT" | "OPTED_IN" | "REQUIRED";
-
 export const SubscriptionTopicStatus = {
     OptedOut: "OPTED_OUT",
     OptedIn: "OPTED_IN",

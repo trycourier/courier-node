@@ -1,5 +1,6 @@
 export * from "./MessageStatus";
 export * from "./MessageDetails";
+export * from "./MessageDetailsExtended";
 export * from "./Reason";
 export * from "./ListMessagesResponse";
 export * from "./MessageHistoryResponse";

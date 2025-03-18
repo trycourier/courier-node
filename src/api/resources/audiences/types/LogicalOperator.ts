@@ -3,7 +3,6 @@
  */
 
 export type LogicalOperator = "AND" | "OR";
-
 export const LogicalOperator = {
     And: "AND",
     Or: "OR",

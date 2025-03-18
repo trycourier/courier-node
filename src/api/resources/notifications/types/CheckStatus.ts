@@ -3,7 +3,6 @@
  */
 
 export type CheckStatus = "RESOLVED" | "FAILED" | "PENDING";
-
 export const CheckStatus = {
     Resolved: "RESOLVED",
     Failed: "FAILED",

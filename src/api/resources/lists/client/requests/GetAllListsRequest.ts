@@ -4,10 +4,7 @@
 
 /**
  * @example
- *     {
- *         cursor: "string",
- *         pattern: "string"
- *     }
+ *     {}
  */
 export interface GetAllListsRequest {
     /**

@@ -8,11 +8,11 @@ import * as Courier from "../../../../index";
  * @example
  *     {
  *         recipients: [{
- *                 recipientId: "string",
- *                 preferences: {
- *                     categories: {},
- *                     notifications: {}
- *                 }
+ *                 recipientId: "recipientId",
+ *                 preferences: undefined
+ *             }, {
+ *                 recipientId: "recipientId",
+ *                 preferences: undefined
  *             }]
  *     }
  */

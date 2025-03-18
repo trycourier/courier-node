@@ -3,7 +3,6 @@
  */
 
 export type RoutingMethod = "all" | "single";
-
 export const RoutingMethod = {
     All: "all",
     Single: "single",

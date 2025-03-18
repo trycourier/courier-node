@@ -3,7 +3,6 @@
  */
 
 export type TokenStatus = "active" | "unknown" | "failed" | "revoked";
-
 export const TokenStatus = {
     Active: "active",
     Unknown: "unknown",

@@ -3,7 +3,6 @@
  */
 
 export type BulkJobStatus = "CREATED" | "PROCESSING" | "COMPLETED" | "ERROR";
-
 export const BulkJobStatus = {
     Created: "CREATED",
     Processing: "PROCESSING",
