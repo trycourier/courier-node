@@ -42,6 +42,11 @@ export declare namespace CourierClient {
         /** Additional headers to include in the request. */
         headers?: Record<string, string>;
     }
+
+    export interface IdempotentRequestOptions extends RequestOptions {
+        idempotencyKey?: string | undefined;
+        idempotencyExpiry?: string | undefined;
+    }
 }
 
 export class CourierClient {
@@ -200,8 +205,8 @@ export class CourierClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0-alpha0",
-                "User-Agent": "@trycourier/courier/6.4.0-alpha0",
+                "X-Fern-SDK-Version": "6.4.0",
+                "User-Agent": "@trycourier/courier/6.4.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
