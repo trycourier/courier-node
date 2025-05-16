@@ -49,10 +49,17 @@ export class AuthTokens {
      *         expires_in: "expires_in"
      *     })
      */
-    public async issueToken(
+    public issueToken(
         request: Courier.IssueTokenParams,
         requestOptions?: AuthTokens.IdempotentRequestOptions,
-    ): Promise<Courier.IssueTokenResponse> {
+    ): core.HttpResponsePromise<Courier.IssueTokenResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__issueToken(request, requestOptions));
+    }
+
+    private async __issueToken(
+        request: Courier.IssueTokenParams,
+        requestOptions?: AuthTokens.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<Courier.IssueTokenResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -65,8 +72,8 @@ export class AuthTokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -82,13 +89,14 @@ export class AuthTokens {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.IssueTokenResponse;
+            return { data: _response.body as Courier.IssueTokenResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -97,12 +105,14 @@ export class AuthTokens {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /auth/issue-token.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

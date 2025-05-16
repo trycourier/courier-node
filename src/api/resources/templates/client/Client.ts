@@ -41,10 +41,17 @@ export class Templates {
      * @example
      *     await client.templates.list()
      */
-    public async list(
+    public list(
         request: Courier.ListTemplatesRequest = {},
         requestOptions?: Templates.RequestOptions,
-    ): Promise<Courier.ListTemplatesResponse> {
+    ): core.HttpResponsePromise<Courier.ListTemplatesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Courier.ListTemplatesRequest = {},
+        requestOptions?: Templates.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.ListTemplatesResponse>> {
         const { cursor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
@@ -63,8 +70,8 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -77,13 +84,14 @@ export class Templates {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.ListTemplatesResponse;
+            return { data: _response.body as Courier.ListTemplatesResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -92,12 +100,14 @@ export class Templates {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /notifications.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -41,10 +41,17 @@ export class AuditEvents {
      * @example
      *     await client.auditEvents.list()
      */
-    public async list(
+    public list(
         request: Courier.ListAuditEventsRequest = {},
         requestOptions?: AuditEvents.RequestOptions,
-    ): Promise<Courier.ListAuditEventsResponse> {
+    ): core.HttpResponsePromise<Courier.ListAuditEventsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Courier.ListAuditEventsRequest = {},
+        requestOptions?: AuditEvents.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.ListAuditEventsResponse>> {
         const { cursor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
@@ -63,8 +70,8 @@ export class AuditEvents {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -77,13 +84,14 @@ export class AuditEvents {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.ListAuditEventsResponse;
+            return { data: _response.body as Courier.ListAuditEventsResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -92,12 +100,14 @@ export class AuditEvents {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /audit-events.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -111,7 +121,17 @@ export class AuditEvents {
      * @example
      *     await client.auditEvents.get("audit-event-id")
      */
-    public async get(auditEventId: string, requestOptions?: AuditEvents.RequestOptions): Promise<Courier.AuditEvent> {
+    public get(
+        auditEventId: string,
+        requestOptions?: AuditEvents.RequestOptions,
+    ): core.HttpResponsePromise<Courier.AuditEvent> {
+        return core.HttpResponsePromise.fromPromise(this.__get(auditEventId, requestOptions));
+    }
+
+    private async __get(
+        auditEventId: string,
+        requestOptions?: AuditEvents.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.AuditEvent>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -124,8 +144,8 @@ export class AuditEvents {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -137,13 +157,14 @@ export class AuditEvents {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.AuditEvent;
+            return { data: _response.body as Courier.AuditEvent, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -152,6 +173,7 @@ export class AuditEvents {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -160,6 +182,7 @@ export class AuditEvents {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

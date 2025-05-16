@@ -48,10 +48,17 @@ export class Lists {
      * @example
      *     await client.lists.list()
      */
-    public async list(
+    public list(
         request: Courier.GetAllListsRequest = {},
         requestOptions?: Lists.RequestOptions,
-    ): Promise<Courier.ListGetAllResponse> {
+    ): core.HttpResponsePromise<Courier.ListGetAllResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Courier.GetAllListsRequest = {},
+        requestOptions?: Lists.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.ListGetAllResponse>> {
         const { cursor, pattern } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
@@ -74,8 +81,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -88,17 +95,21 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.ListGetAllResponse;
+            return { data: _response.body as Courier.ListGetAllResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -108,12 +119,14 @@ export class Lists {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /lists.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -129,7 +142,14 @@ export class Lists {
      * @example
      *     await client.lists.get("list_id")
      */
-    public async get(listId: string, requestOptions?: Lists.RequestOptions): Promise<Courier.List> {
+    public get(listId: string, requestOptions?: Lists.RequestOptions): core.HttpResponsePromise<Courier.List> {
+        return core.HttpResponsePromise.fromPromise(this.__get(listId, requestOptions));
+    }
+
+    private async __get(
+        listId: string,
+        requestOptions?: Lists.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.List>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -142,8 +162,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -155,17 +175,18 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.List;
+            return { data: _response.body as Courier.List, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound);
+                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound, _response.rawResponse);
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -175,12 +196,14 @@ export class Lists {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /lists/{list_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -198,11 +221,19 @@ export class Lists {
      *         preferences: undefined
      *     })
      */
-    public async update(
+    public update(
         listId: string,
         request: Courier.ListPutParams,
         requestOptions?: Lists.RequestOptions,
-    ): Promise<Courier.List> {
+    ): core.HttpResponsePromise<Courier.List> {
+        return core.HttpResponsePromise.fromPromise(this.__update(listId, request, requestOptions));
+    }
+
+    private async __update(
+        listId: string,
+        request: Courier.ListPutParams,
+        requestOptions?: Lists.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.List>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -215,8 +246,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -229,13 +260,14 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.List;
+            return { data: _response.body as Courier.List, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -244,12 +276,14 @@ export class Lists {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling PUT /lists/{list_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -263,7 +297,11 @@ export class Lists {
      * @example
      *     await client.lists.delete("list_id")
      */
-    public async delete(listId: string, requestOptions?: Lists.RequestOptions): Promise<void> {
+    public delete(listId: string, requestOptions?: Lists.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(listId, requestOptions));
+    }
+
+    private async __delete(listId: string, requestOptions?: Lists.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -276,8 +314,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -289,13 +327,14 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -304,12 +343,14 @@ export class Lists {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling DELETE /lists/{list_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -323,7 +364,14 @@ export class Lists {
      * @example
      *     await client.lists.restore("list_id")
      */
-    public async restore(listId: string, requestOptions?: Lists.RequestOptions): Promise<void> {
+    public restore(listId: string, requestOptions?: Lists.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__restore(listId, requestOptions));
+    }
+
+    private async __restore(
+        listId: string,
+        requestOptions?: Lists.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -336,8 +384,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -349,13 +397,14 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -364,12 +413,14 @@ export class Lists {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling PUT /lists/{list_id}/restore.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -386,11 +437,19 @@ export class Lists {
      * @example
      *     await client.lists.getSubscribers("list_id")
      */
-    public async getSubscribers(
+    public getSubscribers(
         listId: string,
         request: Courier.GetSubscriptionForListRequest = {},
         requestOptions?: Lists.RequestOptions,
-    ): Promise<Courier.ListGetSubscriptionsResponse> {
+    ): core.HttpResponsePromise<Courier.ListGetSubscriptionsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getSubscribers(listId, request, requestOptions));
+    }
+
+    private async __getSubscribers(
+        listId: string,
+        request: Courier.GetSubscriptionForListRequest = {},
+        requestOptions?: Lists.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.ListGetSubscriptionsResponse>> {
         const { cursor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
@@ -409,8 +468,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -423,17 +482,18 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.ListGetSubscriptionsResponse;
+            return { data: _response.body as Courier.ListGetSubscriptionsResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound);
+                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound, _response.rawResponse);
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -443,6 +503,7 @@ export class Lists {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -451,6 +512,7 @@ export class Lists {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -475,11 +537,19 @@ export class Lists {
      *             }]
      *     })
      */
-    public async updateSubscribers(
+    public updateSubscribers(
         listId: string,
         request: Courier.SubscribeUsersToListRequest,
         requestOptions?: Lists.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__updateSubscribers(listId, request, requestOptions));
+    }
+
+    private async __updateSubscribers(
+        listId: string,
+        request: Courier.SubscribeUsersToListRequest,
+        requestOptions?: Lists.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -492,8 +562,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -506,17 +576,21 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -526,6 +600,7 @@ export class Lists {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -534,6 +609,7 @@ export class Lists {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -558,11 +634,19 @@ export class Lists {
      *             }]
      *     })
      */
-    public async addSubscribers(
+    public addSubscribers(
         listId: string,
         request: Courier.AddSubscribersToList,
         requestOptions?: Lists.IdempotentRequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__addSubscribers(listId, request, requestOptions));
+    }
+
+    private async __addSubscribers(
+        listId: string,
+        request: Courier.AddSubscribersToList,
+        requestOptions?: Lists.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -575,8 +659,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -592,17 +676,21 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -612,6 +700,7 @@ export class Lists {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -620,6 +709,7 @@ export class Lists {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -637,12 +727,21 @@ export class Lists {
      *         preferences: undefined
      *     })
      */
-    public async subscribe(
+    public subscribe(
         listId: string,
         userId: string,
         request: Courier.SubscribeUserToListRequest = {},
         requestOptions?: Lists.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__subscribe(listId, userId, request, requestOptions));
+    }
+
+    private async __subscribe(
+        listId: string,
+        userId: string,
+        request: Courier.SubscribeUserToListRequest = {},
+        requestOptions?: Lists.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -655,8 +754,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -669,13 +768,14 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -684,6 +784,7 @@ export class Lists {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -692,6 +793,7 @@ export class Lists {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -708,7 +810,19 @@ export class Lists {
      * @example
      *     await client.lists.unsubscribe("list_id", "user_id")
      */
-    public async unsubscribe(listId: string, userId: string, requestOptions?: Lists.RequestOptions): Promise<void> {
+    public unsubscribe(
+        listId: string,
+        userId: string,
+        requestOptions?: Lists.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__unsubscribe(listId, userId, requestOptions));
+    }
+
+    private async __unsubscribe(
+        listId: string,
+        userId: string,
+        requestOptions?: Lists.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -721,8 +835,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -734,17 +848,18 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound);
+                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound, _response.rawResponse);
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -754,6 +869,7 @@ export class Lists {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -762,6 +878,7 @@ export class Lists {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

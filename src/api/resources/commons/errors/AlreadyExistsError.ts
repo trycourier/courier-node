@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../errors/index";
 import * as Courier from "../../../index";
+import * as core from "../../../../core";
 
 export class AlreadyExistsError extends errors.CourierError {
-    constructor(body: Courier.AlreadyExists) {
+    constructor(body: Courier.AlreadyExists, rawResponse?: core.RawResponse) {
         super({
             message: "AlreadyExistsError",
             statusCode: 409,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, AlreadyExistsError.prototype);
     }

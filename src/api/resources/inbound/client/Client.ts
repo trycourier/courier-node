@@ -52,10 +52,17 @@ export class Inbound {
      *         }
      *     })
      */
-    public async track(
+    public track(
         request: Courier.InboundTrackEvent,
         requestOptions?: Inbound.RequestOptions,
-    ): Promise<Courier.TrackAcceptedResponse> {
+    ): core.HttpResponsePromise<Courier.TrackAcceptedResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__track(request, requestOptions));
+    }
+
+    private async __track(
+        request: Courier.InboundTrackEvent,
+        requestOptions?: Inbound.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.TrackAcceptedResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -68,8 +75,8 @@ export class Inbound {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -82,19 +89,23 @@ export class Inbound {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.TrackAcceptedResponse;
+            return { data: _response.body as Courier.TrackAcceptedResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 case 409:
-                    throw new Courier.ConflictError(_response.error.body as Courier.Conflict);
+                    throw new Courier.ConflictError(_response.error.body as Courier.Conflict, _response.rawResponse);
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -104,12 +115,14 @@ export class Inbound {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /inbound/courier.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

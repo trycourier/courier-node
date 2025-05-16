@@ -39,10 +39,17 @@ export class Notifications {
      * @example
      *     await client.notifications.list()
      */
-    public async list(
+    public list(
         request: Courier.NotificationListParams = {},
         requestOptions?: Notifications.RequestOptions,
-    ): Promise<Courier.NotificationListResponse> {
+    ): core.HttpResponsePromise<Courier.NotificationListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Courier.NotificationListParams = {},
+        requestOptions?: Notifications.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.NotificationListResponse>> {
         const { cursor, notes } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
@@ -65,8 +72,8 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -79,13 +86,14 @@ export class Notifications {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.NotificationListResponse;
+            return { data: _response.body as Courier.NotificationListResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -94,12 +102,14 @@ export class Notifications {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /notifications.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -111,10 +121,17 @@ export class Notifications {
      * @example
      *     await client.notifications.getContent("id")
      */
-    public async getContent(
+    public getContent(
         id: string,
         requestOptions?: Notifications.RequestOptions,
-    ): Promise<Courier.NotificationGetContentResponse> {
+    ): core.HttpResponsePromise<Courier.NotificationGetContentResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getContent(id, requestOptions));
+    }
+
+    private async __getContent(
+        id: string,
+        requestOptions?: Notifications.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.NotificationGetContentResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -127,8 +144,8 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -140,13 +157,17 @@ export class Notifications {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.NotificationGetContentResponse;
+            return {
+                data: _response.body as Courier.NotificationGetContentResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -155,12 +176,14 @@ export class Notifications {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /notifications/{id}/content.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -172,10 +195,17 @@ export class Notifications {
      * @example
      *     await client.notifications.getDraftContent("id")
      */
-    public async getDraftContent(
+    public getDraftContent(
         id: string,
         requestOptions?: Notifications.RequestOptions,
-    ): Promise<Courier.NotificationGetContentResponse> {
+    ): core.HttpResponsePromise<Courier.NotificationGetContentResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getDraftContent(id, requestOptions));
+    }
+
+    private async __getDraftContent(
+        id: string,
+        requestOptions?: Notifications.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.NotificationGetContentResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -188,8 +218,8 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -201,13 +231,17 @@ export class Notifications {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.NotificationGetContentResponse;
+            return {
+                data: _response.body as Courier.NotificationGetContentResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -216,6 +250,7 @@ export class Notifications {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -224,6 +259,7 @@ export class Notifications {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -236,11 +272,19 @@ export class Notifications {
      * @example
      *     await client.notifications.getSubmissionChecks("id", "submissionId")
      */
-    public async getSubmissionChecks(
+    public getSubmissionChecks(
         id: string,
         submissionId: string,
         requestOptions?: Notifications.RequestOptions,
-    ): Promise<Courier.SubmissionChecksGetResponse> {
+    ): core.HttpResponsePromise<Courier.SubmissionChecksGetResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getSubmissionChecks(id, submissionId, requestOptions));
+    }
+
+    private async __getSubmissionChecks(
+        id: string,
+        submissionId: string,
+        requestOptions?: Notifications.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.SubmissionChecksGetResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -253,8 +297,8 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -266,13 +310,14 @@ export class Notifications {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.SubmissionChecksGetResponse;
+            return { data: _response.body as Courier.SubmissionChecksGetResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -281,6 +326,7 @@ export class Notifications {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -289,6 +335,7 @@ export class Notifications {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -312,12 +359,23 @@ export class Notifications {
      *             }]
      *     })
      */
-    public async replaceSubmissionChecks(
+    public replaceSubmissionChecks(
         id: string,
         submissionId: string,
         request: Courier.SubmissionChecksReplaceParams,
         requestOptions?: Notifications.RequestOptions,
-    ): Promise<Courier.SubmissionChecksReplaceResponse> {
+    ): core.HttpResponsePromise<Courier.SubmissionChecksReplaceResponse> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__replaceSubmissionChecks(id, submissionId, request, requestOptions),
+        );
+    }
+
+    private async __replaceSubmissionChecks(
+        id: string,
+        submissionId: string,
+        request: Courier.SubmissionChecksReplaceParams,
+        requestOptions?: Notifications.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.SubmissionChecksReplaceResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -330,8 +388,8 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -344,13 +402,17 @@ export class Notifications {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.SubmissionChecksReplaceResponse;
+            return {
+                data: _response.body as Courier.SubmissionChecksReplaceResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -359,6 +421,7 @@ export class Notifications {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -367,6 +430,7 @@ export class Notifications {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -379,11 +443,19 @@ export class Notifications {
      * @example
      *     await client.notifications.cancelSubmission("id", "submissionId")
      */
-    public async cancelSubmission(
+    public cancelSubmission(
         id: string,
         submissionId: string,
         requestOptions?: Notifications.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__cancelSubmission(id, submissionId, requestOptions));
+    }
+
+    private async __cancelSubmission(
+        id: string,
+        submissionId: string,
+        requestOptions?: Notifications.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -396,8 +468,8 @@ export class Notifications {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -409,13 +481,14 @@ export class Notifications {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -424,6 +497,7 @@ export class Notifications {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -432,6 +506,7 @@ export class Notifications {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

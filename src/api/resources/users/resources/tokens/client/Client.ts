@@ -43,7 +43,14 @@ export class Tokens {
      * @example
      *     await client.users.tokens.addMultiple("user_id")
      */
-    public async addMultiple(userId: string, requestOptions?: Tokens.RequestOptions): Promise<void> {
+    public addMultiple(userId: string, requestOptions?: Tokens.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__addMultiple(userId, requestOptions));
+    }
+
+    private async __addMultiple(
+        userId: string,
+        requestOptions?: Tokens.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -56,8 +63,8 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -69,17 +76,21 @@ export class Tokens {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -89,12 +100,14 @@ export class Tokens {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling PUT /users/{user_id}/tokens.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -119,12 +132,21 @@ export class Tokens {
      *         tracking: undefined
      *     })
      */
-    public async add(
+    public add(
         userId: string,
         token: string,
         request: Courier.users.UserToken,
         requestOptions?: Tokens.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__add(userId, token, request, requestOptions));
+    }
+
+    private async __add(
+        userId: string,
+        token: string,
+        request: Courier.users.UserToken,
+        requestOptions?: Tokens.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -137,8 +159,8 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -151,17 +173,21 @@ export class Tokens {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -171,6 +197,7 @@ export class Tokens {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -179,6 +206,7 @@ export class Tokens {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -206,12 +234,21 @@ export class Tokens {
      *             }]
      *     })
      */
-    public async update(
+    public update(
         userId: string,
         token: string,
         request: Courier.users.PatchUserTokenOpts,
         requestOptions?: Tokens.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__update(userId, token, request, requestOptions));
+    }
+
+    private async __update(
+        userId: string,
+        token: string,
+        request: Courier.users.PatchUserTokenOpts,
+        requestOptions?: Tokens.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -224,8 +261,8 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -238,17 +275,21 @@ export class Tokens {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -258,6 +299,7 @@ export class Tokens {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -266,6 +308,7 @@ export class Tokens {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -282,11 +325,19 @@ export class Tokens {
      * @example
      *     await client.users.tokens.get("user_id", "token")
      */
-    public async get(
+    public get(
         userId: string,
         token: string,
         requestOptions?: Tokens.RequestOptions,
-    ): Promise<Courier.users.GetUserTokenResponse> {
+    ): core.HttpResponsePromise<Courier.users.GetUserTokenResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__get(userId, token, requestOptions));
+    }
+
+    private async __get(
+        userId: string,
+        token: string,
+        requestOptions?: Tokens.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.users.GetUserTokenResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -299,8 +350,8 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -312,17 +363,21 @@ export class Tokens {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.users.GetUserTokenResponse;
+            return { data: _response.body as Courier.users.GetUserTokenResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -332,6 +387,7 @@ export class Tokens {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -340,6 +396,7 @@ export class Tokens {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -355,10 +412,17 @@ export class Tokens {
      * @example
      *     await client.users.tokens.list("user_id")
      */
-    public async list(
+    public list(
         userId: string,
         requestOptions?: Tokens.RequestOptions,
-    ): Promise<Courier.users.GetAllTokensResponse> {
+    ): core.HttpResponsePromise<Courier.users.GetAllTokensResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(userId, requestOptions));
+    }
+
+    private async __list(
+        userId: string,
+        requestOptions?: Tokens.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.users.GetAllTokensResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -371,8 +435,8 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -384,17 +448,21 @@ export class Tokens {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.users.GetAllTokensResponse;
+            return { data: _response.body as Courier.users.GetAllTokensResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -404,12 +472,14 @@ export class Tokens {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /users/{user_id}/tokens.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -422,7 +492,19 @@ export class Tokens {
      * @example
      *     await client.users.tokens.delete("user_id", "token")
      */
-    public async delete(userId: string, token: string, requestOptions?: Tokens.RequestOptions): Promise<void> {
+    public delete(
+        userId: string,
+        token: string,
+        requestOptions?: Tokens.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(userId, token, requestOptions));
+    }
+
+    private async __delete(
+        userId: string,
+        token: string,
+        requestOptions?: Tokens.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -435,8 +517,8 @@ export class Tokens {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -448,13 +530,14 @@ export class Tokens {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -463,6 +546,7 @@ export class Tokens {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -471,6 +555,7 @@ export class Tokens {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

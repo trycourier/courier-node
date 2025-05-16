@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../errors/index";
 import * as Courier from "../../../index";
+import * as core from "../../../../core";
 
 export class ConflictError extends errors.CourierError {
-    constructor(body: Courier.Conflict) {
+    constructor(body: Courier.Conflict, rawResponse?: core.RawResponse) {
         super({
             message: "ConflictError",
             statusCode: 409,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, ConflictError.prototype);
     }

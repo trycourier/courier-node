@@ -8,54 +8,19 @@ import * as Courier from "../../index";
  * @example
  *     {
  *         message: {
- *             data: undefined,
- *             brand_id: undefined,
- *             channels: undefined,
- *             context: undefined,
- *             metadata: undefined,
- *             preferences: undefined,
- *             providers: undefined,
- *             routing: undefined,
- *             timeout: undefined,
- *             delay: undefined,
- *             expiry: undefined,
- *             to: undefined,
+ *             to: {
+ *                 email: "email@example.com"
+ *             },
  *             content: {
- *                 version: "version",
- *                 brand: undefined,
- *                 elements: [{
- *                         type: "text",
- *                         channels: undefined,
- *                         ref: undefined,
- *                         if: undefined,
- *                         loop: undefined,
- *                         content: "content",
- *                         align: "left",
- *                         text_style: undefined,
- *                         color: undefined,
- *                         bold: undefined,
- *                         italic: undefined,
- *                         strikethrough: undefined,
- *                         underline: undefined,
- *                         locales: undefined,
- *                         format: undefined
- *                     }, {
- *                         type: "text",
- *                         channels: undefined,
- *                         ref: undefined,
- *                         if: undefined,
- *                         loop: undefined,
- *                         content: "content",
- *                         align: "left",
- *                         text_style: undefined,
- *                         color: undefined,
- *                         bold: undefined,
- *                         italic: undefined,
- *                         strikethrough: undefined,
- *                         underline: undefined,
- *                         locales: undefined,
- *                         format: undefined
- *                     }]
+ *                 title: "Welcome!",
+ *                 body: "Thanks for signing up, {{name}}"
+ *             },
+ *             data: {
+ *                 "name": "Peter Parker"
+ *             },
+ *             routing: {
+ *                 method: "single",
+ *                 channels: ["email"]
  *             }
  *         }
  *     }

@@ -137,62 +137,34 @@ export class CourierClient {
      * @example
      *     await client.send({
      *         message: {
-     *             data: undefined,
-     *             brand_id: undefined,
-     *             channels: undefined,
-     *             context: undefined,
-     *             metadata: undefined,
-     *             preferences: undefined,
-     *             providers: undefined,
-     *             routing: undefined,
-     *             timeout: undefined,
-     *             delay: undefined,
-     *             expiry: undefined,
-     *             to: undefined,
+     *             to: {
+     *                 email: "email@example.com"
+     *             },
      *             content: {
-     *                 version: "version",
-     *                 brand: undefined,
-     *                 elements: [{
-     *                         type: "text",
-     *                         channels: undefined,
-     *                         ref: undefined,
-     *                         if: undefined,
-     *                         loop: undefined,
-     *                         content: "content",
-     *                         align: "left",
-     *                         text_style: undefined,
-     *                         color: undefined,
-     *                         bold: undefined,
-     *                         italic: undefined,
-     *                         strikethrough: undefined,
-     *                         underline: undefined,
-     *                         locales: undefined,
-     *                         format: undefined
-     *                     }, {
-     *                         type: "text",
-     *                         channels: undefined,
-     *                         ref: undefined,
-     *                         if: undefined,
-     *                         loop: undefined,
-     *                         content: "content",
-     *                         align: "left",
-     *                         text_style: undefined,
-     *                         color: undefined,
-     *                         bold: undefined,
-     *                         italic: undefined,
-     *                         strikethrough: undefined,
-     *                         underline: undefined,
-     *                         locales: undefined,
-     *                         format: undefined
-     *                     }]
+     *                 title: "Welcome!",
+     *                 body: "Thanks for signing up, {{name}}"
+     *             },
+     *             data: {
+     *                 "name": "Peter Parker"
+     *             },
+     *             routing: {
+     *                 method: "single",
+     *                 channels: ["email"]
      *             }
      *         }
      *     })
      */
-    public async send(
+    public send(
         request: Courier.SendMessageRequest,
         requestOptions?: CourierClient.IdempotentRequestOptions,
-    ): Promise<Courier.SendMessageResponse> {
+    ): core.HttpResponsePromise<Courier.SendMessageResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
+    }
+
+    private async __send(
+        request: Courier.SendMessageRequest,
+        requestOptions?: CourierClient.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<Courier.SendMessageResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -205,8 +177,8 @@ export class CourierClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -222,13 +194,14 @@ export class CourierClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.SendMessageResponse;
+            return { data: _response.body as Courier.SendMessageResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -237,12 +210,14 @@ export class CourierClient {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /send.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

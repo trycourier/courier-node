@@ -46,10 +46,17 @@ export class Messages {
      * @example
      *     await client.messages.list()
      */
-    public async list(
+    public list(
         request: Courier.ListMessagesRequest = {},
         requestOptions?: Messages.RequestOptions,
-    ): Promise<Courier.ListMessagesResponse> {
+    ): core.HttpResponsePromise<Courier.ListMessagesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Courier.ListMessagesRequest = {},
+        requestOptions?: Messages.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.ListMessagesResponse>> {
         const {
             archived,
             cursor,
@@ -147,8 +154,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -161,13 +168,14 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.ListMessagesResponse;
+            return { data: _response.body as Courier.ListMessagesResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -176,12 +184,14 @@ export class Messages {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /messages.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -198,10 +208,17 @@ export class Messages {
      * @example
      *     await client.messages.get("message_id")
      */
-    public async get(
+    public get(
         messageId: string,
         requestOptions?: Messages.RequestOptions,
-    ): Promise<Courier.MessageDetailsExtended> {
+    ): core.HttpResponsePromise<Courier.MessageDetailsExtended> {
+        return core.HttpResponsePromise.fromPromise(this.__get(messageId, requestOptions));
+    }
+
+    private async __get(
+        messageId: string,
+        requestOptions?: Messages.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.MessageDetailsExtended>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -214,8 +231,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -227,19 +244,26 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.MessageDetailsExtended;
+            return { data: _response.body as Courier.MessageDetailsExtended, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 case 404:
-                    throw new Courier.MessageNotFoundError(_response.error.body as Courier.MessageNotFound);
+                    throw new Courier.MessageNotFoundError(
+                        _response.error.body as Courier.MessageNotFound,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -249,12 +273,14 @@ export class Messages {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /messages/{message_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -268,10 +294,17 @@ export class Messages {
      * @example
      *     await client.messages.cancel("message_id")
      */
-    public async cancel(
+    public cancel(
         messageId: string,
         requestOptions?: Messages.IdempotentRequestOptions,
-    ): Promise<Courier.MessageDetails> {
+    ): core.HttpResponsePromise<Courier.MessageDetails> {
+        return core.HttpResponsePromise.fromPromise(this.__cancel(messageId, requestOptions));
+    }
+
+    private async __cancel(
+        messageId: string,
+        requestOptions?: Messages.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<Courier.MessageDetails>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -284,8 +317,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -300,13 +333,14 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.MessageDetails;
+            return { data: _response.body as Courier.MessageDetails, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -315,6 +349,7 @@ export class Messages {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -323,6 +358,7 @@ export class Messages {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -340,11 +376,19 @@ export class Messages {
      * @example
      *     await client.messages.getHistory("message_id")
      */
-    public async getHistory(
+    public getHistory(
         messageId: string,
         request: Courier.GetMessageHistoryRequest = {},
         requestOptions?: Messages.RequestOptions,
-    ): Promise<Courier.MessageHistoryResponse> {
+    ): core.HttpResponsePromise<Courier.MessageHistoryResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getHistory(messageId, request, requestOptions));
+    }
+
+    private async __getHistory(
+        messageId: string,
+        request: Courier.GetMessageHistoryRequest = {},
+        requestOptions?: Messages.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.MessageHistoryResponse>> {
         const { type: type_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (type_ != null) {
@@ -363,8 +407,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -377,19 +421,26 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.MessageHistoryResponse;
+            return { data: _response.body as Courier.MessageHistoryResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 case 404:
-                    throw new Courier.MessageNotFoundError(_response.error.body as Courier.MessageNotFound);
+                    throw new Courier.MessageNotFoundError(
+                        _response.error.body as Courier.MessageNotFound,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -399,6 +450,7 @@ export class Messages {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -407,6 +459,7 @@ export class Messages {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -421,10 +474,17 @@ export class Messages {
      * @example
      *     await client.messages.getContent("message_id")
      */
-    public async getContent(
+    public getContent(
         messageId: string,
         requestOptions?: Messages.RequestOptions,
-    ): Promise<Courier.RenderOutputResponse> {
+    ): core.HttpResponsePromise<Courier.RenderOutputResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getContent(messageId, requestOptions));
+    }
+
+    private async __getContent(
+        messageId: string,
+        requestOptions?: Messages.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.RenderOutputResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -437,8 +497,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -450,19 +510,26 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.RenderOutputResponse;
+            return { data: _response.body as Courier.RenderOutputResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 case 404:
-                    throw new Courier.MessageNotFoundError(_response.error.body as Courier.MessageNotFound);
+                    throw new Courier.MessageNotFoundError(
+                        _response.error.body as Courier.MessageNotFound,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -472,6 +539,7 @@ export class Messages {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -480,6 +548,7 @@ export class Messages {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -491,7 +560,14 @@ export class Messages {
      * @example
      *     await client.messages.archive("request_id")
      */
-    public async archive(requestId: string, requestOptions?: Messages.RequestOptions): Promise<void> {
+    public archive(requestId: string, requestOptions?: Messages.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__archive(requestId, requestOptions));
+    }
+
+    private async __archive(
+        requestId: string,
+        requestOptions?: Messages.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -504,8 +580,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -517,13 +593,14 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -532,6 +609,7 @@ export class Messages {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -540,6 +618,7 @@ export class Messages {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -1,6 +1,6 @@
 {
     "name": "@trycourier/courier",
-    "version": "6.4.0",
+    "version": "6.4.1",
     "private": false,
     "repository": "https://github.com/trycourier/courier-node",
     "main": "./index.js",
@@ -39,5 +39,6 @@
         "fs": false,
         "os": false,
         "path": false
-    }
+    },
+    "packageManager": "yarn@1.22.22"
 }

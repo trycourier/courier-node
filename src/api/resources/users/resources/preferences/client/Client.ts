@@ -44,11 +44,19 @@ export class Preferences {
      * @example
      *     await client.users.preferences.list("user_id")
      */
-    public async list(
+    public list(
         userId: string,
         request: Courier.users.UserPreferencesParams = {},
         requestOptions?: Preferences.RequestOptions,
-    ): Promise<Courier.users.UserPreferencesListResponse> {
+    ): core.HttpResponsePromise<Courier.users.UserPreferencesListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(userId, request, requestOptions));
+    }
+
+    private async __list(
+        userId: string,
+        request: Courier.users.UserPreferencesParams = {},
+        requestOptions?: Preferences.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.users.UserPreferencesListResponse>> {
         const { tenant_id: tenantId } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (tenantId != null) {
@@ -67,8 +75,8 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -81,17 +89,24 @@ export class Preferences {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.users.UserPreferencesListResponse;
+            return {
+                data: _response.body as Courier.users.UserPreferencesListResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -101,12 +116,14 @@ export class Preferences {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /users/{user_id}/preferences.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -124,12 +141,21 @@ export class Preferences {
      * @example
      *     await client.users.preferences.get("user_id", "topic_id")
      */
-    public async get(
+    public get(
         userId: string,
         topicId: string,
         request: Courier.users.UserPreferencesTopicParams = {},
         requestOptions?: Preferences.RequestOptions,
-    ): Promise<Courier.users.UserPreferencesGetResponse> {
+    ): core.HttpResponsePromise<Courier.users.UserPreferencesGetResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__get(userId, topicId, request, requestOptions));
+    }
+
+    private async __get(
+        userId: string,
+        topicId: string,
+        request: Courier.users.UserPreferencesTopicParams = {},
+        requestOptions?: Preferences.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.users.UserPreferencesGetResponse>> {
         const { tenant_id: tenantId } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (tenantId != null) {
@@ -148,8 +174,8 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -162,17 +188,21 @@ export class Preferences {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.users.UserPreferencesGetResponse;
+            return {
+                data: _response.body as Courier.users.UserPreferencesGetResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound);
+                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound, _response.rawResponse);
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -182,6 +212,7 @@ export class Preferences {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -190,6 +221,7 @@ export class Preferences {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -213,12 +245,21 @@ export class Preferences {
      *         }
      *     })
      */
-    public async update(
+    public update(
         userId: string,
         topicId: string,
         request: Courier.users.UserPreferencesUpdateParams,
         requestOptions?: Preferences.RequestOptions,
-    ): Promise<Courier.users.UserPreferencesUpdateResponse> {
+    ): core.HttpResponsePromise<Courier.users.UserPreferencesUpdateResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__update(userId, topicId, request, requestOptions));
+    }
+
+    private async __update(
+        userId: string,
+        topicId: string,
+        request: Courier.users.UserPreferencesUpdateParams,
+        requestOptions?: Preferences.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.users.UserPreferencesUpdateResponse>> {
         const { tenant_id: tenantId, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (tenantId != null) {
@@ -237,8 +278,8 @@ export class Preferences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -252,17 +293,24 @@ export class Preferences {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.users.UserPreferencesUpdateResponse;
+            return {
+                data: _response.body as Courier.users.UserPreferencesUpdateResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -272,6 +320,7 @@ export class Preferences {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -280,6 +329,7 @@ export class Preferences {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../errors/index";
 import * as Courier from "../../../index";
+import * as core from "../../../../core";
 
 export class PaymentRequiredError extends errors.CourierError {
-    constructor(body: Courier.PaymentRequired) {
+    constructor(body: Courier.PaymentRequired, rawResponse?: core.RawResponse) {
         super({
             message: "PaymentRequiredError",
             statusCode: 402,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, PaymentRequiredError.prototype);
     }

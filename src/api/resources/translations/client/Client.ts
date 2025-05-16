@@ -44,7 +44,19 @@ export class Translations {
      * @example
      *     await client.translations.get("domain", "locale")
      */
-    public async get(domain: string, locale: string, requestOptions?: Translations.RequestOptions): Promise<string> {
+    public get(
+        domain: string,
+        locale: string,
+        requestOptions?: Translations.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__get(domain, locale, requestOptions));
+    }
+
+    private async __get(
+        domain: string,
+        locale: string,
+        requestOptions?: Translations.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -57,8 +69,8 @@ export class Translations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -70,17 +82,18 @@ export class Translations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as string;
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound);
+                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound, _response.rawResponse);
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -90,6 +103,7 @@ export class Translations {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -98,6 +112,7 @@ export class Translations {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -115,12 +130,21 @@ export class Translations {
      * @example
      *     await client.translations.update("domain", "locale", "string")
      */
-    public async update(
+    public update(
         domain: string,
         locale: string,
         request: string,
         requestOptions?: Translations.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__update(domain, locale, request, requestOptions));
+    }
+
+    private async __update(
+        domain: string,
+        locale: string,
+        request: string,
+        requestOptions?: Translations.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -133,8 +157,8 @@ export class Translations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -147,17 +171,18 @@ export class Translations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound);
+                    throw new Courier.NotFoundError(_response.error.body as Courier.NotFound, _response.rawResponse);
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -167,6 +192,7 @@ export class Translations {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -175,6 +201,7 @@ export class Translations {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

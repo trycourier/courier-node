@@ -41,7 +41,17 @@ export class Audiences {
      * @example
      *     await client.audiences.get("audience_id")
      */
-    public async get(audienceId: string, requestOptions?: Audiences.RequestOptions): Promise<Courier.Audience> {
+    public get(
+        audienceId: string,
+        requestOptions?: Audiences.RequestOptions,
+    ): core.HttpResponsePromise<Courier.Audience> {
+        return core.HttpResponsePromise.fromPromise(this.__get(audienceId, requestOptions));
+    }
+
+    private async __get(
+        audienceId: string,
+        requestOptions?: Audiences.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.Audience>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -54,8 +64,8 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -67,13 +77,14 @@ export class Audiences {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.Audience;
+            return { data: _response.body as Courier.Audience, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -82,12 +93,14 @@ export class Audiences {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /audiences/{audience_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -106,11 +119,19 @@ export class Audiences {
      *         filter: undefined
      *     })
      */
-    public async update(
+    public update(
         audienceId: string,
         request: Courier.AudienceUpdateParams = {},
         requestOptions?: Audiences.RequestOptions,
-    ): Promise<Courier.AudienceUpdateResponse> {
+    ): core.HttpResponsePromise<Courier.AudienceUpdateResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__update(audienceId, request, requestOptions));
+    }
+
+    private async __update(
+        audienceId: string,
+        request: Courier.AudienceUpdateParams = {},
+        requestOptions?: Audiences.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.AudienceUpdateResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -123,8 +144,8 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -137,13 +158,14 @@ export class Audiences {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.AudienceUpdateResponse;
+            return { data: _response.body as Courier.AudienceUpdateResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -152,12 +174,14 @@ export class Audiences {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling PUT /audiences/{audience_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -171,7 +195,14 @@ export class Audiences {
      * @example
      *     await client.audiences.delete("audience_id")
      */
-    public async delete(audienceId: string, requestOptions?: Audiences.RequestOptions): Promise<void> {
+    public delete(audienceId: string, requestOptions?: Audiences.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(audienceId, requestOptions));
+    }
+
+    private async __delete(
+        audienceId: string,
+        requestOptions?: Audiences.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -184,8 +215,8 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -197,13 +228,14 @@ export class Audiences {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -212,12 +244,14 @@ export class Audiences {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling DELETE /audiences/{audience_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -234,11 +268,19 @@ export class Audiences {
      * @example
      *     await client.audiences.listMembers("audience_id")
      */
-    public async listMembers(
+    public listMembers(
         audienceId: string,
         request: Courier.AudienceMembersListParams = {},
         requestOptions?: Audiences.RequestOptions,
-    ): Promise<Courier.AudienceMemberListResponse> {
+    ): core.HttpResponsePromise<Courier.AudienceMemberListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listMembers(audienceId, request, requestOptions));
+    }
+
+    private async __listMembers(
+        audienceId: string,
+        request: Courier.AudienceMembersListParams = {},
+        requestOptions?: Audiences.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.AudienceMemberListResponse>> {
         const { cursor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
@@ -257,8 +299,8 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -271,17 +313,21 @@ export class Audiences {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.AudienceMemberListResponse;
+            return { data: _response.body as Courier.AudienceMemberListResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -291,6 +337,7 @@ export class Audiences {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -299,6 +346,7 @@ export class Audiences {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -314,10 +362,17 @@ export class Audiences {
      * @example
      *     await client.audiences.listAudiences()
      */
-    public async listAudiences(
+    public listAudiences(
         request: Courier.AudiencesListParams = {},
         requestOptions?: Audiences.RequestOptions,
-    ): Promise<Courier.AudienceListResponse> {
+    ): core.HttpResponsePromise<Courier.AudienceListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listAudiences(request, requestOptions));
+    }
+
+    private async __listAudiences(
+        request: Courier.AudiencesListParams = {},
+        requestOptions?: Audiences.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.AudienceListResponse>> {
         const { cursor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
@@ -336,8 +391,8 @@ export class Audiences {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -350,17 +405,21 @@ export class Audiences {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.AudienceListResponse;
+            return { data: _response.body as Courier.AudienceListResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -370,12 +429,14 @@ export class Audiences {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /audiences.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

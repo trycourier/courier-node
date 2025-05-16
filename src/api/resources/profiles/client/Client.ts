@@ -48,7 +48,17 @@ export class Profiles {
      * @example
      *     await client.profiles.get("user_id")
      */
-    public async get(userId: string, requestOptions?: Profiles.RequestOptions): Promise<Courier.ProfileGetResponse> {
+    public get(
+        userId: string,
+        requestOptions?: Profiles.RequestOptions,
+    ): core.HttpResponsePromise<Courier.ProfileGetResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__get(userId, requestOptions));
+    }
+
+    private async __get(
+        userId: string,
+        requestOptions?: Profiles.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.ProfileGetResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -61,8 +71,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -74,17 +84,21 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.ProfileGetResponse;
+            return { data: _response.body as Courier.ProfileGetResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -94,12 +108,14 @@ export class Profiles {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /profiles/{user_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -122,11 +138,19 @@ export class Profiles {
      *         }
      *     })
      */
-    public async create(
+    public create(
         userId: string,
         request: Courier.MergeProfileRequest,
         requestOptions?: Profiles.IdempotentRequestOptions,
-    ): Promise<Courier.MergeProfileResponse> {
+    ): core.HttpResponsePromise<Courier.MergeProfileResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__create(userId, request, requestOptions));
+    }
+
+    private async __create(
+        userId: string,
+        request: Courier.MergeProfileRequest,
+        requestOptions?: Profiles.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<Courier.MergeProfileResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -139,8 +163,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -156,17 +180,21 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.MergeProfileResponse;
+            return { data: _response.body as Courier.MergeProfileResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -176,12 +204,14 @@ export class Profiles {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /profiles/{user_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -207,11 +237,19 @@ export class Profiles {
      *         }
      *     })
      */
-    public async replace(
+    public replace(
         userId: string,
         request: Courier.ReplaceProfileRequest,
         requestOptions?: Profiles.RequestOptions,
-    ): Promise<Courier.ReplaceProfileResponse> {
+    ): core.HttpResponsePromise<Courier.ReplaceProfileResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__replace(userId, request, requestOptions));
+    }
+
+    private async __replace(
+        userId: string,
+        request: Courier.ReplaceProfileRequest,
+        requestOptions?: Profiles.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.ReplaceProfileResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -224,8 +262,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -238,17 +276,21 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.ReplaceProfileResponse;
+            return { data: _response.body as Courier.ReplaceProfileResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -258,12 +300,14 @@ export class Profiles {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling PUT /profiles/{user_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -286,11 +330,19 @@ export class Profiles {
      *             }]
      *     })
      */
-    public async mergeProfile(
+    public mergeProfile(
         userId: string,
         request: Courier.ProfileUpdateRequest,
         requestOptions?: Profiles.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__mergeProfile(userId, request, requestOptions));
+    }
+
+    private async __mergeProfile(
+        userId: string,
+        request: Courier.ProfileUpdateRequest,
+        requestOptions?: Profiles.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -303,8 +355,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -317,13 +369,14 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -332,12 +385,14 @@ export class Profiles {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling PATCH /profiles/{user_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -353,7 +408,14 @@ export class Profiles {
      * @example
      *     await client.profiles.delete("user_id")
      */
-    public async delete(userId: string, requestOptions?: Profiles.RequestOptions): Promise<void> {
+    public delete(userId: string, requestOptions?: Profiles.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(userId, requestOptions));
+    }
+
+    private async __delete(
+        userId: string,
+        requestOptions?: Profiles.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -366,8 +428,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -379,17 +441,21 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -399,12 +465,14 @@ export class Profiles {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling DELETE /profiles/{user_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -421,11 +489,19 @@ export class Profiles {
      * @example
      *     await client.profiles.getListSubscriptions("user_id")
      */
-    public async getListSubscriptions(
+    public getListSubscriptions(
         userId: string,
         request: Courier.GetListSubscriptionsRequest = {},
         requestOptions?: Profiles.RequestOptions,
-    ): Promise<Courier.GetListSubscriptionsResponse> {
+    ): core.HttpResponsePromise<Courier.GetListSubscriptionsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getListSubscriptions(userId, request, requestOptions));
+    }
+
+    private async __getListSubscriptions(
+        userId: string,
+        request: Courier.GetListSubscriptionsRequest = {},
+        requestOptions?: Profiles.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.GetListSubscriptionsResponse>> {
         const { cursor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
@@ -444,8 +520,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -458,17 +534,21 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.GetListSubscriptionsResponse;
+            return { data: _response.body as Courier.GetListSubscriptionsResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -478,12 +558,14 @@ export class Profiles {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /profiles/{user_id}/lists.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -508,11 +590,19 @@ export class Profiles {
      *             }]
      *     })
      */
-    public async subscribeToLists(
+    public subscribeToLists(
         userId: string,
         request: Courier.SubscribeToListsRequest,
         requestOptions?: Profiles.IdempotentRequestOptions,
-    ): Promise<Courier.SubscribeToListsResponse> {
+    ): core.HttpResponsePromise<Courier.SubscribeToListsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__subscribeToLists(userId, request, requestOptions));
+    }
+
+    private async __subscribeToLists(
+        userId: string,
+        request: Courier.SubscribeToListsRequest,
+        requestOptions?: Profiles.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<Courier.SubscribeToListsResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -525,8 +615,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -542,17 +632,21 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.SubscribeToListsResponse;
+            return { data: _response.body as Courier.SubscribeToListsResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -562,12 +656,14 @@ export class Profiles {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /profiles/{user_id}/lists.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -583,10 +679,17 @@ export class Profiles {
      * @example
      *     await client.profiles.deleteListSubscription("user_id")
      */
-    public async deleteListSubscription(
+    public deleteListSubscription(
         userId: string,
         requestOptions?: Profiles.RequestOptions,
-    ): Promise<Courier.DeleteListSubscriptionResponse> {
+    ): core.HttpResponsePromise<Courier.DeleteListSubscriptionResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteListSubscription(userId, requestOptions));
+    }
+
+    private async __deleteListSubscription(
+        userId: string,
+        requestOptions?: Profiles.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.DeleteListSubscriptionResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -599,8 +702,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -612,17 +715,24 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.DeleteListSubscriptionResponse;
+            return {
+                data: _response.body as Courier.DeleteListSubscriptionResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -632,12 +742,14 @@ export class Profiles {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling DELETE /profiles/{user_id}/lists.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -53,11 +53,21 @@ export class Automations {
      *         template: undefined
      *     })
      */
-    public async invokeAutomationTemplate(
+    public invokeAutomationTemplate(
         templateId: string,
         request: Courier.AutomationInvokeParams,
         requestOptions?: Automations.IdempotentRequestOptions,
-    ): Promise<Courier.AutomationInvokeResponse> {
+    ): core.HttpResponsePromise<Courier.AutomationInvokeResponse> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__invokeAutomationTemplate(templateId, request, requestOptions),
+        );
+    }
+
+    private async __invokeAutomationTemplate(
+        templateId: string,
+        request: Courier.AutomationInvokeParams,
+        requestOptions?: Automations.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<Courier.AutomationInvokeResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -70,8 +80,8 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -87,13 +97,14 @@ export class Automations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.AutomationInvokeResponse;
+            return { data: _response.body as Courier.AutomationInvokeResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -102,6 +113,7 @@ export class Automations {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -110,6 +122,7 @@ export class Automations {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -141,10 +154,17 @@ export class Automations {
      *         }
      *     })
      */
-    public async invokeAdHocAutomation(
+    public invokeAdHocAutomation(
         request: Courier.AutomationAdHocInvokeParams,
         requestOptions?: Automations.IdempotentRequestOptions,
-    ): Promise<Courier.AutomationInvokeResponse> {
+    ): core.HttpResponsePromise<Courier.AutomationInvokeResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__invokeAdHocAutomation(request, requestOptions));
+    }
+
+    private async __invokeAdHocAutomation(
+        request: Courier.AutomationAdHocInvokeParams,
+        requestOptions?: Automations.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<Courier.AutomationInvokeResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -157,8 +177,8 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -174,13 +194,14 @@ export class Automations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.AutomationInvokeResponse;
+            return { data: _response.body as Courier.AutomationInvokeResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -189,12 +210,14 @@ export class Automations {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /automations/invoke.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

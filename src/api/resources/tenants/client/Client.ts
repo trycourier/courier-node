@@ -49,11 +49,19 @@ export class Tenants {
      *         brand_id: undefined
      *     })
      */
-    public async createOrReplace(
+    public createOrReplace(
         tenantId: string,
         request: Courier.TenantCreateOrReplaceParams,
         requestOptions?: Tenants.RequestOptions,
-    ): Promise<Courier.Tenant> {
+    ): core.HttpResponsePromise<Courier.Tenant> {
+        return core.HttpResponsePromise.fromPromise(this.__createOrReplace(tenantId, request, requestOptions));
+    }
+
+    private async __createOrReplace(
+        tenantId: string,
+        request: Courier.TenantCreateOrReplaceParams,
+        requestOptions?: Tenants.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.Tenant>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -66,8 +74,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -80,17 +88,21 @@ export class Tenants {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.Tenant;
+            return { data: _response.body as Courier.Tenant, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -100,12 +112,14 @@ export class Tenants {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling PUT /tenants/{tenant_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -119,7 +133,14 @@ export class Tenants {
      * @example
      *     await client.tenants.get("tenant_id")
      */
-    public async get(tenantId: string, requestOptions?: Tenants.RequestOptions): Promise<Courier.Tenant> {
+    public get(tenantId: string, requestOptions?: Tenants.RequestOptions): core.HttpResponsePromise<Courier.Tenant> {
+        return core.HttpResponsePromise.fromPromise(this.__get(tenantId, requestOptions));
+    }
+
+    private async __get(
+        tenantId: string,
+        requestOptions?: Tenants.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.Tenant>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -132,8 +153,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -145,17 +166,21 @@ export class Tenants {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.Tenant;
+            return { data: _response.body as Courier.Tenant, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -165,12 +190,14 @@ export class Tenants {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /tenants/{tenant_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -182,10 +209,17 @@ export class Tenants {
      * @example
      *     await client.tenants.list()
      */
-    public async list(
+    public list(
         request: Courier.ListTenantParams = {},
         requestOptions?: Tenants.RequestOptions,
-    ): Promise<Courier.TenantListResponse> {
+    ): core.HttpResponsePromise<Courier.TenantListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Courier.ListTenantParams = {},
+        requestOptions?: Tenants.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.TenantListResponse>> {
         const { parent_tenant_id: parentTenantId, limit, cursor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (parentTenantId != null) {
@@ -212,8 +246,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -226,13 +260,14 @@ export class Tenants {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.TenantListResponse;
+            return { data: _response.body as Courier.TenantListResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -241,12 +276,14 @@ export class Tenants {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /tenants.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -258,7 +295,14 @@ export class Tenants {
      * @example
      *     await client.tenants.delete("tenant_id")
      */
-    public async delete(tenantId: string, requestOptions?: Tenants.RequestOptions): Promise<void> {
+    public delete(tenantId: string, requestOptions?: Tenants.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(tenantId, requestOptions));
+    }
+
+    private async __delete(
+        tenantId: string,
+        requestOptions?: Tenants.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -271,8 +315,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -284,13 +328,14 @@ export class Tenants {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -299,12 +344,14 @@ export class Tenants {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling DELETE /tenants/{tenant_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -319,11 +366,19 @@ export class Tenants {
      * @example
      *     await client.tenants.getUsersByTenant("tenant_id")
      */
-    public async getUsersByTenant(
+    public getUsersByTenant(
         tenantId: string,
         request: Courier.ListUsersForTenantParams = {},
         requestOptions?: Tenants.RequestOptions,
-    ): Promise<Courier.ListUsersForTenantResponse> {
+    ): core.HttpResponsePromise<Courier.ListUsersForTenantResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getUsersByTenant(tenantId, request, requestOptions));
+    }
+
+    private async __getUsersByTenant(
+        tenantId: string,
+        request: Courier.ListUsersForTenantParams = {},
+        requestOptions?: Tenants.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.ListUsersForTenantResponse>> {
         const { limit, cursor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -346,8 +401,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -360,17 +415,21 @@ export class Tenants {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.ListUsersForTenantResponse;
+            return { data: _response.body as Courier.ListUsersForTenantResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -380,12 +439,14 @@ export class Tenants {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /tenants/{tenant_id}/users.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -403,12 +464,23 @@ export class Tenants {
      *         custom_routing: ["inbox"]
      *     })
      */
-    public async createOrReplaceDefaultPreferencesForTopic(
+    public createOrReplaceDefaultPreferencesForTopic(
         tenantId: string,
         topicId: string,
         request: Courier.SubscriptionTopicNew,
         requestOptions?: Tenants.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__createOrReplaceDefaultPreferencesForTopic(tenantId, topicId, request, requestOptions),
+        );
+    }
+
+    private async __createOrReplaceDefaultPreferencesForTopic(
+        tenantId: string,
+        topicId: string,
+        request: Courier.SubscriptionTopicNew,
+        requestOptions?: Tenants.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -421,8 +493,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -435,13 +507,14 @@ export class Tenants {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -450,6 +523,7 @@ export class Tenants {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -458,6 +532,7 @@ export class Tenants {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -470,11 +545,21 @@ export class Tenants {
      * @example
      *     await client.tenants.removeDefaultPreferencesForTopic("tenant_id", "topic_id")
      */
-    public async removeDefaultPreferencesForTopic(
+    public removeDefaultPreferencesForTopic(
         tenantId: string,
         topicId: string,
         requestOptions?: Tenants.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__removeDefaultPreferencesForTopic(tenantId, topicId, requestOptions),
+        );
+    }
+
+    private async __removeDefaultPreferencesForTopic(
+        tenantId: string,
+        topicId: string,
+        requestOptions?: Tenants.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -487,8 +572,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -500,13 +585,14 @@ export class Tenants {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -515,6 +601,7 @@ export class Tenants {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError(
@@ -523,6 +610,7 @@ export class Tenants {
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

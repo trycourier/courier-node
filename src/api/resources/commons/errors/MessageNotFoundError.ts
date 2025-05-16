@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../errors/index";
 import * as Courier from "../../../index";
+import * as core from "../../../../core";
 
 export class MessageNotFoundError extends errors.CourierError {
-    constructor(body: Courier.MessageNotFound) {
+    constructor(body: Courier.MessageNotFound, rawResponse?: core.RawResponse) {
         super({
             message: "MessageNotFoundError",
             statusCode: 404,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, MessageNotFoundError.prototype);
     }

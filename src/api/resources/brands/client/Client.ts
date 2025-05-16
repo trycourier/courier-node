@@ -57,10 +57,17 @@ export class Brands {
      *         snippets: undefined
      *     })
      */
-    public async create(
+    public create(
         request: Courier.BrandParameters,
         requestOptions?: Brands.IdempotentRequestOptions,
-    ): Promise<Courier.Brand> {
+    ): core.HttpResponsePromise<Courier.Brand> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: Courier.BrandParameters,
+        requestOptions?: Brands.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<Courier.Brand>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -73,8 +80,8 @@ export class Brands {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -90,21 +97,31 @@ export class Brands {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.Brand;
+            return { data: _response.body as Courier.Brand, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Courier.BadRequestError(_response.error.body as Courier.BadRequest);
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
                 case 402:
-                    throw new Courier.PaymentRequiredError(_response.error.body as Courier.PaymentRequired);
+                    throw new Courier.PaymentRequiredError(
+                        _response.error.body as Courier.PaymentRequired,
+                        _response.rawResponse,
+                    );
                 case 409:
-                    throw new Courier.AlreadyExistsError(_response.error.body as Courier.AlreadyExists);
+                    throw new Courier.AlreadyExistsError(
+                        _response.error.body as Courier.AlreadyExists,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -114,12 +131,14 @@ export class Brands {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling POST /brands.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -133,7 +152,14 @@ export class Brands {
      * @example
      *     await client.brands.get("brand_id")
      */
-    public async get(brandId: string, requestOptions?: Brands.RequestOptions): Promise<Courier.Brand> {
+    public get(brandId: string, requestOptions?: Brands.RequestOptions): core.HttpResponsePromise<Courier.Brand> {
+        return core.HttpResponsePromise.fromPromise(this.__get(brandId, requestOptions));
+    }
+
+    private async __get(
+        brandId: string,
+        requestOptions?: Brands.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.Brand>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -146,8 +172,8 @@ export class Brands {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -159,13 +185,14 @@ export class Brands {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.Brand;
+            return { data: _response.body as Courier.Brand, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -174,12 +201,14 @@ export class Brands {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /brands/{brand_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -193,10 +222,17 @@ export class Brands {
      * @example
      *     await client.brands.list()
      */
-    public async list(
+    public list(
         request: Courier.ListBrandsRequest = {},
         requestOptions?: Brands.RequestOptions,
-    ): Promise<Courier.BrandsResponse> {
+    ): core.HttpResponsePromise<Courier.BrandsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Courier.ListBrandsRequest = {},
+        requestOptions?: Brands.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.BrandsResponse>> {
         const { cursor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (cursor != null) {
@@ -215,8 +251,8 @@ export class Brands {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -229,13 +265,14 @@ export class Brands {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.BrandsResponse;
+            return { data: _response.body as Courier.BrandsResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -244,12 +281,14 @@ export class Brands {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling GET /brands.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -265,7 +304,14 @@ export class Brands {
      * @example
      *     await client.brands.delete("brand_id")
      */
-    public async delete(brandId: string, requestOptions?: Brands.RequestOptions): Promise<void> {
+    public delete(brandId: string, requestOptions?: Brands.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(brandId, requestOptions));
+    }
+
+    private async __delete(
+        brandId: string,
+        requestOptions?: Brands.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -278,8 +324,8 @@ export class Brands {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -291,17 +337,18 @@ export class Brands {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 409:
-                    throw new Courier.ConflictError(_response.error.body as Courier.Conflict);
+                    throw new Courier.ConflictError(_response.error.body as Courier.Conflict, _response.rawResponse);
                 default:
                     throw new errors.CourierError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -311,12 +358,14 @@ export class Brands {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling DELETE /brands/{brand_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -335,11 +384,19 @@ export class Brands {
      *         snippets: undefined
      *     })
      */
-    public async replace(
+    public replace(
         brandId: string,
         request: Courier.BrandUpdateParameters,
         requestOptions?: Brands.RequestOptions,
-    ): Promise<Courier.Brand> {
+    ): core.HttpResponsePromise<Courier.Brand> {
+        return core.HttpResponsePromise.fromPromise(this.__replace(brandId, request, requestOptions));
+    }
+
+    private async __replace(
+        brandId: string,
+        request: Courier.BrandUpdateParameters,
+        requestOptions?: Brands.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.Brand>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -352,8 +409,8 @@ export class Brands {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.0",
-                "User-Agent": "@trycourier/courier/6.4.0",
+                "X-Fern-SDK-Version": "6.4.1",
+                "User-Agent": "@trycourier/courier/6.4.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -366,13 +423,14 @@ export class Brands {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Courier.Brand;
+            return { data: _response.body as Courier.Brand, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.CourierError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -381,12 +439,14 @@ export class Brands {
                 throw new errors.CourierError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CourierTimeoutError("Timeout exceeded when calling PUT /brands/{brand_id}.");
             case "unknown":
                 throw new errors.CourierError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
