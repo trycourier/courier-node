@@ -1,6 +1,5 @@
 # Specify files that shouldn't be modified by Fern
 
-README.md
 LICENSE
 CHANGELOG.md
 CONTRIBUTING.md
