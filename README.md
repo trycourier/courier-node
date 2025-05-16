@@ -7,7 +7,7 @@ The Courier TypeScript library provides convenient access to the Courier API fro
 
 ## Documentation
 
-API reference documentation is available [here](www.courier.com/docs).
+API reference documentation is available [here](https://www.courier.com/docs).
 
 ## Installation
 

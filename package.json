@@ -1,6 +1,6 @@
 {
     "name": "@trycourier/courier",
-    "version": "6.4.1",
+    "version": "6.4.2",
     "private": false,
     "repository": "https://github.com/trycourier/courier-node",
     "main": "./index.js",
