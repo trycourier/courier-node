@@ -1633,7 +1633,7 @@ await client.lists.get("list_id");
 </dl>
 </details>
 
-<details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">update</a>(listId, { ...params }) -> Courier.List</code></summary>
+<details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">update</a>(listId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1770,7 +1770,7 @@ await client.lists.delete("list_id");
 </dl>
 </details>
 
-<details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">restore</a>(listId) -> void</code></summary>
+<details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">restore</a>(listId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1815,6 +1815,14 @@ await client.lists.restore("list_id");
 <dd>
 
 **listId:** `string` — A unique identifier representing the list you wish to retrieve.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Courier.RestoreListRequest`
 
 </dd>
 </dl>
@@ -3919,6 +3927,118 @@ await client.tenants.removeDefaultPreferencesForTopic("tenant_id", "topic_id");
 <dd>
 
 **topicId:** `string` — Id fo the susbcription topic you want to have a default preference for.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Tenants.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tenants.<a href="/src/api/resources/tenants/client/Client.ts">getTemplateByTenant</a>(tenantId, templateId) -> Courier.GetTemplateByTenantResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tenants.getTemplateByTenant("tenant_id", "template_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` — Id of the tenant for which to retrieve the template.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**templateId:** `string` — Id of the template to be retrieved.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Tenants.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tenants.<a href="/src/api/resources/tenants/client/Client.ts">getTemplateListByTenant</a>(tenantId, { ...params }) -> Courier.ListTemplatesByTenantResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tenants.getTemplateListByTenant("tenant_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` — Id of the tenant for which to retrieve the templates.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Courier.GetTemplateListByTenantParams`
 
 </dd>
 </dl>

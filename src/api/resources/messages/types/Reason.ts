@@ -4,6 +4,12 @@
 
 export type Reason =
     /**
+     * The message bounced and was not delivered. */
+    | "BOUNCED"
+    /**
+     * The message failed to be delivered. */
+    | "FAILED"
+    /**
      * The recipient did not receive the notification because of a condition that passed. */
     | "FILTERED"
     /**
@@ -12,6 +18,9 @@ export type Reason =
     /**
      * The notification did not contain a configured provider for a channel. */
     | "NO_PROVIDERS"
+    /**
+     * The recipient has not opted in to receive this type of notification. */
+    | "OPT_IN_REQUIRED"
     /**
      * The Integration provider had an error when sending a notification. */
     | "PROVIDER_ERROR"
@@ -22,9 +31,12 @@ export type Reason =
      * The recipient did not receive the notification because they chose to unsubscribe from it. */
     | "UNSUBSCRIBED";
 export const Reason = {
+    Bounced: "BOUNCED",
+    Failed: "FAILED",
     Filtered: "FILTERED",
     NoChannels: "NO_CHANNELS",
     NoProviders: "NO_PROVIDERS",
+    OptInRequired: "OPT_IN_REQUIRED",
     ProviderError: "PROVIDER_ERROR",
     Unpublished: "UNPUBLISHED",
     Unsubscribed: "UNSUBSCRIBED",

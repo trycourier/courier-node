@@ -15,3 +15,8 @@ export * from "./NotificationPreferenceDetails";
 export * from "./RecipientPreferences";
 export * from "./Email";
 export * from "./UserTenantAssociation";
+export * from "./BaseTemplateTenantAssociation";
+export * from "./SingleTemplateTenantAssociation";
+export * from "./ListTemplateTenantAssociation";
+export * from "./TenantTemplateData";
+export * from "./TenantTemplateDataNoContent";

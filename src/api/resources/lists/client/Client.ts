@@ -81,8 +81,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -162,8 +162,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -225,7 +225,7 @@ export class Lists {
         listId: string,
         request: Courier.ListPutParams,
         requestOptions?: Lists.RequestOptions,
-    ): core.HttpResponsePromise<Courier.List> {
+    ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__update(listId, request, requestOptions));
     }
 
@@ -233,7 +233,7 @@ export class Lists {
         listId: string,
         request: Courier.ListPutParams,
         requestOptions?: Lists.RequestOptions,
-    ): Promise<core.WithRawResponse<Courier.List>> {
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -246,8 +246,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -260,7 +260,7 @@ export class Lists {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as Courier.List, rawResponse: _response.rawResponse };
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -314,8 +314,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -359,17 +359,23 @@ export class Lists {
      * Restore a previously deleted list.
      *
      * @param {string} listId - A unique identifier representing the list you wish to retrieve.
+     * @param {Courier.RestoreListRequest} request
      * @param {Lists.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.lists.restore("list_id")
      */
-    public restore(listId: string, requestOptions?: Lists.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__restore(listId, requestOptions));
+    public restore(
+        listId: string,
+        request: Courier.RestoreListRequest = {},
+        requestOptions?: Lists.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__restore(listId, request, requestOptions));
     }
 
     private async __restore(
         listId: string,
+        request: Courier.RestoreListRequest = {},
         requestOptions?: Lists.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -384,14 +390,15 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -468,8 +475,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -562,8 +569,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -659,8 +666,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey != null ? requestOptions?.idempotencyKey : undefined,
@@ -754,8 +761,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -835,8 +842,8 @@ export class Lists {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

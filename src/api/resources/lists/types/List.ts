@@ -5,6 +5,6 @@
 export interface List {
     id: string;
     name: string;
-    created?: number;
-    updated?: number;
+    created?: string;
+    updated?: string;
 }

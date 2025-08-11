@@ -5,4 +5,6 @@ export * from "./SubscriptionTopicStatus";
 export * from "./Tenant";
 export * from "./TenantListResponse";
 export * from "./ListUsersForTenantResponse";
+export * from "./GetTemplateByTenantResponse";
+export * from "./ListTemplatesByTenantResponse";
 export * from "./TemplateProperty";

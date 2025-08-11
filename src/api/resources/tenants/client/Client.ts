@@ -74,8 +74,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -153,8 +153,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -246,8 +246,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -315,8 +315,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -401,8 +401,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -493,8 +493,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -572,8 +572,8 @@ export class Tenants {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@trycourier/courier",
-                "X-Fern-SDK-Version": "6.4.2",
-                "User-Agent": "@trycourier/courier/6.4.2",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -606,6 +606,192 @@ export class Tenants {
             case "timeout":
                 throw new errors.CourierTimeoutError(
                     "Timeout exceeded when calling DELETE /tenants/{tenant_id}/default_preferences/items/{topic_id}.",
+                );
+            case "unknown":
+                throw new errors.CourierError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {string} tenantId - Id of the tenant for which to retrieve the template.
+     * @param {string} templateId - Id of the template to be retrieved.
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await client.tenants.getTemplateByTenant("tenant_id", "template_id")
+     */
+    public getTemplateByTenant(
+        tenantId: string,
+        templateId: string,
+        requestOptions?: Tenants.RequestOptions,
+    ): core.HttpResponsePromise<Courier.GetTemplateByTenantResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getTemplateByTenant(tenantId, templateId, requestOptions));
+    }
+
+    private async __getTemplateByTenant(
+        tenantId: string,
+        templateId: string,
+        requestOptions?: Tenants.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.GetTemplateByTenantResponse>> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/tenants/${encodeURIComponent(tenantId)}/templates/${encodeURIComponent(templateId)}`,
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@trycourier/courier",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: _response.body as Courier.GetTemplateByTenantResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.CourierError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CourierError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling GET /tenants/{tenant_id}/templates/{template_id}.",
+                );
+            case "unknown":
+                throw new errors.CourierError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {string} tenantId - Id of the tenant for which to retrieve the templates.
+     * @param {Courier.GetTemplateListByTenantParams} request
+     * @param {Tenants.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Courier.BadRequestError}
+     *
+     * @example
+     *     await client.tenants.getTemplateListByTenant("tenant_id")
+     */
+    public getTemplateListByTenant(
+        tenantId: string,
+        request: Courier.GetTemplateListByTenantParams = {},
+        requestOptions?: Tenants.RequestOptions,
+    ): core.HttpResponsePromise<Courier.ListTemplatesByTenantResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getTemplateListByTenant(tenantId, request, requestOptions));
+    }
+
+    private async __getTemplateListByTenant(
+        tenantId: string,
+        request: Courier.GetTemplateListByTenantParams = {},
+        requestOptions?: Tenants.RequestOptions,
+    ): Promise<core.WithRawResponse<Courier.ListTemplatesByTenantResponse>> {
+        const { limit, cursor } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
+        if (cursor != null) {
+            _queryParams["cursor"] = cursor;
+        }
+
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CourierEnvironment.Production,
+                `/tenants/${encodeURIComponent(tenantId)}/templates`,
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@trycourier/courier",
+                "X-Fern-SDK-Version": "6.5.0",
+                "User-Agent": "@trycourier/courier/6.5.0",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as Courier.ListTemplatesByTenantResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Courier.BadRequestError(
+                        _response.error.body as Courier.BadRequest,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.CourierError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CourierError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.CourierTimeoutError(
+                    "Timeout exceeded when calling GET /tenants/{tenant_id}/templates.",
                 );
             case "unknown":
                 throw new errors.CourierError({
