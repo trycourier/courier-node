@@ -16,5 +16,5 @@ export interface Routing {
      * sub-routing methods, which can be useful for defining advanced push notification
      * delivery strategies.
      */
-    channels: Courier.RoutingChannel[];
+    channels: Courier.MessageRoutingChannel[];
 }
