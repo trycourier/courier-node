@@ -7,10 +7,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "courier-docs/*": ["src/*"],
-      "courier-docs": ["src/index.ts"]
+      "courier-docs/*": ["./src/*"],
+      "courier-docs": ["./src/index.ts"]
     },
     "noEmit": true,
 
