@@ -152,7 +152,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['COURIER_DOCS_BASE_URL'].
+   * Defaults to process.env['COURIER_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -206,7 +206,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['COURIER_DOCS_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['COURIER_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -219,9 +219,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Courier Docs API.
+ * API Client for interfacing with the Courier API.
  */
-export class CourierDocs {
+export class Courier {
   apiKey: string;
 
   baseURL: string;
@@ -237,10 +237,10 @@ export class CourierDocs {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Courier Docs API.
+   * API Client for interfacing with the Courier API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['COURIER_DOCS_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['COURIER_DOCS_BASE_URL'] ?? https://api.courier.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['COURIER_BASE_URL'] ?? https://api.courier.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -249,13 +249,13 @@ export class CourierDocs {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('COURIER_DOCS_BASE_URL'),
+    baseURL = readEnv('COURIER_BASE_URL'),
     apiKey = readEnv('COURIER_DOCS_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
-      throw new Errors.CourierDocsError(
-        "The COURIER_DOCS_API_KEY environment variable is missing or empty; either provide it, or instantiate the CourierDocs client with an apiKey option, like new CourierDocs({ apiKey: 'My API Key' }).",
+      throw new Errors.CourierError(
+        "The COURIER_DOCS_API_KEY environment variable is missing or empty; either provide it, or instantiate the Courier client with an apiKey option, like new Courier({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -266,14 +266,14 @@ export class CourierDocs {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? CourierDocs.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Courier.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('COURIER_DOCS_LOG'), "process.env['COURIER_DOCS_LOG']", this) ??
+      parseLogLevel(readEnv('COURIER_LOG'), "process.env['COURIER_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
@@ -792,10 +792,10 @@ export class CourierDocs {
     }
   }
 
-  static CourierDocs = this;
+  static Courier = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static CourierDocsError = Errors.CourierDocsError;
+  static CourierError = Errors.CourierError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -829,24 +829,24 @@ export class CourierDocs {
   users: API.Users = new API.Users(this);
 }
 
-CourierDocs.Send = Send;
-CourierDocs.Audiences = Audiences;
-CourierDocs.AuditEvents = AuditEvents;
-CourierDocs.Auth = Auth;
-CourierDocs.Automations = Automations;
-CourierDocs.Brands = Brands;
-CourierDocs.Bulk = Bulk;
-CourierDocs.Inbound = Inbound;
-CourierDocs.Lists = Lists;
-CourierDocs.Messages = Messages;
-CourierDocs.Requests = Requests;
-CourierDocs.Notifications = Notifications;
-CourierDocs.Profiles = Profiles;
-CourierDocs.Tenants = Tenants;
-CourierDocs.Translations = Translations;
-CourierDocs.Users = Users;
+Courier.Send = Send;
+Courier.Audiences = Audiences;
+Courier.AuditEvents = AuditEvents;
+Courier.Auth = Auth;
+Courier.Automations = Automations;
+Courier.Brands = Brands;
+Courier.Bulk = Bulk;
+Courier.Inbound = Inbound;
+Courier.Lists = Lists;
+Courier.Messages = Messages;
+Courier.Requests = Requests;
+Courier.Notifications = Notifications;
+Courier.Profiles = Profiles;
+Courier.Tenants = Tenants;
+Courier.Translations = Translations;
+Courier.Users = Users;
 
-export declare namespace CourierDocs {
+export declare namespace Courier {
   export type RequestOptions = Opts.RequestOptions;
 
   export {

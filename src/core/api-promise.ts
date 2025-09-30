@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { type CourierDocs } from '../client';
+import { type Courier } from '../client';
 
 import { type PromiseOrValue } from '../internal/types';
 import { APIResponseProps, defaultParseResponse } from '../internal/parse';
@@ -11,13 +11,13 @@ import { APIResponseProps, defaultParseResponse } from '../internal/parse';
  */
 export class APIPromise<T> extends Promise<T> {
   private parsedPromise: Promise<T> | undefined;
-  #client: CourierDocs;
+  #client: Courier;
 
   constructor(
-    client: CourierDocs,
+    client: Courier,
     private responsePromise: Promise<APIResponseProps>,
     private parseResponse: (
-      client: CourierDocs,
+      client: Courier,
       props: APIResponseProps,
     ) => PromiseOrValue<T> = defaultParseResponse,
   ) {

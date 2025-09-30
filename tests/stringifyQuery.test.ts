@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { CourierDocs } from 'courier-docs';
+import { Courier } from 'courier';
 
-const { stringifyQuery } = CourierDocs.prototype as any;
+const { stringifyQuery } = Courier.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [

@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { CourierDocs } from '../client';
+import type { Courier } from '../client';
 
 export abstract class APIResource {
-  protected _client: CourierDocs;
+  protected _client: Courier;
 
-  constructor(client: CourierDocs) {
+  constructor(client: Courier) {
     this._client = client;
   }
 }

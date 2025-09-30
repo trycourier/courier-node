@@ -1,8 +1,8 @@
-# Courier Docs TypeScript API Library
+# Courier TypeScript API Library
 
-[![NPM version](<https://img.shields.io/npm/v/courier-docs.svg?label=npm%20(stable)>)](https://npmjs.org/package/courier-docs) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/courier-docs)
+[![NPM version](<https://img.shields.io/npm/v/courier.svg?label=npm%20(stable)>)](https://npmjs.org/package/courier) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/courier)
 
-This library provides convenient access to the Courier Docs REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Courier REST API from server-side TypeScript or JavaScript.
 
 The full API of this library can be found in [api.md](api.md).
 
@@ -15,7 +15,7 @@ npm install git+ssh://git@github.com:stainless-sdks/courier-docs-typescript.git
 ```
 
 > [!NOTE]
-> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install courier-docs`
+> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install courier`
 
 ## Usage
 
@@ -23,9 +23,9 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import CourierDocs from 'courier-docs';
+import Courier from 'courier';
 
-const client = new CourierDocs({
+const client = new Courier({
   apiKey: process.env['COURIER_DOCS_API_KEY'], // This is the default and can be omitted
 });
 
@@ -42,16 +42,16 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import CourierDocs from 'courier-docs';
+import Courier from 'courier';
 
-const client = new CourierDocs({
+const client = new Courier({
   apiKey: process.env['COURIER_DOCS_API_KEY'], // This is the default and can be omitted
 });
 
-const params: CourierDocs.SendSendMessageParams = {
+const params: Courier.SendSendMessageParams = {
   message: { content: { elements: [{}], version: 'version' } },
 };
-const response: CourierDocs.SendSendMessageResponse = await client.send.sendMessage(params);
+const response: Courier.SendSendMessageResponse = await client.send.sendMessage(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -67,7 +67,7 @@ a subclass of `APIError` will be thrown:
 const response = await client.send
   .sendMessage({ message: { content: { elements: [{}], version: 'version' } } })
   .catch(async (err) => {
-    if (err instanceof CourierDocs.APIError) {
+    if (err instanceof Courier.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
       console.log(err.headers); // {server: 'nginx', ...}
@@ -101,7 +101,7 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new CourierDocs({
+const client = new Courier({
   maxRetries: 0, // default is 2
 });
 
@@ -118,7 +118,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new CourierDocs({
+const client = new Courier({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -144,7 +144,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new CourierDocs();
+const client = new Courier();
 
 const response = await client.send
   .sendMessage({ message: { content: { elements: [{}], version: 'version' } } })
@@ -169,13 +169,13 @@ console.log(response.requestId);
 
 The log level can be configured in two ways:
 
-1. Via the `COURIER_DOCS_LOG` environment variable
+1. Via the `COURIER_LOG` environment variable
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import CourierDocs from 'courier-docs';
+import Courier from 'courier';
 
-const client = new CourierDocs({
+const client = new Courier({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -201,13 +201,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import CourierDocs from 'courier-docs';
+import Courier from 'courier';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new CourierDocs({
-  logger: logger.child({ name: 'CourierDocs' }),
+const client = new Courier({
+  logger: logger.child({ name: 'Courier' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -270,10 +270,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import CourierDocs from 'courier-docs';
+import Courier from 'courier';
 import fetch from 'my-fetch';
 
-const client = new CourierDocs({ fetch });
+const client = new Courier({ fetch });
 ```
 
 ### Fetch options
@@ -281,9 +281,9 @@ const client = new CourierDocs({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import CourierDocs from 'courier-docs';
+import Courier from 'courier';
 
-const client = new CourierDocs({
+const client = new Courier({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -298,11 +298,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import CourierDocs from 'courier-docs';
+import Courier from 'courier';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new CourierDocs({
+const client = new Courier({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -312,9 +312,9 @@ const client = new CourierDocs({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import CourierDocs from 'courier-docs';
+import Courier from 'courier';
 
-const client = new CourierDocs({
+const client = new Courier({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -324,10 +324,10 @@ const client = new CourierDocs({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import CourierDocs from 'npm:courier-docs';
+import Courier from 'npm:courier';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new CourierDocs({
+const client = new Courier({
   fetchOptions: {
     client: httpClient,
   },

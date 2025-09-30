@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
-import { stringify } from 'courier-docs/internal/qs';
-import { encode } from 'courier-docs/internal/qs/utils';
-import { StringifyOptions } from 'courier-docs/internal/qs/types';
+import { stringify } from 'courier/internal/qs';
+import { encode } from 'courier/internal/qs/utils';
+import { StringifyOptions } from 'courier/internal/qs/types';
 import { empty_test_cases } from './empty-keys-cases';
 import assert from 'assert';
 
