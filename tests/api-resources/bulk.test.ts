@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import CourierDocs from 'courier-docs';
+import Courier from 'courier';
 
-const client = new CourierDocs({
+const client = new Courier({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
@@ -210,7 +210,7 @@ describe('resource bulk', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.bulk.listUsers('job_id', { cursor: 'cursor' }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(CourierDocs.NotFoundError);
+    ).rejects.toThrow(Courier.NotFoundError);
   });
 
   // Prism tests are disabled

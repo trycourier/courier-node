@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { CourierDocsError } from '../../core/error';
+import { CourierError } from '../../core/error';
 
 // https://url.spec.whatwg.org/#url-scheme-string
 const startsWithSchemeRegexp = /^[a-z][a-z0-9+.-]*:/i;
@@ -39,7 +39,7 @@ export function isObj(obj: unknown): obj is Record<string, unknown> {
 
 export const ensurePresent = <T>(value: T | null | undefined): T => {
   if (value == null) {
-    throw new CourierDocsError(`Expected a value to be given but received ${value} instead.`);
+    throw new CourierError(`Expected a value to be given but received ${value} instead.`);
   }
 
   return value;
@@ -47,10 +47,10 @@ export const ensurePresent = <T>(value: T | null | undefined): T => {
 
 export const validatePositiveInteger = (name: string, n: unknown): number => {
   if (typeof n !== 'number' || !Number.isInteger(n)) {
-    throw new CourierDocsError(`${name} must be an integer`);
+    throw new CourierError(`${name} must be an integer`);
   }
   if (n < 0) {
-    throw new CourierDocsError(`${name} must be a positive integer`);
+    throw new CourierError(`${name} must be a positive integer`);
   }
   return n;
 };
@@ -59,14 +59,14 @@ export const coerceInteger = (value: unknown): number => {
   if (typeof value === 'number') return Math.round(value);
   if (typeof value === 'string') return parseInt(value, 10);
 
-  throw new CourierDocsError(`Could not coerce ${value} (type: ${typeof value}) into a number`);
+  throw new CourierError(`Could not coerce ${value} (type: ${typeof value}) into a number`);
 };
 
 export const coerceFloat = (value: unknown): number => {
   if (typeof value === 'number') return value;
   if (typeof value === 'string') return parseFloat(value);
 
-  throw new CourierDocsError(`Could not coerce ${value} (type: ${typeof value}) into a number`);
+  throw new CourierError(`Could not coerce ${value} (type: ${typeof value}) into a number`);
 };
 
 export const coerceBoolean = (value: unknown): boolean => {
