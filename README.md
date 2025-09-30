@@ -26,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 import Courier from 'courier';
 
 const client = new Courier({
-  apiKey: process.env['COURIER_DOCS_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['COURIER_API_KEY'], // This is the default and can be omitted
 });
 
 const response = await client.send.sendMessage({
@@ -45,7 +45,7 @@ This library includes TypeScript definitions for all request params and response
 import Courier from 'courier';
 
 const client = new Courier({
-  apiKey: process.env['COURIER_DOCS_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['COURIER_API_KEY'], // This is the default and can be omitted
 });
 
 const params: Courier.SendSendMessageParams = {

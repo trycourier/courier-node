@@ -145,7 +145,7 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['COURIER_DOCS_API_KEY'].
+   * Defaults to process.env['COURIER_API_KEY'].
    */
   apiKey?: string | undefined;
 
@@ -239,7 +239,7 @@ export class Courier {
   /**
    * API Client for interfacing with the Courier API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['COURIER_DOCS_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey=process.env['COURIER_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['COURIER_BASE_URL'] ?? https://api.courier.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -250,12 +250,12 @@ export class Courier {
    */
   constructor({
     baseURL = readEnv('COURIER_BASE_URL'),
-    apiKey = readEnv('COURIER_DOCS_API_KEY'),
+    apiKey = readEnv('COURIER_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.CourierError(
-        "The COURIER_DOCS_API_KEY environment variable is missing or empty; either provide it, or instantiate the Courier client with an apiKey option, like new Courier({ apiKey: 'My API Key' }).",
+        "The COURIER_API_KEY environment variable is missing or empty; either provide it, or instantiate the Courier client with an apiKey option, like new Courier({ apiKey: 'My API Key' }).",
       );
     }
 
