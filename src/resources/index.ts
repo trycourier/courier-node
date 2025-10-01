@@ -99,8 +99,8 @@ export {
   type RoutingMethod,
   type SlackBaseProperties,
   type Utm,
-  type SendSendMessageResponse,
-  type SendSendMessageParams,
+  type SendMessageResponse,
+  type SendMessageParams,
 } from './send';
 export {
   Tenants,
