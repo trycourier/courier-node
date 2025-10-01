@@ -42,15 +42,15 @@ If you’d like to use the repository from source, you can either install from g
 To install via git:
 
 ```sh
-$ npm install git+ssh://git@github.com:stainless-sdks/courier-typescript.git
+$ npm install git+ssh://git@github.com:trycourier/courier-node.git
 ```
 
 Alternatively, to link a local copy of the repo:
 
 ```sh
 # Clone
-$ git clone https://www.github.com/stainless-sdks/courier-typescript
-$ cd courier-typescript
+$ git clone https://www.github.com/trycourier/courier-node
+$ cd courier-node
 
 # With yarn
 $ yarn link
