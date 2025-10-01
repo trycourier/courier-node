@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'courier/internal/uploads';
-import { toFile } from 'courier/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@trycourier/courier/internal/uploads';
+import { toFile } from '@trycourier/courier/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
