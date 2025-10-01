@@ -10,7 +10,7 @@ export class Send extends APIResource {
   /**
    * Use the send API to send a message to one or more recipients.
    */
-  sendMessage(body: SendSendMessageParams, options?: RequestOptions): APIPromise<SendSendMessageResponse> {
+  message(body: SendMessageParams, options?: RequestOptions): APIPromise<SendMessageResponse> {
     return this._client.post('/send', { body, ...options });
   }
 }
@@ -991,7 +991,7 @@ export interface Utm {
   term?: string | null;
 }
 
-export interface SendSendMessageResponse {
+export interface SendMessageResponse {
   /**
    * A successful call to `POST /send` returns a `202` status code along with a
    * `requestId` in the response body.
@@ -1008,7 +1008,7 @@ export interface SendSendMessageResponse {
   requestId: string;
 }
 
-export interface SendSendMessageParams {
+export interface SendMessageParams {
   /**
    * Defines the message to be delivered
    */
@@ -1030,7 +1030,7 @@ export declare namespace Send {
     type RoutingMethod as RoutingMethod,
     type SlackBaseProperties as SlackBaseProperties,
     type Utm as Utm,
-    type SendSendMessageResponse as SendSendMessageResponse,
-    type SendSendMessageParams as SendSendMessageParams,
+    type SendMessageResponse as SendMessageResponse,
+    type SendMessageParams as SendMessageParams,
   };
 }

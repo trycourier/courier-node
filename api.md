@@ -15,11 +15,11 @@ Types:
 - <code><a href="./src/resources/send.ts">RoutingMethod</a></code>
 - <code><a href="./src/resources/send.ts">SlackBaseProperties</a></code>
 - <code><a href="./src/resources/send.ts">Utm</a></code>
-- <code><a href="./src/resources/send.ts">SendSendMessageResponse</a></code>
+- <code><a href="./src/resources/send.ts">SendMessageResponse</a></code>
 
 Methods:
 
-- <code title="post /send">client.send.<a href="./src/resources/send.ts">sendMessage</a>({ ...params }) -> SendSendMessageResponse</code>
+- <code title="post /send">client.send.<a href="./src/resources/send.ts">message</a>({ ...params }) -> SendMessageResponse</code>
 
 # Audiences
 

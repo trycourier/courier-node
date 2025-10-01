@@ -85,8 +85,8 @@ import {
   Recipient,
   RoutingMethod,
   Send,
-  SendSendMessageParams,
-  SendSendMessageResponse,
+  SendMessageParams,
+  SendMessageResponse,
   SlackBaseProperties,
   Utm,
 } from './resources/send';
@@ -864,8 +864,8 @@ export declare namespace Courier {
     type RoutingMethod as RoutingMethod,
     type SlackBaseProperties as SlackBaseProperties,
     type Utm as Utm,
-    type SendSendMessageResponse as SendSendMessageResponse,
-    type SendSendMessageParams as SendSendMessageParams,
+    type SendMessageResponse as SendMessageResponse,
+    type SendMessageParams as SendMessageParams,
   };
 
   export {
