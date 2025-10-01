@@ -1,12 +1,12 @@
 {
-  "name": "courier",
-  "version": "0.0.1",
+  "name": "@trycourier/courier",
+  "version": "6.6.1-alpha0",
   "description": "The official TypeScript library for the Courier API",
   "author": "Courier <>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:stainless-sdks/courier-typescript",
+  "repository": "github:trycourier/courier-node",
   "license": "Apache-2.0",
   "packageManager": "yarn@1.22.22",
   "files": [
