@@ -1,6 +1,6 @@
 {
   "name": "@trycourier/courier",
-  "version": "0.0.1",
+  "version": "6.6.1-alpha0",
   "description": "The official TypeScript library for the Courier API",
   "author": "Courier <>",
   "types": "dist/index.d.ts",
