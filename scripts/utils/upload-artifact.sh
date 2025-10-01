@@ -18,7 +18,7 @@ UPLOAD_RESPONSE=$(tar "${BASE_PATH:+-C$BASE_PATH}" -cz "${ARTIFACT_PATH:-dist}" 
 
 if echo "$UPLOAD_RESPONSE" | grep -q "HTTP/[0-9.]* 200"; then
   echo -e "\033[32mUploaded build to Stainless storage.\033[0m"
-  echo -e "\033[32mInstallation: npm install 'https://pkg.stainless.com/s/courier-docs-typescript/$SHA'\033[0m"
+  echo -e "\033[32mInstallation: npm install 'https://pkg.stainless.com/s/courier-typescript/$SHA'\033[0m"
 else
   echo -e "\033[31mFailed to upload artifact.\033[0m"
   exit 1
