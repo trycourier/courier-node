@@ -1,4 +1,4 @@
-# Courier TypeScript API Library
+# Courier Node API Library
 
 [![NPM version](<https://img.shields.io/npm/v/@trycourier/courier.svg?label=npm%20(stable)>)](https://npmjs.org/package/@trycourier/courier) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@trycourier/courier)
 
