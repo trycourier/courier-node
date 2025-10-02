@@ -276,16 +276,12 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/tenants/templates.ts">BaseTemplateTenantAssociation</a></code>
-- <code><a href="./src/resources/tenants/templates.ts">ElementalChannelNode</a></code>
-- <code><a href="./src/resources/tenants/templates.ts">ElementalContent</a></code>
-- <code><a href="./src/resources/tenants/templates.ts">ElementalGroupNode</a></code>
-- <code><a href="./src/resources/tenants/templates.ts">ElementalNode</a></code>
+- <code><a href="./src/resources/tenants/templates.ts">TemplateRetrieveResponse</a></code>
 - <code><a href="./src/resources/tenants/templates.ts">TemplateListResponse</a></code>
 
 Methods:
 
-- <code title="get /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates.ts">retrieve</a>(templateID, { ...params }) -> BaseTemplateTenantAssociation</code>
+- <code title="get /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates.ts">retrieve</a>(templateID, { ...params }) -> TemplateRetrieveResponse</code>
 - <code title="get /tenants/{tenant_id}/templates">client.tenants.templates.<a href="./src/resources/tenants/templates.ts">list</a>(tenantID, { ...params }) -> TemplateListResponse</code>
 
 # Translations
