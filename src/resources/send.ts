@@ -536,14 +536,7 @@ export type Content = Content.ElementalContent | Content.ElementalContentSugar;
 
 export namespace Content {
   export interface ElementalContent {
-    elements: Array<
-      | ElementalContent.UnionMember0
-      | ElementalContent.UnionMember1
-      | ElementalContent.UnionMember2
-      | ElementalContent.UnionMember3
-      | ElementalContent.UnionMember4
-      | ElementalContent.UnionMember5
-    >;
+    elements: Array<SendAPI.ElementalNode>;
 
     /**
      * For example, "2022-01-01"
@@ -551,80 +544,6 @@ export namespace Content {
     version: string;
 
     brand?: unknown;
-  }
-
-  export namespace ElementalContent {
-    export interface UnionMember0 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'text';
-    }
-
-    export interface UnionMember1 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'meta';
-    }
-
-    export interface UnionMember2 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'image';
-    }
-
-    export interface UnionMember3 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'action';
-    }
-
-    export interface UnionMember4 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'divider';
-    }
-
-    export interface UnionMember5 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'quote';
-    }
   }
 
   /**
@@ -640,6 +559,171 @@ export namespace Content {
      * The title to be displayed by supported channels i.e. push, email (as subject)
      */
     title: string;
+  }
+}
+
+export interface ElementalChannelNode {
+  /**
+   * The channel the contents of this element should be applied to. Can be `email`,
+   * `push`, `direct_message`, `sms` or a provider such as slack
+   */
+  channel: string;
+
+  channels?: Array<string> | null;
+
+  /**
+   * An array of elements to apply to the channel. If `raw` has not been specified,
+   * `elements` is `required`.
+   */
+  elements?: Array<ElementalNode> | null;
+
+  if?: string | null;
+
+  loop?: string | null;
+
+  /**
+   * Raw data to apply to the channel. If `elements` has not been specified, `raw` is
+   * `required`.
+   */
+  raw?: { [key: string]: unknown } | null;
+
+  ref?: string | null;
+}
+
+export interface ElementalGroupNode {
+  /**
+   * Sub elements to render.
+   */
+  elements: Array<ElementalNode>;
+
+  channels?: Array<string> | null;
+
+  if?: string | null;
+
+  loop?: string | null;
+
+  ref?: string | null;
+}
+
+/**
+ * The channel element allows a notification to be customized based on which
+ * channel it is sent through. For example, you may want to display a detailed
+ * message when the notification is sent through email, and a more concise message
+ * in a push notification. Channel elements are only valid as top-level elements;
+ * you cannot nest channel elements. If there is a channel element specified at the
+ * top-level of the document, all sibling elements must be channel elements. Note:
+ * As an alternative, most elements support a `channel` property. Which allows you
+ * to selectively display an individual element on a per channel basis. See the
+ * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
+ * for more details.
+ */
+export type ElementalNode =
+  | ElementalNode.UnionMember0
+  | ElementalNode.UnionMember1
+  | ElementalNode.UnionMember2
+  | ElementalNode.UnionMember3
+  | ElementalNode.UnionMember4
+  | ElementalNode.UnionMember5
+  | ElementalNode.UnionMember6
+  | ElementalNode.UnionMember7;
+
+export namespace ElementalNode {
+  export interface UnionMember0 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'text';
+  }
+
+  export interface UnionMember1 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'meta';
+  }
+
+  /**
+   * The channel element allows a notification to be customized based on which
+   * channel it is sent through. For example, you may want to display a detailed
+   * message when the notification is sent through email, and a more concise message
+   * in a push notification. Channel elements are only valid as top-level elements;
+   * you cannot nest channel elements. If there is a channel element specified at the
+   * top-level of the document, all sibling elements must be channel elements. Note:
+   * As an alternative, most elements support a `channel` property. Which allows you
+   * to selectively display an individual element on a per channel basis. See the
+   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
+   * for more details.
+   */
+  export interface UnionMember2 extends SendAPI.ElementalChannelNode {
+    type?: 'channel';
+  }
+
+  export interface UnionMember3 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'image';
+  }
+
+  export interface UnionMember4 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'action';
+  }
+
+  export interface UnionMember5 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'divider';
+  }
+
+  /**
+   * Allows you to group elements together. This can be useful when used in
+   * combination with "if" or "loop". See
+   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
+   * for more details.
+   */
+  export interface UnionMember6 extends SendAPI.ElementalGroupNode {
+    type?: 'group';
+  }
+
+  export interface UnionMember7 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'quote';
   }
 }
 
@@ -936,6 +1020,9 @@ export declare namespace Send {
     type BaseMessage as BaseMessage,
     type BaseMessageSendTo as BaseMessageSendTo,
     type Content as Content,
+    type ElementalChannelNode as ElementalChannelNode,
+    type ElementalGroupNode as ElementalGroupNode,
+    type ElementalNode as ElementalNode,
     type Message as Message,
     type MessageContext as MessageContext,
     type MsTeamsBaseProperties as MsTeamsBaseProperties,
