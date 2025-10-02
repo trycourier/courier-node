@@ -4,6 +4,7 @@ import { APIResource } from '../core/resource';
 import * as SendAPI from './send';
 import * as BulkAPI from './bulk';
 import * as NotificationsAPI from './notifications/notifications';
+import * as TemplatesAPI from './tenants/templates';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -138,21 +139,7 @@ export namespace BaseMessage {
 
   export namespace Channels {
     export interface Metadata {
-      utm?: Metadata.Utm | null;
-    }
-
-    export namespace Metadata {
-      export interface Utm {
-        campaign?: string | null;
-
-        content?: string | null;
-
-        medium?: string | null;
-
-        source?: string | null;
-
-        term?: string | null;
-      }
+      utm?: SendAPI.Utm | null;
     }
 
     export interface Timeouts {
@@ -232,25 +219,7 @@ export namespace BaseMessage {
      * Identify the campaign that refers traffic to a specific website, and attributes
      * the browser's website session.
      */
-    utm?: Metadata.Utm | null;
-  }
-
-  export namespace Metadata {
-    /**
-     * Identify the campaign that refers traffic to a specific website, and attributes
-     * the browser's website session.
-     */
-    export interface Utm {
-      campaign?: string | null;
-
-      content?: string | null;
-
-      medium?: string | null;
-
-      source?: string | null;
-
-      term?: string | null;
-    }
+    utm?: SendAPI.Utm | null;
   }
 
   export interface Preferences {
@@ -282,21 +251,7 @@ export namespace BaseMessage {
 
   export namespace Providers {
     export interface Metadata {
-      utm?: Metadata.Utm | null;
-    }
-
-    export namespace Metadata {
-      export interface Utm {
-        campaign?: string | null;
-
-        content?: string | null;
-
-        medium?: string | null;
-
-        source?: string | null;
-
-        term?: string | null;
-      }
+      utm?: SendAPI.Utm | null;
     }
   }
 
@@ -540,111 +495,9 @@ export namespace BaseMessageSendTo {
 /**
  * Syntatic Sugar to provide a fast shorthand for Courier Elemental Blocks.
  */
-export type Content = Content.ElementalContent | Content.ElementalContentSugar;
+export type Content = TemplatesAPI.ElementalContent | Content.ElementalContentSugar;
 
 export namespace Content {
-  export interface ElementalContent {
-    elements: Array<
-      | ElementalContent.UnionMember0
-      | ElementalContent.UnionMember1
-      | ElementalContent.Type
-      | ElementalContent.UnionMember3
-      | ElementalContent.UnionMember4
-      | ElementalContent.UnionMember5
-      | ElementalContent.Type
-      | ElementalContent.UnionMember7
-    >;
-
-    /**
-     * For example, "2022-01-01"
-     */
-    version: string;
-
-    brand?: unknown;
-  }
-
-  export namespace ElementalContent {
-    export interface UnionMember0 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'text';
-    }
-
-    export interface UnionMember1 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'meta';
-    }
-
-    export interface Type {
-      type: 'channel';
-    }
-
-    export interface UnionMember3 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'image';
-    }
-
-    export interface UnionMember4 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'action';
-    }
-
-    export interface UnionMember5 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'divider';
-    }
-
-    export interface Type {
-      type: 'group';
-    }
-
-    export interface UnionMember7 {
-      channels?: Array<string> | null;
-
-      if?: string | null;
-
-      loop?: string | null;
-
-      ref?: string | null;
-
-      type?: 'quote';
-    }
-  }
-
   /**
    * Syntatic Sugar to provide a fast shorthand for Courier Elemental Blocks.
    */
@@ -911,6 +764,18 @@ export interface SlackBaseProperties {
   access_token: string;
 }
 
+export interface Utm {
+  campaign?: string | null;
+
+  content?: string | null;
+
+  medium?: string | null;
+
+  source?: string | null;
+
+  term?: string | null;
+}
+
 export interface SendMessageResponse {
   /**
    * A successful call to `POST /send` returns a `202` status code along with a
@@ -945,6 +810,7 @@ export declare namespace Send {
     type MsTeamsBaseProperties as MsTeamsBaseProperties,
     type Recipient as Recipient,
     type SlackBaseProperties as SlackBaseProperties,
+    type Utm as Utm,
     type SendMessageResponse as SendMessageResponse,
     type SendMessageParams as SendMessageParams,
   };

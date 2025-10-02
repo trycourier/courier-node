@@ -89,42 +89,38 @@ export interface Brand {
   snippets?: BrandSnippets | null;
 }
 
-export interface BrandSettings {
-  colors?: BrandSettings.Colors | null;
+export interface BrandColors {
+  primary?: string | null;
 
-  email?: BrandSettings.Email | null;
+  secondary?: string | null;
+
+  tertiary?: string | null;
+}
+
+export interface BrandSettings {
+  colors?: BrandColors | null;
+
+  email?: Email | null;
 
   inapp?: unknown;
 }
 
-export namespace BrandSettings {
-  export interface Colors {
-    primary?: string | null;
+export interface BrandSnippet {
+  format: 'handlebars';
 
-    secondary?: string | null;
+  name: string;
 
-    tertiary?: string | null;
-  }
-
-  export interface Email {
-    footer: unknown;
-
-    header: unknown;
-  }
+  value: string;
 }
 
 export interface BrandSnippets {
-  items: Array<BrandSnippets.Item>;
+  items: Array<BrandSnippet>;
 }
 
-export namespace BrandSnippets {
-  export interface Item {
-    format: 'handlebars';
+export interface Email {
+  footer: unknown;
 
-    name: string;
-
-    value: string;
-  }
+  header: unknown;
 }
 
 export interface BrandListResponse {
@@ -167,8 +163,11 @@ export interface BrandListParams {
 export declare namespace Brands {
   export {
     type Brand as Brand,
+    type BrandColors as BrandColors,
     type BrandSettings as BrandSettings,
+    type BrandSnippet as BrandSnippet,
     type BrandSnippets as BrandSnippets,
+    type Email as Email,
     type BrandListResponse as BrandListResponse,
     type BrandCreateParams as BrandCreateParams,
     type BrandUpdateParams as BrandUpdateParams,

@@ -1,3 +1,10 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
+- <code><a href="./src/resources/shared.ts">Rule</a></code>
+
 # Send
 
 Types:
@@ -10,6 +17,7 @@ Types:
 - <code><a href="./src/resources/send.ts">MsTeamsBaseProperties</a></code>
 - <code><a href="./src/resources/send.ts">Recipient</a></code>
 - <code><a href="./src/resources/send.ts">SlackBaseProperties</a></code>
+- <code><a href="./src/resources/send.ts">Utm</a></code>
 - <code><a href="./src/resources/send.ts">SendMessageResponse</a></code>
 
 Methods:
@@ -80,8 +88,11 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/brands.ts">Brand</a></code>
+- <code><a href="./src/resources/brands.ts">BrandColors</a></code>
 - <code><a href="./src/resources/brands.ts">BrandSettings</a></code>
+- <code><a href="./src/resources/brands.ts">BrandSnippet</a></code>
 - <code><a href="./src/resources/brands.ts">BrandSnippets</a></code>
+- <code><a href="./src/resources/brands.ts">Email</a></code>
 - <code><a href="./src/resources/brands.ts">BrandListResponse</a></code>
 
 Methods:
@@ -140,6 +151,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/lists/subscriptions.ts">NotificationPreferenceDetails</a></code>
 - <code><a href="./src/resources/lists/subscriptions.ts">PutSubscriptionsRecipient</a></code>
 - <code><a href="./src/resources/lists/subscriptions.ts">RecipientPreferences</a></code>
 - <code><a href="./src/resources/lists/subscriptions.ts">SubscriptionListResponse</a></code>
@@ -276,12 +288,16 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/tenants/templates.ts">TemplateRetrieveResponse</a></code>
+- <code><a href="./src/resources/tenants/templates.ts">BaseTemplateTenantAssociation</a></code>
+- <code><a href="./src/resources/tenants/templates.ts">ElementalChannelNode</a></code>
+- <code><a href="./src/resources/tenants/templates.ts">ElementalContent</a></code>
+- <code><a href="./src/resources/tenants/templates.ts">ElementalGroupNode</a></code>
+- <code><a href="./src/resources/tenants/templates.ts">ElementalNode</a></code>
 - <code><a href="./src/resources/tenants/templates.ts">TemplateListResponse</a></code>
 
 Methods:
 
-- <code title="get /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates.ts">retrieve</a>(templateID, { ...params }) -> TemplateRetrieveResponse</code>
+- <code title="get /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates.ts">retrieve</a>(templateID, { ...params }) -> BaseTemplateTenantAssociation</code>
 - <code title="get /tenants/{tenant_id}/templates">client.tenants.templates.<a href="./src/resources/tenants/templates.ts">list</a>(tenantID, { ...params }) -> TemplateListResponse</code>
 
 # Translations

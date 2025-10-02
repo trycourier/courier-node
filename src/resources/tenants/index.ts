@@ -2,7 +2,11 @@
 
 export {
   Templates,
-  type TemplateRetrieveResponse,
+  type BaseTemplateTenantAssociation,
+  type ElementalChannelNode,
+  type ElementalContent,
+  type ElementalGroupNode,
+  type ElementalNode,
   type TemplateListResponse,
   type TemplateRetrieveParams,
   type TemplateListParams,
