@@ -562,34 +562,6 @@ export namespace Content {
   }
 }
 
-export interface ElementalChannelNode {
-  /**
-   * The channel the contents of this element should be applied to. Can be `email`,
-   * `push`, `direct_message`, `sms` or a provider such as slack
-   */
-  channel: string;
-
-  channels?: Array<string> | null;
-
-  /**
-   * An array of elements to apply to the channel. If `raw` has not been specified,
-   * `elements` is `required`.
-   */
-  elements?: Array<ElementalNode> | null;
-
-  if?: string | null;
-
-  loop?: string | null;
-
-  /**
-   * Raw data to apply to the channel. If `elements` has not been specified, `raw` is
-   * `required`.
-   */
-  raw?: { [key: string]: unknown } | null;
-
-  ref?: string | null;
-}
-
 export interface ElementalGroupNode {
   /**
    * Sub elements to render.
@@ -606,21 +578,15 @@ export interface ElementalGroupNode {
 }
 
 /**
- * The channel element allows a notification to be customized based on which
- * channel it is sent through. For example, you may want to display a detailed
- * message when the notification is sent through email, and a more concise message
- * in a push notification. Channel elements are only valid as top-level elements;
- * you cannot nest channel elements. If there is a channel element specified at the
- * top-level of the document, all sibling elements must be channel elements. Note:
- * As an alternative, most elements support a `channel` property. Which allows you
- * to selectively display an individual element on a per channel basis. See the
+ * Allows you to group elements together. This can be useful when used in
+ * combination with "if" or "loop". See
  * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
  * for more details.
  */
 export type ElementalNode =
   | ElementalNode.UnionMember0
   | ElementalNode.UnionMember1
-  | ElementalNode.UnionMember2
+  | ElementalNode.Type
   | ElementalNode.UnionMember3
   | ElementalNode.UnionMember4
   | ElementalNode.UnionMember5
@@ -652,20 +618,8 @@ export namespace ElementalNode {
     type?: 'meta';
   }
 
-  /**
-   * The channel element allows a notification to be customized based on which
-   * channel it is sent through. For example, you may want to display a detailed
-   * message when the notification is sent through email, and a more concise message
-   * in a push notification. Channel elements are only valid as top-level elements;
-   * you cannot nest channel elements. If there is a channel element specified at the
-   * top-level of the document, all sibling elements must be channel elements. Note:
-   * As an alternative, most elements support a `channel` property. Which allows you
-   * to selectively display an individual element on a per channel basis. See the
-   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-   * for more details.
-   */
-  export interface UnionMember2 extends SendAPI.ElementalChannelNode {
-    type?: 'channel';
+  export interface Type {
+    type: 'channel';
   }
 
   export interface UnionMember3 {
@@ -1020,7 +974,6 @@ export declare namespace Send {
     type BaseMessage as BaseMessage,
     type BaseMessageSendTo as BaseMessageSendTo,
     type Content as Content,
-    type ElementalChannelNode as ElementalChannelNode,
     type ElementalGroupNode as ElementalGroupNode,
     type ElementalNode as ElementalNode,
     type Message as Message,
