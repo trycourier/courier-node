@@ -3,10 +3,14 @@
 import { APIResource } from '../../core/resource';
 import * as TemplatesAPI from './templates';
 import {
+  BaseTemplateTenantAssociation,
+  ElementalChannelNode,
+  ElementalContent,
+  ElementalGroupNode,
+  ElementalNode,
   TemplateListParams,
   TemplateListResponse,
   TemplateRetrieveParams,
-  TemplateRetrieveResponse,
   Templates,
 } from './templates';
 import * as UsersTenantsAPI from '../users/tenants';
@@ -291,7 +295,11 @@ export declare namespace Tenants {
 
   export {
     Templates as Templates,
-    type TemplateRetrieveResponse as TemplateRetrieveResponse,
+    type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
+    type ElementalChannelNode as ElementalChannelNode,
+    type ElementalContent as ElementalContent,
+    type ElementalGroupNode as ElementalGroupNode,
+    type ElementalNode as ElementalNode,
     type TemplateListResponse as TemplateListResponse,
     type TemplateRetrieveParams as TemplateRetrieveParams,
     type TemplateListParams as TemplateListParams,

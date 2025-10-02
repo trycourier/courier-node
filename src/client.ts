@@ -40,13 +40,16 @@ import {
 import { Auth, AuthIssueTokenParams, AuthIssueTokenResponse } from './resources/auth';
 import {
   Brand,
+  BrandColors,
   BrandCreateParams,
   BrandListParams,
   BrandListResponse,
   BrandSettings,
+  BrandSnippet,
   BrandSnippets,
   BrandUpdateParams,
   Brands,
+  Email,
 } from './resources/brands';
 import {
   Bulk,
@@ -84,6 +87,7 @@ import {
   SendMessageParams,
   SendMessageResponse,
   SlackBaseProperties,
+  Utm,
 } from './resources/send';
 import {
   TranslationRetrieveParams,
@@ -857,6 +861,7 @@ export declare namespace Courier {
     type MsTeamsBaseProperties as MsTeamsBaseProperties,
     type Recipient as Recipient,
     type SlackBaseProperties as SlackBaseProperties,
+    type Utm as Utm,
     type SendMessageResponse as SendMessageResponse,
     type SendMessageParams as SendMessageParams,
   };
@@ -894,8 +899,11 @@ export declare namespace Courier {
   export {
     Brands as Brands,
     type Brand as Brand,
+    type BrandColors as BrandColors,
     type BrandSettings as BrandSettings,
+    type BrandSnippet as BrandSnippet,
     type BrandSnippets as BrandSnippets,
+    type Email as Email,
     type BrandListResponse as BrandListResponse,
     type BrandCreateParams as BrandCreateParams,
     type BrandUpdateParams as BrandUpdateParams,
@@ -981,4 +989,7 @@ export declare namespace Courier {
   };
 
   export { Users as Users };
+
+  export type ChannelPreference = API.ChannelPreference;
+  export type Rule = API.Rule;
 }

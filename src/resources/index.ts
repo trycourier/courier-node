@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export * from './shared';
 export {
   Audiences,
   type Audience,
@@ -25,8 +26,11 @@ export { Automations } from './automations/automations';
 export {
   Brands,
   type Brand,
+  type BrandColors,
   type BrandSettings,
+  type BrandSnippet,
   type BrandSnippets,
+  type Email,
   type BrandListResponse,
   type BrandCreateParams,
   type BrandUpdateParams,
@@ -91,6 +95,7 @@ export {
   type MsTeamsBaseProperties,
   type Recipient,
   type SlackBaseProperties,
+  type Utm,
   type SendMessageResponse,
   type SendMessageParams,
 } from './send';

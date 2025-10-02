@@ -4,9 +4,9 @@ import { APIResource } from '../core/resource';
 import * as BulkAPI from './bulk';
 import * as AudiencesAPI from './audiences';
 import * as SendAPI from './send';
+import * as Shared from './shared';
 import * as SubscriptionsAPI from './lists/subscriptions';
 import * as PreferencesAPI from './users/preferences';
-import * as ItemsAPI from './tenants/default-preferences/items';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -181,45 +181,21 @@ export namespace UserRecipient {
     export interface Notifications {
       status: PreferencesAPI.PreferenceStatus;
 
-      channel_preferences?: Array<Notifications.ChannelPreference> | null;
+      channel_preferences?: Array<Shared.ChannelPreference> | null;
 
-      rules?: Array<Notifications.Rule> | null;
+      rules?: Array<Shared.Rule> | null;
 
       source?: 'subscription' | 'list' | 'recipient' | null;
-    }
-
-    export namespace Notifications {
-      export interface ChannelPreference {
-        channel: ItemsAPI.ChannelClassification;
-      }
-
-      export interface Rule {
-        until: string;
-
-        start?: string | null;
-      }
     }
 
     export interface Categories {
       status: PreferencesAPI.PreferenceStatus;
 
-      channel_preferences?: Array<Categories.ChannelPreference> | null;
+      channel_preferences?: Array<Shared.ChannelPreference> | null;
 
-      rules?: Array<Categories.Rule> | null;
+      rules?: Array<Shared.Rule> | null;
 
       source?: 'subscription' | 'list' | 'recipient' | null;
-    }
-
-    export namespace Categories {
-      export interface ChannelPreference {
-        channel: ItemsAPI.ChannelClassification;
-      }
-
-      export interface Rule {
-        until: string;
-
-        start?: string | null;
-      }
     }
   }
 }
