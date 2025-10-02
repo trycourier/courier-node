@@ -89,8 +89,6 @@ export {
   type BaseMessage,
   type BaseMessageSendTo,
   type Content,
-  type ElementalGroupNode,
-  type ElementalNode,
   type Message,
   type MessageContext,
   type MsTeamsBaseProperties,
