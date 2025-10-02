@@ -536,7 +536,14 @@ export type Content = Content.ElementalContent | Content.ElementalContentSugar;
 
 export namespace Content {
   export interface ElementalContent {
-    elements: Array<SendAPI.ElementalNode>;
+    elements: Array<
+      | ElementalContent.UnionMember0
+      | ElementalContent.UnionMember1
+      | ElementalContent.UnionMember2
+      | ElementalContent.UnionMember3
+      | ElementalContent.UnionMember4
+      | ElementalContent.UnionMember5
+    >;
 
     /**
      * For example, "2022-01-01"
@@ -544,6 +551,80 @@ export namespace Content {
     version: string;
 
     brand?: unknown;
+  }
+
+  export namespace ElementalContent {
+    export interface UnionMember0 {
+      channels?: Array<string> | null;
+
+      if?: string | null;
+
+      loop?: string | null;
+
+      ref?: string | null;
+
+      type?: 'text';
+    }
+
+    export interface UnionMember1 {
+      channels?: Array<string> | null;
+
+      if?: string | null;
+
+      loop?: string | null;
+
+      ref?: string | null;
+
+      type?: 'meta';
+    }
+
+    export interface UnionMember2 {
+      channels?: Array<string> | null;
+
+      if?: string | null;
+
+      loop?: string | null;
+
+      ref?: string | null;
+
+      type?: 'image';
+    }
+
+    export interface UnionMember3 {
+      channels?: Array<string> | null;
+
+      if?: string | null;
+
+      loop?: string | null;
+
+      ref?: string | null;
+
+      type?: 'action';
+    }
+
+    export interface UnionMember4 {
+      channels?: Array<string> | null;
+
+      if?: string | null;
+
+      loop?: string | null;
+
+      ref?: string | null;
+
+      type?: 'divider';
+    }
+
+    export interface UnionMember5 {
+      channels?: Array<string> | null;
+
+      if?: string | null;
+
+      loop?: string | null;
+
+      ref?: string | null;
+
+      type?: 'quote';
+    }
   }
 
   /**
@@ -559,125 +640,6 @@ export namespace Content {
      * The title to be displayed by supported channels i.e. push, email (as subject)
      */
     title: string;
-  }
-}
-
-export interface ElementalGroupNode {
-  /**
-   * Sub elements to render.
-   */
-  elements: Array<ElementalNode>;
-
-  channels?: Array<string> | null;
-
-  if?: string | null;
-
-  loop?: string | null;
-
-  ref?: string | null;
-}
-
-/**
- * Allows you to group elements together. This can be useful when used in
- * combination with "if" or "loop". See
- * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
- * for more details.
- */
-export type ElementalNode =
-  | ElementalNode.UnionMember0
-  | ElementalNode.UnionMember1
-  | ElementalNode.Type
-  | ElementalNode.UnionMember3
-  | ElementalNode.UnionMember4
-  | ElementalNode.UnionMember5
-  | ElementalNode.UnionMember6
-  | ElementalNode.UnionMember7;
-
-export namespace ElementalNode {
-  export interface UnionMember0 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'text';
-  }
-
-  export interface UnionMember1 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'meta';
-  }
-
-  export interface Type {
-    type: 'channel';
-  }
-
-  export interface UnionMember3 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'image';
-  }
-
-  export interface UnionMember4 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'action';
-  }
-
-  export interface UnionMember5 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'divider';
-  }
-
-  /**
-   * Allows you to group elements together. This can be useful when used in
-   * combination with "if" or "loop". See
-   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-   * for more details.
-   */
-  export interface UnionMember6 extends SendAPI.ElementalGroupNode {
-    type?: 'group';
-  }
-
-  export interface UnionMember7 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'quote';
   }
 }
 
@@ -974,8 +936,6 @@ export declare namespace Send {
     type BaseMessage as BaseMessage,
     type BaseMessageSendTo as BaseMessageSendTo,
     type Content as Content,
-    type ElementalGroupNode as ElementalGroupNode,
-    type ElementalNode as ElementalNode,
     type Message as Message,
     type MessageContext as MessageContext,
     type MsTeamsBaseProperties as MsTeamsBaseProperties,
