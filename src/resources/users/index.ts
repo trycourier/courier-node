@@ -23,11 +23,11 @@ export {
 export {
   Tokens,
   type UserToken,
+  type TokenRetrieveResponse,
   type TokenListResponse,
-  type TokenRetrieveSingleResponse,
+  type TokenRetrieveParams,
   type TokenUpdateParams,
   type TokenDeleteParams,
   type TokenAddSingleParams,
-  type TokenRetrieveSingleParams,
 } from './tokens';
 export { Users } from './users';

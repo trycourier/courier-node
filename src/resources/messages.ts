@@ -38,7 +38,7 @@ export class Messages extends APIResource {
   /**
    * Get message content
    */
-  getContent(messageID: string, options?: RequestOptions): APIPromise<MessageGetContentResponse> {
+  content(messageID: string, options?: RequestOptions): APIPromise<MessageContentResponse> {
     return this._client.get(path`/messages/${messageID}/output`, options);
   }
 
@@ -135,9 +135,12 @@ export interface MessageDetails {
    * The reason for the current status of the message.
    */
   reason?:
+    | 'BOUNCED'
+    | 'FAILED'
     | 'FILTERED'
     | 'NO_CHANNELS'
     | 'NO_PROVIDERS'
+    | 'OPT_IN_REQUIRED'
     | 'PROVIDER_ERROR'
     | 'UNPUBLISHED'
     | 'UNSUBSCRIBED'
@@ -160,14 +163,14 @@ export interface MessageListResponse {
   results: Array<MessageDetails>;
 }
 
-export interface MessageGetContentResponse {
+export interface MessageContentResponse {
   /**
    * An array of render output of a previously sent message.
    */
-  results: Array<MessageGetContentResponse.Result>;
+  results: Array<MessageContentResponse.Result>;
 }
 
-export namespace MessageGetContentResponse {
+export namespace MessageContentResponse {
   export interface Result {
     /**
      * The channel used for rendering the message.
@@ -334,7 +337,7 @@ export declare namespace Messages {
     type MessageDetails as MessageDetails,
     type MessageRetrieveResponse as MessageRetrieveResponse,
     type MessageListResponse as MessageListResponse,
-    type MessageGetContentResponse as MessageGetContentResponse,
+    type MessageContentResponse as MessageContentResponse,
     type MessageHistoryResponse as MessageHistoryResponse,
     type MessageListParams as MessageListParams,
     type MessageHistoryParams as MessageHistoryParams,

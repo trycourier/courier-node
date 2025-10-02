@@ -11,7 +11,7 @@ describe('resource send', () => {
   // Prism tests are disabled
   test.skip('message: only required params', async () => {
     const responsePromise = client.send.message({
-      message: { content: { elements: [{}], version: 'version' } },
+      message: { content: { body: 'Thanks for signing up, {{name}}', title: 'Welcome!' } },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -47,7 +47,7 @@ describe('resource send', () => {
           },
         },
         context: { tenant_id: 'tenant_id' },
-        data: { foo: 'bar' },
+        data: { name: 'bar' },
         delay: { duration: 0, until: 'until' },
         expiry: { expires_in: 'string', expires_at: 'expires_at' },
         metadata: {
@@ -73,33 +73,7 @@ describe('resource send', () => {
             timeouts: 0,
           },
         },
-        routing: {
-          channels: [
-            {
-              channel: 'channel',
-              config: { foo: 'bar' },
-              if: 'if',
-              method: 'all',
-              providers: {
-                foo: {
-                  if: 'if',
-                  metadata: {
-                    utm: {
-                      campaign: 'campaign',
-                      content: 'content',
-                      medium: 'medium',
-                      source: 'source',
-                      term: 'term',
-                    },
-                  },
-                  override: { foo: 'bar' },
-                  timeouts: 0,
-                },
-              },
-            },
-          ],
-          method: 'all',
-        },
+        routing: { channels: ['email'], method: 'single' },
         timeout: {
           channel: { foo: 0 },
           criteria: 'no-escalation',
@@ -108,15 +82,11 @@ describe('resource send', () => {
           provider: { foo: 0 },
         },
         to: {
-          audience_id: 'audience_id',
           data: { foo: 'bar' },
           filters: [{ operator: 'MEMBER_OF', path: 'account_id', value: 'value' }],
+          list_id: 'list_id',
         },
-        content: {
-          elements: [{ channels: ['string'], if: 'if', loop: 'loop', ref: 'ref', type: 'text' }],
-          version: 'version',
-          brand: {},
-        },
+        content: { body: 'Thanks for signing up, {{name}}', title: 'Welcome!' },
       },
     });
   });

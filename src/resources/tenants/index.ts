@@ -1,6 +1,17 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
+  Templates,
+  type BaseTemplateTenantAssociation,
+  type ElementalChannelNode,
+  type ElementalContent,
+  type ElementalGroupNode,
+  type ElementalNode,
+  type TemplateListResponse,
+  type TemplateRetrieveParams,
+  type TemplateListParams,
+} from './templates';
+export {
   Tenants,
   type DefaultPreferences,
   type Tenant,

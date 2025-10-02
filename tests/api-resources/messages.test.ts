@@ -71,8 +71,8 @@ describe('resource messages', () => {
   });
 
   // Prism tests are disabled
-  test.skip('getContent', async () => {
-    const responsePromise = client.messages.getContent('message_id');
+  test.skip('content', async () => {
+    const responsePromise = client.messages.content('message_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

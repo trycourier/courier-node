@@ -1,6 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Lists, type List, type ListListResponse, type ListUpdateParams, type ListListParams } from './lists';
+export {
+  Lists,
+  type List,
+  type ListListResponse,
+  type ListUpdateParams,
+  type ListListParams,
+  type ListRestoreParams,
+} from './lists';
 export {
   Subscriptions,
   type PutSubscriptionsRecipient,

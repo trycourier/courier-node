@@ -7,10 +7,10 @@ const client = new Courier({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource automations', () => {
+describe('resource invoke', () => {
   // Prism tests are disabled
   test.skip('invokeAdHoc: only required params', async () => {
-    const responsePromise = client.automations.invokeAdHoc({
+    const responsePromise = client.automations.invoke.invokeAdHoc({
       automation: {
         steps: [{ action: 'add-to-digest', subscription_topic_id: 'RAJE97CMT04KDJJ88ZDS2TP1690S' }],
       },
@@ -26,7 +26,7 @@ describe('resource automations', () => {
 
   // Prism tests are disabled
   test.skip('invokeAdHoc: required and optional params', async () => {
-    const response = await client.automations.invokeAdHoc({
+    const response = await client.automations.invoke.invokeAdHoc({
       automation: {
         steps: [
           {
@@ -48,7 +48,7 @@ describe('resource automations', () => {
 
   // Prism tests are disabled
   test.skip('invokeByTemplate', async () => {
-    const responsePromise = client.automations.invokeByTemplate('templateId', {});
+    const responsePromise = client.automations.invoke.invokeByTemplate('templateId', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

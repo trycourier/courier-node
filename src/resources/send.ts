@@ -3,12 +3,29 @@
 import { APIResource } from '../core/resource';
 import * as SendAPI from './send';
 import * as BulkAPI from './bulk';
+import * as NotificationsAPI from './notifications/notifications';
+import * as TemplatesAPI from './tenants/templates';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
 export class Send extends APIResource {
   /**
    * Use the send API to send a message to one or more recipients.
+   *
+   * @example
+   * ```ts
+   * const response = await client.send.message({
+   *   message: {
+   *     to: { email: 'email@example.com' },
+   *     content: {
+   *       title: 'Welcome!',
+   *       body: 'Thanks for signing up, {{name}}',
+   *     },
+   *     data: { name: 'Peter Parker' },
+   *     routing: { method: 'single', channels: ['email'] },
+   *   },
+   * });
+   * ```
    */
   message(body: SendMessageParams, options?: RequestOptions): APIPromise<SendMessageResponse> {
     return this._client.post('/send', { body, ...options });
@@ -91,8 +108,9 @@ export namespace BaseMessage {
 
     /**
      * A JavaScript conditional expression to determine if the message should be sent
-     * through the channel. Has access to the data and profile object. For example,
-     * `data.name === profile.name`
+     * through the channel. Has access to the data and profile object. Only applies
+     * when a custom routing strategy is defined. For example,
+     * `data.name === profile.name`.
      */
     if?: string | null;
 
@@ -114,14 +132,28 @@ export namespace BaseMessage {
      * send to one of the available providers for this channel, all will send the
      * message through all channels. Defaults to `single`.
      */
-    routing_method?: SendAPI.RoutingMethod | null;
+    routing_method?: 'all' | 'single' | null;
 
     timeouts?: Channels.Timeouts | null;
   }
 
   export namespace Channels {
     export interface Metadata {
-      utm?: SendAPI.Utm | null;
+      utm?: Metadata.Utm | null;
+    }
+
+    export namespace Metadata {
+      export interface Utm {
+        campaign?: string | null;
+
+        content?: string | null;
+
+        medium?: string | null;
+
+        source?: string | null;
+
+        term?: string | null;
+      }
     }
 
     export interface Timeouts {
@@ -201,7 +233,25 @@ export namespace BaseMessage {
      * Identify the campaign that refers traffic to a specific website, and attributes
      * the browser's website session.
      */
-    utm?: SendAPI.Utm | null;
+    utm?: Metadata.Utm | null;
+  }
+
+  export namespace Metadata {
+    /**
+     * Identify the campaign that refers traffic to a specific website, and attributes
+     * the browser's website session.
+     */
+    export interface Utm {
+      campaign?: string | null;
+
+      content?: string | null;
+
+      medium?: string | null;
+
+      source?: string | null;
+
+      term?: string | null;
+    }
   }
 
   export interface Preferences {
@@ -215,7 +265,8 @@ export namespace BaseMessage {
   export interface Providers {
     /**
      * A JavaScript conditional expression to determine if the message should be sent
-     * through the channel. Has access to the data and profile object. For example,
+     * through the provider. Has access to the data and profile object. Only applies
+     * when a custom routing strategy is defined. For example,
      * `data.name === profile.name`
      */
     if?: string | null;
@@ -232,7 +283,21 @@ export namespace BaseMessage {
 
   export namespace Providers {
     export interface Metadata {
-      utm?: SendAPI.Utm | null;
+      utm?: Metadata.Utm | null;
+    }
+
+    export namespace Metadata {
+      export interface Utm {
+        campaign?: string | null;
+
+        content?: string | null;
+
+        medium?: string | null;
+
+        source?: string | null;
+
+        term?: string | null;
+      }
     }
   }
 
@@ -247,65 +312,9 @@ export namespace BaseMessage {
      * recursively define sub-routing methods, which can be useful for defining
      * advanced push notification delivery strategies.
      */
-    channels: Array<Routing.RoutingStrategyChannel | Routing.RoutingStrategyProvider | string>;
+    channels: Array<NotificationsAPI.MessageRoutingChannel>;
 
-    method: SendAPI.RoutingMethod;
-  }
-
-  export namespace Routing {
-    export interface RoutingStrategyChannel {
-      channel: string;
-
-      config?: { [key: string]: unknown } | null;
-
-      if?: string | null;
-
-      method?: SendAPI.RoutingMethod | null;
-
-      providers?: { [key: string]: RoutingStrategyChannel.Providers } | null;
-    }
-
-    export namespace RoutingStrategyChannel {
-      export interface Providers {
-        /**
-         * A JavaScript conditional expression to determine if the message should be sent
-         * through the channel. Has access to the data and profile object. For example,
-         * `data.name === profile.name`
-         */
-        if?: string | null;
-
-        metadata?: Providers.Metadata | null;
-
-        /**
-         * Provider specific overrides.
-         */
-        override?: { [key: string]: unknown } | null;
-
-        timeouts?: number | null;
-      }
-
-      export namespace Providers {
-        export interface Metadata {
-          utm?: SendAPI.Utm | null;
-        }
-      }
-    }
-
-    export interface RoutingStrategyProvider {
-      metadata: RoutingStrategyProvider.Metadata;
-
-      name: string;
-
-      config?: { [key: string]: unknown } | null;
-
-      if?: string | null;
-    }
-
-    export namespace RoutingStrategyProvider {
-      export interface Metadata {
-        utm?: SendAPI.Utm | null;
-      }
-    }
+    method: 'all' | 'single';
   }
 
   /**
@@ -532,20 +541,9 @@ export namespace BaseMessageSendTo {
 /**
  * Syntatic Sugar to provide a fast shorthand for Courier Elemental Blocks.
  */
-export type Content = Content.ElementalContent | Content.ElementalContentSugar;
+export type Content = TemplatesAPI.ElementalContent | Content.ElementalContentSugar;
 
 export namespace Content {
-  export interface ElementalContent {
-    elements: Array<SendAPI.ElementalNode>;
-
-    /**
-     * For example, "2022-01-01"
-     */
-    version: string;
-
-    brand?: unknown;
-  }
-
   /**
    * Syntatic Sugar to provide a fast shorthand for Courier Elemental Blocks.
    */
@@ -559,171 +557,6 @@ export namespace Content {
      * The title to be displayed by supported channels i.e. push, email (as subject)
      */
     title: string;
-  }
-}
-
-export interface ElementalChannelNode {
-  /**
-   * The channel the contents of this element should be applied to. Can be `email`,
-   * `push`, `direct_message`, `sms` or a provider such as slack
-   */
-  channel: string;
-
-  channels?: Array<string> | null;
-
-  /**
-   * An array of elements to apply to the channel. If `raw` has not been specified,
-   * `elements` is `required`.
-   */
-  elements?: Array<ElementalNode> | null;
-
-  if?: string | null;
-
-  loop?: string | null;
-
-  /**
-   * Raw data to apply to the channel. If `elements` has not been specified, `raw` is
-   * `required`.
-   */
-  raw?: { [key: string]: unknown } | null;
-
-  ref?: string | null;
-}
-
-export interface ElementalGroupNode {
-  /**
-   * Sub elements to render.
-   */
-  elements: Array<ElementalNode>;
-
-  channels?: Array<string> | null;
-
-  if?: string | null;
-
-  loop?: string | null;
-
-  ref?: string | null;
-}
-
-/**
- * The channel element allows a notification to be customized based on which
- * channel it is sent through. For example, you may want to display a detailed
- * message when the notification is sent through email, and a more concise message
- * in a push notification. Channel elements are only valid as top-level elements;
- * you cannot nest channel elements. If there is a channel element specified at the
- * top-level of the document, all sibling elements must be channel elements. Note:
- * As an alternative, most elements support a `channel` property. Which allows you
- * to selectively display an individual element on a per channel basis. See the
- * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
- * for more details.
- */
-export type ElementalNode =
-  | ElementalNode.UnionMember0
-  | ElementalNode.UnionMember1
-  | ElementalNode.UnionMember2
-  | ElementalNode.UnionMember3
-  | ElementalNode.UnionMember4
-  | ElementalNode.UnionMember5
-  | ElementalNode.UnionMember6
-  | ElementalNode.UnionMember7;
-
-export namespace ElementalNode {
-  export interface UnionMember0 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'text';
-  }
-
-  export interface UnionMember1 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'meta';
-  }
-
-  /**
-   * The channel element allows a notification to be customized based on which
-   * channel it is sent through. For example, you may want to display a detailed
-   * message when the notification is sent through email, and a more concise message
-   * in a push notification. Channel elements are only valid as top-level elements;
-   * you cannot nest channel elements. If there is a channel element specified at the
-   * top-level of the document, all sibling elements must be channel elements. Note:
-   * As an alternative, most elements support a `channel` property. Which allows you
-   * to selectively display an individual element on a per channel basis. See the
-   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-   * for more details.
-   */
-  export interface UnionMember2 extends SendAPI.ElementalChannelNode {
-    type?: 'channel';
-  }
-
-  export interface UnionMember3 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'image';
-  }
-
-  export interface UnionMember4 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'action';
-  }
-
-  export interface UnionMember5 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'divider';
-  }
-
-  /**
-   * Allows you to group elements together. This can be useful when used in
-   * combination with "if" or "loop". See
-   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-   * for more details.
-   */
-  export interface UnionMember6 extends SendAPI.ElementalGroupNode {
-    type?: 'group';
-  }
-
-  export interface UnionMember7 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
-    type?: 'quote';
   }
 }
 
@@ -973,22 +806,8 @@ export namespace Recipient {
   }
 }
 
-export type RoutingMethod = 'all' | 'single';
-
 export interface SlackBaseProperties {
   access_token: string;
-}
-
-export interface Utm {
-  campaign?: string | null;
-
-  content?: string | null;
-
-  medium?: string | null;
-
-  source?: string | null;
-
-  term?: string | null;
 }
 
 export interface SendMessageResponse {
@@ -1020,16 +839,11 @@ export declare namespace Send {
     type BaseMessage as BaseMessage,
     type BaseMessageSendTo as BaseMessageSendTo,
     type Content as Content,
-    type ElementalChannelNode as ElementalChannelNode,
-    type ElementalGroupNode as ElementalGroupNode,
-    type ElementalNode as ElementalNode,
     type Message as Message,
     type MessageContext as MessageContext,
     type MsTeamsBaseProperties as MsTeamsBaseProperties,
     type Recipient as Recipient,
-    type RoutingMethod as RoutingMethod,
     type SlackBaseProperties as SlackBaseProperties,
-    type Utm as Utm,
     type SendMessageResponse as SendMessageResponse,
     type SendMessageParams as SendMessageParams,
   };

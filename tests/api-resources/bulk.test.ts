@@ -152,33 +152,7 @@ describe('resource bulk', () => {
               timeouts: 0,
             },
           },
-          routing: {
-            channels: [
-              {
-                channel: 'channel',
-                config: { foo: 'bar' },
-                if: 'if',
-                method: 'all',
-                providers: {
-                  foo: {
-                    if: 'if',
-                    metadata: {
-                      utm: {
-                        campaign: 'campaign',
-                        content: 'content',
-                        medium: 'medium',
-                        source: 'source',
-                        term: 'term',
-                      },
-                    },
-                    override: { foo: 'bar' },
-                    timeouts: 0,
-                  },
-                },
-              },
-            ],
-            method: 'all',
-          },
+          routing: { channels: ['string'], method: 'all' },
           timeout: {
             channel: { foo: 0 },
             criteria: 'no-escalation',

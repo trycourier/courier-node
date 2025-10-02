@@ -21,11 +21,7 @@ export {
   type AuditEventListParams,
 } from './audit-events';
 export { Auth, type AuthIssueTokenResponse, type AuthIssueTokenParams } from './auth';
-export {
-  Automations,
-  type AutomationInvokeAdHocParams,
-  type AutomationInvokeByTemplateParams,
-} from './automations/automations';
+export { Automations } from './automations/automations';
 export {
   Brands,
   type Brand,
@@ -55,13 +51,14 @@ export {
   type ListListResponse,
   type ListUpdateParams,
   type ListListParams,
+  type ListRestoreParams,
 } from './lists/lists';
 export {
   Messages,
   type MessageDetails,
   type MessageRetrieveResponse,
   type MessageListResponse,
-  type MessageGetContentResponse,
+  type MessageContentResponse,
   type MessageHistoryResponse,
   type MessageListParams,
   type MessageHistoryParams,
@@ -89,16 +86,11 @@ export {
   type BaseMessage,
   type BaseMessageSendTo,
   type Content,
-  type ElementalChannelNode,
-  type ElementalGroupNode,
-  type ElementalNode,
   type Message,
   type MessageContext,
   type MsTeamsBaseProperties,
   type Recipient,
-  type RoutingMethod,
   type SlackBaseProperties,
-  type Utm,
   type SendMessageResponse,
   type SendMessageParams,
 } from './send';

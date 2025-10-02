@@ -62,8 +62,8 @@ import {
 } from './resources/bulk';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
+  MessageContentResponse,
   MessageDetails,
-  MessageGetContentResponse,
   MessageHistoryParams,
   MessageHistoryResponse,
   MessageListParams,
@@ -76,19 +76,14 @@ import {
   BaseMessage,
   BaseMessageSendTo,
   Content,
-  ElementalChannelNode,
-  ElementalGroupNode,
-  ElementalNode,
   Message,
   MessageContext,
   MsTeamsBaseProperties,
   Recipient,
-  RoutingMethod,
   Send,
   SendMessageParams,
   SendMessageResponse,
   SlackBaseProperties,
-  Utm,
 } from './resources/send';
 import {
   TranslationRetrieveParams,
@@ -96,12 +91,15 @@ import {
   TranslationUpdateParams,
   Translations,
 } from './resources/translations';
+import { Automations } from './resources/automations/automations';
 import {
-  AutomationInvokeAdHocParams,
-  AutomationInvokeByTemplateParams,
-  Automations,
-} from './resources/automations/automations';
-import { List, ListListParams, ListListResponse, ListUpdateParams, Lists } from './resources/lists/lists';
+  List,
+  ListListParams,
+  ListListResponse,
+  ListRestoreParams,
+  ListUpdateParams,
+  Lists,
+} from './resources/lists/lists';
 import {
   MessageRouting,
   MessageRoutingChannel,
@@ -854,16 +852,11 @@ export declare namespace Courier {
     type BaseMessage as BaseMessage,
     type BaseMessageSendTo as BaseMessageSendTo,
     type Content as Content,
-    type ElementalChannelNode as ElementalChannelNode,
-    type ElementalGroupNode as ElementalGroupNode,
-    type ElementalNode as ElementalNode,
     type Message as Message,
     type MessageContext as MessageContext,
     type MsTeamsBaseProperties as MsTeamsBaseProperties,
     type Recipient as Recipient,
-    type RoutingMethod as RoutingMethod,
     type SlackBaseProperties as SlackBaseProperties,
-    type Utm as Utm,
     type SendMessageResponse as SendMessageResponse,
     type SendMessageParams as SendMessageParams,
   };
@@ -896,11 +889,7 @@ export declare namespace Courier {
     type AuthIssueTokenParams as AuthIssueTokenParams,
   };
 
-  export {
-    Automations as Automations,
-    type AutomationInvokeAdHocParams as AutomationInvokeAdHocParams,
-    type AutomationInvokeByTemplateParams as AutomationInvokeByTemplateParams,
-  };
+  export { Automations as Automations };
 
   export {
     Brands as Brands,
@@ -938,6 +927,7 @@ export declare namespace Courier {
     type ListListResponse as ListListResponse,
     type ListUpdateParams as ListUpdateParams,
     type ListListParams as ListListParams,
+    type ListRestoreParams as ListRestoreParams,
   };
 
   export {
@@ -945,7 +935,7 @@ export declare namespace Courier {
     type MessageDetails as MessageDetails,
     type MessageRetrieveResponse as MessageRetrieveResponse,
     type MessageListResponse as MessageListResponse,
-    type MessageGetContentResponse as MessageGetContentResponse,
+    type MessageContentResponse as MessageContentResponse,
     type MessageHistoryResponse as MessageHistoryResponse,
     type MessageListParams as MessageListParams,
     type MessageHistoryParams as MessageHistoryParams,

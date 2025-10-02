@@ -89,7 +89,7 @@ describe('resource lists', () => {
 
   // Prism tests are disabled
   test.skip('restore', async () => {
-    const responsePromise = client.lists.restore('list_id');
+    const responsePromise = client.lists.restore('list_id', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
