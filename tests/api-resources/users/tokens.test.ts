@@ -9,6 +9,23 @@ const client = new Courier({
 
 describe('resource tokens', () => {
   // Prism tests are disabled
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.users.tokens.retrieve('token', { user_id: 'user_id' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.users.tokens.retrieve('token', { user_id: 'user_id' });
+  });
+
+  // Prism tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.users.tokens.update('token', {
       user_id: 'user_id',
@@ -105,22 +122,5 @@ describe('resource tokens', () => {
       properties: {},
       tracking: { ip: 'ip', lat: 'lat', long: 'long', os_version: 'os_version' },
     });
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieveSingle: only required params', async () => {
-    const responsePromise = client.users.tokens.retrieveSingle('token', { user_id: 'user_id' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieveSingle: required and optional params', async () => {
-    const response = await client.users.tokens.retrieveSingle('token', { user_id: 'user_id' });
   });
 });

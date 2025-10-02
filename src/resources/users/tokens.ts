@@ -8,6 +8,25 @@ import { path } from '../../internal/utils/path';
 
 export class Tokens extends APIResource {
   /**
+   * Get single token available for a `:token`
+   *
+   * @example
+   * ```ts
+   * const token = await client.users.tokens.retrieve('token', {
+   *   user_id: 'user_id',
+   * });
+   * ```
+   */
+  retrieve(
+    token: string,
+    params: TokenRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<TokenRetrieveResponse> {
+    const { user_id } = params;
+    return this._client.get(path`/users/${user_id}/tokens/${token}`, options);
+  }
+
+  /**
    * Apply a JSON Patch (RFC 6902) to the specified token.
    *
    * @example
@@ -92,26 +111,6 @@ export class Tokens extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
-  }
-
-  /**
-   * Get single token available for a `:token`
-   *
-   * @example
-   * ```ts
-   * const response = await client.users.tokens.retrieveSingle(
-   *   'token',
-   *   { user_id: 'user_id' },
-   * );
-   * ```
-   */
-  retrieveSingle(
-    token: string,
-    params: TokenRetrieveSingleParams,
-    options?: RequestOptions,
-  ): APIPromise<TokenRetrieveSingleResponse> {
-    const { user_id } = params;
-    return this._client.get(path`/users/${user_id}/tokens/${token}`, options);
   }
 }
 
@@ -207,18 +206,25 @@ export namespace UserToken {
   }
 }
 
-/**
- * A list of tokens registered with the user.
- */
-export type TokenListResponse = Array<UserToken>;
-
-export interface TokenRetrieveSingleResponse extends UserToken {
+export interface TokenRetrieveResponse extends UserToken {
   status?: 'active' | 'unknown' | 'failed' | 'revoked' | null;
 
   /**
    * The reason for the token status.
    */
   status_reason?: string | null;
+}
+
+/**
+ * A list of tokens registered with the user.
+ */
+export type TokenListResponse = Array<UserToken>;
+
+export interface TokenRetrieveParams {
+  /**
+   * The user's ID. This can be any uniquely identifiable string.
+   */
+  user_id: string;
 }
 
 export interface TokenUpdateParams {
@@ -359,21 +365,14 @@ export namespace TokenAddSingleParams {
   }
 }
 
-export interface TokenRetrieveSingleParams {
-  /**
-   * The user's ID. This can be any uniquely identifiable string.
-   */
-  user_id: string;
-}
-
 export declare namespace Tokens {
   export {
     type UserToken as UserToken,
+    type TokenRetrieveResponse as TokenRetrieveResponse,
     type TokenListResponse as TokenListResponse,
-    type TokenRetrieveSingleResponse as TokenRetrieveSingleResponse,
+    type TokenRetrieveParams as TokenRetrieveParams,
     type TokenUpdateParams as TokenUpdateParams,
     type TokenDeleteParams as TokenDeleteParams,
     type TokenAddSingleParams as TokenAddSingleParams,
-    type TokenRetrieveSingleParams as TokenRetrieveSingleParams,
   };
 }
