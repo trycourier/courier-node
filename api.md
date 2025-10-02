@@ -5,7 +5,6 @@ Types:
 - <code><a href="./src/resources/send.ts">BaseMessage</a></code>
 - <code><a href="./src/resources/send.ts">BaseMessageSendTo</a></code>
 - <code><a href="./src/resources/send.ts">Content</a></code>
-- <code><a href="./src/resources/send.ts">ElementalChannelNode</a></code>
 - <code><a href="./src/resources/send.ts">ElementalGroupNode</a></code>
 - <code><a href="./src/resources/send.ts">ElementalNode</a></code>
 - <code><a href="./src/resources/send.ts">Message</a></code>

@@ -89,7 +89,6 @@ export {
   type BaseMessage,
   type BaseMessageSendTo,
   type Content,
-  type ElementalChannelNode,
   type ElementalGroupNode,
   type ElementalNode,
   type Message,
