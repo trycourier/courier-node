@@ -7,8 +7,6 @@
  *     {}
  */
 export interface GetSubscriptionForListRequest {
-    /**
-     * A unique identifier that allows for fetching the next set of list subscriptions
-     */
+    /** A unique identifier that allows for fetching the next set of list subscriptions */
     cursor?: string;
 }

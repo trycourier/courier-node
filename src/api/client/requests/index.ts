@@ -1,1 +1,1 @@
-export { type SendMessageRequest } from "./SendMessageRequest";
+export { type SendMessageRequest } from "./SendMessageRequest.js";

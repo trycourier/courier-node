@@ -7,8 +7,6 @@
  *     {}
  */
 export interface ListTemplatesRequest {
-    /**
-     * A unique identifier that allows for fetching the next set of templates
-     */
+    /** A unique identifier that allows for fetching the next set of templates */
     cursor?: string;
 }

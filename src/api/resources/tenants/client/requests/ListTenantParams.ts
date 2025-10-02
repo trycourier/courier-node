@@ -7,17 +7,13 @@
  *     {}
  */
 export interface ListTenantParams {
-    /**
-     * Filter the list of tenants by parent_id
-     */
+    /** Filter the list of tenants by parent_id */
     parent_tenant_id?: string;
     /**
      * The number of tenants to return
      * (defaults to 20, maximum value of 100)
      */
     limit?: number;
-    /**
-     * Continue the pagination with the next cursor
-     */
+    /** Continue the pagination with the next cursor */
     cursor?: string;
 }

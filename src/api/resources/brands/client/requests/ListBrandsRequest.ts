@@ -7,8 +7,6 @@
  *     {}
  */
 export interface ListBrandsRequest {
-    /**
-     * A unique identifier that allows for fetching the next set of brands.
-     */
+    /** A unique identifier that allows for fetching the next set of brands. */
     cursor?: string;
 }

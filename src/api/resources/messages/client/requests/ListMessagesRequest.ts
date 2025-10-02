@@ -7,60 +7,32 @@
  *     {}
  */
 export interface ListMessagesRequest {
-    /**
-     * A boolean value that indicates whether archived messages should be included in the response.
-     */
+    /** A boolean value that indicates whether archived messages should be included in the response. */
     archived?: boolean;
-    /**
-     * A unique identifier that allows for fetching the next set of messages.
-     */
+    /** A unique identifier that allows for fetching the next set of messages. */
     cursor?: string;
-    /**
-     * A unique identifier representing the event that was used to send the event.
-     */
+    /** A unique identifier representing the event that was used to send the event. */
     event?: string;
-    /**
-     * A unique identifier representing the list the message was sent to.
-     */
+    /** A unique identifier representing the list the message was sent to. */
     list?: string;
-    /**
-     * A unique identifier representing the message_id returned from either /send or /send/list.
-     */
+    /** A unique identifier representing the message_id returned from either /send or /send/list. */
     messageId?: string;
-    /**
-     * A unique identifier representing the notification that was used to send the event.
-     */
+    /** A unique identifier representing the notification that was used to send the event. */
     notification?: string;
-    /**
-     * The key assocated to the provider you want to filter on. E.g., sendgrid, inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
-     */
+    /** The key assocated to the provider you want to filter on. E.g., sendgrid, inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters. */
     provider?: string | string[];
-    /**
-     * A unique identifier representing the recipient associated with the requested profile.
-     */
+    /** A unique identifier representing the recipient associated with the requested profile. */
     recipient?: string;
-    /**
-     * An indicator of the current status of the message. Allows multiple values to be set in query parameters.
-     */
+    /** An indicator of the current status of the message. Allows multiple values to be set in query parameters. */
     status?: string | string[];
-    /**
-     * A tag placed in the metadata.tags during a notification send. Allows multiple values to be set in query parameters.
-     */
+    /** A tag placed in the metadata.tags during a notification send. Allows multiple values to be set in query parameters. */
     tag?: string | string[];
-    /**
-     * A comma delimited list of 'tags'. Messages will be returned if they match any of the tags passed in.
-     */
+    /** A comma delimited list of 'tags'. Messages will be returned if they match any of the tags passed in. */
     tags?: string;
-    /**
-     * Messages sent with the context of a Tenant
-     */
+    /** Messages sent with the context of a Tenant */
     tenant_id?: string;
-    /**
-     * The enqueued datetime of a message to filter out messages received before.
-     */
+    /** The enqueued datetime of a message to filter out messages received before. */
     enqueued_after?: string;
-    /**
-     * The unique identifier used to trace the requests
-     */
+    /** The unique identifier used to trace the requests */
     traceId?: string;
 }

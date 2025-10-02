@@ -1,2 +1,2 @@
-export { type BulkCreateJobParams } from "./BulkCreateJobParams";
-export { type BulkGetUsersParams } from "./BulkGetUsersParams";
+export { type BulkCreateJobParams } from "./BulkCreateJobParams.js";
+export { type BulkGetUsersParams } from "./BulkGetUsersParams.js";

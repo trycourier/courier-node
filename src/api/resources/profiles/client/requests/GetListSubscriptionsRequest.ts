@@ -7,8 +7,6 @@
  *     {}
  */
 export interface GetListSubscriptionsRequest {
-    /**
-     * A unique identifier that allows for fetching the next set of message statuses.
-     */
+    /** A unique identifier that allows for fetching the next set of message statuses. */
     cursor?: string;
 }

@@ -1,1 +1,1 @@
-export { type ListAuditEventsRequest } from "./ListAuditEventsRequest";
+export { type ListAuditEventsRequest } from "./ListAuditEventsRequest.js";

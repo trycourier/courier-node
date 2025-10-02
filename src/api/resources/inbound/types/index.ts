@@ -1,2 +1,2 @@
-export * from "./InboundTrackEvent";
-export * from "./TrackAcceptedResponse";
+export * from "./InboundTrackEvent.js";
+export * from "./TrackAcceptedResponse.js";

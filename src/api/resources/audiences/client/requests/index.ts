@@ -1,3 +1,3 @@
-export { type AudienceUpdateParams } from "./AudienceUpdateParams";
-export { type AudienceMembersListParams } from "./AudienceMembersListParams";
-export { type AudiencesListParams } from "./AudiencesListParams";
+export { type AudienceUpdateParams } from "./AudienceUpdateParams.js";
+export { type AudienceMembersListParams } from "./AudienceMembersListParams.js";
+export { type AudiencesListParams } from "./AudiencesListParams.js";

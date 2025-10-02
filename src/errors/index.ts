@@ -1,2 +1,2 @@
-export { CourierError } from "./CourierError";
-export { CourierTimeoutError } from "./CourierTimeoutError";
+export { CourierError } from "./CourierError.js";
+export { CourierTimeoutError } from "./CourierTimeoutError.js";

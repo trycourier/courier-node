@@ -1,2 +1,2 @@
-export * from "./AddUserToSingleTenantsParamsProfile";
-export * from "./ListTenantsForUserResponse";
+export * from "./AddUserToSingleTenantsParamsProfile.js";
+export * from "./ListTenantsForUserResponse.js";

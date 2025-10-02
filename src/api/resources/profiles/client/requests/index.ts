@@ -1,3 +1,3 @@
-export { type MergeProfileRequest } from "./MergeProfileRequest";
-export { type ReplaceProfileRequest } from "./ReplaceProfileRequest";
-export { type GetListSubscriptionsRequest } from "./GetListSubscriptionsRequest";
+export { type MergeProfileRequest } from "./MergeProfileRequest.js";
+export { type ReplaceProfileRequest } from "./ReplaceProfileRequest.js";
+export { type GetListSubscriptionsRequest } from "./GetListSubscriptionsRequest.js";

@@ -12,8 +12,6 @@ export interface ListUsersForTenantParams {
      * (defaults to 20, maximum value of 100)
      */
     limit?: number;
-    /**
-     * Continue the pagination with the next cursor
-     */
+    /** Continue the pagination with the next cursor */
     cursor?: string;
 }

@@ -7,12 +7,8 @@
  *     {}
  */
 export interface GetTemplateListByTenantParams {
-    /**
-     * The number of templates to return (defaults to 20, maximum value of 100)
-     */
+    /** The number of templates to return (defaults to 20, maximum value of 100) */
     limit?: number;
-    /**
-     * Continue the pagination with the next cursor
-     */
+    /** Continue the pagination with the next cursor */
     cursor?: string;
 }

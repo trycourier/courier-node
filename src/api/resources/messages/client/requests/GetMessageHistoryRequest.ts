@@ -7,8 +7,6 @@
  *     {}
  */
 export interface GetMessageHistoryRequest {
-    /**
-     * A supported Message History type that will filter the events returned.
-     */
+    /** A supported Message History type that will filter the events returned. */
     type?: string;
 }

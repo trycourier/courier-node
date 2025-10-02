@@ -1,2 +1,2 @@
-export { type NotificationListParams } from "./NotificationListParams";
-export { type SubmissionChecksReplaceParams } from "./SubmissionChecksReplaceParams";
+export { type NotificationListParams } from "./NotificationListParams.js";
+export { type SubmissionChecksReplaceParams } from "./SubmissionChecksReplaceParams.js";

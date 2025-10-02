@@ -1,4 +1,4 @@
-export * as Courier from "./api";
-export { CourierClient } from "./Client";
-export { CourierEnvironment } from "./environments";
-export { CourierError, CourierTimeoutError } from "./errors";
+export * as Courier from "./api/index.js";
+export { CourierError, CourierTimeoutError } from "./errors/index.js";
+export { CourierClient } from "./Client.js";
+export { CourierEnvironment } from "./environments.js";

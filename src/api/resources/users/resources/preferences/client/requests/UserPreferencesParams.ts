@@ -7,8 +7,6 @@
  *     {}
  */
 export interface UserPreferencesParams {
-    /**
-     * Query the preferences of a user for this specific tenant context.
-     */
+    /** Query the preferences of a user for this specific tenant context. */
     tenant_id?: string;
 }

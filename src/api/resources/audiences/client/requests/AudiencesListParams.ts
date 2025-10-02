@@ -7,8 +7,6 @@
  *     {}
  */
 export interface AudiencesListParams {
-    /**
-     * A unique identifier that allows for fetching the next set of audiences
-     */
+    /** A unique identifier that allows for fetching the next set of audiences */
     cursor?: string;
 }

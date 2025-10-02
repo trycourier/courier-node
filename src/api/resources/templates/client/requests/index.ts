@@ -1,1 +1,1 @@
-export { type ListTemplatesRequest } from "./ListTemplatesRequest";
+export { type ListTemplatesRequest } from "./ListTemplatesRequest.js";

@@ -1,2 +1,2 @@
-export { type ListBrandsRequest } from "./ListBrandsRequest";
-export { type BrandUpdateParameters } from "./BrandUpdateParameters";
+export { type ListBrandsRequest } from "./ListBrandsRequest.js";
+export { type BrandUpdateParameters } from "./BrandUpdateParameters.js";

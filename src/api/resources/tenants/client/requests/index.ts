@@ -1,4 +1,4 @@
-export { type TenantCreateOrReplaceParams } from "./TenantCreateOrReplaceParams";
-export { type ListTenantParams } from "./ListTenantParams";
-export { type ListUsersForTenantParams } from "./ListUsersForTenantParams";
-export { type GetTemplateListByTenantParams } from "./GetTemplateListByTenantParams";
+export { type TenantCreateOrReplaceParams } from "./TenantCreateOrReplaceParams.js";
+export { type ListTenantParams } from "./ListTenantParams.js";
+export { type ListUsersForTenantParams } from "./ListUsersForTenantParams.js";
+export { type GetTemplateListByTenantParams } from "./GetTemplateListByTenantParams.js";

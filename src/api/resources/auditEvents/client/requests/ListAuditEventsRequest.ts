@@ -7,8 +7,6 @@
  *     {}
  */
 export interface ListAuditEventsRequest {
-    /**
-     * A unique identifier that allows for fetching the next set of audit events.
-     */
+    /** A unique identifier that allows for fetching the next set of audit events. */
     cursor?: string;
 }

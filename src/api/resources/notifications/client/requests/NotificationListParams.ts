@@ -8,8 +8,6 @@
  */
 export interface NotificationListParams {
     cursor?: string;
-    /**
-     * Retrieve the notes from the Notification template settings.
-     */
+    /** Retrieve the notes from the Notification template settings. */
     notes?: boolean;
 }

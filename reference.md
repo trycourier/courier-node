@@ -1118,12 +1118,12 @@ await client.brands.replace("brand_id", {
 ```typescript
 await client.bulk.createJob({
     message: {
+        message: undefined,
         brand: undefined,
         data: undefined,
         event: undefined,
         locale: undefined,
         override: undefined,
-        message: undefined,
     },
 });
 ```
