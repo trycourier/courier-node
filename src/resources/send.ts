@@ -11,7 +11,7 @@ export class Send extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.send.sendMessage({
+   * const response = await client.send.message({
    *   message: {
    *     to: { email: 'email@example.com' },
    *     content: {
@@ -24,7 +24,7 @@ export class Send extends APIResource {
    * });
    * ```
    */
-  sendMessage(body: SendSendMessageParams, options?: RequestOptions): APIPromise<SendSendMessageResponse> {
+  message(body: SendMessageParams, options?: RequestOptions): APIPromise<SendMessageResponse> {
     return this._client.post('/send', { body, ...options });
   }
 }
@@ -132,7 +132,7 @@ export namespace Recipient {
   }
 }
 
-export interface SendSendMessageResponse {
+export interface SendMessageResponse {
   /**
    * A successful call to `POST /send` returns a `202` status code along with a
    * `requestId` in the response body. For single-recipient requests, the `requestId`
@@ -142,15 +142,15 @@ export interface SendSendMessageResponse {
   requestId: string;
 }
 
-export interface SendSendMessageParams {
+export interface SendMessageParams {
   /**
    * The message property has the following primary top-level properties. They define
    * the destination and content of the message.
    */
-  message: SendSendMessageParams.Message;
+  message: SendMessageParams.Message;
 }
 
-export namespace SendSendMessageParams {
+export namespace SendMessageParams {
   /**
    * The message property has the following primary top-level properties. They define
    * the destination and content of the message.
@@ -480,7 +480,7 @@ export declare namespace Send {
     type MessageRouting as MessageRouting,
     type MessageRoutingChannel as MessageRoutingChannel,
     type Recipient as Recipient,
-    type SendSendMessageResponse as SendSendMessageResponse,
-    type SendSendMessageParams as SendSendMessageParams,
+    type SendMessageResponse as SendMessageResponse,
+    type SendMessageParams as SendMessageParams,
   };
 }
