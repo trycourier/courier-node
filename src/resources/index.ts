@@ -5,7 +5,9 @@ export {
   type MessageContext,
   type MessageRouting,
   type MessageRoutingChannel,
+  type Preference,
   type Recipient,
+  type Utm,
   type SendMessageResponse,
   type SendMessageParams,
 } from './send';

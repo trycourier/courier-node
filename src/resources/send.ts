@@ -44,6 +44,28 @@ export interface MessageRouting {
 
 export type MessageRoutingChannel = string | MessageRouting;
 
+export interface Preference {
+  status: 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED';
+
+  channel_preferences?: Array<Preference.ChannelPreference> | null;
+
+  rules?: Array<Preference.Rule> | null;
+
+  source?: 'subscription' | 'list' | 'recipient' | null;
+}
+
+export namespace Preference {
+  export interface ChannelPreference {
+    channel: 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox';
+  }
+
+  export interface Rule {
+    until: string;
+
+    start?: string | null;
+  }
+}
+
 export interface Recipient {
   /**
    * Use `tenant_id` instead.
@@ -78,58 +100,24 @@ export interface Recipient {
 
 export namespace Recipient {
   export interface Preferences {
-    notifications: { [key: string]: Preferences.Notifications };
+    notifications: { [key: string]: SendAPI.Preference };
 
-    categories?: { [key: string]: Preferences.Categories } | null;
+    categories?: { [key: string]: SendAPI.Preference } | null;
 
     templateId?: string | null;
   }
+}
 
-  export namespace Preferences {
-    export interface Notifications {
-      status: 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED';
+export interface Utm {
+  campaign?: string | null;
 
-      channel_preferences?: Array<Notifications.ChannelPreference> | null;
+  content?: string | null;
 
-      rules?: Array<Notifications.Rule> | null;
+  medium?: string | null;
 
-      source?: 'subscription' | 'list' | 'recipient' | null;
-    }
+  source?: string | null;
 
-    export namespace Notifications {
-      export interface ChannelPreference {
-        channel: 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox';
-      }
-
-      export interface Rule {
-        until: string;
-
-        start?: string | null;
-      }
-    }
-
-    export interface Categories {
-      status: 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED';
-
-      channel_preferences?: Array<Categories.ChannelPreference> | null;
-
-      rules?: Array<Categories.Rule> | null;
-
-      source?: 'subscription' | 'list' | 'recipient' | null;
-    }
-
-    export namespace Categories {
-      export interface ChannelPreference {
-        channel: 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox';
-      }
-
-      export interface Rule {
-        until: string;
-
-        start?: string | null;
-      }
-    }
-  }
+  term?: string | null;
 }
 
 export interface SendMessageResponse {
@@ -245,21 +233,7 @@ export namespace SendMessageParams {
 
     export namespace Channels {
       export interface Metadata {
-        utm?: Metadata.Utm | null;
-      }
-
-      export namespace Metadata {
-        export interface Utm {
-          campaign?: string | null;
-
-          content?: string | null;
-
-          medium?: string | null;
-
-          source?: string | null;
-
-          term?: string | null;
-        }
+        utm?: SendAPI.Utm | null;
       }
 
       export interface Timeouts {
@@ -300,21 +274,7 @@ export namespace SendMessageParams {
 
       trace_id?: string | null;
 
-      utm?: Metadata.Utm | null;
-    }
-
-    export namespace Metadata {
-      export interface Utm {
-        campaign?: string | null;
-
-        content?: string | null;
-
-        medium?: string | null;
-
-        source?: string | null;
-
-        term?: string | null;
-      }
+      utm?: SendAPI.Utm | null;
     }
 
     export interface Preferences {
@@ -342,21 +302,7 @@ export namespace SendMessageParams {
 
     export namespace Providers {
       export interface Metadata {
-        utm?: Metadata.Utm | null;
-      }
-
-      export namespace Metadata {
-        export interface Utm {
-          campaign?: string | null;
-
-          content?: string | null;
-
-          medium?: string | null;
-
-          source?: string | null;
-
-          term?: string | null;
-        }
+        utm?: SendAPI.Utm | null;
       }
     }
 
@@ -418,57 +364,11 @@ export namespace SendMessageParams {
 
     export namespace UnionMember0 {
       export interface Preferences {
-        notifications: { [key: string]: Preferences.Notifications };
+        notifications: { [key: string]: SendAPI.Preference };
 
-        categories?: { [key: string]: Preferences.Categories } | null;
+        categories?: { [key: string]: SendAPI.Preference } | null;
 
         templateId?: string | null;
-      }
-
-      export namespace Preferences {
-        export interface Notifications {
-          status: 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED';
-
-          channel_preferences?: Array<Notifications.ChannelPreference> | null;
-
-          rules?: Array<Notifications.Rule> | null;
-
-          source?: 'subscription' | 'list' | 'recipient' | null;
-        }
-
-        export namespace Notifications {
-          export interface ChannelPreference {
-            channel: 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox';
-          }
-
-          export interface Rule {
-            until: string;
-
-            start?: string | null;
-          }
-        }
-
-        export interface Categories {
-          status: 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED';
-
-          channel_preferences?: Array<Categories.ChannelPreference> | null;
-
-          rules?: Array<Categories.Rule> | null;
-
-          source?: 'subscription' | 'list' | 'recipient' | null;
-        }
-
-        export namespace Categories {
-          export interface ChannelPreference {
-            channel: 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox';
-          }
-
-          export interface Rule {
-            until: string;
-
-            start?: string | null;
-          }
-        }
       }
     }
   }
@@ -479,7 +379,9 @@ export declare namespace Send {
     type MessageContext as MessageContext,
     type MessageRouting as MessageRouting,
     type MessageRoutingChannel as MessageRoutingChannel,
+    type Preference as Preference,
     type Recipient as Recipient,
+    type Utm as Utm,
     type SendMessageResponse as SendMessageResponse,
     type SendMessageParams as SendMessageParams,
   };

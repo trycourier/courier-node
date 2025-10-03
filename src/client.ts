@@ -20,10 +20,12 @@ import {
   MessageContext,
   MessageRouting,
   MessageRoutingChannel,
+  Preference,
   Recipient,
   Send,
   SendMessageParams,
   SendMessageResponse,
+  Utm,
 } from './resources/send';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -735,7 +737,9 @@ export declare namespace Courier {
     type MessageContext as MessageContext,
     type MessageRouting as MessageRouting,
     type MessageRoutingChannel as MessageRoutingChannel,
+    type Preference as Preference,
     type Recipient as Recipient,
+    type Utm as Utm,
     type SendMessageResponse as SendMessageResponse,
     type SendMessageParams as SendMessageParams,
   };
