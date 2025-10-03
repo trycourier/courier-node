@@ -22,8 +22,8 @@ import {
   MessageRoutingChannel,
   Recipient,
   Send,
-  SendSendMessageParams,
-  SendSendMessageResponse,
+  SendMessageParams,
+  SendMessageResponse,
 } from './resources/send';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -736,7 +736,7 @@ export declare namespace Courier {
     type MessageRouting as MessageRouting,
     type MessageRoutingChannel as MessageRoutingChannel,
     type Recipient as Recipient,
-    type SendSendMessageResponse as SendSendMessageResponse,
-    type SendSendMessageParams as SendSendMessageParams,
+    type SendMessageResponse as SendMessageResponse,
+    type SendMessageParams as SendMessageParams,
   };
 }
