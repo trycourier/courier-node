@@ -11,127 +11,20 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
-import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
-  Audience,
-  AudienceListMembersParams,
-  AudienceListMembersResponse,
-  AudienceListParams,
-  AudienceListResponse,
-  AudienceUpdateParams,
-  AudienceUpdateResponse,
-  Audiences,
-  Filter,
-  FilterConfig,
-  NestedFilterConfig,
-  Paging,
-} from './resources/audiences';
-import {
-  AuditEvent,
-  AuditEventListParams,
-  AuditEventListResponse,
-  AuditEvents,
-} from './resources/audit-events';
-import { Auth, AuthIssueTokenParams, AuthIssueTokenResponse } from './resources/auth';
-import {
-  Brand,
-  BrandColors,
-  BrandCreateParams,
-  BrandListParams,
-  BrandListResponse,
-  BrandSettings,
-  BrandSnippet,
-  BrandSnippets,
-  BrandUpdateParams,
-  Brands,
-  Email,
-} from './resources/brands';
-import {
-  Bulk,
-  BulkAddUsersParams,
-  BulkCreateJobParams,
-  BulkCreateJobResponse,
-  BulkListUsersParams,
-  BulkListUsersResponse,
-  BulkRetrieveJobResponse,
-  InboundBulkMessage,
-  InboundBulkMessageUser,
-  UserRecipient,
-} from './resources/bulk';
-import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
-import {
-  MessageContentResponse,
-  MessageDetails,
-  MessageHistoryParams,
-  MessageHistoryResponse,
-  MessageListParams,
-  MessageListResponse,
-  MessageRetrieveResponse,
-  Messages,
-} from './resources/messages';
-import { Requests } from './resources/requests';
-import {
-  BaseMessage,
-  BaseMessageSendTo,
-  Content,
-  Message,
   MessageContext,
-  MsTeamsBaseProperties,
-  Recipient,
-  Send,
-  SendMessageParams,
-  SendMessageResponse,
-  SlackBaseProperties,
-  Utm,
-} from './resources/send';
-import {
-  TranslationRetrieveParams,
-  TranslationRetrieveResponse,
-  TranslationUpdateParams,
-  Translations,
-} from './resources/translations';
-import { Automations } from './resources/automations/automations';
-import {
-  List,
-  ListListParams,
-  ListListResponse,
-  ListRestoreParams,
-  ListUpdateParams,
-  Lists,
-} from './resources/lists/lists';
-import {
   MessageRouting,
   MessageRoutingChannel,
-  NotificationGetContent,
-  NotificationListParams,
-  NotificationListResponse,
-  Notifications,
-} from './resources/notifications/notifications';
-import {
-  ProfileCreateParams,
-  ProfileCreateResponse,
-  ProfileReplaceParams,
-  ProfileReplaceResponse,
-  ProfileRetrieveResponse,
-  ProfileUpdateParams,
-  Profiles,
-} from './resources/profiles/profiles';
-import {
-  DefaultPreferences,
-  Tenant,
-  TenantListParams,
-  TenantListResponse,
-  TenantListUsersParams,
-  TenantListUsersResponse,
-  TenantUpdateParams,
-  Tenants,
-} from './resources/tenants/tenants';
-import { Users } from './resources/users/users';
+  Recipient,
+  Send,
+  SendSendMessageParams,
+  SendSendMessageResponse,
+} from './resources/send';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -325,8 +218,24 @@ export class Courier {
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
+  /**
+   * Basic re-implementation of `qs.stringify` for primitive types.
+   */
   protected stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+    return Object.entries(query)
+      .filter(([_, value]) => typeof value !== 'undefined')
+      .map(([key, value]) => {
+        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+        }
+        if (value === null) {
+          return `${encodeURIComponent(key)}=`;
+        }
+        throw new Errors.CourierError(
+          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
+        );
+      })
+      .join('&');
   }
 
   private getUserAgent(): string {
@@ -814,182 +723,20 @@ export class Courier {
   static toFile = Uploads.toFile;
 
   send: API.Send = new API.Send(this);
-  audiences: API.Audiences = new API.Audiences(this);
-  auditEvents: API.AuditEvents = new API.AuditEvents(this);
-  auth: API.Auth = new API.Auth(this);
-  automations: API.Automations = new API.Automations(this);
-  brands: API.Brands = new API.Brands(this);
-  bulk: API.Bulk = new API.Bulk(this);
-  inbound: API.Inbound = new API.Inbound(this);
-  lists: API.Lists = new API.Lists(this);
-  messages: API.Messages = new API.Messages(this);
-  requests: API.Requests = new API.Requests(this);
-  notifications: API.Notifications = new API.Notifications(this);
-  profiles: API.Profiles = new API.Profiles(this);
-  tenants: API.Tenants = new API.Tenants(this);
-  translations: API.Translations = new API.Translations(this);
-  users: API.Users = new API.Users(this);
 }
 
 Courier.Send = Send;
-Courier.Audiences = Audiences;
-Courier.AuditEvents = AuditEvents;
-Courier.Auth = Auth;
-Courier.Automations = Automations;
-Courier.Brands = Brands;
-Courier.Bulk = Bulk;
-Courier.Inbound = Inbound;
-Courier.Lists = Lists;
-Courier.Messages = Messages;
-Courier.Requests = Requests;
-Courier.Notifications = Notifications;
-Courier.Profiles = Profiles;
-Courier.Tenants = Tenants;
-Courier.Translations = Translations;
-Courier.Users = Users;
 
 export declare namespace Courier {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
     Send as Send,
-    type BaseMessage as BaseMessage,
-    type BaseMessageSendTo as BaseMessageSendTo,
-    type Content as Content,
-    type Message as Message,
     type MessageContext as MessageContext,
-    type MsTeamsBaseProperties as MsTeamsBaseProperties,
-    type Recipient as Recipient,
-    type SlackBaseProperties as SlackBaseProperties,
-    type Utm as Utm,
-    type SendMessageResponse as SendMessageResponse,
-    type SendMessageParams as SendMessageParams,
-  };
-
-  export {
-    Audiences as Audiences,
-    type Audience as Audience,
-    type Filter as Filter,
-    type FilterConfig as FilterConfig,
-    type NestedFilterConfig as NestedFilterConfig,
-    type Paging as Paging,
-    type AudienceUpdateResponse as AudienceUpdateResponse,
-    type AudienceListResponse as AudienceListResponse,
-    type AudienceListMembersResponse as AudienceListMembersResponse,
-    type AudienceUpdateParams as AudienceUpdateParams,
-    type AudienceListParams as AudienceListParams,
-    type AudienceListMembersParams as AudienceListMembersParams,
-  };
-
-  export {
-    AuditEvents as AuditEvents,
-    type AuditEvent as AuditEvent,
-    type AuditEventListResponse as AuditEventListResponse,
-    type AuditEventListParams as AuditEventListParams,
-  };
-
-  export {
-    Auth as Auth,
-    type AuthIssueTokenResponse as AuthIssueTokenResponse,
-    type AuthIssueTokenParams as AuthIssueTokenParams,
-  };
-
-  export { Automations as Automations };
-
-  export {
-    Brands as Brands,
-    type Brand as Brand,
-    type BrandColors as BrandColors,
-    type BrandSettings as BrandSettings,
-    type BrandSnippet as BrandSnippet,
-    type BrandSnippets as BrandSnippets,
-    type Email as Email,
-    type BrandListResponse as BrandListResponse,
-    type BrandCreateParams as BrandCreateParams,
-    type BrandUpdateParams as BrandUpdateParams,
-    type BrandListParams as BrandListParams,
-  };
-
-  export {
-    Bulk as Bulk,
-    type InboundBulkMessage as InboundBulkMessage,
-    type InboundBulkMessageUser as InboundBulkMessageUser,
-    type UserRecipient as UserRecipient,
-    type BulkCreateJobResponse as BulkCreateJobResponse,
-    type BulkListUsersResponse as BulkListUsersResponse,
-    type BulkRetrieveJobResponse as BulkRetrieveJobResponse,
-    type BulkAddUsersParams as BulkAddUsersParams,
-    type BulkCreateJobParams as BulkCreateJobParams,
-    type BulkListUsersParams as BulkListUsersParams,
-  };
-
-  export {
-    Inbound as Inbound,
-    type InboundTrackEventResponse as InboundTrackEventResponse,
-    type InboundTrackEventParams as InboundTrackEventParams,
-  };
-
-  export {
-    Lists as Lists,
-    type List as List,
-    type ListListResponse as ListListResponse,
-    type ListUpdateParams as ListUpdateParams,
-    type ListListParams as ListListParams,
-    type ListRestoreParams as ListRestoreParams,
-  };
-
-  export {
-    Messages as Messages,
-    type MessageDetails as MessageDetails,
-    type MessageRetrieveResponse as MessageRetrieveResponse,
-    type MessageListResponse as MessageListResponse,
-    type MessageContentResponse as MessageContentResponse,
-    type MessageHistoryResponse as MessageHistoryResponse,
-    type MessageListParams as MessageListParams,
-    type MessageHistoryParams as MessageHistoryParams,
-  };
-
-  export { Requests as Requests };
-
-  export {
-    Notifications as Notifications,
     type MessageRouting as MessageRouting,
     type MessageRoutingChannel as MessageRoutingChannel,
-    type NotificationGetContent as NotificationGetContent,
-    type NotificationListResponse as NotificationListResponse,
-    type NotificationListParams as NotificationListParams,
+    type Recipient as Recipient,
+    type SendSendMessageResponse as SendSendMessageResponse,
+    type SendSendMessageParams as SendSendMessageParams,
   };
-
-  export {
-    Profiles as Profiles,
-    type ProfileCreateResponse as ProfileCreateResponse,
-    type ProfileRetrieveResponse as ProfileRetrieveResponse,
-    type ProfileReplaceResponse as ProfileReplaceResponse,
-    type ProfileCreateParams as ProfileCreateParams,
-    type ProfileUpdateParams as ProfileUpdateParams,
-    type ProfileReplaceParams as ProfileReplaceParams,
-  };
-
-  export {
-    Tenants as Tenants,
-    type DefaultPreferences as DefaultPreferences,
-    type Tenant as Tenant,
-    type TenantListResponse as TenantListResponse,
-    type TenantListUsersResponse as TenantListUsersResponse,
-    type TenantUpdateParams as TenantUpdateParams,
-    type TenantListParams as TenantListParams,
-    type TenantListUsersParams as TenantListUsersParams,
-  };
-
-  export {
-    Translations as Translations,
-    type TranslationRetrieveResponse as TranslationRetrieveResponse,
-    type TranslationRetrieveParams as TranslationRetrieveParams,
-    type TranslationUpdateParams as TranslationUpdateParams,
-  };
-
-  export { Users as Users };
-
-  export type ChannelPreference = API.ChannelPreference;
-  export type Rule = API.Rule;
 }
