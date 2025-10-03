@@ -9,8 +9,8 @@ const client = new Courier({
 
 describe('resource send', () => {
   // Prism tests are disabled
-  test.skip('message: only required params', async () => {
-    const responsePromise = client.send.message({
+  test.skip('sendMessage: only required params', async () => {
+    const responsePromise = client.send.sendMessage({
       message: { content: { body: 'Thanks for signing up, {{name}}', title: 'Welcome!' } },
     });
     const rawResponse = await responsePromise.asResponse();
@@ -23,9 +23,10 @@ describe('resource send', () => {
   });
 
   // Prism tests are disabled
-  test.skip('message: required and optional params', async () => {
-    const response = await client.send.message({
+  test.skip('sendMessage: required and optional params', async () => {
+    const response = await client.send.sendMessage({
       message: {
+        content: { body: 'Thanks for signing up, {{name}}', title: 'Welcome!' },
         brand_id: 'brand_id',
         channels: {
           foo: {
@@ -82,11 +83,34 @@ describe('resource send', () => {
           provider: { foo: 0 },
         },
         to: {
+          account_id: 'account_id',
+          context: { tenant_id: 'tenant_id' },
           data: { foo: 'bar' },
-          filters: [{ operator: 'MEMBER_OF', path: 'account_id', value: 'value' }],
-          list_id: 'list_id',
+          email: 'email@example.com',
+          locale: 'locale',
+          phone_number: 'phone_number',
+          preferences: {
+            notifications: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+                source: 'subscription',
+              },
+            },
+            categories: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+                source: 'subscription',
+              },
+            },
+            templateId: 'templateId',
+          },
+          tenant_id: 'tenant_id',
+          user_id: 'user_id',
         },
-        content: { body: 'Thanks for signing up, {{name}}', title: 'Welcome!' },
       },
     });
   });
