@@ -13,13 +13,9 @@ export class Send extends APIResource {
    * ```ts
    * const response = await client.send.message({
    *   message: {
-   *     to: { email: 'email@example.com' },
-   *     content: {
-   *       title: 'Welcome!',
-   *       body: 'Thanks for signing up, {{name}}',
-   *     },
-   *     data: { name: 'Peter Parker' },
-   *     routing: { method: 'single', channels: ['email'] },
+   *     to: { user_id: 'example_user' },
+   *     template: 'template_id',
+   *     data: { name: 'Example Name' },
    *   },
    * });
    * ```

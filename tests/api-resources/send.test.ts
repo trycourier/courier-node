@@ -10,9 +10,7 @@ const client = new Courier({
 describe('resource send', () => {
   // Prism tests are disabled
   test.skip('message: only required params', async () => {
-    const responsePromise = client.send.message({
-      message: { content: { body: 'Thanks for signing up, {{name}}', title: 'Welcome!' } },
-    });
+    const responsePromise = client.send.message({ message: { content: { body: 'body', title: 'title' } } });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,7 +24,7 @@ describe('resource send', () => {
   test.skip('message: required and optional params', async () => {
     const response = await client.send.message({
       message: {
-        content: { body: 'Thanks for signing up, {{name}}', title: 'Welcome!' },
+        content: { body: 'body', title: 'title' },
         brand_id: 'brand_id',
         channels: {
           foo: {
@@ -74,7 +72,7 @@ describe('resource send', () => {
             timeouts: 0,
           },
         },
-        routing: { channels: ['email'], method: 'single' },
+        routing: { channels: ['string'], method: 'all' },
         timeout: {
           channel: { foo: 0 },
           criteria: 'no-escalation',
@@ -86,7 +84,7 @@ describe('resource send', () => {
           account_id: 'account_id',
           context: { tenant_id: 'tenant_id' },
           data: { foo: 'bar' },
-          email: 'email@example.com',
+          email: 'email',
           locale: 'locale',
           phone_number: 'phone_number',
           preferences: {
@@ -109,7 +107,7 @@ describe('resource send', () => {
             templateId: 'templateId',
           },
           tenant_id: 'tenant_id',
-          user_id: 'user_id',
+          user_id: 'example_user',
         },
       },
     });
