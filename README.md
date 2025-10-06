@@ -27,11 +27,7 @@ const client = new Courier({
 });
 
 const response = await client.send.message({
-  message: {
-    content: { body: 'body', title: 'title' },
-    data: { foo: 'bar' },
-    to: { user_id: 'your_user_id' },
-  },
+  message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } },
 });
 
 console.log(response.requestId);
@@ -50,11 +46,7 @@ const client = new Courier({
 });
 
 const params: Courier.SendMessageParams = {
-  message: {
-    content: { body: 'body', title: 'title' },
-    data: { foo: 'bar' },
-    to: { user_id: 'your_user_id' },
-  },
+  message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } },
 };
 const response: Courier.SendMessageResponse = await client.send.message(params);
 ```
@@ -70,13 +62,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const response = await client.send
-  .message({
-    message: {
-      content: { body: 'body', title: 'title' },
-      data: { foo: 'bar' },
-      to: { user_id: 'your_user_id' },
-    },
-  })
+  .message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } })
   .catch(async (err) => {
     if (err instanceof Courier.APIError) {
       console.log(err.status); // 400
@@ -117,7 +103,7 @@ const client = new Courier({
 });
 
 // Or, configure per-request:
-await client.send.message({ message: { content: { body: 'body', title: 'title' }, data: { foo: 'bar' }, to: { user_id: 'your_user_id' } } }, {
+await client.send.message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } }, {
   maxRetries: 5,
 });
 ```
@@ -134,7 +120,7 @@ const client = new Courier({
 });
 
 // Override per-request:
-await client.send.message({ message: { content: { body: 'body', title: 'title' }, data: { foo: 'bar' }, to: { user_id: 'your_user_id' } } }, {
+await client.send.message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } }, {
   timeout: 5 * 1000,
 });
 ```
@@ -158,25 +144,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new Courier();
 
 const response = await client.send
-  .message({
-    message: {
-      content: { body: 'body', title: 'title' },
-      data: { foo: 'bar' },
-      to: { user_id: 'your_user_id' },
-    },
-  })
+  .message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.send
-  .message({
-    message: {
-      content: { body: 'body', title: 'title' },
-      data: { foo: 'bar' },
-      to: { user_id: 'your_user_id' },
-    },
-  })
+  .message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.requestId);
