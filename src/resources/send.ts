@@ -29,6 +29,149 @@ export class Send extends APIResource {
   }
 }
 
+export type ElementalNode =
+  | ElementalNode.UnionMember0
+  | ElementalNode.UnionMember1
+  | ElementalNode.UnionMember2
+  | ElementalNode.UnionMember3
+  | ElementalNode.UnionMember4
+  | ElementalNode.UnionMember5
+  | ElementalNode.UnionMember6
+  | ElementalNode.UnionMember7;
+
+export namespace ElementalNode {
+  export interface UnionMember0 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'text';
+  }
+
+  export interface UnionMember1 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'meta';
+  }
+
+  export interface UnionMember2 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'channel';
+  }
+
+  export interface UnionMember3 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'image';
+  }
+
+  export interface UnionMember4 {
+    /**
+     * A unique id used to identify the action when it is executed.
+     */
+    action_id?: string | null;
+
+    /**
+     * The alignment of the action button. Defaults to "center".
+     */
+    align?: 'center' | 'left' | 'right' | 'full' | null;
+
+    /**
+     * The background color of the action button.
+     */
+    background_color?: string | null;
+
+    /**
+     * The text content of the action shown to the user.
+     */
+    content?: string;
+
+    /**
+     * The target URL of the action.
+     */
+    href?: string;
+
+    /**
+     * Region specific content. See
+     * [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
+     * for more details.
+     */
+    locales?: { [key: string]: UnionMember4.Locales } | null;
+
+    /**
+     * Defaults to `button`.
+     */
+    style?: 'button' | 'link' | null;
+
+    type?: 'action';
+  }
+
+  export namespace UnionMember4 {
+    export interface Locales {
+      content: string;
+    }
+  }
+
+  export interface UnionMember5 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'divider';
+  }
+
+  export interface UnionMember6 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'group';
+  }
+
+  export interface UnionMember7 {
+    channels?: Array<string> | null;
+
+    if?: string | null;
+
+    loop?: string | null;
+
+    ref?: string | null;
+
+    type?: 'quote';
+  }
+}
+
 export interface MessageContext {
   /**
    * Tenant id used to load brand/default preferences/context.
@@ -145,9 +288,10 @@ export namespace SendMessageParams {
    */
   export interface Message {
     /**
-     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+     * Describes content that will work for email, inbox, push, chat, or any channel
+     * id.
      */
-    content: Message.Content;
+    content: Message.ElementalContentSugar | Message.ElementalContent;
 
     brand_id?: string | null;
 
@@ -188,7 +332,7 @@ export namespace SendMessageParams {
     /**
      * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
      */
-    export interface Content {
+    export interface ElementalContentSugar {
       /**
        * The text content displayed in the notification.
        */
@@ -198,6 +342,17 @@ export namespace SendMessageParams {
        * Title/subject displayed by supported channels.
        */
       title: string;
+    }
+
+    export interface ElementalContent {
+      elements: Array<SendAPI.ElementalNode>;
+
+      /**
+       * For example, "2022-01-01"
+       */
+      version: string;
+
+      brand?: unknown;
     }
 
     export interface Channels {
@@ -376,6 +531,7 @@ export namespace SendMessageParams {
 
 export declare namespace Send {
   export {
+    type ElementalNode as ElementalNode,
     type MessageContext as MessageContext,
     type MessageRouting as MessageRouting,
     type MessageRoutingChannel as MessageRoutingChannel,
