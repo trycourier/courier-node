@@ -11,13 +11,81 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
+import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  Audience,
+  AudienceListMembersParams,
+  AudienceListMembersResponse,
+  AudienceListParams,
+  AudienceListResponse,
+  AudienceUpdateParams,
+  AudienceUpdateResponse,
+  Audiences,
+  Filter,
+  FilterConfig,
+  NestedFilterConfig,
+  Paging,
+} from './resources/audiences';
+import {
+  AuditEvent,
+  AuditEventListParams,
+  AuditEventListResponse,
+  AuditEvents,
+} from './resources/audit-events';
+import { Auth, AuthIssueTokenParams, AuthIssueTokenResponse } from './resources/auth';
+import {
+  Brand,
+  BrandColors,
+  BrandCreateParams,
+  BrandListParams,
+  BrandListResponse,
+  BrandSettings,
+  BrandSettingsEmail,
+  BrandSettingsInApp,
+  BrandSnippet,
+  BrandSnippets,
+  BrandTemplate,
+  BrandUpdateParams,
+  Brands,
+  EmailFooter,
+  EmailHead,
+  EmailHeader,
+  Icons,
+  Logo,
+  WidgetBackground,
+} from './resources/brands';
+import {
+  Bulk,
+  BulkAddUsersParams,
+  BulkCreateJobParams,
+  BulkCreateJobResponse,
+  BulkListUsersParams,
+  BulkListUsersResponse,
+  BulkRetrieveJobResponse,
+  InboundBulkMessage,
+  InboundBulkMessageUser,
+  UserRecipient,
+} from './resources/bulk';
+import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
+import {
+  MessageContentResponse,
+  MessageDetails,
+  MessageHistoryParams,
+  MessageHistoryResponse,
+  MessageListParams,
+  MessageListResponse,
+  MessageRetrieveResponse,
+  Messages,
+} from './resources/messages';
+import { Requests } from './resources/requests';
+import {
   Alignment,
+  Content,
   ElementalBaseNode,
   ElementalChannelNode,
   ElementalNode,
@@ -32,6 +100,47 @@ import {
   TextStyle,
   Utm,
 } from './resources/send';
+import {
+  TranslationRetrieveParams,
+  TranslationRetrieveResponse,
+  TranslationUpdateParams,
+  Translations,
+} from './resources/translations';
+import { Automations } from './resources/automations/automations';
+import {
+  List,
+  ListListParams,
+  ListListResponse,
+  ListRestoreParams,
+  ListUpdateParams,
+  Lists,
+} from './resources/lists/lists';
+import {
+  NotificationContent,
+  NotificationListParams,
+  NotificationListResponse,
+  Notifications,
+} from './resources/notifications/notifications';
+import {
+  ProfileCreateParams,
+  ProfileCreateResponse,
+  ProfileReplaceParams,
+  ProfileReplaceResponse,
+  ProfileRetrieveResponse,
+  ProfileUpdateParams,
+  Profiles,
+} from './resources/profiles/profiles';
+import {
+  DefaultPreferences,
+  Tenant,
+  TenantListParams,
+  TenantListResponse,
+  TenantListUsersParams,
+  TenantListUsersResponse,
+  TenantUpdateParams,
+  Tenants,
+} from './resources/tenants/tenants';
+import { Users } from './resources/users/users';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -225,24 +334,8 @@ export class Courier {
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
-  /**
-   * Basic re-implementation of `qs.stringify` for primitive types.
-   */
   protected stringifyQuery(query: Record<string, unknown>): string {
-    return Object.entries(query)
-      .filter(([_, value]) => typeof value !== 'undefined')
-      .map(([key, value]) => {
-        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-        }
-        if (value === null) {
-          return `${encodeURIComponent(key)}=`;
-        }
-        throw new Errors.CourierError(
-          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
-        );
-      })
-      .join('&');
+    return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
   private getUserAgent(): string {
@@ -730,9 +823,39 @@ export class Courier {
   static toFile = Uploads.toFile;
 
   send: API.Send = new API.Send(this);
+  tenants: API.Tenants = new API.Tenants(this);
+  audiences: API.Audiences = new API.Audiences(this);
+  bulk: API.Bulk = new API.Bulk(this);
+  users: API.Users = new API.Users(this);
+  auditEvents: API.AuditEvents = new API.AuditEvents(this);
+  automations: API.Automations = new API.Automations(this);
+  brands: API.Brands = new API.Brands(this);
+  lists: API.Lists = new API.Lists(this);
+  messages: API.Messages = new API.Messages(this);
+  notifications: API.Notifications = new API.Notifications(this);
+  auth: API.Auth = new API.Auth(this);
+  inbound: API.Inbound = new API.Inbound(this);
+  requests: API.Requests = new API.Requests(this);
+  profiles: API.Profiles = new API.Profiles(this);
+  translations: API.Translations = new API.Translations(this);
 }
 
 Courier.Send = Send;
+Courier.Tenants = Tenants;
+Courier.Audiences = Audiences;
+Courier.Bulk = Bulk;
+Courier.Users = Users;
+Courier.AuditEvents = AuditEvents;
+Courier.Automations = Automations;
+Courier.Brands = Brands;
+Courier.Lists = Lists;
+Courier.Messages = Messages;
+Courier.Notifications = Notifications;
+Courier.Auth = Auth;
+Courier.Inbound = Inbound;
+Courier.Requests = Requests;
+Courier.Profiles = Profiles;
+Courier.Translations = Translations;
 
 export declare namespace Courier {
   export type RequestOptions = Opts.RequestOptions;
@@ -740,6 +863,7 @@ export declare namespace Courier {
   export {
     Send as Send,
     type Alignment as Alignment,
+    type Content as Content,
     type ElementalBaseNode as ElementalBaseNode,
     type ElementalChannelNode as ElementalChannelNode,
     type ElementalNode as ElementalNode,
@@ -753,4 +877,137 @@ export declare namespace Courier {
     type SendMessageResponse as SendMessageResponse,
     type SendMessageParams as SendMessageParams,
   };
+
+  export {
+    Tenants as Tenants,
+    type DefaultPreferences as DefaultPreferences,
+    type Tenant as Tenant,
+    type TenantListResponse as TenantListResponse,
+    type TenantListUsersResponse as TenantListUsersResponse,
+    type TenantUpdateParams as TenantUpdateParams,
+    type TenantListParams as TenantListParams,
+    type TenantListUsersParams as TenantListUsersParams,
+  };
+
+  export {
+    Audiences as Audiences,
+    type Audience as Audience,
+    type Filter as Filter,
+    type FilterConfig as FilterConfig,
+    type NestedFilterConfig as NestedFilterConfig,
+    type Paging as Paging,
+    type AudienceUpdateResponse as AudienceUpdateResponse,
+    type AudienceListResponse as AudienceListResponse,
+    type AudienceListMembersResponse as AudienceListMembersResponse,
+    type AudienceUpdateParams as AudienceUpdateParams,
+    type AudienceListParams as AudienceListParams,
+    type AudienceListMembersParams as AudienceListMembersParams,
+  };
+
+  export {
+    Bulk as Bulk,
+    type InboundBulkMessage as InboundBulkMessage,
+    type InboundBulkMessageUser as InboundBulkMessageUser,
+    type UserRecipient as UserRecipient,
+    type BulkCreateJobResponse as BulkCreateJobResponse,
+    type BulkListUsersResponse as BulkListUsersResponse,
+    type BulkRetrieveJobResponse as BulkRetrieveJobResponse,
+    type BulkAddUsersParams as BulkAddUsersParams,
+    type BulkCreateJobParams as BulkCreateJobParams,
+    type BulkListUsersParams as BulkListUsersParams,
+  };
+
+  export { Users as Users };
+
+  export {
+    AuditEvents as AuditEvents,
+    type AuditEvent as AuditEvent,
+    type AuditEventListResponse as AuditEventListResponse,
+    type AuditEventListParams as AuditEventListParams,
+  };
+
+  export { Automations as Automations };
+
+  export {
+    Brands as Brands,
+    type Brand as Brand,
+    type BrandColors as BrandColors,
+    type BrandSettings as BrandSettings,
+    type BrandSettingsEmail as BrandSettingsEmail,
+    type BrandSettingsInApp as BrandSettingsInApp,
+    type BrandSnippet as BrandSnippet,
+    type BrandSnippets as BrandSnippets,
+    type BrandTemplate as BrandTemplate,
+    type EmailFooter as EmailFooter,
+    type EmailHead as EmailHead,
+    type EmailHeader as EmailHeader,
+    type Icons as Icons,
+    type Logo as Logo,
+    type WidgetBackground as WidgetBackground,
+    type BrandListResponse as BrandListResponse,
+    type BrandCreateParams as BrandCreateParams,
+    type BrandUpdateParams as BrandUpdateParams,
+    type BrandListParams as BrandListParams,
+  };
+
+  export {
+    Lists as Lists,
+    type List as List,
+    type ListListResponse as ListListResponse,
+    type ListUpdateParams as ListUpdateParams,
+    type ListListParams as ListListParams,
+    type ListRestoreParams as ListRestoreParams,
+  };
+
+  export {
+    Messages as Messages,
+    type MessageDetails as MessageDetails,
+    type MessageRetrieveResponse as MessageRetrieveResponse,
+    type MessageListResponse as MessageListResponse,
+    type MessageContentResponse as MessageContentResponse,
+    type MessageHistoryResponse as MessageHistoryResponse,
+    type MessageListParams as MessageListParams,
+    type MessageHistoryParams as MessageHistoryParams,
+  };
+
+  export {
+    Notifications as Notifications,
+    type NotificationContent as NotificationContent,
+    type NotificationListResponse as NotificationListResponse,
+    type NotificationListParams as NotificationListParams,
+  };
+
+  export {
+    Auth as Auth,
+    type AuthIssueTokenResponse as AuthIssueTokenResponse,
+    type AuthIssueTokenParams as AuthIssueTokenParams,
+  };
+
+  export {
+    Inbound as Inbound,
+    type InboundTrackEventResponse as InboundTrackEventResponse,
+    type InboundTrackEventParams as InboundTrackEventParams,
+  };
+
+  export { Requests as Requests };
+
+  export {
+    Profiles as Profiles,
+    type ProfileCreateResponse as ProfileCreateResponse,
+    type ProfileRetrieveResponse as ProfileRetrieveResponse,
+    type ProfileReplaceResponse as ProfileReplaceResponse,
+    type ProfileCreateParams as ProfileCreateParams,
+    type ProfileUpdateParams as ProfileUpdateParams,
+    type ProfileReplaceParams as ProfileReplaceParams,
+  };
+
+  export {
+    Translations as Translations,
+    type TranslationRetrieveResponse as TranslationRetrieveResponse,
+    type TranslationRetrieveParams as TranslationRetrieveParams,
+    type TranslationUpdateParams as TranslationUpdateParams,
+  };
+
+  export type ChannelPreference = API.ChannelPreference;
+  export type Rule = API.Rule;
 }
