@@ -351,7 +351,7 @@ export namespace SendMessageParams {
        */
       version: string;
 
-      brand?: unknown;
+      brand?: string | null;
     }
 
     export interface Channels {
