@@ -18,7 +18,6 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   ElementalChannelNode,
-  ElementalGroupNode,
   ElementalNode,
   MessageContext,
   MessageRouting,
@@ -738,7 +737,6 @@ export declare namespace Courier {
   export {
     Send as Send,
     type ElementalChannelNode as ElementalChannelNode,
-    type ElementalGroupNode as ElementalGroupNode,
     type ElementalNode as ElementalNode,
     type MessageContext as MessageContext,
     type MessageRouting as MessageRouting,

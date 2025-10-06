@@ -3,7 +3,6 @@
 export {
   Send,
   type ElementalChannelNode,
-  type ElementalGroupNode,
   type ElementalNode,
   type MessageContext,
   type MessageRouting,
