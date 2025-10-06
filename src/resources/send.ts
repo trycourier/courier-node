@@ -286,12 +286,6 @@ export namespace SendMessageParams {
    * the destination and content of the message.
    */
   export interface Message {
-    /**
-     * Describes content that will work for email, inbox, push, chat, or any channel
-     * id.
-     */
-    content: Message.ElementalContentSugar | Message.ElementalContent;
-
     brand_id?: string | null;
 
     /**
@@ -299,6 +293,12 @@ export namespace SendMessageParams {
      * inbox, direct_message, banner, webhook.
      */
     channels?: { [key: string]: Message.Channels } | null;
+
+    /**
+     * Describes content that will work for email, inbox, push, chat, or any channel
+     * id.
+     */
+    content?: Message.ElementalContentSugar | Message.ElementalContent;
 
     context?: SendAPI.MessageContext | null;
 
@@ -328,32 +328,6 @@ export namespace SendMessageParams {
   }
 
   export namespace Message {
-    /**
-     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
-     */
-    export interface ElementalContentSugar {
-      /**
-       * The text content displayed in the notification.
-       */
-      body: string;
-
-      /**
-       * Title/subject displayed by supported channels.
-       */
-      title: string;
-    }
-
-    export interface ElementalContent {
-      elements: Array<SendAPI.ElementalNode>;
-
-      /**
-       * For example, "2022-01-01"
-       */
-      version: string;
-
-      brand?: string | null;
-    }
-
     export interface Channels {
       /**
        * Brand id used for rendering.
@@ -395,6 +369,32 @@ export namespace SendMessageParams {
 
         provider?: number | null;
       }
+    }
+
+    /**
+     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+     */
+    export interface ElementalContentSugar {
+      /**
+       * The text content displayed in the notification.
+       */
+      body: string;
+
+      /**
+       * Title/subject displayed by supported channels.
+       */
+      title: string;
+    }
+
+    export interface ElementalContent {
+      elements: Array<SendAPI.ElementalNode>;
+
+      /**
+       * For example, "2022-01-01"
+       */
+      version: string;
+
+      brand?: string | null;
     }
 
     export interface Delay {
