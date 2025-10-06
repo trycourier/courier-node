@@ -57,21 +57,6 @@ export interface ElementalChannelNode {
   ref?: string | null;
 }
 
-export interface ElementalGroupNode {
-  /**
-   * Sub elements to render.
-   */
-  elements: Array<ElementalNode>;
-
-  channels?: Array<string> | null;
-
-  if?: string | null;
-
-  loop?: string | null;
-
-  ref?: string | null;
-}
-
 /**
  * The channel element allows a notification to be customized based on which
  * channel it is sent through. For example, you may want to display a detailed
@@ -91,8 +76,7 @@ export type ElementalNode =
   | ElementalNode.UnionMember3
   | ElementalNode.UnionMember4
   | ElementalNode.UnionMember5
-  | ElementalNode.UnionMember6
-  | ElementalNode.UnionMember7;
+  | ElementalNode.UnionMember6;
 
 export namespace ElementalNode {
   export interface UnionMember0 {
@@ -206,17 +190,7 @@ export namespace ElementalNode {
     type?: 'divider';
   }
 
-  /**
-   * Allows you to group elements together. This can be useful when used in
-   * combination with "if" or "loop". See
-   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-   * for more details.
-   */
-  export interface UnionMember6 extends SendAPI.ElementalGroupNode {
-    type?: 'group';
-  }
-
-  export interface UnionMember7 {
+  export interface UnionMember6 {
     channels?: Array<string> | null;
 
     if?: string | null;
@@ -589,7 +563,6 @@ export namespace SendMessageParams {
 export declare namespace Send {
   export {
     type ElementalChannelNode as ElementalChannelNode,
-    type ElementalGroupNode as ElementalGroupNode,
     type ElementalNode as ElementalNode,
     type MessageContext as MessageContext,
     type MessageRouting as MessageRouting,
