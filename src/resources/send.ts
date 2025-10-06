@@ -29,32 +29,42 @@ export class Send extends APIResource {
   }
 }
 
-export interface ElementalChannelNode {
+export type Alignment = 'center' | 'left' | 'right' | 'full';
+
+export interface ElementalBaseNode {
+  channels?: Array<string> | null;
+
+  if?: string | null;
+
+  loop?: string | null;
+
+  ref?: string | null;
+}
+
+/**
+ * The channel element allows a notification to be customized based on which
+ * channel it is sent through. For example, you may want to display a detailed
+ * message when the notification is sent through email, and a more concise message
+ * in a push notification. Channel elements are only valid as top-level elements;
+ * you cannot nest channel elements. If there is a channel element specified at the
+ * top-level of the document, all sibling elements must be channel elements. Note:
+ * As an alternative, most elements support a `channel` property. Which allows you
+ * to selectively display an individual element on a per channel basis. See the
+ * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
+ * for more details.
+ */
+export interface ElementalChannelNode extends ElementalBaseNode {
   /**
    * The channel the contents of this element should be applied to. Can be `email`,
    * `push`, `direct_message`, `sms` or a provider such as slack
    */
   channel: string;
 
-  channels?: Array<string> | null;
-
-  /**
-   * An array of elements to apply to the channel. If `raw` has not been specified,
-   * `elements` is `required`.
-   */
-  elements?: Array<ElementalNode> | null;
-
-  if?: string | null;
-
-  loop?: string | null;
-
   /**
    * Raw data to apply to the channel. If `elements` has not been specified, `raw` is
    * `required`.
    */
   raw?: { [key: string]: unknown } | null;
-
-  ref?: string | null;
 }
 
 /**
@@ -79,27 +89,11 @@ export type ElementalNode =
   | ElementalNode.UnionMember6;
 
 export namespace ElementalNode {
-  export interface UnionMember0 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
+  export interface UnionMember0 extends SendAPI.ElementalBaseNode {
     type?: 'text';
   }
 
-  export interface UnionMember1 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
+  export interface UnionMember1 extends SendAPI.ElementalBaseNode {
     type?: 'meta';
   }
 
@@ -119,15 +113,7 @@ export namespace ElementalNode {
     type?: 'channel';
   }
 
-  export interface UnionMember3 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
+  export interface UnionMember3 extends SendAPI.ElementalBaseNode {
     type?: 'image';
   }
 
@@ -140,7 +126,7 @@ export namespace ElementalNode {
     /**
      * The alignment of the action button. Defaults to "center".
      */
-    align?: 'center' | 'left' | 'right' | 'full' | null;
+    align?: SendAPI.Alignment | null;
 
     /**
      * The background color of the action button.
@@ -178,27 +164,11 @@ export namespace ElementalNode {
     }
   }
 
-  export interface UnionMember5 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
+  export interface UnionMember5 extends SendAPI.ElementalBaseNode {
     type?: 'divider';
   }
 
-  export interface UnionMember6 {
-    channels?: Array<string> | null;
-
-    if?: string | null;
-
-    loop?: string | null;
-
-    ref?: string | null;
-
+  export interface UnionMember6 extends SendAPI.ElementalBaseNode {
     type?: 'quote';
   }
 }
@@ -281,6 +251,8 @@ export namespace Recipient {
     templateId?: string | null;
   }
 }
+
+export type TextStyle = 'text' | 'h1' | 'h2' | 'subtext';
 
 export interface Utm {
   campaign?: string | null;
@@ -562,6 +534,8 @@ export namespace SendMessageParams {
 
 export declare namespace Send {
   export {
+    type Alignment as Alignment,
+    type ElementalBaseNode as ElementalBaseNode,
     type ElementalChannelNode as ElementalChannelNode,
     type ElementalNode as ElementalNode,
     type MessageContext as MessageContext,
@@ -569,6 +543,7 @@ export declare namespace Send {
     type MessageRoutingChannel as MessageRoutingChannel,
     type Preference as Preference,
     type Recipient as Recipient,
+    type TextStyle as TextStyle,
     type Utm as Utm,
     type SendMessageResponse as SendMessageResponse,
     type SendMessageParams as SendMessageParams,

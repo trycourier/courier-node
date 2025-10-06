@@ -17,6 +17,8 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  Alignment,
+  ElementalBaseNode,
   ElementalChannelNode,
   ElementalNode,
   MessageContext,
@@ -27,6 +29,7 @@ import {
   Send,
   SendMessageParams,
   SendMessageResponse,
+  TextStyle,
   Utm,
 } from './resources/send';
 import { type Fetch } from './internal/builtin-types';
@@ -736,6 +739,8 @@ export declare namespace Courier {
 
   export {
     Send as Send,
+    type Alignment as Alignment,
+    type ElementalBaseNode as ElementalBaseNode,
     type ElementalChannelNode as ElementalChannelNode,
     type ElementalNode as ElementalNode,
     type MessageContext as MessageContext,
@@ -743,6 +748,7 @@ export declare namespace Courier {
     type MessageRoutingChannel as MessageRoutingChannel,
     type Preference as Preference,
     type Recipient as Recipient,
+    type TextStyle as TextStyle,
     type Utm as Utm,
     type SendMessageResponse as SendMessageResponse,
     type SendMessageParams as SendMessageParams,
