@@ -2,6 +2,8 @@
 
 Types:
 
+- <code><a href="./src/resources/send.ts">ElementalChannelNode</a></code>
+- <code><a href="./src/resources/send.ts">ElementalGroupNode</a></code>
 - <code><a href="./src/resources/send.ts">ElementalNode</a></code>
 - <code><a href="./src/resources/send.ts">MessageContext</a></code>
 - <code><a href="./src/resources/send.ts">MessageRouting</a></code>
