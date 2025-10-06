@@ -2,6 +2,10 @@
 
 import { APIResource } from '../core/resource';
 import * as SendAPI from './send';
+import * as BulkAPI from './bulk';
+import * as Shared from './shared';
+import * as TemplatesAPI from './tenants/templates';
+import * as PreferencesAPI from './users/preferences';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -26,6 +30,28 @@ export class Send extends APIResource {
 }
 
 export type Alignment = 'center' | 'left' | 'right' | 'full';
+
+/**
+ * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+ */
+export type Content = Content.ElementalContentSugar | TemplatesAPI.ElementalContent;
+
+export namespace Content {
+  /**
+   * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+   */
+  export interface ElementalContentSugar {
+    /**
+     * The text content displayed in the notification.
+     */
+    body: string;
+
+    /**
+     * Title/subject displayed by supported channels.
+     */
+    title: string;
+  }
+}
 
 export interface ElementalBaseNode {
   channels?: Array<string> | null;
@@ -185,25 +211,13 @@ export interface MessageRouting {
 export type MessageRoutingChannel = string | MessageRouting;
 
 export interface Preference {
-  status: 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED';
+  status: PreferencesAPI.PreferenceStatus;
 
-  channel_preferences?: Array<Preference.ChannelPreference> | null;
+  channel_preferences?: Array<Shared.ChannelPreference> | null;
 
-  rules?: Array<Preference.Rule> | null;
+  rules?: Array<Shared.Rule> | null;
 
   source?: 'subscription' | 'list' | 'recipient' | null;
-}
-
-export namespace Preference {
-  export interface ChannelPreference {
-    channel: 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox';
-  }
-
-  export interface Rule {
-    until: string;
-
-    start?: string | null;
-  }
 }
 
 export interface Recipient {
@@ -298,7 +312,7 @@ export namespace SendMessageParams {
      * Describes content that will work for email, inbox, push, chat, or any channel
      * id.
      */
-    content?: Message.ElementalContentSugar | Message.ElementalContent;
+    content?: SendAPI.Content;
 
     context?: SendAPI.MessageContext | null;
 
@@ -324,7 +338,7 @@ export namespace SendMessageParams {
     /**
      * The recipient or a list of recipients of the message
      */
-    to?: Message.UnionMember0 | Array<SendAPI.Recipient> | null;
+    to?: BulkAPI.UserRecipient | Array<SendAPI.Recipient> | null;
   }
 
   export namespace Message {
@@ -369,32 +383,6 @@ export namespace SendMessageParams {
 
         provider?: number | null;
       }
-    }
-
-    /**
-     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
-     */
-    export interface ElementalContentSugar {
-      /**
-       * The text content displayed in the notification.
-       */
-      body: string;
-
-      /**
-       * Title/subject displayed by supported channels.
-       */
-      title: string;
-    }
-
-    export interface ElementalContent {
-      elements: Array<SendAPI.ElementalNode>;
-
-      /**
-       * For example, "2022-01-01"
-       */
-      version: string;
-
-      brand?: string | null;
     }
 
     export interface Delay {
@@ -483,54 +471,13 @@ export namespace SendMessageParams {
 
       provider?: { [key: string]: number } | null;
     }
-
-    export interface UnionMember0 {
-      /**
-       * Use `tenant_id` instead.
-       */
-      account_id?: string | null;
-
-      /**
-       * Context such as tenant_id to send the notification with.
-       */
-      context?: SendAPI.MessageContext | null;
-
-      data?: { [key: string]: unknown } | null;
-
-      email?: string | null;
-
-      /**
-       * The user's preferred ISO 639-1 language code.
-       */
-      locale?: string | null;
-
-      phone_number?: string | null;
-
-      preferences?: UnionMember0.Preferences | null;
-
-      /**
-       * Tenant id. Will load brand, default preferences and base context data.
-       */
-      tenant_id?: string | null;
-
-      user_id?: string | null;
-    }
-
-    export namespace UnionMember0 {
-      export interface Preferences {
-        notifications: { [key: string]: SendAPI.Preference };
-
-        categories?: { [key: string]: SendAPI.Preference } | null;
-
-        templateId?: string | null;
-      }
-    }
   }
 }
 
 export declare namespace Send {
   export {
     type Alignment as Alignment,
+    type Content as Content,
     type ElementalBaseNode as ElementalBaseNode,
     type ElementalChannelNode as ElementalChannelNode,
     type ElementalNode as ElementalNode,
