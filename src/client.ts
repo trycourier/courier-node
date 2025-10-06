@@ -17,6 +17,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  ElementalNode,
   MessageContext,
   MessageRouting,
   MessageRoutingChannel,
@@ -734,6 +735,7 @@ export declare namespace Courier {
 
   export {
     Send as Send,
+    type ElementalNode as ElementalNode,
     type MessageContext as MessageContext,
     type MessageRouting as MessageRouting,
     type MessageRoutingChannel as MessageRoutingChannel,
