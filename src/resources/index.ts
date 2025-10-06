@@ -2,6 +2,8 @@
 
 export {
   Send,
+  type Alignment,
+  type ElementalBaseNode,
   type ElementalChannelNode,
   type ElementalNode,
   type MessageContext,
@@ -9,6 +11,7 @@ export {
   type MessageRoutingChannel,
   type Preference,
   type Recipient,
+  type TextStyle,
   type Utm,
   type SendMessageResponse,
   type SendMessageParams,
