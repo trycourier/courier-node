@@ -5,6 +5,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">Alignment</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalBaseNode</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalContentSugar</a></code>
 - <code><a href="./src/resources/shared.ts">MessageRouting</a></code>
 - <code><a href="./src/resources/shared.ts">MessageRoutingChannel</a></code>
 - <code><a href="./src/resources/shared.ts">Preference</a></code>

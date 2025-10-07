@@ -257,7 +257,7 @@ export namespace SendMessageParams {
      * Describes content that will work for email, inbox, push, chat, or any channel
      * id.
      */
-    content?: Message.ElementalContentSugar | TemplatesAPI.ElementalContent;
+    content?: Shared.ElementalContentSugar | TemplatesAPI.ElementalContent;
 
     context?: SendAPI.MessageContext | null;
 
@@ -328,21 +328,6 @@ export namespace SendMessageParams {
 
         provider?: number | null;
       }
-    }
-
-    /**
-     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
-     */
-    export interface ElementalContentSugar {
-      /**
-       * The text content displayed in the notification.
-       */
-      body: string;
-
-      /**
-       * Title/subject displayed by supported channels.
-       */
-      title: string;
     }
 
     export interface Delay {

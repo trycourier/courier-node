@@ -83,7 +83,7 @@ export namespace InboundBulkMessage {
     /**
      * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
      */
-    content: InboundBulkContentMessage.ElementalContentSugar | TemplatesAPI.ElementalContent;
+    content: Shared.ElementalContentSugar | TemplatesAPI.ElementalContent;
 
     brand?: string | null;
 
@@ -94,23 +94,6 @@ export namespace InboundBulkMessage {
     locale?: { [key: string]: { [key: string]: unknown } } | null;
 
     override?: { [key: string]: unknown } | null;
-  }
-
-  export namespace InboundBulkContentMessage {
-    /**
-     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
-     */
-    export interface ElementalContentSugar {
-      /**
-       * The text content displayed in the notification.
-       */
-      body: string;
-
-      /**
-       * Title/subject displayed by supported channels.
-       */
-      title: string;
-    }
   }
 }
 
