@@ -148,7 +148,7 @@ export interface BrandTemplate {
 }
 
 export interface EmailFooter {
-  content?: unknown;
+  content?: string | null;
 
   inheritDefault?: boolean | null;
 }
