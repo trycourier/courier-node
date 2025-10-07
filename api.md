@@ -1,3 +1,11 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
+- <code><a href="./src/resources/shared.ts">Preference</a></code>
+- <code><a href="./src/resources/shared.ts">Rule</a></code>
+
 # Send
 
 Types:
@@ -5,6 +13,7 @@ Types:
 - <code><a href="./src/resources/send.ts">Content</a></code>
 - <code><a href="./src/resources/send.ts">MessageContext</a></code>
 - <code><a href="./src/resources/send.ts">Recipient</a></code>
+- <code><a href="./src/resources/send.ts">Utm</a></code>
 - <code><a href="./src/resources/send.ts">SendSendMessageResponse</a></code>
 
 Methods:
@@ -72,9 +81,19 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/brands.ts">Brand</a></code>
+- <code><a href="./src/resources/brands.ts">BrandColors</a></code>
 - <code><a href="./src/resources/brands.ts">BrandSettings</a></code>
+- <code><a href="./src/resources/brands.ts">BrandSettingsEmail</a></code>
+- <code><a href="./src/resources/brands.ts">BrandSettingsInApp</a></code>
+- <code><a href="./src/resources/brands.ts">BrandSnippet</a></code>
 - <code><a href="./src/resources/brands.ts">BrandSnippets</a></code>
 - <code><a href="./src/resources/brands.ts">BrandTemplate</a></code>
+- <code><a href="./src/resources/brands.ts">EmailFooter</a></code>
+- <code><a href="./src/resources/brands.ts">EmailHead</a></code>
+- <code><a href="./src/resources/brands.ts">EmailHeader</a></code>
+- <code><a href="./src/resources/brands.ts">Icons</a></code>
+- <code><a href="./src/resources/brands.ts">Logo</a></code>
+- <code><a href="./src/resources/brands.ts">WidgetBackground</a></code>
 - <code><a href="./src/resources/brands.ts">BrandListResponse</a></code>
 
 Methods:
@@ -133,6 +152,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/lists/subscriptions.ts">NotificationPreferenceDetails</a></code>
 - <code><a href="./src/resources/lists/subscriptions.ts">PutSubscriptionsRecipient</a></code>
 - <code><a href="./src/resources/lists/subscriptions.ts">RecipientPreferences</a></code>
 - <code><a href="./src/resources/lists/subscriptions.ts">SubscriptionListResponse</a></code>
