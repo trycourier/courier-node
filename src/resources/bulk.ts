@@ -6,6 +6,7 @@ import * as AudiencesAPI from './audiences';
 import * as SendAPI from './send';
 import * as Shared from './shared';
 import * as SubscriptionsAPI from './lists/subscriptions';
+import * as TemplatesAPI from './tenants/templates';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -82,7 +83,7 @@ export namespace InboundBulkMessage {
     /**
      * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
      */
-    content: SendAPI.Content;
+    content: InboundBulkContentMessage.ElementalContentSugar | TemplatesAPI.ElementalContent;
 
     brand?: string | null;
 
@@ -93,6 +94,23 @@ export namespace InboundBulkMessage {
     locale?: { [key: string]: { [key: string]: unknown } } | null;
 
     override?: { [key: string]: unknown } | null;
+  }
+
+  export namespace InboundBulkContentMessage {
+    /**
+     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+     */
+    export interface ElementalContentSugar {
+      /**
+       * The text content displayed in the notification.
+       */
+      body: string;
+
+      /**
+       * Title/subject displayed by supported channels.
+       */
+      title: string;
+    }
   }
 }
 

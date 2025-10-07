@@ -13,8 +13,6 @@ export {
 export { Draft } from './draft';
 export {
   Notifications,
-  type MessageRouting,
-  type MessageRoutingChannel,
   type NotificationGetContent,
   type NotificationListResponse,
   type NotificationListParams,

@@ -76,8 +76,6 @@ export {
 } from './messages';
 export {
   Notifications,
-  type MessageRouting,
-  type MessageRoutingChannel,
   type NotificationGetContent,
   type NotificationListResponse,
   type NotificationListParams,
@@ -94,12 +92,13 @@ export {
 export { Requests } from './requests';
 export {
   Send,
-  type Content,
+  type ElementalChannelNode,
+  type ElementalNode,
   type MessageContext,
   type Recipient,
   type Utm,
-  type SendSendMessageResponse,
-  type SendSendMessageParams,
+  type SendMessageResponse,
+  type SendMessageParams,
 } from './send';
 export {
   Tenants,

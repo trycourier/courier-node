@@ -4,7 +4,6 @@ import { APIResource } from '../core/resource';
 import * as SendAPI from './send';
 import * as BulkAPI from './bulk';
 import * as Shared from './shared';
-import * as NotificationsAPI from './notifications/notifications';
 import * as TemplatesAPI from './tenants/templates';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
@@ -15,7 +14,7 @@ export class Send extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.send.sendMessage({
+   * const response = await client.send.message({
    *   message: {
    *     to: { user_id: 'example_user' },
    *     template: 'template_id',
@@ -24,30 +23,140 @@ export class Send extends APIResource {
    * });
    * ```
    */
-  sendMessage(body: SendSendMessageParams, options?: RequestOptions): APIPromise<SendSendMessageResponse> {
+  message(body: SendMessageParams, options?: RequestOptions): APIPromise<SendMessageResponse> {
     return this._client.post('/send', { body, ...options });
   }
 }
 
 /**
- * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+ * The channel element allows a notification to be customized based on which
+ * channel it is sent through. For example, you may want to display a detailed
+ * message when the notification is sent through email, and a more concise message
+ * in a push notification. Channel elements are only valid as top-level elements;
+ * you cannot nest channel elements. If there is a channel element specified at the
+ * top-level of the document, all sibling elements must be channel elements. Note:
+ * As an alternative, most elements support a `channel` property. Which allows you
+ * to selectively display an individual element on a per channel basis. See the
+ * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
+ * for more details.
  */
-export type Content = Content.ElementalContentSugar | TemplatesAPI.ElementalContent;
-
-export namespace Content {
+export interface ElementalChannelNode extends Shared.ElementalBaseNode {
   /**
-   * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+   * The channel the contents of this element should be applied to. Can be `email`,
+   * `push`, `direct_message`, `sms` or a provider such as slack
    */
-  export interface ElementalContentSugar {
+  channel: string;
+
+  /**
+   * Raw data to apply to the channel. If `elements` has not been specified, `raw` is
+   * `required`.
+   */
+  raw?: { [key: string]: unknown } | null;
+}
+
+/**
+ * The channel element allows a notification to be customized based on which
+ * channel it is sent through. For example, you may want to display a detailed
+ * message when the notification is sent through email, and a more concise message
+ * in a push notification. Channel elements are only valid as top-level elements;
+ * you cannot nest channel elements. If there is a channel element specified at the
+ * top-level of the document, all sibling elements must be channel elements. Note:
+ * As an alternative, most elements support a `channel` property. Which allows you
+ * to selectively display an individual element on a per channel basis. See the
+ * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
+ * for more details.
+ */
+export type ElementalNode =
+  | ElementalNode.UnionMember0
+  | ElementalNode.UnionMember1
+  | ElementalNode.UnionMember2
+  | ElementalNode.UnionMember3
+  | ElementalNode.UnionMember4
+  | ElementalNode.UnionMember5
+  | ElementalNode.UnionMember6;
+
+export namespace ElementalNode {
+  export interface UnionMember0 extends Shared.ElementalBaseNode {
+    type?: 'text';
+  }
+
+  export interface UnionMember1 extends Shared.ElementalBaseNode {
+    type?: 'meta';
+  }
+
+  /**
+   * The channel element allows a notification to be customized based on which
+   * channel it is sent through. For example, you may want to display a detailed
+   * message when the notification is sent through email, and a more concise message
+   * in a push notification. Channel elements are only valid as top-level elements;
+   * you cannot nest channel elements. If there is a channel element specified at the
+   * top-level of the document, all sibling elements must be channel elements. Note:
+   * As an alternative, most elements support a `channel` property. Which allows you
+   * to selectively display an individual element on a per channel basis. See the
+   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
+   * for more details.
+   */
+  export interface UnionMember2 extends SendAPI.ElementalChannelNode {
+    type?: 'channel';
+  }
+
+  export interface UnionMember3 extends Shared.ElementalBaseNode {
+    type?: 'image';
+  }
+
+  export interface UnionMember4 {
     /**
-     * The text content displayed in the notification.
+     * A unique id used to identify the action when it is executed.
      */
-    body: string;
+    action_id?: string | null;
 
     /**
-     * Title/subject displayed by supported channels.
+     * The alignment of the action button. Defaults to "center".
      */
-    title: string;
+    align?: Shared.Alignment | null;
+
+    /**
+     * The background color of the action button.
+     */
+    background_color?: string | null;
+
+    /**
+     * The text content of the action shown to the user.
+     */
+    content?: string;
+
+    /**
+     * The target URL of the action.
+     */
+    href?: string;
+
+    /**
+     * Region specific content. See
+     * [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
+     * for more details.
+     */
+    locales?: { [key: string]: UnionMember4.Locales } | null;
+
+    /**
+     * Defaults to `button`.
+     */
+    style?: 'button' | 'link' | null;
+
+    type?: 'action';
+  }
+
+  export namespace UnionMember4 {
+    export interface Locales {
+      content: string;
+    }
+  }
+
+  export interface UnionMember5 extends Shared.ElementalBaseNode {
+    type?: 'divider';
+  }
+
+  export interface UnionMember6 extends Shared.ElementalBaseNode {
+    type?: 'quote';
   }
 }
 
@@ -112,7 +221,7 @@ export interface Utm {
   term?: string | null;
 }
 
-export interface SendSendMessageResponse {
+export interface SendMessageResponse {
   /**
    * A successful call to `POST /send` returns a `202` status code along with a
    * `requestId` in the response body. For single-recipient requests, the `requestId`
@@ -122,15 +231,15 @@ export interface SendSendMessageResponse {
   requestId: string;
 }
 
-export interface SendSendMessageParams {
+export interface SendMessageParams {
   /**
    * The message property has the following primary top-level properties. They define
    * the destination and content of the message.
    */
-  message: SendSendMessageParams.Message;
+  message: SendMessageParams.Message;
 }
 
-export namespace SendSendMessageParams {
+export namespace SendMessageParams {
   /**
    * The message property has the following primary top-level properties. They define
    * the destination and content of the message.
@@ -148,7 +257,7 @@ export namespace SendSendMessageParams {
      * Describes content that will work for email, inbox, push, chat, or any channel
      * id.
      */
-    content?: SendAPI.Content;
+    content?: Message.ElementalContentSugar | TemplatesAPI.ElementalContent;
 
     context?: SendAPI.MessageContext | null;
 
@@ -221,6 +330,21 @@ export namespace SendSendMessageParams {
       }
     }
 
+    /**
+     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+     */
+    export interface ElementalContentSugar {
+      /**
+       * The text content displayed in the notification.
+       */
+      body: string;
+
+      /**
+       * Title/subject displayed by supported channels.
+       */
+      title: string;
+    }
+
     export interface Delay {
       /**
        * The duration of the delay in milliseconds.
@@ -291,7 +415,7 @@ export namespace SendSendMessageParams {
       /**
        * A list of channels or providers (or nested routing rules).
        */
-      channels: Array<NotificationsAPI.MessageRoutingChannel>;
+      channels: Array<Shared.MessageRoutingChannel>;
 
       method: 'all' | 'single';
     }
@@ -312,11 +436,12 @@ export namespace SendSendMessageParams {
 
 export declare namespace Send {
   export {
-    type Content as Content,
+    type ElementalChannelNode as ElementalChannelNode,
+    type ElementalNode as ElementalNode,
     type MessageContext as MessageContext,
     type Recipient as Recipient,
     type Utm as Utm,
-    type SendSendMessageResponse as SendSendMessageResponse,
-    type SendSendMessageParams as SendSendMessageParams,
+    type SendMessageResponse as SendMessageResponse,
+    type SendMessageParams as SendMessageParams,
   };
 }
