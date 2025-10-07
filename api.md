@@ -2,23 +2,29 @@
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">Alignment</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalBaseNode</a></code>
+- <code><a href="./src/resources/shared.ts">MessageRouting</a></code>
+- <code><a href="./src/resources/shared.ts">MessageRoutingChannel</a></code>
 - <code><a href="./src/resources/shared.ts">Preference</a></code>
 - <code><a href="./src/resources/shared.ts">Rule</a></code>
+- <code><a href="./src/resources/shared.ts">TextStyle</a></code>
 
 # Send
 
 Types:
 
-- <code><a href="./src/resources/send.ts">Content</a></code>
+- <code><a href="./src/resources/send.ts">ElementalChannelNode</a></code>
+- <code><a href="./src/resources/send.ts">ElementalNode</a></code>
 - <code><a href="./src/resources/send.ts">MessageContext</a></code>
 - <code><a href="./src/resources/send.ts">Recipient</a></code>
 - <code><a href="./src/resources/send.ts">Utm</a></code>
-- <code><a href="./src/resources/send.ts">SendSendMessageResponse</a></code>
+- <code><a href="./src/resources/send.ts">SendMessageResponse</a></code>
 
 Methods:
 
-- <code title="post /send">client.send.<a href="./src/resources/send.ts">sendMessage</a>({ ...params }) -> SendSendMessageResponse</code>
+- <code title="post /send">client.send.<a href="./src/resources/send.ts">message</a>({ ...params }) -> SendMessageResponse</code>
 
 # Audiences
 
@@ -192,8 +198,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/notifications/notifications.ts">MessageRouting</a></code>
-- <code><a href="./src/resources/notifications/notifications.ts">MessageRoutingChannel</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationGetContent</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationListResponse</a></code>
 
@@ -288,11 +292,8 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/tenants/templates.ts">Alignment</a></code>
 - <code><a href="./src/resources/tenants/templates.ts">BaseTemplateTenantAssociation</a></code>
-- <code><a href="./src/resources/tenants/templates.ts">ElementalBaseNode</a></code>
 - <code><a href="./src/resources/tenants/templates.ts">ElementalContent</a></code>
-- <code><a href="./src/resources/tenants/templates.ts">TextStyle</a></code>
 - <code><a href="./src/resources/tenants/templates.ts">TemplateListResponse</a></code>
 
 Methods:

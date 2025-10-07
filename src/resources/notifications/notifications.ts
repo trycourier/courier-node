@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as NotificationsAPI from './notifications';
 import * as AudiencesAPI from '../audiences';
+import * as Shared from '../shared';
 import * as ChecksAPI from './checks';
 import {
   BaseCheck,
@@ -35,14 +35,6 @@ export class Notifications extends APIResource {
     return this._client.get(path`/notifications/${id}/content`, options);
   }
 }
-
-export interface MessageRouting {
-  channels: Array<MessageRoutingChannel>;
-
-  method: 'all' | 'single';
-}
-
-export type MessageRoutingChannel = string | MessageRouting;
 
 export interface NotificationGetContent {
   blocks?: Array<NotificationGetContent.Block> | null;
@@ -124,7 +116,7 @@ export namespace NotificationListResponse {
 
     note: string;
 
-    routing: NotificationsAPI.MessageRouting;
+    routing: Shared.MessageRouting;
 
     topic_id: string;
 
@@ -164,8 +156,6 @@ Notifications.Checks = Checks;
 
 export declare namespace Notifications {
   export {
-    type MessageRouting as MessageRouting,
-    type MessageRoutingChannel as MessageRoutingChannel,
     type NotificationGetContent as NotificationGetContent,
     type NotificationListResponse as NotificationListResponse,
     type NotificationListParams as NotificationListParams,

@@ -29,7 +29,7 @@ const client = new Courier({
   apiKey: process.env['COURIER_API_KEY'], // This is the default and can be omitted
 });
 
-const response = await client.send.sendMessage({
+const response = await client.send.message({
   message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } },
 });
 
@@ -48,10 +48,10 @@ const client = new Courier({
   apiKey: process.env['COURIER_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Courier.SendSendMessageParams = {
+const params: Courier.SendMessageParams = {
   message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } },
 };
-const response: Courier.SendSendMessageResponse = await client.send.sendMessage(params);
+const response: Courier.SendMessageResponse = await client.send.message(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -65,9 +65,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const response = await client.send
-  .sendMessage({
-    message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } },
-  })
+  .message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } })
   .catch(async (err) => {
     if (err instanceof Courier.APIError) {
       console.log(err.status); // 400
@@ -108,7 +106,7 @@ const client = new Courier({
 });
 
 // Or, configure per-request:
-await client.send.sendMessage({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } }, {
+await client.send.message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } }, {
   maxRetries: 5,
 });
 ```
@@ -125,7 +123,7 @@ const client = new Courier({
 });
 
 // Override per-request:
-await client.send.sendMessage({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } }, {
+await client.send.message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } }, {
   timeout: 5 * 1000,
 });
 ```
@@ -149,17 +147,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new Courier();
 
 const response = await client.send
-  .sendMessage({
-    message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } },
-  })
+  .message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.send
-  .sendMessage({
-    message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } },
-  })
+  .message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template', data: { foo: 'bar' } } })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.requestId);
@@ -242,7 +236,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.send.sendMessage({
+client.send.message({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

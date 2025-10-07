@@ -83,12 +83,13 @@ import {
 } from './resources/messages';
 import { Requests } from './resources/requests';
 import {
-  Content,
+  ElementalChannelNode,
+  ElementalNode,
   MessageContext,
   Recipient,
   Send,
-  SendSendMessageParams,
-  SendSendMessageResponse,
+  SendMessageParams,
+  SendMessageResponse,
   Utm,
 } from './resources/send';
 import {
@@ -107,8 +108,6 @@ import {
   Lists,
 } from './resources/lists/lists';
 import {
-  MessageRouting,
-  MessageRoutingChannel,
   NotificationGetContent,
   NotificationListParams,
   NotificationListResponse,
@@ -855,12 +854,13 @@ export declare namespace Courier {
 
   export {
     Send as Send,
-    type Content as Content,
+    type ElementalChannelNode as ElementalChannelNode,
+    type ElementalNode as ElementalNode,
     type MessageContext as MessageContext,
     type Recipient as Recipient,
     type Utm as Utm,
-    type SendSendMessageResponse as SendSendMessageResponse,
-    type SendSendMessageParams as SendSendMessageParams,
+    type SendMessageResponse as SendMessageResponse,
+    type SendMessageParams as SendMessageParams,
   };
 
   export {
@@ -957,8 +957,6 @@ export declare namespace Courier {
 
   export {
     Notifications as Notifications,
-    type MessageRouting as MessageRouting,
-    type MessageRoutingChannel as MessageRoutingChannel,
     type NotificationGetContent as NotificationGetContent,
     type NotificationListResponse as NotificationListResponse,
     type NotificationListParams as NotificationListParams,
@@ -994,7 +992,12 @@ export declare namespace Courier {
 
   export { Users as Users };
 
+  export type Alignment = API.Alignment;
   export type ChannelPreference = API.ChannelPreference;
+  export type ElementalBaseNode = API.ElementalBaseNode;
+  export type MessageRouting = API.MessageRouting;
+  export type MessageRoutingChannel = API.MessageRoutingChannel;
   export type Preference = API.Preference;
   export type Rule = API.Rule;
+  export type TextStyle = API.TextStyle;
 }

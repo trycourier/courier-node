@@ -9,8 +9,8 @@ const client = new Courier({
 
 describe('resource send', () => {
   // Prism tests are disabled
-  test.skip('sendMessage: only required params', async () => {
-    const responsePromise = client.send.sendMessage({ message: {} });
+  test.skip('message: only required params', async () => {
+    const responsePromise = client.send.message({ message: {} });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,8 +21,8 @@ describe('resource send', () => {
   });
 
   // Prism tests are disabled
-  test.skip('sendMessage: required and optional params', async () => {
-    const response = await client.send.sendMessage({
+  test.skip('message: required and optional params', async () => {
+    const response = await client.send.message({
       message: {
         brand_id: 'brand_id',
         channels: {
