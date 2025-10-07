@@ -4,9 +4,9 @@ import { APIResource } from '../core/resource';
 import * as BulkAPI from './bulk';
 import * as AudiencesAPI from './audiences';
 import * as SendAPI from './send';
+import * as Shared from './shared';
 import * as SubscriptionsAPI from './lists/subscriptions';
-import * as PreferencesAPI from './users/preferences';
-import * as ItemsAPI from './tenants/default-preferences/items';
+import * as TemplatesAPI from './tenants/templates';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -60,64 +60,40 @@ export class Bulk extends APIResource {
   }
 }
 
-export interface InboundBulkMessage {
-  /**
-   * A unique identifier that represents the brand that should be used for rendering
-   * the notification.
-   */
-  brand?: string | null;
-
-  /**
-   * JSON that includes any data you want to pass to a message template. The data
-   * will populate the corresponding template variables.
-   */
-  data?: { [key: string]: unknown } | null;
-
-  event?: string | null;
-
-  locale?: { [key: string]: unknown } | null;
-
-  /**
-   * Describes the content of the message in a way that will work for email, push,
-   * chat, or any channel.
-   */
-  message?:
-    | InboundBulkMessage.InboundBulkTemplateMessage
-    | InboundBulkMessage.InboundBulkContentMessage
-    | null;
-
-  /**
-   * JSON that is merged into the request sent by Courier to the provider to override
-   * properties or to gain access to features in the provider API that are not
-   * natively supported by Courier.
-   */
-  override?: unknown;
-}
+export type InboundBulkMessage =
+  | InboundBulkMessage.InboundBulkTemplateMessage
+  | InboundBulkMessage.InboundBulkContentMessage;
 
 export namespace InboundBulkMessage {
-  /**
-   * Describes the content of the message in a way that will work for email, push,
-   * chat, or any channel.
-   */
-  export interface InboundBulkTemplateMessage extends SendAPI.BaseMessage {
-    /**
-     * The id of the notification template to be rendered and sent to the recipient(s).
-     * This field or the content field must be supplied.
-     */
+  export interface InboundBulkTemplateMessage {
     template: string;
+
+    brand?: string | null;
+
+    data?: { [key: string]: unknown } | null;
+
+    event?: string | null;
+
+    locale?: { [key: string]: { [key: string]: unknown } } | null;
+
+    override?: { [key: string]: unknown } | null;
   }
 
-  /**
-   * A template for a type of message that can be sent more than once. For example,
-   * you might create an "Appointment Reminder" Notification or “Reset Password”
-   * Notifications.
-   */
-  export interface InboundBulkContentMessage extends SendAPI.BaseMessage {
+  export interface InboundBulkContentMessage {
     /**
-     * Describes the content of the message in a way that will work for email, push,
-     * chat, or any channel. Either this or template must be specified.
+     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
      */
-    content: SendAPI.Content;
+    content: Shared.ElementalContentSugar | TemplatesAPI.ElementalContent;
+
+    brand?: string | null;
+
+    data?: { [key: string]: unknown } | null;
+
+    event?: string | null;
+
+    locale?: { [key: string]: { [key: string]: unknown } } | null;
+
+    override?: { [key: string]: unknown } | null;
   }
 }
 
@@ -135,12 +111,12 @@ export interface InboundBulkMessageUser {
 
 export interface UserRecipient {
   /**
-   * Use `tenant_id` instad.
+   * Use `tenant_id` instead.
    */
   account_id?: string | null;
 
   /**
-   * Context information such as tenant_id to send the notification with.
+   * Context such as tenant_id to send the notification with.
    */
   context?: SendAPI.MessageContext | null;
 
@@ -158,10 +134,7 @@ export interface UserRecipient {
   preferences?: UserRecipient.Preferences | null;
 
   /**
-   * An id of a tenant,
-   * [see tenants api docs](https://www.courier.com/docs/reference/tenants). Will
-   * load brand, default preferences and any other base context data associated with
-   * this tenant.
+   * Tenant id. Will load brand, default preferences and base context data.
    */
   tenant_id?: string | null;
 
@@ -170,57 +143,11 @@ export interface UserRecipient {
 
 export namespace UserRecipient {
   export interface Preferences {
-    notifications: { [key: string]: Preferences.Notifications };
+    notifications: { [key: string]: Shared.Preference };
 
-    categories?: { [key: string]: Preferences.Categories } | null;
+    categories?: { [key: string]: Shared.Preference } | null;
 
     templateId?: string | null;
-  }
-
-  export namespace Preferences {
-    export interface Notifications {
-      status: PreferencesAPI.PreferenceStatus;
-
-      channel_preferences?: Array<Notifications.ChannelPreference> | null;
-
-      rules?: Array<Notifications.Rule> | null;
-
-      source?: 'subscription' | 'list' | 'recipient' | null;
-    }
-
-    export namespace Notifications {
-      export interface ChannelPreference {
-        channel: ItemsAPI.ChannelClassification;
-      }
-
-      export interface Rule {
-        until: string;
-
-        start?: string | null;
-      }
-    }
-
-    export interface Categories {
-      status: PreferencesAPI.PreferenceStatus;
-
-      channel_preferences?: Array<Categories.ChannelPreference> | null;
-
-      rules?: Array<Categories.Rule> | null;
-
-      source?: 'subscription' | 'list' | 'recipient' | null;
-    }
-
-    export namespace Categories {
-      export interface ChannelPreference {
-        channel: ItemsAPI.ChannelClassification;
-      }
-
-      export interface Rule {
-        until: string;
-
-        start?: string | null;
-      }
-    }
   }
 }
 

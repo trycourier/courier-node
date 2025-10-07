@@ -7,13 +7,10 @@ const client = new Courier({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource items', () => {
+describe('resource templates', () => {
   // Prism tests are disabled
-  test.skip('update: only required params', async () => {
-    const responsePromise = client.tenants.defaultPreferences.items.update('topic_id', {
-      tenant_id: 'tenant_id',
-      status: 'OPTED_IN',
-    });
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.tenants.templates.retrieve('template_id', { tenant_id: 'tenant_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,20 +21,13 @@ describe('resource items', () => {
   });
 
   // Prism tests are disabled
-  test.skip('update: required and optional params', async () => {
-    const response = await client.tenants.defaultPreferences.items.update('topic_id', {
-      tenant_id: 'tenant_id',
-      status: 'OPTED_IN',
-      custom_routing: ['inbox'],
-      has_custom_routing: true,
-    });
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.tenants.templates.retrieve('template_id', { tenant_id: 'tenant_id' });
   });
 
   // Prism tests are disabled
-  test.skip('delete: only required params', async () => {
-    const responsePromise = client.tenants.defaultPreferences.items.delete('topic_id', {
-      tenant_id: 'tenant_id',
-    });
+  test.skip('list', async () => {
+    const responsePromise = client.tenants.templates.list('tenant_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -48,9 +38,14 @@ describe('resource items', () => {
   });
 
   // Prism tests are disabled
-  test.skip('delete: required and optional params', async () => {
-    const response = await client.tenants.defaultPreferences.items.delete('topic_id', {
-      tenant_id: 'tenant_id',
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.tenants.templates.list(
+        'tenant_id',
+        { cursor: 'cursor', limit: 0 },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Courier.NotFoundError);
   });
 });

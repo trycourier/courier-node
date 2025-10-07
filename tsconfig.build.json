@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "@trycourier/courier/*": ["./dist/src/*"],
-      "@trycourier/courier": ["./dist/src/index.ts"]
+      "courier/*": ["./dist/src/*"],
+      "courier": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

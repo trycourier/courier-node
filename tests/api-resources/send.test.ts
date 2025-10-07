@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Courier from '@trycourier/courier';
+import Courier from 'courier';
 
 const client = new Courier({
   apiKey: 'My API Key',
@@ -9,10 +9,8 @@ const client = new Courier({
 
 describe('resource send', () => {
   // Prism tests are disabled
-  test.skip('sendMessage: only required params', async () => {
-    const responsePromise = client.send.sendMessage({
-      message: { content: { elements: [{}], version: 'version' } },
-    });
+  test.skip('message: only required params', async () => {
+    const responsePromise = client.send.message({ message: {} });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,8 +21,8 @@ describe('resource send', () => {
   });
 
   // Prism tests are disabled
-  test.skip('sendMessage: required and optional params', async () => {
-    const response = await client.send.sendMessage({
+  test.skip('message: required and optional params', async () => {
+    const response = await client.send.message({
       message: {
         brand_id: 'brand_id',
         channels: {
@@ -46,8 +44,9 @@ describe('resource send', () => {
             timeouts: { channel: 0, provider: 0 },
           },
         },
+        content: { body: 'body', title: 'title' },
         context: { tenant_id: 'tenant_id' },
-        data: { foo: 'bar' },
+        data: { name: 'bar' },
         delay: { duration: 0, until: 'until' },
         expiry: { expires_in: 'string', expires_at: 'expires_at' },
         metadata: {
@@ -73,33 +72,7 @@ describe('resource send', () => {
             timeouts: 0,
           },
         },
-        routing: {
-          channels: [
-            {
-              channel: 'channel',
-              config: { foo: 'bar' },
-              if: 'if',
-              method: 'all',
-              providers: {
-                foo: {
-                  if: 'if',
-                  metadata: {
-                    utm: {
-                      campaign: 'campaign',
-                      content: 'content',
-                      medium: 'medium',
-                      source: 'source',
-                      term: 'term',
-                    },
-                  },
-                  override: { foo: 'bar' },
-                  timeouts: 0,
-                },
-              },
-            },
-          ],
-          method: 'all',
-        },
+        routing: { channels: ['string'], method: 'all' },
         timeout: {
           channel: { foo: 0 },
           criteria: 'no-escalation',
@@ -108,14 +81,33 @@ describe('resource send', () => {
           provider: { foo: 0 },
         },
         to: {
-          audience_id: 'audience_id',
+          account_id: 'account_id',
+          context: { tenant_id: 'tenant_id' },
           data: { foo: 'bar' },
-          filters: [{ operator: 'MEMBER_OF', path: 'account_id', value: 'value' }],
-        },
-        content: {
-          elements: [{ channels: ['string'], if: 'if', loop: 'loop', ref: 'ref', type: 'text' }],
-          version: 'version',
-          brand: {},
+          email: 'email',
+          locale: 'locale',
+          phone_number: 'phone_number',
+          preferences: {
+            notifications: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+                source: 'subscription',
+              },
+            },
+            categories: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+                source: 'subscription',
+              },
+            },
+            templateId: 'templateId',
+          },
+          tenant_id: 'tenant_id',
+          user_id: 'example_user',
         },
       },
     });

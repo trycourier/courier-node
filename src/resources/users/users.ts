@@ -28,8 +28,8 @@ import {
   TokenAddSingleParams,
   TokenDeleteParams,
   TokenListResponse,
-  TokenRetrieveSingleParams,
-  TokenRetrieveSingleResponse,
+  TokenRetrieveParams,
+  TokenRetrieveResponse,
   TokenUpdateParams,
   Tokens,
   UserToken,
@@ -71,11 +71,11 @@ export declare namespace Users {
   export {
     Tokens as Tokens,
     type UserToken as UserToken,
+    type TokenRetrieveResponse as TokenRetrieveResponse,
     type TokenListResponse as TokenListResponse,
-    type TokenRetrieveSingleResponse as TokenRetrieveSingleResponse,
+    type TokenRetrieveParams as TokenRetrieveParams,
     type TokenUpdateParams as TokenUpdateParams,
     type TokenDeleteParams as TokenDeleteParams,
     type TokenAddSingleParams as TokenAddSingleParams,
-    type TokenRetrieveSingleParams as TokenRetrieveSingleParams,
   };
 }

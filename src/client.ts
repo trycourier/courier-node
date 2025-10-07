@@ -28,7 +28,6 @@ import {
   Audiences,
   Filter,
   FilterConfig,
-  NestedFilterConfig,
   Paging,
 } from './resources/audiences';
 import {
@@ -40,13 +39,24 @@ import {
 import { Auth, AuthIssueTokenParams, AuthIssueTokenResponse } from './resources/auth';
 import {
   Brand,
+  BrandColors,
   BrandCreateParams,
   BrandListParams,
   BrandListResponse,
   BrandSettings,
+  BrandSettingsEmail,
+  BrandSettingsInApp,
+  BrandSnippet,
   BrandSnippets,
+  BrandTemplate,
   BrandUpdateParams,
   Brands,
+  EmailFooter,
+  EmailHead,
+  EmailHeader,
+  Icons,
+  Logo,
+  WidgetBackground,
 } from './resources/brands';
 import {
   Bulk,
@@ -62,8 +72,8 @@ import {
 } from './resources/bulk';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
+  MessageContentResponse,
   MessageDetails,
-  MessageGetContentResponse,
   MessageHistoryParams,
   MessageHistoryResponse,
   MessageListParams,
@@ -73,21 +83,13 @@ import {
 } from './resources/messages';
 import { Requests } from './resources/requests';
 import {
-  BaseMessage,
-  BaseMessageSendTo,
-  Content,
   ElementalChannelNode,
-  ElementalGroupNode,
   ElementalNode,
-  Message,
   MessageContext,
-  MsTeamsBaseProperties,
   Recipient,
-  RoutingMethod,
   Send,
-  SendSendMessageParams,
-  SendSendMessageResponse,
-  SlackBaseProperties,
+  SendMessageParams,
+  SendMessageResponse,
   Utm,
 } from './resources/send';
 import {
@@ -96,15 +98,16 @@ import {
   TranslationUpdateParams,
   Translations,
 } from './resources/translations';
+import { Automations } from './resources/automations/automations';
 import {
-  AutomationInvokeAdHocParams,
-  AutomationInvokeByTemplateParams,
-  Automations,
-} from './resources/automations/automations';
-import { List, ListListParams, ListListResponse, ListUpdateParams, Lists } from './resources/lists/lists';
+  List,
+  ListListParams,
+  ListListResponse,
+  ListRestoreParams,
+  ListUpdateParams,
+  Lists,
+} from './resources/lists/lists';
 import {
-  MessageRouting,
-  MessageRoutingChannel,
   NotificationGetContent,
   NotificationListParams,
   NotificationListResponse,
@@ -851,21 +854,13 @@ export declare namespace Courier {
 
   export {
     Send as Send,
-    type BaseMessage as BaseMessage,
-    type BaseMessageSendTo as BaseMessageSendTo,
-    type Content as Content,
     type ElementalChannelNode as ElementalChannelNode,
-    type ElementalGroupNode as ElementalGroupNode,
     type ElementalNode as ElementalNode,
-    type Message as Message,
     type MessageContext as MessageContext,
-    type MsTeamsBaseProperties as MsTeamsBaseProperties,
     type Recipient as Recipient,
-    type RoutingMethod as RoutingMethod,
-    type SlackBaseProperties as SlackBaseProperties,
     type Utm as Utm,
-    type SendSendMessageResponse as SendSendMessageResponse,
-    type SendSendMessageParams as SendSendMessageParams,
+    type SendMessageResponse as SendMessageResponse,
+    type SendMessageParams as SendMessageParams,
   };
 
   export {
@@ -873,7 +868,6 @@ export declare namespace Courier {
     type Audience as Audience,
     type Filter as Filter,
     type FilterConfig as FilterConfig,
-    type NestedFilterConfig as NestedFilterConfig,
     type Paging as Paging,
     type AudienceUpdateResponse as AudienceUpdateResponse,
     type AudienceListResponse as AudienceListResponse,
@@ -896,17 +890,24 @@ export declare namespace Courier {
     type AuthIssueTokenParams as AuthIssueTokenParams,
   };
 
-  export {
-    Automations as Automations,
-    type AutomationInvokeAdHocParams as AutomationInvokeAdHocParams,
-    type AutomationInvokeByTemplateParams as AutomationInvokeByTemplateParams,
-  };
+  export { Automations as Automations };
 
   export {
     Brands as Brands,
     type Brand as Brand,
+    type BrandColors as BrandColors,
     type BrandSettings as BrandSettings,
+    type BrandSettingsEmail as BrandSettingsEmail,
+    type BrandSettingsInApp as BrandSettingsInApp,
+    type BrandSnippet as BrandSnippet,
     type BrandSnippets as BrandSnippets,
+    type BrandTemplate as BrandTemplate,
+    type EmailFooter as EmailFooter,
+    type EmailHead as EmailHead,
+    type EmailHeader as EmailHeader,
+    type Icons as Icons,
+    type Logo as Logo,
+    type WidgetBackground as WidgetBackground,
     type BrandListResponse as BrandListResponse,
     type BrandCreateParams as BrandCreateParams,
     type BrandUpdateParams as BrandUpdateParams,
@@ -938,6 +939,7 @@ export declare namespace Courier {
     type ListListResponse as ListListResponse,
     type ListUpdateParams as ListUpdateParams,
     type ListListParams as ListListParams,
+    type ListRestoreParams as ListRestoreParams,
   };
 
   export {
@@ -945,7 +947,7 @@ export declare namespace Courier {
     type MessageDetails as MessageDetails,
     type MessageRetrieveResponse as MessageRetrieveResponse,
     type MessageListResponse as MessageListResponse,
-    type MessageGetContentResponse as MessageGetContentResponse,
+    type MessageContentResponse as MessageContentResponse,
     type MessageHistoryResponse as MessageHistoryResponse,
     type MessageListParams as MessageListParams,
     type MessageHistoryParams as MessageHistoryParams,
@@ -955,8 +957,6 @@ export declare namespace Courier {
 
   export {
     Notifications as Notifications,
-    type MessageRouting as MessageRouting,
-    type MessageRoutingChannel as MessageRoutingChannel,
     type NotificationGetContent as NotificationGetContent,
     type NotificationListResponse as NotificationListResponse,
     type NotificationListParams as NotificationListParams,
@@ -991,4 +991,14 @@ export declare namespace Courier {
   };
 
   export { Users as Users };
+
+  export type Alignment = API.Alignment;
+  export type ChannelPreference = API.ChannelPreference;
+  export type ElementalBaseNode = API.ElementalBaseNode;
+  export type ElementalContentSugar = API.ElementalContentSugar;
+  export type MessageRouting = API.MessageRouting;
+  export type MessageRoutingChannel = API.MessageRoutingChannel;
+  export type Preference = API.Preference;
+  export type Rule = API.Rule;
+  export type TextStyle = API.TextStyle;
 }

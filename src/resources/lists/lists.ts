@@ -4,6 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as AudiencesAPI from '../audiences';
 import * as SubscriptionsAPI from './subscriptions';
 import {
+  NotificationPreferenceDetails,
   PutSubscriptionsRecipient,
   RecipientPreferences,
   SubscriptionAddParams,
@@ -32,8 +33,12 @@ export class Lists extends APIResource {
   /**
    * Create or replace an existing list with the supplied values.
    */
-  update(listID: string, body: ListUpdateParams, options?: RequestOptions): APIPromise<List> {
-    return this._client.put(path`/lists/${listID}`, { body, ...options });
+  update(listID: string, body: ListUpdateParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.put(path`/lists/${listID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -59,8 +64,9 @@ export class Lists extends APIResource {
   /**
    * Restore a previously deleted list.
    */
-  restore(listID: string, options?: RequestOptions): APIPromise<void> {
+  restore(listID: string, body: ListRestoreParams, options?: RequestOptions): APIPromise<void> {
     return this._client.put(path`/lists/${listID}/restore`, {
+      body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -72,9 +78,9 @@ export interface List {
 
   name: string;
 
-  created?: number | null;
+  created?: string | null;
 
-  updated?: number | null;
+  updated?: string | null;
 }
 
 export interface ListListResponse {
@@ -104,6 +110,8 @@ export interface ListListParams {
   pattern?: string | null;
 }
 
+export interface ListRestoreParams {}
+
 Lists.Subscriptions = Subscriptions;
 
 export declare namespace Lists {
@@ -112,10 +120,12 @@ export declare namespace Lists {
     type ListListResponse as ListListResponse,
     type ListUpdateParams as ListUpdateParams,
     type ListListParams as ListListParams,
+    type ListRestoreParams as ListRestoreParams,
   };
 
   export {
     Subscriptions as Subscriptions,
+    type NotificationPreferenceDetails as NotificationPreferenceDetails,
     type PutSubscriptionsRecipient as PutSubscriptionsRecipient,
     type RecipientPreferences as RecipientPreferences,
     type SubscriptionListResponse as SubscriptionListResponse,

@@ -14,27 +14,13 @@ export class Auth extends APIResource {
 }
 
 export interface AuthIssueTokenResponse {
-  token?: string | null;
+  token: string;
 }
 
 export interface AuthIssueTokenParams {
   expires_in: string;
 
-  scope:
-    | 'read:preferences'
-    | 'write:preferences'
-    | 'read:user-tokens'
-    | 'write:user-tokens'
-    | 'read:brands'
-    | 'write:brands'
-    | 'read:brands{:id}'
-    | 'write:brands{:id}'
-    | 'write:track'
-    | 'inbox:read:messages'
-    | 'inbox:write:messages'
-    | 'inbox:write:event'
-    | 'inbox:write:events'
-    | 'user_id:$YOUR_USER_ID';
+  scope: string;
 }
 
 export declare namespace Auth {

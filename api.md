@@ -1,25 +1,31 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">Alignment</a></code>
+- <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalBaseNode</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalContentSugar</a></code>
+- <code><a href="./src/resources/shared.ts">MessageRouting</a></code>
+- <code><a href="./src/resources/shared.ts">MessageRoutingChannel</a></code>
+- <code><a href="./src/resources/shared.ts">Preference</a></code>
+- <code><a href="./src/resources/shared.ts">Rule</a></code>
+- <code><a href="./src/resources/shared.ts">TextStyle</a></code>
+
 # Send
 
 Types:
 
-- <code><a href="./src/resources/send.ts">BaseMessage</a></code>
-- <code><a href="./src/resources/send.ts">BaseMessageSendTo</a></code>
-- <code><a href="./src/resources/send.ts">Content</a></code>
 - <code><a href="./src/resources/send.ts">ElementalChannelNode</a></code>
-- <code><a href="./src/resources/send.ts">ElementalGroupNode</a></code>
 - <code><a href="./src/resources/send.ts">ElementalNode</a></code>
-- <code><a href="./src/resources/send.ts">Message</a></code>
 - <code><a href="./src/resources/send.ts">MessageContext</a></code>
-- <code><a href="./src/resources/send.ts">MsTeamsBaseProperties</a></code>
 - <code><a href="./src/resources/send.ts">Recipient</a></code>
-- <code><a href="./src/resources/send.ts">RoutingMethod</a></code>
-- <code><a href="./src/resources/send.ts">SlackBaseProperties</a></code>
 - <code><a href="./src/resources/send.ts">Utm</a></code>
-- <code><a href="./src/resources/send.ts">SendSendMessageResponse</a></code>
+- <code><a href="./src/resources/send.ts">SendMessageResponse</a></code>
 
 Methods:
 
-- <code title="post /send">client.send.<a href="./src/resources/send.ts">sendMessage</a>({ ...params }) -> SendSendMessageResponse</code>
+- <code title="post /send">client.send.<a href="./src/resources/send.ts">message</a>({ ...params }) -> SendMessageResponse</code>
 
 # Audiences
 
@@ -28,7 +34,6 @@ Types:
 - <code><a href="./src/resources/audiences.ts">Audience</a></code>
 - <code><a href="./src/resources/audiences.ts">Filter</a></code>
 - <code><a href="./src/resources/audiences.ts">FilterConfig</a></code>
-- <code><a href="./src/resources/audiences.ts">NestedFilterConfig</a></code>
 - <code><a href="./src/resources/audiences.ts">Paging</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceUpdateResponse</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceListResponse</a></code>
@@ -66,27 +71,35 @@ Methods:
 
 # Automations
 
-Methods:
-
-- <code title="post /automations/invoke">client.automations.<a href="./src/resources/automations/automations.ts">invokeAdHoc</a>({ ...params }) -> AutomationInvokeResponse</code>
-- <code title="post /automations/{templateId}/invoke">client.automations.<a href="./src/resources/automations/automations.ts">invokeByTemplate</a>(templateID, { ...params }) -> AutomationInvokeResponse</code>
-
 ## Invoke
 
 Types:
 
-- <code><a href="./src/resources/automations/invoke.ts">AutomationInvokeParams</a></code>
 - <code><a href="./src/resources/automations/invoke.ts">AutomationInvokeResponse</a></code>
-- <code><a href="./src/resources/automations/invoke.ts">AutomationStep</a></code>
-- <code><a href="./src/resources/automations/invoke.ts">MergeAlgorithm</a></code>
+
+Methods:
+
+- <code title="post /automations/invoke">client.automations.invoke.<a href="./src/resources/automations/invoke.ts">invokeAdHoc</a>({ ...params }) -> AutomationInvokeResponse</code>
+- <code title="post /automations/{templateId}/invoke">client.automations.invoke.<a href="./src/resources/automations/invoke.ts">invokeByTemplate</a>(templateID, { ...params }) -> AutomationInvokeResponse</code>
 
 # Brands
 
 Types:
 
 - <code><a href="./src/resources/brands.ts">Brand</a></code>
+- <code><a href="./src/resources/brands.ts">BrandColors</a></code>
 - <code><a href="./src/resources/brands.ts">BrandSettings</a></code>
+- <code><a href="./src/resources/brands.ts">BrandSettingsEmail</a></code>
+- <code><a href="./src/resources/brands.ts">BrandSettingsInApp</a></code>
+- <code><a href="./src/resources/brands.ts">BrandSnippet</a></code>
 - <code><a href="./src/resources/brands.ts">BrandSnippets</a></code>
+- <code><a href="./src/resources/brands.ts">BrandTemplate</a></code>
+- <code><a href="./src/resources/brands.ts">EmailFooter</a></code>
+- <code><a href="./src/resources/brands.ts">EmailHead</a></code>
+- <code><a href="./src/resources/brands.ts">EmailHeader</a></code>
+- <code><a href="./src/resources/brands.ts">Icons</a></code>
+- <code><a href="./src/resources/brands.ts">Logo</a></code>
+- <code><a href="./src/resources/brands.ts">WidgetBackground</a></code>
 - <code><a href="./src/resources/brands.ts">BrandListResponse</a></code>
 
 Methods:
@@ -136,7 +149,7 @@ Types:
 Methods:
 
 - <code title="get /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">retrieve</a>(listID) -> List</code>
-- <code title="put /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">update</a>(listID, { ...params }) -> List</code>
+- <code title="put /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">update</a>(listID, { ...params }) -> void</code>
 - <code title="get /lists">client.lists.<a href="./src/resources/lists/lists.ts">list</a>({ ...params }) -> ListListResponse</code>
 - <code title="delete /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">delete</a>(listID) -> void</code>
 - <code title="put /lists/{list_id}/restore">client.lists.<a href="./src/resources/lists/lists.ts">restore</a>(listID) -> void</code>
@@ -145,6 +158,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/lists/subscriptions.ts">NotificationPreferenceDetails</a></code>
 - <code><a href="./src/resources/lists/subscriptions.ts">PutSubscriptionsRecipient</a></code>
 - <code><a href="./src/resources/lists/subscriptions.ts">RecipientPreferences</a></code>
 - <code><a href="./src/resources/lists/subscriptions.ts">SubscriptionListResponse</a></code>
@@ -164,7 +178,7 @@ Types:
 - <code><a href="./src/resources/messages.ts">MessageDetails</a></code>
 - <code><a href="./src/resources/messages.ts">MessageRetrieveResponse</a></code>
 - <code><a href="./src/resources/messages.ts">MessageListResponse</a></code>
-- <code><a href="./src/resources/messages.ts">MessageGetContentResponse</a></code>
+- <code><a href="./src/resources/messages.ts">MessageContentResponse</a></code>
 - <code><a href="./src/resources/messages.ts">MessageHistoryResponse</a></code>
 
 Methods:
@@ -172,7 +186,7 @@ Methods:
 - <code title="get /messages/{message_id}">client.messages.<a href="./src/resources/messages.ts">retrieve</a>(messageID) -> MessageRetrieveResponse</code>
 - <code title="get /messages">client.messages.<a href="./src/resources/messages.ts">list</a>({ ...params }) -> MessageListResponse</code>
 - <code title="post /messages/{message_id}/cancel">client.messages.<a href="./src/resources/messages.ts">cancel</a>(messageID) -> MessageDetails</code>
-- <code title="get /messages/{message_id}/output">client.messages.<a href="./src/resources/messages.ts">getContent</a>(messageID) -> MessageGetContentResponse</code>
+- <code title="get /messages/{message_id}/output">client.messages.<a href="./src/resources/messages.ts">content</a>(messageID) -> MessageContentResponse</code>
 - <code title="get /messages/{message_id}/history">client.messages.<a href="./src/resources/messages.ts">history</a>(messageID, { ...params }) -> MessageHistoryResponse</code>
 
 # Requests
@@ -185,8 +199,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/notifications/notifications.ts">MessageRouting</a></code>
-- <code><a href="./src/resources/notifications/notifications.ts">MessageRoutingChannel</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationGetContent</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationListResponse</a></code>
 
@@ -277,6 +289,19 @@ Methods:
 - <code title="put /tenants/{tenant_id}/default_preferences/items/{topic_id}">client.tenants.defaultPreferences.items.<a href="./src/resources/tenants/default-preferences/items.ts">update</a>(topicID, { ...params }) -> void</code>
 - <code title="delete /tenants/{tenant_id}/default_preferences/items/{topic_id}">client.tenants.defaultPreferences.items.<a href="./src/resources/tenants/default-preferences/items.ts">delete</a>(topicID, { ...params }) -> void</code>
 
+## Templates
+
+Types:
+
+- <code><a href="./src/resources/tenants/templates.ts">BaseTemplateTenantAssociation</a></code>
+- <code><a href="./src/resources/tenants/templates.ts">ElementalContent</a></code>
+- <code><a href="./src/resources/tenants/templates.ts">TemplateListResponse</a></code>
+
+Methods:
+
+- <code title="get /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates.ts">retrieve</a>(templateID, { ...params }) -> BaseTemplateTenantAssociation</code>
+- <code title="get /tenants/{tenant_id}/templates">client.tenants.templates.<a href="./src/resources/tenants/templates.ts">list</a>(tenantID, { ...params }) -> TemplateListResponse</code>
+
 # Translations
 
 Types:
@@ -326,14 +351,14 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/users/tokens.ts">UserToken</a></code>
+- <code><a href="./src/resources/users/tokens.ts">TokenRetrieveResponse</a></code>
 - <code><a href="./src/resources/users/tokens.ts">TokenListResponse</a></code>
-- <code><a href="./src/resources/users/tokens.ts">TokenRetrieveSingleResponse</a></code>
 
 Methods:
 
+- <code title="get /users/{user_id}/tokens/{token}">client.users.tokens.<a href="./src/resources/users/tokens.ts">retrieve</a>(token, { ...params }) -> TokenRetrieveResponse</code>
 - <code title="patch /users/{user_id}/tokens/{token}">client.users.tokens.<a href="./src/resources/users/tokens.ts">update</a>(token, { ...params }) -> void</code>
 - <code title="get /users/{user_id}/tokens">client.users.tokens.<a href="./src/resources/users/tokens.ts">list</a>(userID) -> TokenListResponse</code>
 - <code title="delete /users/{user_id}/tokens/{token}">client.users.tokens.<a href="./src/resources/users/tokens.ts">delete</a>(token, { ...params }) -> void</code>
 - <code title="put /users/{user_id}/tokens">client.users.tokens.<a href="./src/resources/users/tokens.ts">addMultiple</a>(userID) -> void</code>
 - <code title="put /users/{user_id}/tokens/{token}">client.users.tokens.<a href="./src/resources/users/tokens.ts">addSingle</a>(pathToken, { ...params }) -> void</code>
-- <code title="get /users/{user_id}/tokens/{token}">client.users.tokens.<a href="./src/resources/users/tokens.ts">retrieveSingle</a>(token, { ...params }) -> TokenRetrieveSingleResponse</code>

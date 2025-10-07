@@ -54,7 +54,7 @@ export interface InboundTrackEventParams {
   type: 'track';
 
   /**
-   * The user id associated with the track
+   * The user id associatiated with the track
    */
   userId?: string | null;
 }

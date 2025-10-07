@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Courier from '@trycourier/courier';
+import Courier from 'courier';
 
 const client = new Courier({
   apiKey: 'My API Key',
@@ -71,8 +71,8 @@ describe('resource messages', () => {
   });
 
   // Prism tests are disabled
-  test.skip('getContent', async () => {
-    const responsePromise = client.messages.getContent('message_id');
+  test.skip('content', async () => {
+    const responsePromise = client.messages.content('message_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

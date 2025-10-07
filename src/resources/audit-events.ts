@@ -26,28 +26,22 @@ export class AuditEvents extends APIResource {
 }
 
 export interface AuditEvent {
+  actor: AuditEvent.Actor;
+
   auditEventId: string;
 
   source: string;
 
+  target: string;
+
   timestamp: string;
 
   type: string;
-
-  actor?: AuditEvent.Actor | null;
-
-  target?: AuditEvent.Target | null;
 }
 
 export namespace AuditEvent {
   export interface Actor {
-    id?: string | null;
-
-    email?: string | null;
-  }
-
-  export interface Target {
-    id?: string | null;
+    id: string;
 
     email?: string | null;
   }

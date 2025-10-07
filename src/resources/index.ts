@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export * from './shared';
 export {
   Audiences,
   type Audience,
   type Filter,
   type FilterConfig,
-  type NestedFilterConfig,
   type Paging,
   type AudienceUpdateResponse,
   type AudienceListResponse,
@@ -21,16 +21,23 @@ export {
   type AuditEventListParams,
 } from './audit-events';
 export { Auth, type AuthIssueTokenResponse, type AuthIssueTokenParams } from './auth';
-export {
-  Automations,
-  type AutomationInvokeAdHocParams,
-  type AutomationInvokeByTemplateParams,
-} from './automations/automations';
+export { Automations } from './automations/automations';
 export {
   Brands,
   type Brand,
+  type BrandColors,
   type BrandSettings,
+  type BrandSettingsEmail,
+  type BrandSettingsInApp,
+  type BrandSnippet,
   type BrandSnippets,
+  type BrandTemplate,
+  type EmailFooter,
+  type EmailHead,
+  type EmailHeader,
+  type Icons,
+  type Logo,
+  type WidgetBackground,
   type BrandListResponse,
   type BrandCreateParams,
   type BrandUpdateParams,
@@ -55,21 +62,20 @@ export {
   type ListListResponse,
   type ListUpdateParams,
   type ListListParams,
+  type ListRestoreParams,
 } from './lists/lists';
 export {
   Messages,
   type MessageDetails,
   type MessageRetrieveResponse,
   type MessageListResponse,
-  type MessageGetContentResponse,
+  type MessageContentResponse,
   type MessageHistoryResponse,
   type MessageListParams,
   type MessageHistoryParams,
 } from './messages';
 export {
   Notifications,
-  type MessageRouting,
-  type MessageRoutingChannel,
   type NotificationGetContent,
   type NotificationListResponse,
   type NotificationListParams,
@@ -86,21 +92,13 @@ export {
 export { Requests } from './requests';
 export {
   Send,
-  type BaseMessage,
-  type BaseMessageSendTo,
-  type Content,
   type ElementalChannelNode,
-  type ElementalGroupNode,
   type ElementalNode,
-  type Message,
   type MessageContext,
-  type MsTeamsBaseProperties,
   type Recipient,
-  type RoutingMethod,
-  type SlackBaseProperties,
   type Utm,
-  type SendSendMessageResponse,
-  type SendSendMessageParams,
+  type SendMessageResponse,
+  type SendMessageParams,
 } from './send';
 export {
   Tenants,

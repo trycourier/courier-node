@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as BrandsAPI from './brands';
 import * as AudiencesAPI from './audiences';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
@@ -51,80 +52,137 @@ export class Brands extends APIResource {
 }
 
 export interface Brand {
-  /**
-   * The date/time of when the brand was created. Represented in milliseconds since
-   * Unix epoch.
-   */
+  id: string;
+
   created: number;
 
-  /**
-   * Brand name
-   */
   name: string;
 
-  /**
-   * The date/time of when the brand was published. Represented in milliseconds since
-   * Unix epoch.
-   */
-  published: number;
-
-  settings: BrandSettings;
-
-  /**
-   * The date/time of when the brand was updated. Represented in milliseconds since
-   * Unix epoch.
-   */
   updated: number;
 
-  /**
-   * The version identifier for the brand
-   */
-  version: string;
+  published?: number | null;
 
-  /**
-   * Brand Identifier
-   */
-  id?: string | null;
+  settings?: BrandSettings | null;
 
   snippets?: BrandSnippets | null;
+
+  version?: string | null;
+}
+
+export interface BrandColors {
+  primary?: string;
+
+  secondary?: string;
+
+  [k: string]: string | undefined;
 }
 
 export interface BrandSettings {
-  colors?: BrandSettings.Colors | null;
+  colors?: BrandColors | null;
 
-  email?: BrandSettings.Email | null;
+  email?: BrandSettingsEmail | null;
 
-  inapp?: unknown;
+  inapp?: BrandSettingsInApp | null;
 }
 
-export namespace BrandSettings {
-  export interface Colors {
-    primary?: string | null;
+export interface BrandSettingsEmail {
+  footer?: EmailFooter | null;
 
-    secondary?: string | null;
+  head?: EmailHead | null;
 
-    tertiary?: string | null;
+  header?: EmailHeader | null;
+
+  templateOverride?: BrandSettingsEmail.TemplateOverride | null;
+}
+
+export namespace BrandSettingsEmail {
+  export interface TemplateOverride extends BrandsAPI.BrandTemplate {
+    mjml: BrandsAPI.BrandTemplate;
+
+    footerBackgroundColor?: string | null;
+
+    footerFullWidth?: boolean | null;
   }
+}
 
-  export interface Email {
-    footer: unknown;
+export interface BrandSettingsInApp {
+  colors: BrandColors;
 
-    header: unknown;
-  }
+  icons: Icons;
+
+  widgetBackground: WidgetBackground;
+
+  borderRadius?: string | null;
+
+  disableMessageIcon?: boolean | null;
+
+  fontFamily?: string | null;
+
+  placement?: 'top' | 'bottom' | 'left' | 'right' | null;
+}
+
+export interface BrandSnippet {
+  name: string;
+
+  value: string;
 }
 
 export interface BrandSnippets {
-  items: Array<BrandSnippets.Item>;
+  items?: Array<BrandSnippet> | null;
 }
 
-export namespace BrandSnippets {
-  export interface Item {
-    format: 'handlebars';
+export interface BrandTemplate {
+  enabled: boolean;
 
-    name: string;
+  backgroundColor?: string | null;
 
-    value: string;
-  }
+  blocksBackgroundColor?: string | null;
+
+  footer?: string | null;
+
+  head?: string | null;
+
+  header?: string | null;
+
+  width?: string | null;
+}
+
+export interface EmailFooter {
+  content?: string | null;
+
+  inheritDefault?: boolean | null;
+}
+
+export interface EmailHead {
+  inheritDefault: boolean;
+
+  content?: string | null;
+}
+
+export interface EmailHeader {
+  logo: Logo;
+
+  barColor?: string | null;
+
+  inheritDefault?: boolean | null;
+}
+
+export interface Icons {
+  bell?: string | null;
+
+  message?: string | null;
+}
+
+export interface Logo {
+  href?: string | null;
+
+  image?: string | null;
+}
+
+export interface WidgetBackground {
+  bottomColor?: string | null;
+
+  topColor?: string | null;
 }
 
 export interface BrandListResponse {
@@ -134,14 +192,11 @@ export interface BrandListResponse {
 }
 
 export interface BrandCreateParams {
-  /**
-   * The name of the brand.
-   */
   name: string;
 
-  settings: BrandSettings;
-
   id?: string | null;
+
+  settings?: BrandSettings | null;
 
   snippets?: BrandSnippets | null;
 }
@@ -167,8 +222,19 @@ export interface BrandListParams {
 export declare namespace Brands {
   export {
     type Brand as Brand,
+    type BrandColors as BrandColors,
     type BrandSettings as BrandSettings,
+    type BrandSettingsEmail as BrandSettingsEmail,
+    type BrandSettingsInApp as BrandSettingsInApp,
+    type BrandSnippet as BrandSnippet,
     type BrandSnippets as BrandSnippets,
+    type BrandTemplate as BrandTemplate,
+    type EmailFooter as EmailFooter,
+    type EmailHead as EmailHead,
+    type EmailHeader as EmailHeader,
+    type Icons as Icons,
+    type Logo as Logo,
+    type WidgetBackground as WidgetBackground,
     type BrandListResponse as BrandListResponse,
     type BrandCreateParams as BrandCreateParams,
     type BrandUpdateParams as BrandUpdateParams,

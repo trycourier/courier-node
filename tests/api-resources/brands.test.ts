@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Courier from '@trycourier/courier';
+import Courier from 'courier';
 
 const client = new Courier({
   apiKey: 'My API Key',
@@ -10,7 +10,7 @@ const client = new Courier({
 describe('resource brands', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.brands.create({ name: 'name', settings: {} });
+    const responsePromise = client.brands.create({ name: 'name' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,13 +24,45 @@ describe('resource brands', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.brands.create({
       name: 'name',
-      settings: {
-        colors: { primary: 'primary', secondary: 'secondary', tertiary: 'tertiary' },
-        email: { footer: {}, header: {} },
-        inapp: {},
-      },
       id: 'id',
-      snippets: { items: [{ format: 'handlebars', name: 'name', value: 'value' }] },
+      settings: {
+        colors: { primary: 'primary', secondary: 'secondary' },
+        email: {
+          footer: { content: 'content', inheritDefault: true },
+          head: { inheritDefault: true, content: 'content' },
+          header: { logo: { href: 'href', image: 'image' }, barColor: 'barColor', inheritDefault: true },
+          templateOverride: {
+            enabled: true,
+            backgroundColor: 'backgroundColor',
+            blocksBackgroundColor: 'blocksBackgroundColor',
+            footer: 'footer',
+            head: 'head',
+            header: 'header',
+            width: 'width',
+            mjml: {
+              enabled: true,
+              backgroundColor: 'backgroundColor',
+              blocksBackgroundColor: 'blocksBackgroundColor',
+              footer: 'footer',
+              head: 'head',
+              header: 'header',
+              width: 'width',
+            },
+            footerBackgroundColor: 'footerBackgroundColor',
+            footerFullWidth: true,
+          },
+        },
+        inapp: {
+          colors: { primary: 'primary', secondary: 'secondary' },
+          icons: { bell: 'bell', message: 'message' },
+          widgetBackground: { bottomColor: 'bottomColor', topColor: 'topColor' },
+          borderRadius: 'borderRadius',
+          disableMessageIcon: true,
+          fontFamily: 'fontFamily',
+          placement: 'top',
+        },
+      },
+      snippets: { items: [{ name: 'name', value: 'value' }] },
     });
   });
 
@@ -63,11 +95,43 @@ describe('resource brands', () => {
     const response = await client.brands.update('brand_id', {
       name: 'name',
       settings: {
-        colors: { primary: 'primary', secondary: 'secondary', tertiary: 'tertiary' },
-        email: { footer: {}, header: {} },
-        inapp: {},
+        colors: { primary: 'primary', secondary: 'secondary' },
+        email: {
+          footer: { content: 'content', inheritDefault: true },
+          head: { inheritDefault: true, content: 'content' },
+          header: { logo: { href: 'href', image: 'image' }, barColor: 'barColor', inheritDefault: true },
+          templateOverride: {
+            enabled: true,
+            backgroundColor: 'backgroundColor',
+            blocksBackgroundColor: 'blocksBackgroundColor',
+            footer: 'footer',
+            head: 'head',
+            header: 'header',
+            width: 'width',
+            mjml: {
+              enabled: true,
+              backgroundColor: 'backgroundColor',
+              blocksBackgroundColor: 'blocksBackgroundColor',
+              footer: 'footer',
+              head: 'head',
+              header: 'header',
+              width: 'width',
+            },
+            footerBackgroundColor: 'footerBackgroundColor',
+            footerFullWidth: true,
+          },
+        },
+        inapp: {
+          colors: { primary: 'primary', secondary: 'secondary' },
+          icons: { bell: 'bell', message: 'message' },
+          widgetBackground: { bottomColor: 'bottomColor', topColor: 'topColor' },
+          borderRadius: 'borderRadius',
+          disableMessageIcon: true,
+          fontFamily: 'fontFamily',
+          placement: 'top',
+        },
       },
-      snippets: { items: [{ format: 'handlebars', name: 'name', value: 'value' }] },
+      snippets: { items: [{ name: 'name', value: 'value' }] },
     });
   });
 

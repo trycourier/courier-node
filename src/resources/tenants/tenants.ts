@@ -1,6 +1,15 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as TemplatesAPI from './templates';
+import {
+  BaseTemplateTenantAssociation,
+  ElementalContent,
+  TemplateListParams,
+  TemplateListResponse,
+  TemplateRetrieveParams,
+  Templates,
+} from './templates';
 import * as UsersTenantsAPI from '../users/tenants';
 import * as DefaultPreferencesAPI from './default-preferences/default-preferences';
 import * as ItemsAPI from './default-preferences/items';
@@ -13,6 +22,7 @@ export class Tenants extends APIResource {
   defaultPreferences: DefaultPreferencesAPI.DefaultPreferences = new DefaultPreferencesAPI.DefaultPreferences(
     this._client,
   );
+  templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
 
   /**
    * Get a Tenant
@@ -267,6 +277,8 @@ export interface TenantListUsersParams {
   limit?: number | null;
 }
 
+Tenants.Templates = Templates;
+
 export declare namespace Tenants {
   export {
     type DefaultPreferences as DefaultPreferences,
@@ -276,5 +288,14 @@ export declare namespace Tenants {
     type TenantUpdateParams as TenantUpdateParams,
     type TenantListParams as TenantListParams,
     type TenantListUsersParams as TenantListUsersParams,
+  };
+
+  export {
+    Templates as Templates,
+    type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
+    type ElementalContent as ElementalContent,
+    type TemplateListResponse as TemplateListResponse,
+    type TemplateRetrieveParams as TemplateRetrieveParams,
+    type TemplateListParams as TemplateListParams,
   };
 }
