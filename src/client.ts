@@ -28,7 +28,6 @@ import {
   Audiences,
   Filter,
   FilterConfig,
-  NestedFilterConfig,
   Paging,
 } from './resources/audiences';
 import {
@@ -869,7 +868,6 @@ export declare namespace Courier {
     type Audience as Audience,
     type Filter as Filter,
     type FilterConfig as FilterConfig,
-    type NestedFilterConfig as NestedFilterConfig,
     type Paging as Paging,
     type AudienceUpdateResponse as AudienceUpdateResponse,
     type AudienceListResponse as AudienceListResponse,
