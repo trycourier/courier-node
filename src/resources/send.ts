@@ -278,6 +278,9 @@ export namespace SendMessageParams {
      */
     routing?: Message.Routing | null;
 
+    /**
+     * The id of the template you want to send
+     */
     template?: string | null;
 
     timeout?: Message.Timeout | null;
