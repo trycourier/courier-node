@@ -2,8 +2,11 @@
 
 export {
   Templates,
+  type Alignment,
   type BaseTemplateTenantAssociation,
+  type ElementalBaseNode,
   type ElementalContent,
+  type TextStyle,
   type TemplateListResponse,
   type TemplateRetrieveParams,
   type TemplateListParams,

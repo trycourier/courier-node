@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as NotificationsAPI from './notifications';
 import * as AudiencesAPI from '../audiences';
-import * as SendAPI from '../send';
 import * as ChecksAPI from './checks';
 import {
   BaseCheck,
@@ -21,8 +21,8 @@ import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Notifications extends APIResource {
-  checks: ChecksAPI.Checks = new ChecksAPI.Checks(this._client);
   draft: DraftAPI.Draft = new DraftAPI.Draft(this._client);
+  checks: ChecksAPI.Checks = new ChecksAPI.Checks(this._client);
 
   list(
     query: NotificationListParams | null | undefined = {},
@@ -31,20 +31,28 @@ export class Notifications extends APIResource {
     return this._client.get('/notifications', { query, ...options });
   }
 
-  retrieveContent(id: string, options?: RequestOptions): APIPromise<NotificationContent> {
+  retrieveContent(id: string, options?: RequestOptions): APIPromise<NotificationGetContent> {
     return this._client.get(path`/notifications/${id}/content`, options);
   }
 }
 
-export interface NotificationContent {
-  blocks?: Array<NotificationContent.Block> | null;
+export interface MessageRouting {
+  channels: Array<MessageRoutingChannel>;
 
-  channels?: Array<NotificationContent.Channel> | null;
+  method: 'all' | 'single';
+}
+
+export type MessageRoutingChannel = string | MessageRouting;
+
+export interface NotificationGetContent {
+  blocks?: Array<NotificationGetContent.Block> | null;
+
+  channels?: Array<NotificationGetContent.Channel> | null;
 
   checksum?: string | null;
 }
 
-export namespace NotificationContent {
+export namespace NotificationGetContent {
   export interface Block {
     id: string;
 
@@ -116,7 +124,7 @@ export namespace NotificationListResponse {
 
     note: string;
 
-    routing: SendAPI.MessageRouting;
+    routing: NotificationsAPI.MessageRouting;
 
     topic_id: string;
 
@@ -151,15 +159,19 @@ export interface NotificationListParams {
   notes?: boolean | null;
 }
 
-Notifications.Checks = Checks;
 Notifications.Draft = Draft;
+Notifications.Checks = Checks;
 
 export declare namespace Notifications {
   export {
-    type NotificationContent as NotificationContent,
+    type MessageRouting as MessageRouting,
+    type MessageRoutingChannel as MessageRoutingChannel,
+    type NotificationGetContent as NotificationGetContent,
     type NotificationListResponse as NotificationListResponse,
     type NotificationListParams as NotificationListParams,
   };
+
+  export { Draft as Draft };
 
   export {
     Checks as Checks,
@@ -171,6 +183,4 @@ export declare namespace Notifications {
     type CheckListParams as CheckListParams,
     type CheckDeleteParams as CheckDeleteParams,
   };
-
-  export { Draft as Draft };
 }

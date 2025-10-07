@@ -3,9 +3,10 @@
 import { APIResource } from '../core/resource';
 import * as SendAPI from './send';
 import * as BulkAPI from './bulk';
-import * as Shared from './shared';
+import * as NotificationsAPI from './notifications/notifications';
 import * as TemplatesAPI from './tenants/templates';
 import * as PreferencesAPI from './users/preferences';
+import * as ItemsAPI from './tenants/default-preferences/items';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -15,7 +16,7 @@ export class Send extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.send.message({
+   * const response = await client.send.sendMessage({
    *   message: {
    *     to: { user_id: 'example_user' },
    *     template: 'template_id',
@@ -24,12 +25,10 @@ export class Send extends APIResource {
    * });
    * ```
    */
-  message(body: SendMessageParams, options?: RequestOptions): APIPromise<SendMessageResponse> {
+  sendMessage(body: SendSendMessageParams, options?: RequestOptions): APIPromise<SendSendMessageResponse> {
     return this._client.post('/send', { body, ...options });
   }
 }
-
-export type Alignment = 'center' | 'left' | 'right' | 'full';
 
 /**
  * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
@@ -53,171 +52,11 @@ export namespace Content {
   }
 }
 
-export interface ElementalBaseNode {
-  channels?: Array<string> | null;
-
-  if?: string | null;
-
-  loop?: string | null;
-
-  ref?: string | null;
-}
-
-/**
- * The channel element allows a notification to be customized based on which
- * channel it is sent through. For example, you may want to display a detailed
- * message when the notification is sent through email, and a more concise message
- * in a push notification. Channel elements are only valid as top-level elements;
- * you cannot nest channel elements. If there is a channel element specified at the
- * top-level of the document, all sibling elements must be channel elements. Note:
- * As an alternative, most elements support a `channel` property. Which allows you
- * to selectively display an individual element on a per channel basis. See the
- * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
- * for more details.
- */
-export interface ElementalChannelNode extends ElementalBaseNode {
-  /**
-   * The channel the contents of this element should be applied to. Can be `email`,
-   * `push`, `direct_message`, `sms` or a provider such as slack
-   */
-  channel: string;
-
-  /**
-   * Raw data to apply to the channel. If `elements` has not been specified, `raw` is
-   * `required`.
-   */
-  raw?: { [key: string]: unknown } | null;
-}
-
-/**
- * The channel element allows a notification to be customized based on which
- * channel it is sent through. For example, you may want to display a detailed
- * message when the notification is sent through email, and a more concise message
- * in a push notification. Channel elements are only valid as top-level elements;
- * you cannot nest channel elements. If there is a channel element specified at the
- * top-level of the document, all sibling elements must be channel elements. Note:
- * As an alternative, most elements support a `channel` property. Which allows you
- * to selectively display an individual element on a per channel basis. See the
- * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
- * for more details.
- */
-export type ElementalNode =
-  | ElementalNode.UnionMember0
-  | ElementalNode.UnionMember1
-  | ElementalNode.UnionMember2
-  | ElementalNode.UnionMember3
-  | ElementalNode.UnionMember4
-  | ElementalNode.UnionMember5
-  | ElementalNode.UnionMember6;
-
-export namespace ElementalNode {
-  export interface UnionMember0 extends SendAPI.ElementalBaseNode {
-    type?: 'text';
-  }
-
-  export interface UnionMember1 extends SendAPI.ElementalBaseNode {
-    type?: 'meta';
-  }
-
-  /**
-   * The channel element allows a notification to be customized based on which
-   * channel it is sent through. For example, you may want to display a detailed
-   * message when the notification is sent through email, and a more concise message
-   * in a push notification. Channel elements are only valid as top-level elements;
-   * you cannot nest channel elements. If there is a channel element specified at the
-   * top-level of the document, all sibling elements must be channel elements. Note:
-   * As an alternative, most elements support a `channel` property. Which allows you
-   * to selectively display an individual element on a per channel basis. See the
-   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-   * for more details.
-   */
-  export interface UnionMember2 extends SendAPI.ElementalChannelNode {
-    type?: 'channel';
-  }
-
-  export interface UnionMember3 extends SendAPI.ElementalBaseNode {
-    type?: 'image';
-  }
-
-  export interface UnionMember4 {
-    /**
-     * A unique id used to identify the action when it is executed.
-     */
-    action_id?: string | null;
-
-    /**
-     * The alignment of the action button. Defaults to "center".
-     */
-    align?: SendAPI.Alignment | null;
-
-    /**
-     * The background color of the action button.
-     */
-    background_color?: string | null;
-
-    /**
-     * The text content of the action shown to the user.
-     */
-    content?: string;
-
-    /**
-     * The target URL of the action.
-     */
-    href?: string;
-
-    /**
-     * Region specific content. See
-     * [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
-     * for more details.
-     */
-    locales?: { [key: string]: UnionMember4.Locales } | null;
-
-    /**
-     * Defaults to `button`.
-     */
-    style?: 'button' | 'link' | null;
-
-    type?: 'action';
-  }
-
-  export namespace UnionMember4 {
-    export interface Locales {
-      content: string;
-    }
-  }
-
-  export interface UnionMember5 extends SendAPI.ElementalBaseNode {
-    type?: 'divider';
-  }
-
-  export interface UnionMember6 extends SendAPI.ElementalBaseNode {
-    type?: 'quote';
-  }
-}
-
 export interface MessageContext {
   /**
    * Tenant id used to load brand/default preferences/context.
    */
   tenant_id?: string | null;
-}
-
-export interface MessageRouting {
-  channels: Array<MessageRoutingChannel>;
-
-  method: 'all' | 'single';
-}
-
-export type MessageRoutingChannel = string | MessageRouting;
-
-export interface Preference {
-  status: PreferencesAPI.PreferenceStatus;
-
-  channel_preferences?: Array<Shared.ChannelPreference> | null;
-
-  rules?: Array<Shared.Rule> | null;
-
-  source?: 'subscription' | 'list' | 'recipient' | null;
 }
 
 export interface Recipient {
@@ -254,29 +93,61 @@ export interface Recipient {
 
 export namespace Recipient {
   export interface Preferences {
-    notifications: { [key: string]: SendAPI.Preference };
+    notifications: { [key: string]: Preferences.Notifications };
 
-    categories?: { [key: string]: SendAPI.Preference } | null;
+    categories?: { [key: string]: Preferences.Categories } | null;
 
     templateId?: string | null;
   }
+
+  export namespace Preferences {
+    export interface Notifications {
+      status: PreferencesAPI.PreferenceStatus;
+
+      channel_preferences?: Array<Notifications.ChannelPreference> | null;
+
+      rules?: Array<Notifications.Rule> | null;
+
+      source?: 'subscription' | 'list' | 'recipient' | null;
+    }
+
+    export namespace Notifications {
+      export interface ChannelPreference {
+        channel: ItemsAPI.ChannelClassification;
+      }
+
+      export interface Rule {
+        until: string;
+
+        start?: string | null;
+      }
+    }
+
+    export interface Categories {
+      status: PreferencesAPI.PreferenceStatus;
+
+      channel_preferences?: Array<Categories.ChannelPreference> | null;
+
+      rules?: Array<Categories.Rule> | null;
+
+      source?: 'subscription' | 'list' | 'recipient' | null;
+    }
+
+    export namespace Categories {
+      export interface ChannelPreference {
+        channel: ItemsAPI.ChannelClassification;
+      }
+
+      export interface Rule {
+        until: string;
+
+        start?: string | null;
+      }
+    }
+  }
 }
 
-export type TextStyle = 'text' | 'h1' | 'h2' | 'subtext';
-
-export interface Utm {
-  campaign?: string | null;
-
-  content?: string | null;
-
-  medium?: string | null;
-
-  source?: string | null;
-
-  term?: string | null;
-}
-
-export interface SendMessageResponse {
+export interface SendSendMessageResponse {
   /**
    * A successful call to `POST /send` returns a `202` status code along with a
    * `requestId` in the response body. For single-recipient requests, the `requestId`
@@ -286,15 +157,15 @@ export interface SendMessageResponse {
   requestId: string;
 }
 
-export interface SendMessageParams {
+export interface SendSendMessageParams {
   /**
    * The message property has the following primary top-level properties. They define
    * the destination and content of the message.
    */
-  message: SendMessageParams.Message;
+  message: SendSendMessageParams.Message;
 }
 
-export namespace SendMessageParams {
+export namespace SendSendMessageParams {
   /**
    * The message property has the following primary top-level properties. They define
    * the destination and content of the message.
@@ -375,7 +246,21 @@ export namespace SendMessageParams {
 
     export namespace Channels {
       export interface Metadata {
-        utm?: SendAPI.Utm | null;
+        utm?: Metadata.Utm | null;
+      }
+
+      export namespace Metadata {
+        export interface Utm {
+          campaign?: string | null;
+
+          content?: string | null;
+
+          medium?: string | null;
+
+          source?: string | null;
+
+          term?: string | null;
+        }
       }
 
       export interface Timeouts {
@@ -416,7 +301,21 @@ export namespace SendMessageParams {
 
       trace_id?: string | null;
 
-      utm?: SendAPI.Utm | null;
+      utm?: Metadata.Utm | null;
+    }
+
+    export namespace Metadata {
+      export interface Utm {
+        campaign?: string | null;
+
+        content?: string | null;
+
+        medium?: string | null;
+
+        source?: string | null;
+
+        term?: string | null;
+      }
     }
 
     export interface Preferences {
@@ -444,7 +343,21 @@ export namespace SendMessageParams {
 
     export namespace Providers {
       export interface Metadata {
-        utm?: SendAPI.Utm | null;
+        utm?: Metadata.Utm | null;
+      }
+
+      export namespace Metadata {
+        export interface Utm {
+          campaign?: string | null;
+
+          content?: string | null;
+
+          medium?: string | null;
+
+          source?: string | null;
+
+          term?: string | null;
+        }
       }
     }
 
@@ -455,7 +368,7 @@ export namespace SendMessageParams {
       /**
        * A list of channels or providers (or nested routing rules).
        */
-      channels: Array<SendAPI.MessageRoutingChannel>;
+      channels: Array<NotificationsAPI.MessageRoutingChannel>;
 
       method: 'all' | 'single';
     }
@@ -476,19 +389,10 @@ export namespace SendMessageParams {
 
 export declare namespace Send {
   export {
-    type Alignment as Alignment,
     type Content as Content,
-    type ElementalBaseNode as ElementalBaseNode,
-    type ElementalChannelNode as ElementalChannelNode,
-    type ElementalNode as ElementalNode,
     type MessageContext as MessageContext,
-    type MessageRouting as MessageRouting,
-    type MessageRoutingChannel as MessageRoutingChannel,
-    type Preference as Preference,
     type Recipient as Recipient,
-    type TextStyle as TextStyle,
-    type Utm as Utm,
-    type SendMessageResponse as SendMessageResponse,
-    type SendMessageParams as SendMessageParams,
+    type SendSendMessageResponse as SendSendMessageResponse,
+    type SendSendMessageParams as SendSendMessageParams,
   };
 }

@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export * from './shared';
 export {
   Audiences,
   type Audience,
@@ -26,19 +25,9 @@ export { Automations } from './automations/automations';
 export {
   Brands,
   type Brand,
-  type BrandColors,
   type BrandSettings,
-  type BrandSettingsEmail,
-  type BrandSettingsInApp,
-  type BrandSnippet,
   type BrandSnippets,
   type BrandTemplate,
-  type EmailFooter,
-  type EmailHead,
-  type EmailHeader,
-  type Icons,
-  type Logo,
-  type WidgetBackground,
   type BrandListResponse,
   type BrandCreateParams,
   type BrandUpdateParams,
@@ -77,7 +66,9 @@ export {
 } from './messages';
 export {
   Notifications,
-  type NotificationContent,
+  type MessageRouting,
+  type MessageRoutingChannel,
+  type NotificationGetContent,
   type NotificationListResponse,
   type NotificationListParams,
 } from './notifications/notifications';
@@ -93,20 +84,11 @@ export {
 export { Requests } from './requests';
 export {
   Send,
-  type Alignment,
   type Content,
-  type ElementalBaseNode,
-  type ElementalChannelNode,
-  type ElementalNode,
   type MessageContext,
-  type MessageRouting,
-  type MessageRoutingChannel,
-  type Preference,
   type Recipient,
-  type TextStyle,
-  type Utm,
-  type SendMessageResponse,
-  type SendMessageParams,
+  type SendSendMessageResponse,
+  type SendSendMessageParams,
 } from './send';
 export {
   Tenants,
