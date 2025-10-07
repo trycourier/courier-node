@@ -19,6 +19,21 @@ export interface ElementalBaseNode {
   ref?: string | null;
 }
 
+/**
+ * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+ */
+export interface ElementalContentSugar {
+  /**
+   * The text content displayed in the notification.
+   */
+  body: string;
+
+  /**
+   * Title/subject displayed by supported channels.
+   */
+  title: string;
+}
+
 export interface MessageRouting {
   channels: Array<MessageRoutingChannel>;
 

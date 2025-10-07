@@ -995,6 +995,7 @@ export declare namespace Courier {
   export type Alignment = API.Alignment;
   export type ChannelPreference = API.ChannelPreference;
   export type ElementalBaseNode = API.ElementalBaseNode;
+  export type ElementalContentSugar = API.ElementalContentSugar;
   export type MessageRouting = API.MessageRouting;
   export type MessageRoutingChannel = API.MessageRoutingChannel;
   export type Preference = API.Preference;
