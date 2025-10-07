@@ -28,7 +28,7 @@ describe('resource brands', () => {
       settings: {
         colors: { primary: 'primary', secondary: 'secondary' },
         email: {
-          footer: { content: {}, inheritDefault: true },
+          footer: { content: 'content', inheritDefault: true },
           head: { inheritDefault: true, content: 'content' },
           header: { logo: { href: 'href', image: 'image' }, barColor: 'barColor', inheritDefault: true },
           templateOverride: {
@@ -97,7 +97,7 @@ describe('resource brands', () => {
       settings: {
         colors: { primary: 'primary', secondary: 'secondary' },
         email: {
-          footer: { content: {}, inheritDefault: true },
+          footer: { content: 'content', inheritDefault: true },
           head: { inheritDefault: true, content: 'content' },
           header: { logo: { href: 'href', image: 'image' }, barColor: 'barColor', inheritDefault: true },
           templateOverride: {
