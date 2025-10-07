@@ -3,10 +3,9 @@
 import { APIResource } from '../core/resource';
 import * as SendAPI from './send';
 import * as BulkAPI from './bulk';
+import * as Shared from './shared';
 import * as NotificationsAPI from './notifications/notifications';
 import * as TemplatesAPI from './tenants/templates';
-import * as PreferencesAPI from './users/preferences';
-import * as ItemsAPI from './tenants/default-preferences/items';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -93,58 +92,24 @@ export interface Recipient {
 
 export namespace Recipient {
   export interface Preferences {
-    notifications: { [key: string]: Preferences.Notifications };
+    notifications: { [key: string]: Shared.Preference };
 
-    categories?: { [key: string]: Preferences.Categories } | null;
+    categories?: { [key: string]: Shared.Preference } | null;
 
     templateId?: string | null;
   }
+}
 
-  export namespace Preferences {
-    export interface Notifications {
-      status: PreferencesAPI.PreferenceStatus;
+export interface Utm {
+  campaign?: string | null;
 
-      channel_preferences?: Array<Notifications.ChannelPreference> | null;
+  content?: string | null;
 
-      rules?: Array<Notifications.Rule> | null;
+  medium?: string | null;
 
-      source?: 'subscription' | 'list' | 'recipient' | null;
-    }
+  source?: string | null;
 
-    export namespace Notifications {
-      export interface ChannelPreference {
-        channel: ItemsAPI.ChannelClassification;
-      }
-
-      export interface Rule {
-        until: string;
-
-        start?: string | null;
-      }
-    }
-
-    export interface Categories {
-      status: PreferencesAPI.PreferenceStatus;
-
-      channel_preferences?: Array<Categories.ChannelPreference> | null;
-
-      rules?: Array<Categories.Rule> | null;
-
-      source?: 'subscription' | 'list' | 'recipient' | null;
-    }
-
-    export namespace Categories {
-      export interface ChannelPreference {
-        channel: ItemsAPI.ChannelClassification;
-      }
-
-      export interface Rule {
-        until: string;
-
-        start?: string | null;
-      }
-    }
-  }
+  term?: string | null;
 }
 
 export interface SendSendMessageResponse {
@@ -246,21 +211,7 @@ export namespace SendSendMessageParams {
 
     export namespace Channels {
       export interface Metadata {
-        utm?: Metadata.Utm | null;
-      }
-
-      export namespace Metadata {
-        export interface Utm {
-          campaign?: string | null;
-
-          content?: string | null;
-
-          medium?: string | null;
-
-          source?: string | null;
-
-          term?: string | null;
-        }
+        utm?: SendAPI.Utm | null;
       }
 
       export interface Timeouts {
@@ -301,21 +252,7 @@ export namespace SendSendMessageParams {
 
       trace_id?: string | null;
 
-      utm?: Metadata.Utm | null;
-    }
-
-    export namespace Metadata {
-      export interface Utm {
-        campaign?: string | null;
-
-        content?: string | null;
-
-        medium?: string | null;
-
-        source?: string | null;
-
-        term?: string | null;
-      }
+      utm?: SendAPI.Utm | null;
     }
 
     export interface Preferences {
@@ -343,21 +280,7 @@ export namespace SendSendMessageParams {
 
     export namespace Providers {
       export interface Metadata {
-        utm?: Metadata.Utm | null;
-      }
-
-      export namespace Metadata {
-        export interface Utm {
-          campaign?: string | null;
-
-          content?: string | null;
-
-          medium?: string | null;
-
-          source?: string | null;
-
-          term?: string | null;
-        }
+        utm?: SendAPI.Utm | null;
       }
     }
 
@@ -392,6 +315,7 @@ export declare namespace Send {
     type Content as Content,
     type MessageContext as MessageContext,
     type Recipient as Recipient,
+    type Utm as Utm,
     type SendSendMessageResponse as SendSendMessageResponse,
     type SendSendMessageParams as SendSendMessageParams,
   };

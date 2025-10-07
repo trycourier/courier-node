@@ -4,6 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as AudiencesAPI from '../audiences';
 import * as SubscriptionsAPI from './subscriptions';
 import {
+  NotificationPreferenceDetails,
   PutSubscriptionsRecipient,
   RecipientPreferences,
   SubscriptionAddParams,
@@ -124,6 +125,7 @@ export declare namespace Lists {
 
   export {
     Subscriptions as Subscriptions,
+    type NotificationPreferenceDetails as NotificationPreferenceDetails,
     type PutSubscriptionsRecipient as PutSubscriptionsRecipient,
     type RecipientPreferences as RecipientPreferences,
     type SubscriptionListResponse as SubscriptionListResponse,

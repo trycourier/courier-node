@@ -40,14 +40,24 @@ import {
 import { Auth, AuthIssueTokenParams, AuthIssueTokenResponse } from './resources/auth';
 import {
   Brand,
+  BrandColors,
   BrandCreateParams,
   BrandListParams,
   BrandListResponse,
   BrandSettings,
+  BrandSettingsEmail,
+  BrandSettingsInApp,
+  BrandSnippet,
   BrandSnippets,
   BrandTemplate,
   BrandUpdateParams,
   Brands,
+  EmailFooter,
+  EmailHead,
+  EmailHeader,
+  Icons,
+  Logo,
+  WidgetBackground,
 } from './resources/brands';
 import {
   Bulk,
@@ -80,6 +90,7 @@ import {
   Send,
   SendSendMessageParams,
   SendSendMessageResponse,
+  Utm,
 } from './resources/send';
 import {
   TranslationRetrieveParams,
@@ -848,6 +859,7 @@ export declare namespace Courier {
     type Content as Content,
     type MessageContext as MessageContext,
     type Recipient as Recipient,
+    type Utm as Utm,
     type SendSendMessageResponse as SendSendMessageResponse,
     type SendSendMessageParams as SendSendMessageParams,
   };
@@ -885,9 +897,19 @@ export declare namespace Courier {
   export {
     Brands as Brands,
     type Brand as Brand,
+    type BrandColors as BrandColors,
     type BrandSettings as BrandSettings,
+    type BrandSettingsEmail as BrandSettingsEmail,
+    type BrandSettingsInApp as BrandSettingsInApp,
+    type BrandSnippet as BrandSnippet,
     type BrandSnippets as BrandSnippets,
     type BrandTemplate as BrandTemplate,
+    type EmailFooter as EmailFooter,
+    type EmailHead as EmailHead,
+    type EmailHeader as EmailHeader,
+    type Icons as Icons,
+    type Logo as Logo,
+    type WidgetBackground as WidgetBackground,
     type BrandListResponse as BrandListResponse,
     type BrandCreateParams as BrandCreateParams,
     type BrandUpdateParams as BrandUpdateParams,
@@ -973,4 +995,8 @@ export declare namespace Courier {
   };
 
   export { Users as Users };
+
+  export type ChannelPreference = API.ChannelPreference;
+  export type Preference = API.Preference;
+  export type Rule = API.Rule;
 }
