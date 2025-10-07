@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "courier/*": ["./src/*"],
-      "courier": ["./src/index.ts"]
+      "@trycourier/courier/*": ["./src/*"],
+      "@trycourier/courier": ["./src/index.ts"]
     },
     "noEmit": true,
 
