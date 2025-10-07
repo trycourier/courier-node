@@ -47,7 +47,6 @@ export {
   Bulk,
   type InboundBulkMessage,
   type InboundBulkMessageUser,
-  type UserRecipient,
   type BulkCreateJobResponse,
   type BulkListUsersResponse,
   type BulkRetrieveJobResponse,

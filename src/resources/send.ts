@@ -2,7 +2,6 @@
 
 import { APIResource } from '../core/resource';
 import * as SendAPI from './send';
-import * as BulkAPI from './bulk';
 import * as Shared from './shared';
 import * as TemplatesAPI from './tenants/templates';
 import { APIPromise } from '../core/api-promise';
@@ -167,47 +166,7 @@ export interface MessageContext {
   tenant_id?: string | null;
 }
 
-export interface Recipient {
-  /**
-   * Use `tenant_id` instead.
-   */
-  account_id?: string | null;
-
-  /**
-   * Context such as tenant_id to send the notification with.
-   */
-  context?: MessageContext | null;
-
-  data?: { [key: string]: unknown } | null;
-
-  email?: string | null;
-
-  /**
-   * The user's preferred ISO 639-1 language code.
-   */
-  locale?: string | null;
-
-  phone_number?: string | null;
-
-  preferences?: Recipient.Preferences | null;
-
-  /**
-   * Tenant id. Will load brand, default preferences and base context data.
-   */
-  tenant_id?: string | null;
-
-  user_id?: string | null;
-}
-
-export namespace Recipient {
-  export interface Preferences {
-    notifications: { [key: string]: Shared.Preference };
-
-    categories?: { [key: string]: Shared.Preference } | null;
-
-    templateId?: string | null;
-  }
-}
+export type Recipient = Shared.UserRecipient | Shared.ListRecipient;
 
 export interface Utm {
   campaign?: string | null;
@@ -288,7 +247,7 @@ export namespace SendMessageParams {
     /**
      * The recipient or a list of recipients of the message
      */
-    to?: BulkAPI.UserRecipient | Array<SendAPI.Recipient> | null;
+    to?: Shared.UserRecipient | Shared.ListRecipient | Array<SendAPI.Recipient> | null;
   }
 
   export namespace Message {
