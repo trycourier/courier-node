@@ -7,7 +7,7 @@ import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Draft extends APIResource {
-  retrieveContent(id: string, options?: RequestOptions): APIPromise<NotificationsAPI.NotificationContent> {
+  retrieveContent(id: string, options?: RequestOptions): APIPromise<NotificationsAPI.NotificationGetContent> {
     return this._client.get(path`/notifications/${id}/draft/content`, options);
   }
 }

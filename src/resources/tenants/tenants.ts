@@ -3,12 +3,15 @@
 import { APIResource } from '../../core/resource';
 import * as TemplatesAPI from './templates';
 import {
+  Alignment,
   BaseTemplateTenantAssociation,
+  ElementalBaseNode,
   ElementalContent,
   TemplateListParams,
   TemplateListResponse,
   TemplateRetrieveParams,
   Templates,
+  TextStyle,
 } from './templates';
 import * as UsersTenantsAPI from '../users/tenants';
 import * as DefaultPreferencesAPI from './default-preferences/default-preferences';
@@ -19,10 +22,10 @@ import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Tenants extends APIResource {
-  templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
   defaultPreferences: DefaultPreferencesAPI.DefaultPreferences = new DefaultPreferencesAPI.DefaultPreferences(
     this._client,
   );
+  templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
 
   /**
    * Get a Tenant
@@ -292,8 +295,11 @@ export declare namespace Tenants {
 
   export {
     Templates as Templates,
+    type Alignment as Alignment,
     type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
+    type ElementalBaseNode as ElementalBaseNode,
     type ElementalContent as ElementalContent,
+    type TextStyle as TextStyle,
     type TemplateListResponse as TemplateListResponse,
     type TemplateRetrieveParams as TemplateRetrieveParams,
     type TemplateListParams as TemplateListParams,

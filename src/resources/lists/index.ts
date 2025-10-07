@@ -10,7 +10,6 @@ export {
 } from './lists';
 export {
   Subscriptions,
-  type NotificationPreferenceDetails,
   type PutSubscriptionsRecipient,
   type RecipientPreferences,
   type SubscriptionListResponse,

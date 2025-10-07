@@ -3,8 +3,8 @@
 import { APIResource } from '../../core/resource';
 import * as SubscriptionsAPI from './subscriptions';
 import * as AudiencesAPI from '../audiences';
-import * as Shared from '../shared';
 import * as PreferencesAPI from '../users/preferences';
+import * as ItemsAPI from '../tenants/default-preferences/items';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -79,14 +79,6 @@ export class Subscriptions extends APIResource {
   }
 }
 
-export interface NotificationPreferenceDetails {
-  status: PreferencesAPI.PreferenceStatus;
-
-  channel_preferences?: Array<Shared.ChannelPreference> | null;
-
-  rules?: Array<Shared.Rule> | null;
-}
-
 export interface PutSubscriptionsRecipient {
   recipientId: string;
 
@@ -94,9 +86,51 @@ export interface PutSubscriptionsRecipient {
 }
 
 export interface RecipientPreferences {
-  categories?: { [key: string]: NotificationPreferenceDetails } | null;
+  categories?: { [key: string]: RecipientPreferences.Categories } | null;
 
-  notifications?: { [key: string]: NotificationPreferenceDetails } | null;
+  notifications?: { [key: string]: RecipientPreferences.Notifications } | null;
+}
+
+export namespace RecipientPreferences {
+  export interface Categories {
+    status: PreferencesAPI.PreferenceStatus;
+
+    channel_preferences?: Array<Categories.ChannelPreference> | null;
+
+    rules?: Array<Categories.Rule> | null;
+  }
+
+  export namespace Categories {
+    export interface ChannelPreference {
+      channel: ItemsAPI.ChannelClassification;
+    }
+
+    export interface Rule {
+      until: string;
+
+      start?: string | null;
+    }
+  }
+
+  export interface Notifications {
+    status: PreferencesAPI.PreferenceStatus;
+
+    channel_preferences?: Array<Notifications.ChannelPreference> | null;
+
+    rules?: Array<Notifications.Rule> | null;
+  }
+
+  export namespace Notifications {
+    export interface ChannelPreference {
+      channel: ItemsAPI.ChannelClassification;
+    }
+
+    export interface Rule {
+      until: string;
+
+      start?: string | null;
+    }
+  }
 }
 
 export interface SubscriptionListResponse {
@@ -151,7 +185,6 @@ export interface SubscriptionUnsubscribeUserParams {
 
 export declare namespace Subscriptions {
   export {
-    type NotificationPreferenceDetails as NotificationPreferenceDetails,
     type PutSubscriptionsRecipient as PutSubscriptionsRecipient,
     type RecipientPreferences as RecipientPreferences,
     type SubscriptionListResponse as SubscriptionListResponse,

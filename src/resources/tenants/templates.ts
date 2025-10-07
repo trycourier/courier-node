@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as TemplatesAPI from './templates';
-import * as SendAPI from '../send';
+import * as NotificationsAPI from '../notifications/notifications';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -47,6 +47,8 @@ export class Templates extends APIResource {
   }
 }
 
+export type Alignment = 'center' | 'left' | 'right' | 'full';
+
 export interface BaseTemplateTenantAssociation {
   /**
    * The template's id
@@ -74,8 +76,26 @@ export interface BaseTemplateTenantAssociation {
   version: string;
 }
 
+export interface ElementalBaseNode {
+  channels?: Array<string> | null;
+
+  if?: string | null;
+
+  loop?: string | null;
+
+  ref?: string | null;
+}
+
 export interface ElementalContent {
-  elements: Array<SendAPI.ElementalNode>;
+  elements: Array<
+    | ElementalContent.UnionMember0
+    | ElementalContent.UnionMember1
+    | ElementalContent.UnionMember2
+    | ElementalContent.UnionMember3
+    | ElementalContent.UnionMember4
+    | ElementalContent.UnionMember5
+    | ElementalContent.UnionMember6
+  >;
 
   /**
    * For example, "2022-01-01"
@@ -84,6 +104,81 @@ export interface ElementalContent {
 
   brand?: string | null;
 }
+
+export namespace ElementalContent {
+  export interface UnionMember0 extends TemplatesAPI.ElementalBaseNode {
+    type?: 'text';
+  }
+
+  export interface UnionMember1 extends TemplatesAPI.ElementalBaseNode {
+    type?: 'meta';
+  }
+
+  export interface UnionMember2 extends TemplatesAPI.ElementalBaseNode {
+    type?: 'channel';
+  }
+
+  export interface UnionMember3 extends TemplatesAPI.ElementalBaseNode {
+    type?: 'image';
+  }
+
+  export interface UnionMember4 {
+    /**
+     * A unique id used to identify the action when it is executed.
+     */
+    action_id?: string | null;
+
+    /**
+     * The alignment of the action button. Defaults to "center".
+     */
+    align?: TemplatesAPI.Alignment | null;
+
+    /**
+     * The background color of the action button.
+     */
+    background_color?: string | null;
+
+    /**
+     * The text content of the action shown to the user.
+     */
+    content?: string;
+
+    /**
+     * The target URL of the action.
+     */
+    href?: string;
+
+    /**
+     * Region specific content. See
+     * [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
+     * for more details.
+     */
+    locales?: { [key: string]: UnionMember4.Locales } | null;
+
+    /**
+     * Defaults to `button`.
+     */
+    style?: 'button' | 'link' | null;
+
+    type?: 'action';
+  }
+
+  export namespace UnionMember4 {
+    export interface Locales {
+      content: string;
+    }
+  }
+
+  export interface UnionMember5 extends TemplatesAPI.ElementalBaseNode {
+    type?: 'divider';
+  }
+
+  export interface UnionMember6 extends TemplatesAPI.ElementalBaseNode {
+    type?: 'quote';
+  }
+}
+
+export type TextStyle = 'text' | 'h1' | 'h2' | 'subtext';
 
 export interface TemplateListResponse {
   /**
@@ -129,7 +224,7 @@ export namespace TemplateListResponse {
      * The template's data containing it's routing configs
      */
     export interface Data {
-      routing: SendAPI.MessageRouting;
+      routing: NotificationsAPI.MessageRouting;
     }
   }
 }
@@ -155,8 +250,11 @@ export interface TemplateListParams {
 
 export declare namespace Templates {
   export {
+    type Alignment as Alignment,
     type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
+    type ElementalBaseNode as ElementalBaseNode,
     type ElementalContent as ElementalContent,
+    type TextStyle as TextStyle,
     type TemplateListResponse as TemplateListResponse,
     type TemplateRetrieveParams as TemplateRetrieveParams,
     type TemplateListParams as TemplateListParams,

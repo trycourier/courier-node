@@ -69,66 +69,120 @@ export interface Brand {
   version?: string | null;
 }
 
-export interface BrandColors {
-  primary?: string | null;
-
-  secondary?: string | null;
-
-  [k: string]: string | undefined;
-}
-
 export interface BrandSettings {
-  colors?: BrandColors | null;
+  colors?: BrandSettings.Colors | null;
 
-  email?: BrandSettingsEmail | null;
+  email?: BrandSettings.Email | null;
 
-  inapp?: BrandSettingsInApp | null;
+  inapp?: BrandSettings.Inapp | null;
 }
 
-export interface BrandSettingsEmail {
-  footer?: EmailFooter | null;
+export namespace BrandSettings {
+  export interface Colors {
+    primary?: string | null;
 
-  head?: EmailHead | null;
+    secondary?: string | null;
 
-  header?: EmailHeader | null;
+    [k: string]: string | undefined;
+  }
 
-  templateOverride?: BrandSettingsEmail.TemplateOverride | null;
-}
+  export interface Email {
+    footer?: Email.Footer | null;
 
-export namespace BrandSettingsEmail {
-  export interface TemplateOverride extends BrandsAPI.BrandTemplate {
-    mjml: BrandsAPI.BrandTemplate;
+    head?: Email.Head | null;
 
-    footerBackgroundColor?: string | null;
+    header?: Email.Header | null;
 
-    footerFullWidth?: boolean | null;
+    templateOverride?: Email.TemplateOverride | null;
+  }
+
+  export namespace Email {
+    export interface Footer {
+      content?: string | null;
+
+      inheritDefault?: boolean | null;
+    }
+
+    export interface Head {
+      inheritDefault: boolean;
+
+      content?: string | null;
+    }
+
+    export interface Header {
+      logo: Header.Logo;
+
+      barColor?: string | null;
+
+      inheritDefault?: boolean | null;
+    }
+
+    export namespace Header {
+      export interface Logo {
+        href?: string | null;
+
+        image?: string | null;
+      }
+    }
+
+    export interface TemplateOverride extends BrandsAPI.BrandTemplate {
+      mjml: BrandsAPI.BrandTemplate;
+
+      footerBackgroundColor?: string | null;
+
+      footerFullWidth?: boolean | null;
+    }
+  }
+
+  export interface Inapp {
+    colors: Inapp.Colors;
+
+    icons: Inapp.Icons;
+
+    widgetBackground: Inapp.WidgetBackground;
+
+    borderRadius?: string | null;
+
+    disableMessageIcon?: boolean | null;
+
+    fontFamily?: string | null;
+
+    placement?: 'top' | 'bottom' | 'left' | 'right' | null;
+  }
+
+  export namespace Inapp {
+    export interface Colors {
+      primary?: string | null;
+
+      secondary?: string | null;
+
+      [k: string]: string | undefined;
+    }
+
+    export interface Icons {
+      bell?: string | null;
+
+      message?: string | null;
+    }
+
+    export interface WidgetBackground {
+      bottomColor?: string | null;
+
+      topColor?: string | null;
+    }
   }
 }
 
-export interface BrandSettingsInApp {
-  colors: BrandColors;
-
-  icons: Icons;
-
-  widgetBackground: WidgetBackground;
-
-  borderRadius?: string | null;
-
-  disableMessageIcon?: boolean | null;
-
-  fontFamily?: string | null;
-
-  placement?: 'top' | 'bottom' | 'left' | 'right' | null;
-}
-
-export interface BrandSnippet {
-  name: string;
-
-  value: string;
-}
-
 export interface BrandSnippets {
-  items?: Array<BrandSnippet> | null;
+  items?: Array<BrandSnippets.Item> | null;
+}
+
+export namespace BrandSnippets {
+  export interface Item {
+    name: string;
+
+    value: string;
+  }
 }
 
 export interface BrandTemplate {
@@ -145,44 +199,6 @@ export interface BrandTemplate {
   header?: string | null;
 
   width?: string | null;
-}
-
-export interface EmailFooter {
-  content?: string | null;
-
-  inheritDefault?: boolean | null;
-}
-
-export interface EmailHead {
-  inheritDefault: boolean;
-
-  content?: string | null;
-}
-
-export interface EmailHeader {
-  logo: Logo;
-
-  barColor?: string | null;
-
-  inheritDefault?: boolean | null;
-}
-
-export interface Icons {
-  bell?: string | null;
-
-  message?: string | null;
-}
-
-export interface Logo {
-  href?: string | null;
-
-  image?: string | null;
-}
-
-export interface WidgetBackground {
-  bottomColor?: string | null;
-
-  topColor?: string | null;
 }
 
 export interface BrandListResponse {
@@ -222,19 +238,9 @@ export interface BrandListParams {
 export declare namespace Brands {
   export {
     type Brand as Brand,
-    type BrandColors as BrandColors,
     type BrandSettings as BrandSettings,
-    type BrandSettingsEmail as BrandSettingsEmail,
-    type BrandSettingsInApp as BrandSettingsInApp,
-    type BrandSnippet as BrandSnippet,
     type BrandSnippets as BrandSnippets,
     type BrandTemplate as BrandTemplate,
-    type EmailFooter as EmailFooter,
-    type EmailHead as EmailHead,
-    type EmailHeader as EmailHeader,
-    type Icons as Icons,
-    type Logo as Logo,
-    type WidgetBackground as WidgetBackground,
     type BrandListResponse as BrandListResponse,
     type BrandCreateParams as BrandCreateParams,
     type BrandUpdateParams as BrandUpdateParams,
