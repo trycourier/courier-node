@@ -17,7 +17,7 @@ export class Send extends APIResource {
    *   message: {
    *     to: { user_id: 'example_user' },
    *     template: 'template_id',
-   *     data: { name: 'Example Name' },
+   *     data: { foo: 'bar' },
    *   },
    * });
    * ```
@@ -103,51 +103,8 @@ export namespace ElementalNode {
     type?: 'image';
   }
 
-  export interface UnionMember4 {
-    /**
-     * A unique id used to identify the action when it is executed.
-     */
-    action_id?: string | null;
-
-    /**
-     * The alignment of the action button. Defaults to "center".
-     */
-    align?: Shared.Alignment | null;
-
-    /**
-     * The background color of the action button.
-     */
-    background_color?: string | null;
-
-    /**
-     * The text content of the action shown to the user.
-     */
-    content?: string;
-
-    /**
-     * The target URL of the action.
-     */
-    href?: string;
-
-    /**
-     * Region specific content. See
-     * [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
-     * for more details.
-     */
-    locales?: { [key: string]: UnionMember4.Locales } | null;
-
-    /**
-     * Defaults to `button`.
-     */
-    style?: 'button' | 'link' | null;
-
+  export interface UnionMember4 extends Shared.ElementalBaseNode {
     type?: 'action';
-  }
-
-  export namespace UnionMember4 {
-    export interface Locales {
-      content: string;
-    }
   }
 
   export interface UnionMember5 extends Shared.ElementalBaseNode {

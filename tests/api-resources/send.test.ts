@@ -46,7 +46,7 @@ describe('resource send', () => {
         },
         content: { body: 'body', title: 'title' },
         context: { tenant_id: 'tenant_id' },
-        data: { name: 'bar' },
+        data: { foo: 'bar' },
         delay: { duration: 0, until: 'until' },
         expiry: { expires_in: 'string', expires_at: 'expires_at' },
         metadata: {
