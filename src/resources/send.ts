@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import * as SendAPI from './send';
+import * as BulkAPI from './bulk';
 import * as Shared from './shared';
 import * as TemplatesAPI from './tenants/templates';
 import { APIPromise } from '../core/api-promise';
@@ -123,7 +124,15 @@ export interface MessageContext {
   tenant_id?: string | null;
 }
 
-export type Recipient = Shared.UserRecipient | Shared.ListRecipient;
+export type Recipient = BulkAPI.UserRecipient | Recipient.ListRecipient;
+
+export namespace Recipient {
+  export interface ListRecipient {
+    data?: { [key: string]: unknown } | null;
+
+    list_id?: string | null;
+  }
+}
 
 export interface Utm {
   campaign?: string | null;
@@ -204,7 +213,7 @@ export namespace SendMessageParams {
     /**
      * The recipient or a list of recipients of the message
      */
-    to?: Shared.UserRecipient | Shared.ListRecipient | Array<SendAPI.Recipient> | null;
+    to?: BulkAPI.UserRecipient | Message.ListRecipient | Array<SendAPI.Recipient> | null;
   }
 
   export namespace Message {
@@ -336,6 +345,12 @@ export namespace SendMessageParams {
       message?: number | null;
 
       provider?: { [key: string]: number } | null;
+    }
+
+    export interface ListRecipient {
+      data?: { [key: string]: unknown } | null;
+
+      list_id?: string | null;
     }
   }
 }

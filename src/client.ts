@@ -68,6 +68,7 @@ import {
   BulkRetrieveJobResponse,
   InboundBulkMessage,
   InboundBulkMessageUser,
+  UserRecipient,
 } from './resources/bulk';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
@@ -917,6 +918,7 @@ export declare namespace Courier {
     Bulk as Bulk,
     type InboundBulkMessage as InboundBulkMessage,
     type InboundBulkMessageUser as InboundBulkMessageUser,
+    type UserRecipient as UserRecipient,
     type BulkCreateJobResponse as BulkCreateJobResponse,
     type BulkListUsersResponse as BulkListUsersResponse,
     type BulkRetrieveJobResponse as BulkRetrieveJobResponse,
@@ -994,11 +996,9 @@ export declare namespace Courier {
   export type ChannelPreference = API.ChannelPreference;
   export type ElementalBaseNode = API.ElementalBaseNode;
   export type ElementalContentSugar = API.ElementalContentSugar;
-  export type ListRecipient = API.ListRecipient;
   export type MessageRouting = API.MessageRouting;
   export type MessageRoutingChannel = API.MessageRoutingChannel;
   export type Preference = API.Preference;
   export type Rule = API.Rule;
   export type TextStyle = API.TextStyle;
-  export type UserRecipient = API.UserRecipient;
 }
