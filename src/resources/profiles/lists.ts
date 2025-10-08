@@ -1,8 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as AudiencesAPI from '../audiences';
-import * as SubscriptionsAPI from '../lists/subscriptions';
+import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -40,7 +39,7 @@ export class Lists extends APIResource {
 }
 
 export interface ListRetrieveResponse {
-  paging: AudiencesAPI.Paging;
+  paging: Shared.Paging;
 
   /**
    * An array of lists
@@ -69,7 +68,7 @@ export namespace ListRetrieveResponse {
      */
     updated: string;
 
-    preferences?: SubscriptionsAPI.RecipientPreferences | null;
+    preferences?: Shared.RecipientPreferences | null;
   }
 }
 
@@ -96,7 +95,7 @@ export namespace ListSubscribeParams {
   export interface List {
     listId: string;
 
-    preferences?: SubscriptionsAPI.RecipientPreferences | null;
+    preferences?: Shared.RecipientPreferences | null;
   }
 }
 

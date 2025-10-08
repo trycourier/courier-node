@@ -1,8 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as TemplatesAPI from './templates';
-import * as SendAPI from '../send';
 import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
@@ -24,7 +22,7 @@ export class Templates extends APIResource {
     templateID: string,
     params: TemplateRetrieveParams,
     options?: RequestOptions,
-  ): APIPromise<BaseTemplateTenantAssociation> {
+  ): APIPromise<Shared.BaseTemplateTenantAssociation> {
     const { tenant_id } = params;
     return this._client.get(path`/tenants/${tenant_id}/templates/${templateID}`, options);
   }
@@ -46,44 +44,6 @@ export class Templates extends APIResource {
   ): APIPromise<TemplateListResponse> {
     return this._client.get(path`/tenants/${tenantID}/templates`, { query, ...options });
   }
-}
-
-export interface BaseTemplateTenantAssociation {
-  /**
-   * The template's id
-   */
-  id: string;
-
-  /**
-   * The timestamp at which the template was created
-   */
-  created_at: string;
-
-  /**
-   * The timestamp at which the template was published
-   */
-  published_at: string;
-
-  /**
-   * The timestamp at which the template was last updated
-   */
-  updated_at: string;
-
-  /**
-   * The version of the template
-   */
-  version: string;
-}
-
-export interface ElementalContent {
-  elements: Array<SendAPI.ElementalNode>;
-
-  /**
-   * For example, "2022-01-01"
-   */
-  version: string;
-
-  brand?: string | null;
 }
 
 export interface TemplateListResponse {
@@ -118,7 +78,7 @@ export interface TemplateListResponse {
 }
 
 export namespace TemplateListResponse {
-  export interface Item extends TemplatesAPI.BaseTemplateTenantAssociation {
+  export interface Item extends Shared.BaseTemplateTenantAssociation {
     /**
      * The template's data containing it's routing configs
      */
@@ -156,8 +116,6 @@ export interface TemplateListParams {
 
 export declare namespace Templates {
   export {
-    type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
-    type ElementalContent as ElementalContent,
     type TemplateListResponse as TemplateListResponse,
     type TemplateRetrieveParams as TemplateRetrieveParams,
     type TemplateListParams as TemplateListParams,

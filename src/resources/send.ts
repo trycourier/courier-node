@@ -1,10 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as SendAPI from './send';
-import * as BulkAPI from './bulk';
 import * as Shared from './shared';
-import * as TemplatesAPI from './tenants/templates';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -26,124 +23,6 @@ export class Send extends APIResource {
   message(body: SendMessageParams, options?: RequestOptions): APIPromise<SendMessageResponse> {
     return this._client.post('/send', { body, ...options });
   }
-}
-
-/**
- * The channel element allows a notification to be customized based on which
- * channel it is sent through. For example, you may want to display a detailed
- * message when the notification is sent through email, and a more concise message
- * in a push notification. Channel elements are only valid as top-level elements;
- * you cannot nest channel elements. If there is a channel element specified at the
- * top-level of the document, all sibling elements must be channel elements. Note:
- * As an alternative, most elements support a `channel` property. Which allows you
- * to selectively display an individual element on a per channel basis. See the
- * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
- * for more details.
- */
-export interface ElementalChannelNode extends Shared.ElementalBaseNode {
-  /**
-   * The channel the contents of this element should be applied to. Can be `email`,
-   * `push`, `direct_message`, `sms` or a provider such as slack
-   */
-  channel: string;
-
-  /**
-   * Raw data to apply to the channel. If `elements` has not been specified, `raw` is
-   * `required`.
-   */
-  raw?: { [key: string]: unknown } | null;
-}
-
-/**
- * The channel element allows a notification to be customized based on which
- * channel it is sent through. For example, you may want to display a detailed
- * message when the notification is sent through email, and a more concise message
- * in a push notification. Channel elements are only valid as top-level elements;
- * you cannot nest channel elements. If there is a channel element specified at the
- * top-level of the document, all sibling elements must be channel elements. Note:
- * As an alternative, most elements support a `channel` property. Which allows you
- * to selectively display an individual element on a per channel basis. See the
- * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
- * for more details.
- */
-export type ElementalNode =
-  | ElementalNode.UnionMember0
-  | ElementalNode.UnionMember1
-  | ElementalNode.UnionMember2
-  | ElementalNode.UnionMember3
-  | ElementalNode.UnionMember4
-  | ElementalNode.UnionMember5
-  | ElementalNode.UnionMember6;
-
-export namespace ElementalNode {
-  export interface UnionMember0 extends Shared.ElementalBaseNode {
-    type?: 'text';
-  }
-
-  export interface UnionMember1 extends Shared.ElementalBaseNode {
-    type?: 'meta';
-  }
-
-  /**
-   * The channel element allows a notification to be customized based on which
-   * channel it is sent through. For example, you may want to display a detailed
-   * message when the notification is sent through email, and a more concise message
-   * in a push notification. Channel elements are only valid as top-level elements;
-   * you cannot nest channel elements. If there is a channel element specified at the
-   * top-level of the document, all sibling elements must be channel elements. Note:
-   * As an alternative, most elements support a `channel` property. Which allows you
-   * to selectively display an individual element on a per channel basis. See the
-   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-   * for more details.
-   */
-  export interface UnionMember2 extends SendAPI.ElementalChannelNode {
-    type?: 'channel';
-  }
-
-  export interface UnionMember3 extends Shared.ElementalBaseNode {
-    type?: 'image';
-  }
-
-  export interface UnionMember4 extends Shared.ElementalBaseNode {
-    type?: 'action';
-  }
-
-  export interface UnionMember5 extends Shared.ElementalBaseNode {
-    type?: 'divider';
-  }
-
-  export interface UnionMember6 extends Shared.ElementalBaseNode {
-    type?: 'quote';
-  }
-}
-
-export interface MessageContext {
-  /**
-   * Tenant id used to load brand/default preferences/context.
-   */
-  tenant_id?: string | null;
-}
-
-export type Recipient = BulkAPI.UserRecipient | Recipient.ListRecipient;
-
-export namespace Recipient {
-  export interface ListRecipient {
-    data?: { [key: string]: unknown } | null;
-
-    list_id?: string | null;
-  }
-}
-
-export interface Utm {
-  campaign?: string | null;
-
-  content?: string | null;
-
-  medium?: string | null;
-
-  source?: string | null;
-
-  term?: string | null;
 }
 
 export interface SendMessageResponse {
@@ -182,9 +61,9 @@ export namespace SendMessageParams {
      * Describes content that will work for email, inbox, push, chat, or any channel
      * id.
      */
-    content?: Shared.ElementalContentSugar | TemplatesAPI.ElementalContent;
+    content?: Shared.ElementalContentSugar | Shared.ElementalContent;
 
-    context?: SendAPI.MessageContext | null;
+    context?: Shared.MessageContext | null;
 
     data?: { [key: string]: unknown } | null;
 
@@ -203,17 +82,12 @@ export namespace SendMessageParams {
      */
     routing?: Message.Routing | null;
 
-    /**
-     * The id of the template you want to send
-     */
-    template?: string | null;
-
     timeout?: Message.Timeout | null;
 
     /**
      * The recipient or a list of recipients of the message
      */
-    to?: BulkAPI.UserRecipient | Message.ListRecipient | Array<SendAPI.Recipient> | null;
+    to?: Shared.UserRecipient | Array<Shared.Recipient> | null;
   }
 
   export namespace Message {
@@ -250,7 +124,7 @@ export namespace SendMessageParams {
 
     export namespace Channels {
       export interface Metadata {
-        utm?: SendAPI.Utm | null;
+        utm?: Shared.Utm | null;
       }
 
       export interface Timeouts {
@@ -291,7 +165,7 @@ export namespace SendMessageParams {
 
       trace_id?: string | null;
 
-      utm?: SendAPI.Utm | null;
+      utm?: Shared.Utm | null;
     }
 
     export interface Preferences {
@@ -319,7 +193,7 @@ export namespace SendMessageParams {
 
     export namespace Providers {
       export interface Metadata {
-        utm?: SendAPI.Utm | null;
+        utm?: Shared.Utm | null;
       }
     }
 
@@ -346,23 +220,9 @@ export namespace SendMessageParams {
 
       provider?: { [key: string]: number } | null;
     }
-
-    export interface ListRecipient {
-      data?: { [key: string]: unknown } | null;
-
-      list_id?: string | null;
-    }
   }
 }
 
 export declare namespace Send {
-  export {
-    type ElementalChannelNode as ElementalChannelNode,
-    type ElementalNode as ElementalNode,
-    type MessageContext as MessageContext,
-    type Recipient as Recipient,
-    type Utm as Utm,
-    type SendMessageResponse as SendMessageResponse,
-    type SendMessageParams as SendMessageParams,
-  };
+  export { type SendMessageResponse as SendMessageResponse, type SendMessageParams as SendMessageParams };
 }

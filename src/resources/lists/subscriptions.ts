@@ -1,10 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as SubscriptionsAPI from './subscriptions';
-import * as AudiencesAPI from '../audiences';
 import * as Shared from '../shared';
-import * as PreferencesAPI from '../users/preferences';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -79,30 +76,10 @@ export class Subscriptions extends APIResource {
   }
 }
 
-export interface NotificationPreferenceDetails {
-  status: PreferencesAPI.PreferenceStatus;
-
-  channel_preferences?: Array<Shared.ChannelPreference> | null;
-
-  rules?: Array<Shared.Rule> | null;
-}
-
-export interface PutSubscriptionsRecipient {
-  recipientId: string;
-
-  preferences?: RecipientPreferences | null;
-}
-
-export interface RecipientPreferences {
-  categories?: { [key: string]: NotificationPreferenceDetails } | null;
-
-  notifications?: { [key: string]: NotificationPreferenceDetails } | null;
-}
-
 export interface SubscriptionListResponse {
   items: Array<SubscriptionListResponse.Item>;
 
-  paging: AudiencesAPI.Paging;
+  paging: Shared.Paging;
 }
 
 export namespace SubscriptionListResponse {
@@ -111,7 +88,7 @@ export namespace SubscriptionListResponse {
 
     created?: string | null;
 
-    preferences?: SubscriptionsAPI.RecipientPreferences | null;
+    preferences?: Shared.RecipientPreferences | null;
   }
 }
 
@@ -123,11 +100,11 @@ export interface SubscriptionListParams {
 }
 
 export interface SubscriptionAddParams {
-  recipients: Array<PutSubscriptionsRecipient>;
+  recipients: Array<Shared.PutSubscriptionsRecipient>;
 }
 
 export interface SubscriptionSubscribeParams {
-  recipients: Array<PutSubscriptionsRecipient>;
+  recipients: Array<Shared.PutSubscriptionsRecipient>;
 }
 
 export interface SubscriptionSubscribeUserParams {
@@ -139,7 +116,7 @@ export interface SubscriptionSubscribeUserParams {
   /**
    * Body param:
    */
-  preferences?: RecipientPreferences | null;
+  preferences?: Shared.RecipientPreferences | null;
 }
 
 export interface SubscriptionUnsubscribeUserParams {
@@ -151,9 +128,6 @@ export interface SubscriptionUnsubscribeUserParams {
 
 export declare namespace Subscriptions {
   export {
-    type NotificationPreferenceDetails as NotificationPreferenceDetails,
-    type PutSubscriptionsRecipient as PutSubscriptionsRecipient,
-    type RecipientPreferences as RecipientPreferences,
     type SubscriptionListResponse as SubscriptionListResponse,
     type SubscriptionListParams as SubscriptionListParams,
     type SubscriptionAddParams as SubscriptionAddParams,

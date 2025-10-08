@@ -3,24 +3,65 @@
 Types:
 
 - <code><a href="./src/resources/shared.ts">Alignment</a></code>
+- <code><a href="./src/resources/shared.ts">Audience</a></code>
+- <code><a href="./src/resources/shared.ts">AuditEvent</a></code>
+- <code><a href="./src/resources/shared.ts">AutomationInvokeResponse</a></code>
+- <code><a href="./src/resources/shared.ts">BaseCheck</a></code>
+- <code><a href="./src/resources/shared.ts">BaseTemplateTenantAssociation</a></code>
+- <code><a href="./src/resources/shared.ts">Brand</a></code>
+- <code><a href="./src/resources/shared.ts">BrandColors</a></code>
+- <code><a href="./src/resources/shared.ts">BrandSettings</a></code>
+- <code><a href="./src/resources/shared.ts">BrandSettingsEmail</a></code>
+- <code><a href="./src/resources/shared.ts">BrandSettingsInApp</a></code>
+- <code><a href="./src/resources/shared.ts">BrandSnippet</a></code>
+- <code><a href="./src/resources/shared.ts">BrandSnippets</a></code>
+- <code><a href="./src/resources/shared.ts">BrandTemplate</a></code>
+- <code><a href="./src/resources/shared.ts">ChannelClassification</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
+- <code><a href="./src/resources/shared.ts">Check</a></code>
+- <code><a href="./src/resources/shared.ts">DefaultPreferences</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalBaseNode</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalChannelNode</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalContent</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalContentSugar</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalNode</a></code>
+- <code><a href="./src/resources/shared.ts">EmailFooter</a></code>
+- <code><a href="./src/resources/shared.ts">EmailHead</a></code>
+- <code><a href="./src/resources/shared.ts">EmailHeader</a></code>
+- <code><a href="./src/resources/shared.ts">Filter</a></code>
+- <code><a href="./src/resources/shared.ts">FilterConfig</a></code>
+- <code><a href="./src/resources/shared.ts">Icons</a></code>
+- <code><a href="./src/resources/shared.ts">InboundBulkMessage</a></code>
+- <code><a href="./src/resources/shared.ts">InboundBulkMessageUser</a></code>
+- <code><a href="./src/resources/shared.ts">List</a></code>
+- <code><a href="./src/resources/shared.ts">Logo</a></code>
+- <code><a href="./src/resources/shared.ts">MessageContext</a></code>
+- <code><a href="./src/resources/shared.ts">MessageDetails</a></code>
 - <code><a href="./src/resources/shared.ts">MessageRouting</a></code>
 - <code><a href="./src/resources/shared.ts">MessageRoutingChannel</a></code>
+- <code><a href="./src/resources/shared.ts">NotificationGetContent</a></code>
+- <code><a href="./src/resources/shared.ts">NotificationPreferenceDetails</a></code>
+- <code><a href="./src/resources/shared.ts">Paging</a></code>
 - <code><a href="./src/resources/shared.ts">Preference</a></code>
+- <code><a href="./src/resources/shared.ts">PreferenceStatus</a></code>
+- <code><a href="./src/resources/shared.ts">PutSubscriptionsRecipient</a></code>
+- <code><a href="./src/resources/shared.ts">Recipient</a></code>
+- <code><a href="./src/resources/shared.ts">RecipientPreferences</a></code>
 - <code><a href="./src/resources/shared.ts">Rule</a></code>
+- <code><a href="./src/resources/shared.ts">SubscriptionTopicNew</a></code>
+- <code><a href="./src/resources/shared.ts">Tenant</a></code>
+- <code><a href="./src/resources/shared.ts">TenantAssociation</a></code>
 - <code><a href="./src/resources/shared.ts">TextStyle</a></code>
+- <code><a href="./src/resources/shared.ts">TopicPreference</a></code>
+- <code><a href="./src/resources/shared.ts">UserRecipient</a></code>
+- <code><a href="./src/resources/shared.ts">UserToken</a></code>
+- <code><a href="./src/resources/shared.ts">Utm</a></code>
+- <code><a href="./src/resources/shared.ts">WidgetBackground</a></code>
 
 # Send
 
 Types:
 
-- <code><a href="./src/resources/send.ts">ElementalChannelNode</a></code>
-- <code><a href="./src/resources/send.ts">ElementalNode</a></code>
-- <code><a href="./src/resources/send.ts">MessageContext</a></code>
-- <code><a href="./src/resources/send.ts">Recipient</a></code>
-- <code><a href="./src/resources/send.ts">Utm</a></code>
 - <code><a href="./src/resources/send.ts">SendMessageResponse</a></code>
 
 Methods:
@@ -31,10 +72,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/audiences.ts">Audience</a></code>
-- <code><a href="./src/resources/audiences.ts">Filter</a></code>
-- <code><a href="./src/resources/audiences.ts">FilterConfig</a></code>
-- <code><a href="./src/resources/audiences.ts">Paging</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceUpdateResponse</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceListResponse</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceListMembersResponse</a></code>
@@ -51,7 +88,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/audit-events.ts">AuditEvent</a></code>
 - <code><a href="./src/resources/audit-events.ts">AuditEventListResponse</a></code>
 
 Methods:
@@ -73,10 +109,6 @@ Methods:
 
 ## Invoke
 
-Types:
-
-- <code><a href="./src/resources/automations/invoke.ts">AutomationInvokeResponse</a></code>
-
 Methods:
 
 - <code title="post /automations/invoke">client.automations.invoke.<a href="./src/resources/automations/invoke.ts">invokeAdHoc</a>({ ...params }) -> AutomationInvokeResponse</code>
@@ -86,20 +118,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/brands.ts">Brand</a></code>
-- <code><a href="./src/resources/brands.ts">BrandColors</a></code>
-- <code><a href="./src/resources/brands.ts">BrandSettings</a></code>
-- <code><a href="./src/resources/brands.ts">BrandSettingsEmail</a></code>
-- <code><a href="./src/resources/brands.ts">BrandSettingsInApp</a></code>
-- <code><a href="./src/resources/brands.ts">BrandSnippet</a></code>
-- <code><a href="./src/resources/brands.ts">BrandSnippets</a></code>
-- <code><a href="./src/resources/brands.ts">BrandTemplate</a></code>
-- <code><a href="./src/resources/brands.ts">EmailFooter</a></code>
-- <code><a href="./src/resources/brands.ts">EmailHead</a></code>
-- <code><a href="./src/resources/brands.ts">EmailHeader</a></code>
-- <code><a href="./src/resources/brands.ts">Icons</a></code>
-- <code><a href="./src/resources/brands.ts">Logo</a></code>
-- <code><a href="./src/resources/brands.ts">WidgetBackground</a></code>
 - <code><a href="./src/resources/brands.ts">BrandListResponse</a></code>
 
 Methods:
@@ -114,9 +132,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/bulk.ts">InboundBulkMessage</a></code>
-- <code><a href="./src/resources/bulk.ts">InboundBulkMessageUser</a></code>
-- <code><a href="./src/resources/bulk.ts">UserRecipient</a></code>
 - <code><a href="./src/resources/bulk.ts">BulkCreateJobResponse</a></code>
 - <code><a href="./src/resources/bulk.ts">BulkListUsersResponse</a></code>
 - <code><a href="./src/resources/bulk.ts">BulkRetrieveJobResponse</a></code>
@@ -143,7 +158,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/lists/lists.ts">List</a></code>
 - <code><a href="./src/resources/lists/lists.ts">ListListResponse</a></code>
 
 Methods:
@@ -158,9 +172,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/lists/subscriptions.ts">NotificationPreferenceDetails</a></code>
-- <code><a href="./src/resources/lists/subscriptions.ts">PutSubscriptionsRecipient</a></code>
-- <code><a href="./src/resources/lists/subscriptions.ts">RecipientPreferences</a></code>
 - <code><a href="./src/resources/lists/subscriptions.ts">SubscriptionListResponse</a></code>
 
 Methods:
@@ -175,7 +186,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/messages.ts">MessageDetails</a></code>
 - <code><a href="./src/resources/messages.ts">MessageRetrieveResponse</a></code>
 - <code><a href="./src/resources/messages.ts">MessageListResponse</a></code>
 - <code><a href="./src/resources/messages.ts">MessageContentResponse</a></code>
@@ -199,7 +209,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/notifications/notifications.ts">NotificationGetContent</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationListResponse</a></code>
 
 Methods:
@@ -217,8 +226,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/notifications/checks.ts">BaseCheck</a></code>
-- <code><a href="./src/resources/notifications/checks.ts">Check</a></code>
 - <code><a href="./src/resources/notifications/checks.ts">CheckUpdateResponse</a></code>
 - <code><a href="./src/resources/notifications/checks.ts">CheckListResponse</a></code>
 
@@ -262,8 +269,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/tenants/tenants.ts">DefaultPreferences</a></code>
-- <code><a href="./src/resources/tenants/tenants.ts">Tenant</a></code>
 - <code><a href="./src/resources/tenants/tenants.ts">TenantListResponse</a></code>
 - <code><a href="./src/resources/tenants/tenants.ts">TenantListUsersResponse</a></code>
 
@@ -279,11 +284,6 @@ Methods:
 
 ### Items
 
-Types:
-
-- <code><a href="./src/resources/tenants/default-preferences/items.ts">ChannelClassification</a></code>
-- <code><a href="./src/resources/tenants/default-preferences/items.ts">SubscriptionTopicNew</a></code>
-
 Methods:
 
 - <code title="put /tenants/{tenant_id}/default_preferences/items/{topic_id}">client.tenants.defaultPreferences.items.<a href="./src/resources/tenants/default-preferences/items.ts">update</a>(topicID, { ...params }) -> void</code>
@@ -293,8 +293,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/tenants/templates.ts">BaseTemplateTenantAssociation</a></code>
-- <code><a href="./src/resources/tenants/templates.ts">ElementalContent</a></code>
 - <code><a href="./src/resources/tenants/templates.ts">TemplateListResponse</a></code>
 
 Methods:
@@ -319,8 +317,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/users/preferences.ts">PreferenceStatus</a></code>
-- <code><a href="./src/resources/users/preferences.ts">TopicPreference</a></code>
 - <code><a href="./src/resources/users/preferences.ts">PreferenceRetrieveResponse</a></code>
 - <code><a href="./src/resources/users/preferences.ts">PreferenceRetrieveTopicResponse</a></code>
 - <code><a href="./src/resources/users/preferences.ts">PreferenceUpdateOrCreateTopicResponse</a></code>
@@ -335,7 +331,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/users/tenants.ts">TenantAssociation</a></code>
 - <code><a href="./src/resources/users/tenants.ts">TenantListResponse</a></code>
 
 Methods:
@@ -350,7 +345,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/users/tokens.ts">UserToken</a></code>
 - <code><a href="./src/resources/users/tokens.ts">TokenRetrieveResponse</a></code>
 - <code><a href="./src/resources/users/tokens.ts">TokenListResponse</a></code>
 

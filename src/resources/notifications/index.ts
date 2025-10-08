@@ -2,8 +2,6 @@
 
 export {
   Checks,
-  type BaseCheck,
-  type Check,
   type CheckUpdateResponse,
   type CheckListResponse,
   type CheckUpdateParams,
@@ -11,9 +9,4 @@ export {
   type CheckDeleteParams,
 } from './checks';
 export { Draft } from './draft';
-export {
-  Notifications,
-  type NotificationGetContent,
-  type NotificationListResponse,
-  type NotificationListParams,
-} from './notifications';
+export { Notifications, type NotificationListResponse, type NotificationListParams } from './notifications';

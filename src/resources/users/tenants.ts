@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -103,26 +104,6 @@ export class Tenants extends APIResource {
   }
 }
 
-export interface TenantAssociation {
-  /**
-   * Tenant ID for the association between tenant and user
-   */
-  tenant_id: string;
-
-  /**
-   * Additional metadata to be applied to a user profile when used in a tenant
-   * context
-   */
-  profile?: { [key: string]: unknown } | null;
-
-  type?: 'user' | null;
-
-  /**
-   * User ID for the association between tenant and user
-   */
-  user_id?: string | null;
-}
-
 export interface TenantListResponse {
   /**
    * Set to true when there are more pages that can be retrieved.
@@ -145,7 +126,7 @@ export interface TenantListResponse {
    */
   cursor?: string | null;
 
-  items?: Array<TenantAssociation> | null;
+  items?: Array<Shared.TenantAssociation> | null;
 
   /**
    * A url that may be used to generate fetch the next set of results. Defined only
@@ -167,7 +148,7 @@ export interface TenantListParams {
 }
 
 export interface TenantAddMultipleParams {
-  tenants: Array<TenantAssociation>;
+  tenants: Array<Shared.TenantAssociation>;
 }
 
 export interface TenantAddSingleParams {
@@ -191,7 +172,6 @@ export interface TenantRemoveSingleParams {
 
 export declare namespace Tenants {
   export {
-    type TenantAssociation as TenantAssociation,
     type TenantListResponse as TenantListResponse,
     type TenantListParams as TenantListParams,
     type TenantAddMultipleParams as TenantAddMultipleParams,

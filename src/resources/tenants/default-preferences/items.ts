@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import * as Shared from '../../shared';
 import { APIPromise } from '../../../core/api-promise';
 import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
@@ -52,24 +53,6 @@ export class Items extends APIResource {
   }
 }
 
-export type ChannelClassification = 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox';
-
-export interface SubscriptionTopicNew {
-  status: 'OPTED_OUT' | 'OPTED_IN' | 'REQUIRED';
-
-  /**
-   * The default channels to send to this tenant when has_custom_routing is enabled
-   */
-  custom_routing?: Array<ChannelClassification> | null;
-
-  /**
-   * Override channel routing with custom preferences. This will override any
-   * template prefernces that are set, but a user can still customize their
-   * preferences
-   */
-  has_custom_routing?: boolean | null;
-}
-
 export interface ItemUpdateParams {
   /**
    * Path param: Id of the tenant to update the default preferences for.
@@ -85,7 +68,7 @@ export interface ItemUpdateParams {
    * Body param: The default channels to send to this tenant when has_custom_routing
    * is enabled
    */
-  custom_routing?: Array<ChannelClassification> | null;
+  custom_routing?: Array<Shared.ChannelClassification> | null;
 
   /**
    * Body param: Override channel routing with custom preferences. This will override
@@ -103,10 +86,5 @@ export interface ItemDeleteParams {
 }
 
 export declare namespace Items {
-  export {
-    type ChannelClassification as ChannelClassification,
-    type SubscriptionTopicNew as SubscriptionTopicNew,
-    type ItemUpdateParams as ItemUpdateParams,
-    type ItemDeleteParams as ItemDeleteParams,
-  };
+  export { type ItemUpdateParams as ItemUpdateParams, type ItemDeleteParams as ItemDeleteParams };
 }

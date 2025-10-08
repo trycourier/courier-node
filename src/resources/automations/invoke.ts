@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -32,7 +33,10 @@ export class Invoke extends APIResource {
    *   });
    * ```
    */
-  invokeAdHoc(body: InvokeInvokeAdHocParams, options?: RequestOptions): APIPromise<AutomationInvokeResponse> {
+  invokeAdHoc(
+    body: InvokeInvokeAdHocParams,
+    options?: RequestOptions,
+  ): APIPromise<Shared.AutomationInvokeResponse> {
     return this._client.post('/automations/invoke', { body, ...options });
   }
 
@@ -52,13 +56,9 @@ export class Invoke extends APIResource {
     templateID: string,
     body: InvokeInvokeByTemplateParams,
     options?: RequestOptions,
-  ): APIPromise<AutomationInvokeResponse> {
+  ): APIPromise<Shared.AutomationInvokeResponse> {
     return this._client.post(path`/automations/${templateID}/invoke`, { body, ...options });
   }
-}
-
-export interface AutomationInvokeResponse {
-  runId: string;
 }
 
 export interface InvokeInvokeAdHocParams {
@@ -181,7 +181,6 @@ export interface InvokeInvokeByTemplateParams {
 
 export declare namespace Invoke {
   export {
-    type AutomationInvokeResponse as AutomationInvokeResponse,
     type InvokeInvokeAdHocParams as InvokeInvokeAdHocParams,
     type InvokeInvokeByTemplateParams as InvokeInvokeByTemplateParams,
   };
