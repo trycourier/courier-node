@@ -1,12 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as AudiencesAPI from '../audiences';
 import * as Shared from '../shared';
 import * as ChecksAPI from './checks';
 import {
-  BaseCheck,
-  Check,
   CheckDeleteParams,
   CheckListParams,
   CheckListResponse,
@@ -31,79 +28,13 @@ export class Notifications extends APIResource {
     return this._client.get('/notifications', { query, ...options });
   }
 
-  retrieveContent(id: string, options?: RequestOptions): APIPromise<NotificationGetContent> {
+  retrieveContent(id: string, options?: RequestOptions): APIPromise<Shared.NotificationGetContent> {
     return this._client.get(path`/notifications/${id}/content`, options);
   }
 }
 
-export interface NotificationGetContent {
-  blocks?: Array<NotificationGetContent.Block> | null;
-
-  channels?: Array<NotificationGetContent.Channel> | null;
-
-  checksum?: string | null;
-}
-
-export namespace NotificationGetContent {
-  export interface Block {
-    id: string;
-
-    type: 'action' | 'divider' | 'image' | 'jsonnet' | 'list' | 'markdown' | 'quote' | 'template' | 'text';
-
-    alias?: string | null;
-
-    checksum?: string | null;
-
-    content?: string | Block.NotificationContentHierarchy | null;
-
-    context?: string | null;
-
-    locales?: { [key: string]: string | Block.NotificationContentHierarchy } | null;
-  }
-
-  export namespace Block {
-    export interface NotificationContentHierarchy {
-      children?: string | null;
-
-      parent?: string | null;
-    }
-
-    export interface NotificationContentHierarchy {
-      children?: string | null;
-
-      parent?: string | null;
-    }
-  }
-
-  export interface Channel {
-    id: string;
-
-    checksum?: string | null;
-
-    content?: Channel.Content | null;
-
-    locales?: { [key: string]: Channel.Locales } | null;
-
-    type?: string | null;
-  }
-
-  export namespace Channel {
-    export interface Content {
-      subject?: string | null;
-
-      title?: string | null;
-    }
-
-    export interface Locales {
-      subject?: string | null;
-
-      title?: string | null;
-    }
-  }
-}
-
 export interface NotificationListResponse {
-  paging: AudiencesAPI.Paging;
+  paging: Shared.Paging;
 
   results: Array<NotificationListResponse.Result>;
 }
@@ -156,7 +87,6 @@ Notifications.Checks = Checks;
 
 export declare namespace Notifications {
   export {
-    type NotificationGetContent as NotificationGetContent,
     type NotificationListResponse as NotificationListResponse,
     type NotificationListParams as NotificationListParams,
   };
@@ -165,8 +95,6 @@ export declare namespace Notifications {
 
   export {
     Checks as Checks,
-    type BaseCheck as BaseCheck,
-    type Check as Check,
     type CheckUpdateResponse as CheckUpdateResponse,
     type CheckListResponse as CheckListResponse,
     type CheckUpdateParams as CheckUpdateParams,

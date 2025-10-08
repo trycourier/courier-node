@@ -1,12 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as BulkAPI from './bulk';
-import * as AudiencesAPI from './audiences';
-import * as SendAPI from './send';
 import * as Shared from './shared';
-import * as SubscriptionsAPI from './lists/subscriptions';
-import * as TemplatesAPI from './tenants/templates';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -60,97 +55,6 @@ export class Bulk extends APIResource {
   }
 }
 
-export type InboundBulkMessage =
-  | InboundBulkMessage.InboundBulkTemplateMessage
-  | InboundBulkMessage.InboundBulkContentMessage;
-
-export namespace InboundBulkMessage {
-  export interface InboundBulkTemplateMessage {
-    template: string;
-
-    brand?: string | null;
-
-    data?: { [key: string]: unknown } | null;
-
-    event?: string | null;
-
-    locale?: { [key: string]: { [key: string]: unknown } } | null;
-
-    override?: { [key: string]: unknown } | null;
-  }
-
-  export interface InboundBulkContentMessage {
-    /**
-     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
-     */
-    content: Shared.ElementalContentSugar | TemplatesAPI.ElementalContent;
-
-    brand?: string | null;
-
-    data?: { [key: string]: unknown } | null;
-
-    event?: string | null;
-
-    locale?: { [key: string]: { [key: string]: unknown } } | null;
-
-    override?: { [key: string]: unknown } | null;
-  }
-}
-
-export interface InboundBulkMessageUser {
-  data?: unknown;
-
-  preferences?: SubscriptionsAPI.RecipientPreferences | null;
-
-  profile?: unknown;
-
-  recipient?: string | null;
-
-  to?: UserRecipient | null;
-}
-
-export interface UserRecipient {
-  /**
-   * Use `tenant_id` instead.
-   */
-  account_id?: string | null;
-
-  /**
-   * Context such as tenant_id to send the notification with.
-   */
-  context?: SendAPI.MessageContext | null;
-
-  data?: { [key: string]: unknown } | null;
-
-  email?: string | null;
-
-  /**
-   * The user's preferred ISO 639-1 language code.
-   */
-  locale?: string | null;
-
-  phone_number?: string | null;
-
-  preferences?: UserRecipient.Preferences | null;
-
-  /**
-   * Tenant id. Will load brand, default preferences and base context data.
-   */
-  tenant_id?: string | null;
-
-  user_id?: string | null;
-}
-
-export namespace UserRecipient {
-  export interface Preferences {
-    notifications: { [key: string]: Shared.Preference };
-
-    categories?: { [key: string]: Shared.Preference } | null;
-
-    templateId?: string | null;
-  }
-}
-
 export interface BulkCreateJobResponse {
   jobId: string;
 }
@@ -158,11 +62,11 @@ export interface BulkCreateJobResponse {
 export interface BulkListUsersResponse {
   items: Array<BulkListUsersResponse.Item>;
 
-  paging: AudiencesAPI.Paging;
+  paging: Shared.Paging;
 }
 
 export namespace BulkListUsersResponse {
-  export interface Item extends BulkAPI.InboundBulkMessageUser {
+  export interface Item extends Shared.InboundBulkMessageUser {
     status: 'PENDING' | 'ENQUEUED' | 'ERROR';
 
     messageId?: string | null;
@@ -175,7 +79,7 @@ export interface BulkRetrieveJobResponse {
 
 export namespace BulkRetrieveJobResponse {
   export interface Job {
-    definition: BulkAPI.InboundBulkMessage;
+    definition: Shared.InboundBulkMessage;
 
     enqueued: number;
 
@@ -188,11 +92,11 @@ export namespace BulkRetrieveJobResponse {
 }
 
 export interface BulkAddUsersParams {
-  users: Array<InboundBulkMessageUser>;
+  users: Array<Shared.InboundBulkMessageUser>;
 }
 
 export interface BulkCreateJobParams {
-  message: InboundBulkMessage;
+  message: Shared.InboundBulkMessage;
 }
 
 export interface BulkListUsersParams {
@@ -205,9 +109,6 @@ export interface BulkListUsersParams {
 
 export declare namespace Bulk {
   export {
-    type InboundBulkMessage as InboundBulkMessage,
-    type InboundBulkMessageUser as InboundBulkMessageUser,
-    type UserRecipient as UserRecipient,
     type BulkCreateJobResponse as BulkCreateJobResponse,
     type BulkListUsersResponse as BulkListUsersResponse,
     type BulkRetrieveJobResponse as BulkRetrieveJobResponse,

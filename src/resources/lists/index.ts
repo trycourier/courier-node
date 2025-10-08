@@ -2,7 +2,6 @@
 
 export {
   Lists,
-  type List,
   type ListListResponse,
   type ListUpdateParams,
   type ListListParams,
@@ -10,9 +9,6 @@ export {
 } from './lists';
 export {
   Subscriptions,
-  type NotificationPreferenceDetails,
-  type PutSubscriptionsRecipient,
-  type RecipientPreferences,
   type SubscriptionListResponse,
   type SubscriptionListParams,
   type SubscriptionAddParams,

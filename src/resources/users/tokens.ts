@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -114,99 +115,7 @@ export class Tokens extends APIResource {
   }
 }
 
-export interface UserToken {
-  provider_key: 'firebase-fcm' | 'apn' | 'expo' | 'onesignal';
-
-  /**
-   * Full body of the token. Must match token in URL.
-   */
-  token?: string | null;
-
-  /**
-   * Information about the device the token is associated with.
-   */
-  device?: UserToken.Device | null;
-
-  /**
-   * ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false to
-   * disable expiration.
-   */
-  expiry_date?: string | boolean | null;
-
-  /**
-   * Properties sent to the provider along with the token
-   */
-  properties?: unknown;
-
-  /**
-   * Information about the device the token is associated with.
-   */
-  tracking?: UserToken.Tracking | null;
-}
-
-export namespace UserToken {
-  /**
-   * Information about the device the token is associated with.
-   */
-  export interface Device {
-    /**
-     * Id of the advertising identifier
-     */
-    ad_id?: string | null;
-
-    /**
-     * Id of the application the token is used for
-     */
-    app_id?: string | null;
-
-    /**
-     * Id of the device the token is associated with
-     */
-    device_id?: string | null;
-
-    /**
-     * The device manufacturer
-     */
-    manufacturer?: string | null;
-
-    /**
-     * The device model
-     */
-    model?: string | null;
-
-    /**
-     * The device platform i.e. android, ios, web
-     */
-    platform?: string | null;
-  }
-
-  /**
-   * Information about the device the token is associated with.
-   */
-  export interface Tracking {
-    /**
-     * The IP address of the device
-     */
-    ip?: string | null;
-
-    /**
-     * The latitude of the device
-     */
-    lat?: string | null;
-
-    /**
-     * The longitude of the device
-     */
-    long?: string | null;
-
-    /**
-     * The operating system version
-     */
-    os_version?: string | null;
-  }
-}
-
-export interface TokenRetrieveResponse extends UserToken {
+export interface TokenRetrieveResponse extends Shared.UserToken {
   status?: 'active' | 'unknown' | 'failed' | 'revoked' | null;
 
   /**
@@ -218,7 +127,7 @@ export interface TokenRetrieveResponse extends UserToken {
 /**
  * A list of tokens registered with the user.
  */
-export type TokenListResponse = Array<UserToken>;
+export type TokenListResponse = Array<Shared.UserToken>;
 
 export interface TokenRetrieveParams {
   /**
@@ -367,7 +276,6 @@ export namespace TokenAddSingleParams {
 
 export declare namespace Tokens {
   export {
-    type UserToken as UserToken,
     type TokenRetrieveResponse as TokenRetrieveResponse,
     type TokenListResponse as TokenListResponse,
     type TokenRetrieveParams as TokenRetrieveParams,

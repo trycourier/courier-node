@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as AudiencesAPI from './audiences';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -10,7 +10,7 @@ export class AuditEvents extends APIResource {
   /**
    * Fetch a specific audit event by ID.
    */
-  retrieve(auditEventID: string, options?: RequestOptions): APIPromise<AuditEvent> {
+  retrieve(auditEventID: string, options?: RequestOptions): APIPromise<Shared.AuditEvent> {
     return this._client.get(path`/audit-events/${auditEventID}`, options);
   }
 
@@ -25,32 +25,10 @@ export class AuditEvents extends APIResource {
   }
 }
 
-export interface AuditEvent {
-  actor: AuditEvent.Actor;
-
-  auditEventId: string;
-
-  source: string;
-
-  target: string;
-
-  timestamp: string;
-
-  type: string;
-}
-
-export namespace AuditEvent {
-  export interface Actor {
-    id: string;
-
-    email?: string | null;
-  }
-}
-
 export interface AuditEventListResponse {
-  paging: AudiencesAPI.Paging;
+  paging: Shared.Paging;
 
-  results: Array<AuditEvent>;
+  results: Array<Shared.AuditEvent>;
 }
 
 export interface AuditEventListParams {
@@ -62,7 +40,6 @@ export interface AuditEventListParams {
 
 export declare namespace AuditEvents {
   export {
-    type AuditEvent as AuditEvent,
     type AuditEventListResponse as AuditEventListResponse,
     type AuditEventListParams as AuditEventListParams,
   };

@@ -1,9 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as PreferencesAPI from './preferences';
-import * as AudiencesAPI from '../audiences';
-import * as ItemsAPI from '../tenants/default-preferences/items';
+import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -80,39 +78,20 @@ export class Preferences extends APIResource {
   }
 }
 
-export type PreferenceStatus = 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED';
-
-export interface TopicPreference {
-  default_status: PreferenceStatus;
-
-  status: PreferenceStatus;
-
-  topic_id: string;
-
-  topic_name: string;
-
-  /**
-   * The Channels a user has chosen to receive notifications through for this topic
-   */
-  custom_routing?: Array<ItemsAPI.ChannelClassification> | null;
-
-  has_custom_routing?: boolean | null;
-}
-
 export interface PreferenceRetrieveResponse {
   /**
    * The Preferences associated with the user_id.
    */
-  items: Array<TopicPreference>;
+  items: Array<Shared.TopicPreference>;
 
   /**
    * Deprecated - Paging not implemented on this endpoint
    */
-  paging: AudiencesAPI.Paging;
+  paging: Shared.Paging;
 }
 
 export interface PreferenceRetrieveTopicResponse {
-  topic: TopicPreference;
+  topic: Shared.TopicPreference;
 }
 
 export interface PreferenceUpdateOrCreateTopicResponse {
@@ -159,12 +138,12 @@ export interface PreferenceUpdateOrCreateTopicParams {
 
 export namespace PreferenceUpdateOrCreateTopicParams {
   export interface Topic {
-    status: PreferencesAPI.PreferenceStatus;
+    status: Shared.PreferenceStatus;
 
     /**
      * The Channels a user has chosen to receive notifications through for this topic
      */
-    custom_routing?: Array<ItemsAPI.ChannelClassification> | null;
+    custom_routing?: Array<Shared.ChannelClassification> | null;
 
     has_custom_routing?: boolean | null;
   }
@@ -172,8 +151,6 @@ export namespace PreferenceUpdateOrCreateTopicParams {
 
 export declare namespace Preferences {
   export {
-    type PreferenceStatus as PreferenceStatus,
-    type TopicPreference as TopicPreference,
     type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
     type PreferenceRetrieveTopicResponse as PreferenceRetrieveTopicResponse,
     type PreferenceUpdateOrCreateTopicResponse as PreferenceUpdateOrCreateTopicResponse,
