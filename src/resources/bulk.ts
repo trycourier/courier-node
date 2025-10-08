@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as BulkAPI from './bulk';
 import * as AudiencesAPI from './audiences';
+import * as SendAPI from './send';
 import * as Shared from './shared';
 import * as SubscriptionsAPI from './lists/subscriptions';
 import * as TemplatesAPI from './tenants/templates';
@@ -105,7 +106,49 @@ export interface InboundBulkMessageUser {
 
   recipient?: string | null;
 
-  to?: Shared.UserRecipient | null;
+  to?: UserRecipient | null;
+}
+
+export interface UserRecipient {
+  /**
+   * Use `tenant_id` instead.
+   */
+  account_id?: string | null;
+
+  /**
+   * Context such as tenant_id to send the notification with.
+   */
+  context?: SendAPI.MessageContext | null;
+
+  data?: { [key: string]: unknown } | null;
+
+  email?: string | null;
+
+  /**
+   * The user's preferred ISO 639-1 language code.
+   */
+  locale?: string | null;
+
+  phone_number?: string | null;
+
+  preferences?: UserRecipient.Preferences | null;
+
+  /**
+   * Tenant id. Will load brand, default preferences and base context data.
+   */
+  tenant_id?: string | null;
+
+  user_id?: string | null;
+}
+
+export namespace UserRecipient {
+  export interface Preferences {
+    notifications: { [key: string]: Shared.Preference };
+
+    categories?: { [key: string]: Shared.Preference } | null;
+
+    templateId?: string | null;
+  }
 }
 
 export interface BulkCreateJobResponse {
@@ -164,6 +207,7 @@ export declare namespace Bulk {
   export {
     type InboundBulkMessage as InboundBulkMessage,
     type InboundBulkMessageUser as InboundBulkMessageUser,
+    type UserRecipient as UserRecipient,
     type BulkCreateJobResponse as BulkCreateJobResponse,
     type BulkListUsersResponse as BulkListUsersResponse,
     type BulkRetrieveJobResponse as BulkRetrieveJobResponse,
