@@ -82,6 +82,8 @@ export namespace SendMessageParams {
      */
     routing?: Message.Routing | null;
 
+    template?: string | null;
+
     timeout?: Message.Timeout | null;
 
     /**
