@@ -938,11 +938,18 @@ export declare namespace Courier {
   export type ChannelPreference = API.ChannelPreference;
   export type Check = API.Check;
   export type DefaultPreferences = API.DefaultPreferences;
+  export type ElementalActionNodeWithType = API.ElementalActionNodeWithType;
   export type ElementalBaseNode = API.ElementalBaseNode;
   export type ElementalChannelNode = API.ElementalChannelNode;
+  export type ElementalChannelNodeWithType = API.ElementalChannelNodeWithType;
   export type ElementalContent = API.ElementalContent;
   export type ElementalContentSugar = API.ElementalContentSugar;
+  export type ElementalDividerNodeWithType = API.ElementalDividerNodeWithType;
+  export type ElementalImageNodeWithType = API.ElementalImageNodeWithType;
+  export type ElementalMetaNodeWithType = API.ElementalMetaNodeWithType;
   export type ElementalNode = API.ElementalNode;
+  export type ElementalQuoteNodeWithType = API.ElementalQuoteNodeWithType;
+  export type ElementalTextNodeWithType = API.ElementalTextNodeWithType;
   export type EmailFooter = API.EmailFooter;
   export type EmailHead = API.EmailHead;
   export type EmailHeader = API.EmailHeader;
@@ -951,7 +958,6 @@ export declare namespace Courier {
   export type Icons = API.Icons;
   export type InboundBulkMessage = API.InboundBulkMessage;
   export type InboundBulkMessageUser = API.InboundBulkMessageUser;
-  export type List = API.List;
   export type Logo = API.Logo;
   export type MessageContext = API.MessageContext;
   export type MessageDetails = API.MessageDetails;
@@ -971,6 +977,7 @@ export declare namespace Courier {
   export type TenantAssociation = API.TenantAssociation;
   export type TextStyle = API.TextStyle;
   export type TopicPreference = API.TopicPreference;
+  export type UserList = API.UserList;
   export type UserRecipient = API.UserRecipient;
   export type UserToken = API.UserToken;
   export type Utm = API.Utm;

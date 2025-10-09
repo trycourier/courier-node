@@ -23,7 +23,7 @@ export class Lists extends APIResource {
   /**
    * Returns a list based on the list ID provided.
    */
-  retrieve(listID: string, options?: RequestOptions): APIPromise<Shared.List> {
+  retrieve(listID: string, options?: RequestOptions): APIPromise<Shared.UserList> {
     return this._client.get(path`/lists/${listID}`, options);
   }
 
@@ -71,7 +71,7 @@ export class Lists extends APIResource {
 }
 
 export interface ListListResponse {
-  items: Array<Shared.List>;
+  items: Array<Shared.UserList>;
 
   paging: Shared.Paging;
 }
