@@ -20,11 +20,18 @@ Types:
 - <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
 - <code><a href="./src/resources/shared.ts">Check</a></code>
 - <code><a href="./src/resources/shared.ts">DefaultPreferences</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalActionNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalBaseNode</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalChannelNode</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalChannelNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalContent</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalContentSugar</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalDividerNodeWithType</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalImageNodeWithType</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalMetaNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalNode</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalQuoteNodeWithType</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalTextNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">EmailFooter</a></code>
 - <code><a href="./src/resources/shared.ts">EmailHead</a></code>
 - <code><a href="./src/resources/shared.ts">EmailHeader</a></code>
@@ -33,7 +40,6 @@ Types:
 - <code><a href="./src/resources/shared.ts">Icons</a></code>
 - <code><a href="./src/resources/shared.ts">InboundBulkMessage</a></code>
 - <code><a href="./src/resources/shared.ts">InboundBulkMessageUser</a></code>
-- <code><a href="./src/resources/shared.ts">List</a></code>
 - <code><a href="./src/resources/shared.ts">Logo</a></code>
 - <code><a href="./src/resources/shared.ts">MessageContext</a></code>
 - <code><a href="./src/resources/shared.ts">MessageDetails</a></code>
@@ -53,6 +59,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">TenantAssociation</a></code>
 - <code><a href="./src/resources/shared.ts">TextStyle</a></code>
 - <code><a href="./src/resources/shared.ts">TopicPreference</a></code>
+- <code><a href="./src/resources/shared.ts">UserList</a></code>
 - <code><a href="./src/resources/shared.ts">UserRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">UserToken</a></code>
 - <code><a href="./src/resources/shared.ts">Utm</a></code>
@@ -162,7 +169,7 @@ Types:
 
 Methods:
 
-- <code title="get /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">retrieve</a>(listID) -> List</code>
+- <code title="get /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">retrieve</a>(listID) -> UserList</code>
 - <code title="put /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">update</a>(listID, { ...params }) -> void</code>
 - <code title="get /lists">client.lists.<a href="./src/resources/lists/lists.ts">list</a>({ ...params }) -> ListListResponse</code>
 - <code title="delete /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">delete</a>(listID) -> void</code>

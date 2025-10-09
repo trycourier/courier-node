@@ -210,6 +210,10 @@ export namespace DefaultPreferences {
   }
 }
 
+export interface ElementalActionNodeWithType extends ElementalBaseNode {
+  type?: 'action';
+}
+
 export interface ElementalBaseNode {
   channels?: Array<string> | null;
 
@@ -246,6 +250,22 @@ export interface ElementalChannelNode extends ElementalBaseNode {
   raw?: { [key: string]: unknown } | null;
 }
 
+/**
+ * The channel element allows a notification to be customized based on which
+ * channel it is sent through. For example, you may want to display a detailed
+ * message when the notification is sent through email, and a more concise message
+ * in a push notification. Channel elements are only valid as top-level elements;
+ * you cannot nest channel elements. If there is a channel element specified at the
+ * top-level of the document, all sibling elements must be channel elements. Note:
+ * As an alternative, most elements support a `channel` property. Which allows you
+ * to selectively display an individual element on a per channel basis. See the
+ * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
+ * for more details.
+ */
+export interface ElementalChannelNodeWithType extends ElementalChannelNode {
+  type?: 'channel';
+}
+
 export interface ElementalContent {
   elements: Array<ElementalNode>;
 
@@ -272,6 +292,18 @@ export interface ElementalContentSugar {
   title: string;
 }
 
+export interface ElementalDividerNodeWithType extends ElementalBaseNode {
+  type?: 'divider';
+}
+
+export interface ElementalImageNodeWithType extends ElementalBaseNode {
+  type?: 'image';
+}
+
+export interface ElementalMetaNodeWithType extends ElementalBaseNode {
+  type?: 'meta';
+}
+
 /**
  * The channel element allows a notification to be customized based on which
  * channel it is sent through. For example, you may want to display a detailed
@@ -285,54 +317,20 @@ export interface ElementalContentSugar {
  * for more details.
  */
 export type ElementalNode =
-  | ElementalNode.UnionMember0
-  | ElementalNode.UnionMember1
-  | ElementalNode.UnionMember2
-  | ElementalNode.UnionMember3
-  | ElementalNode.UnionMember4
-  | ElementalNode.UnionMember5
-  | ElementalNode.UnionMember6;
+  | ElementalTextNodeWithType
+  | ElementalMetaNodeWithType
+  | ElementalChannelNodeWithType
+  | ElementalImageNodeWithType
+  | ElementalActionNodeWithType
+  | ElementalDividerNodeWithType
+  | ElementalQuoteNodeWithType;
 
-export namespace ElementalNode {
-  export interface UnionMember0 extends Shared.ElementalBaseNode {
-    type?: 'text';
-  }
+export interface ElementalQuoteNodeWithType extends ElementalBaseNode {
+  type?: 'quote';
+}
 
-  export interface UnionMember1 extends Shared.ElementalBaseNode {
-    type?: 'meta';
-  }
-
-  /**
-   * The channel element allows a notification to be customized based on which
-   * channel it is sent through. For example, you may want to display a detailed
-   * message when the notification is sent through email, and a more concise message
-   * in a push notification. Channel elements are only valid as top-level elements;
-   * you cannot nest channel elements. If there is a channel element specified at the
-   * top-level of the document, all sibling elements must be channel elements. Note:
-   * As an alternative, most elements support a `channel` property. Which allows you
-   * to selectively display an individual element on a per channel basis. See the
-   * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-   * for more details.
-   */
-  export interface UnionMember2 extends Shared.ElementalChannelNode {
-    type?: 'channel';
-  }
-
-  export interface UnionMember3 extends Shared.ElementalBaseNode {
-    type?: 'image';
-  }
-
-  export interface UnionMember4 extends Shared.ElementalBaseNode {
-    type?: 'action';
-  }
-
-  export interface UnionMember5 extends Shared.ElementalBaseNode {
-    type?: 'divider';
-  }
-
-  export interface UnionMember6 extends Shared.ElementalBaseNode {
-    type?: 'quote';
-  }
+export interface ElementalTextNodeWithType extends ElementalBaseNode {
+  type?: 'text';
 }
 
 export interface EmailFooter {
@@ -474,16 +472,6 @@ export interface InboundBulkMessageUser {
   recipient?: string | null;
 
   to?: UserRecipient | null;
-}
-
-export interface List {
-  id: string;
-
-  name: string;
-
-  created?: string | null;
-
-  updated?: string | null;
 }
 
 export interface Logo {
@@ -843,6 +831,16 @@ export interface TopicPreference {
   custom_routing?: Array<ChannelClassification> | null;
 
   has_custom_routing?: boolean | null;
+}
+
+export interface UserList {
+  id: string;
+
+  name: string;
+
+  created?: string | null;
+
+  updated?: string | null;
 }
 
 export interface UserRecipient {
