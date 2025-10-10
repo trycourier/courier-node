@@ -54,12 +54,12 @@ Types:
 - <code><a href="./src/resources/shared.ts">Recipient</a></code>
 - <code><a href="./src/resources/shared.ts">RecipientPreferences</a></code>
 - <code><a href="./src/resources/shared.ts">Rule</a></code>
+- <code><a href="./src/resources/shared.ts">SubscriptionList</a></code>
 - <code><a href="./src/resources/shared.ts">SubscriptionTopicNew</a></code>
 - <code><a href="./src/resources/shared.ts">Tenant</a></code>
 - <code><a href="./src/resources/shared.ts">TenantAssociation</a></code>
 - <code><a href="./src/resources/shared.ts">TextStyle</a></code>
 - <code><a href="./src/resources/shared.ts">TopicPreference</a></code>
-- <code><a href="./src/resources/shared.ts">UserList</a></code>
 - <code><a href="./src/resources/shared.ts">UserRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">UserToken</a></code>
 - <code><a href="./src/resources/shared.ts">Utm</a></code>
@@ -169,7 +169,7 @@ Types:
 
 Methods:
 
-- <code title="get /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">retrieve</a>(listID) -> UserList</code>
+- <code title="get /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">retrieve</a>(listID) -> SubscriptionList</code>
 - <code title="put /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">update</a>(listID, { ...params }) -> void</code>
 - <code title="get /lists">client.lists.<a href="./src/resources/lists/lists.ts">list</a>({ ...params }) -> ListListResponse</code>
 - <code title="delete /lists/{list_id}">client.lists.<a href="./src/resources/lists/lists.ts">delete</a>(listID) -> void</code>
