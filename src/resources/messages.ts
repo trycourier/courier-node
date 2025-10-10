@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as AudiencesAPI from './audiences';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -31,7 +31,7 @@ export class Messages extends APIResource {
    * unsuccessful cancellation. Both cases will include the actual message record in
    * the response body (see details below).
    */
-  cancel(messageID: string, options?: RequestOptions): APIPromise<MessageDetails> {
+  cancel(messageID: string, options?: RequestOptions): APIPromise<Shared.MessageDetails> {
     return this._client.post(path`/messages/${messageID}/cancel`, options);
   }
 
@@ -54,100 +54,7 @@ export class Messages extends APIResource {
   }
 }
 
-export interface MessageDetails {
-  /**
-   * A unique identifier associated with the message you wish to retrieve (results
-   * from a send).
-   */
-  id: string;
-
-  /**
-   * A UTC timestamp at which the recipient clicked on a tracked link for the first
-   * time. Stored as a millisecond representation of the Unix epoch.
-   */
-  clicked: number;
-
-  /**
-   * A UTC timestamp at which the Integration provider delivered the message. Stored
-   * as a millisecond representation of the Unix epoch.
-   */
-  delivered: number;
-
-  /**
-   * A UTC timestamp at which Courier received the message request. Stored as a
-   * millisecond representation of the Unix epoch.
-   */
-  enqueued: number;
-
-  /**
-   * A unique identifier associated with the event of the delivered message.
-   */
-  event: string;
-
-  /**
-   * A unique identifier associated with the notification of the delivered message.
-   */
-  notification: string;
-
-  /**
-   * A UTC timestamp at which the recipient opened a message for the first time.
-   * Stored as a millisecond representation of the Unix epoch.
-   */
-  opened: number;
-
-  /**
-   * A unique identifier associated with the recipient of the delivered message.
-   */
-  recipient: string;
-
-  /**
-   * A UTC timestamp at which Courier passed the message to the Integration provider.
-   * Stored as a millisecond representation of the Unix epoch.
-   */
-  sent: number;
-
-  /**
-   * The current status of the message.
-   */
-  status:
-    | 'CANCELED'
-    | 'CLICKED'
-    | 'DELAYED'
-    | 'DELIVERED'
-    | 'DIGESTED'
-    | 'ENQUEUED'
-    | 'FILTERED'
-    | 'OPENED'
-    | 'ROUTED'
-    | 'SENT'
-    | 'SIMULATED'
-    | 'THROTTLED'
-    | 'UNDELIVERABLE'
-    | 'UNMAPPED'
-    | 'UNROUTABLE';
-
-  /**
-   * A message describing the error that occurred.
-   */
-  error?: string | null;
-
-  /**
-   * The reason for the current status of the message.
-   */
-  reason?:
-    | 'BOUNCED'
-    | 'FAILED'
-    | 'FILTERED'
-    | 'NO_CHANNELS'
-    | 'NO_PROVIDERS'
-    | 'OPT_IN_REQUIRED'
-    | 'PROVIDER_ERROR'
-    | 'UNPUBLISHED'
-    | 'UNSUBSCRIBED'
-    | null;
-}
-
-export interface MessageRetrieveResponse extends MessageDetails {
+export interface MessageRetrieveResponse extends Shared.MessageDetails {
   providers?: Array<{ [key: string]: unknown }> | null;
 }
 
@@ -155,12 +62,12 @@ export interface MessageListResponse {
   /**
    * Paging information for the result set.
    */
-  paging: AudiencesAPI.Paging;
+  paging: Shared.Paging;
 
   /**
    * An array of messages with their details.
    */
-  results: Array<MessageDetails>;
+  results: Array<Shared.MessageDetails>;
 }
 
 export interface MessageContentResponse {
@@ -334,7 +241,6 @@ export interface MessageHistoryParams {
 
 export declare namespace Messages {
   export {
-    type MessageDetails as MessageDetails,
     type MessageRetrieveResponse as MessageRetrieveResponse,
     type MessageListResponse as MessageListResponse,
     type MessageContentResponse as MessageContentResponse,

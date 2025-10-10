@@ -7,17 +7,14 @@ import {
   PreferenceRetrieveResponse,
   PreferenceRetrieveTopicParams,
   PreferenceRetrieveTopicResponse,
-  PreferenceStatus,
   PreferenceUpdateOrCreateTopicParams,
   PreferenceUpdateOrCreateTopicResponse,
   Preferences,
-  TopicPreference,
 } from './preferences';
 import * as TenantsAPI from './tenants';
 import {
   TenantAddMultipleParams,
   TenantAddSingleParams,
-  TenantAssociation,
   TenantListParams,
   TenantListResponse,
   TenantRemoveSingleParams,
@@ -32,7 +29,6 @@ import {
   TokenRetrieveResponse,
   TokenUpdateParams,
   Tokens,
-  UserToken,
 } from './tokens';
 
 export class Users extends APIResource {
@@ -48,8 +44,6 @@ Users.Tokens = Tokens;
 export declare namespace Users {
   export {
     Preferences as Preferences,
-    type PreferenceStatus as PreferenceStatus,
-    type TopicPreference as TopicPreference,
     type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
     type PreferenceRetrieveTopicResponse as PreferenceRetrieveTopicResponse,
     type PreferenceUpdateOrCreateTopicResponse as PreferenceUpdateOrCreateTopicResponse,
@@ -60,7 +54,6 @@ export declare namespace Users {
 
   export {
     Tenants as Tenants,
-    type TenantAssociation as TenantAssociation,
     type TenantListResponse as TenantListResponse,
     type TenantListParams as TenantListParams,
     type TenantAddMultipleParams as TenantAddMultipleParams,
@@ -70,7 +63,6 @@ export declare namespace Users {
 
   export {
     Tokens as Tokens,
-    type UserToken as UserToken,
     type TokenRetrieveResponse as TokenRetrieveResponse,
     type TokenListResponse as TokenListResponse,
     type TokenRetrieveParams as TokenRetrieveParams,

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Courier from '@trycourier/courier';
+import Courier from 'courier';
 
 const client = new Courier({
   apiKey: 'My API Key',
@@ -46,7 +46,7 @@ describe('resource send', () => {
         },
         content: { body: 'body', title: 'title' },
         context: { tenant_id: 'tenant_id' },
-        data: { name: 'bar' },
+        data: { foo: 'bar' },
         delay: { duration: 0, until: 'until' },
         expiry: { expires_in: 'string', expires_at: 'expires_at' },
         metadata: {

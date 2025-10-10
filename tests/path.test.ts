@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from '@trycourier/courier/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from 'courier/internal/utils/path';
 import { inspect } from 'node:util';
 import { runInNewContext } from 'node:vm';
 

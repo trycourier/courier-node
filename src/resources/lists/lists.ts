@@ -1,12 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as AudiencesAPI from '../audiences';
+import * as Shared from '../shared';
 import * as SubscriptionsAPI from './subscriptions';
 import {
-  NotificationPreferenceDetails,
-  PutSubscriptionsRecipient,
-  RecipientPreferences,
   SubscriptionAddParams,
   SubscriptionListParams,
   SubscriptionListResponse,
@@ -26,7 +23,7 @@ export class Lists extends APIResource {
   /**
    * Returns a list based on the list ID provided.
    */
-  retrieve(listID: string, options?: RequestOptions): APIPromise<List> {
+  retrieve(listID: string, options?: RequestOptions): APIPromise<Shared.SubscriptionList> {
     return this._client.get(path`/lists/${listID}`, options);
   }
 
@@ -73,26 +70,16 @@ export class Lists extends APIResource {
   }
 }
 
-export interface List {
-  id: string;
-
-  name: string;
-
-  created?: string | null;
-
-  updated?: string | null;
-}
-
 export interface ListListResponse {
-  items: Array<List>;
+  items: Array<Shared.SubscriptionList>;
 
-  paging: AudiencesAPI.Paging;
+  paging: Shared.Paging;
 }
 
 export interface ListUpdateParams {
   name: string;
 
-  preferences?: SubscriptionsAPI.RecipientPreferences | null;
+  preferences?: Shared.RecipientPreferences | null;
 }
 
 export interface ListListParams {
@@ -116,7 +103,6 @@ Lists.Subscriptions = Subscriptions;
 
 export declare namespace Lists {
   export {
-    type List as List,
     type ListListResponse as ListListResponse,
     type ListUpdateParams as ListUpdateParams,
     type ListListParams as ListListParams,
@@ -125,9 +111,6 @@ export declare namespace Lists {
 
   export {
     Subscriptions as Subscriptions,
-    type NotificationPreferenceDetails as NotificationPreferenceDetails,
-    type PutSubscriptionsRecipient as PutSubscriptionsRecipient,
-    type RecipientPreferences as RecipientPreferences,
     type SubscriptionListResponse as SubscriptionListResponse,
     type SubscriptionListParams as SubscriptionListParams,
     type SubscriptionAddParams as SubscriptionAddParams,

@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -34,24 +35,12 @@ export class Checks extends APIResource {
   }
 }
 
-export interface BaseCheck {
-  id: string;
-
-  status: 'RESOLVED' | 'FAILED' | 'PENDING';
-
-  type: 'custom';
-}
-
-export interface Check extends BaseCheck {
-  updated: number;
-}
-
 export interface CheckUpdateResponse {
-  checks: Array<Check>;
+  checks: Array<Shared.Check>;
 }
 
 export interface CheckListResponse {
-  checks: Array<Check>;
+  checks: Array<Shared.Check>;
 }
 
 export interface CheckUpdateParams {
@@ -63,7 +52,7 @@ export interface CheckUpdateParams {
   /**
    * Body param:
    */
-  checks: Array<BaseCheck>;
+  checks: Array<Shared.BaseCheck>;
 }
 
 export interface CheckListParams {
@@ -76,8 +65,6 @@ export interface CheckDeleteParams {
 
 export declare namespace Checks {
   export {
-    type BaseCheck as BaseCheck,
-    type Check as Check,
     type CheckUpdateResponse as CheckUpdateResponse,
     type CheckListResponse as CheckListResponse,
     type CheckUpdateParams as CheckUpdateParams,

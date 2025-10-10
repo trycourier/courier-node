@@ -1,18 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as Shared from '../shared';
 import * as TemplatesAPI from './templates';
-import {
-  BaseTemplateTenantAssociation,
-  ElementalContent,
-  TemplateListParams,
-  TemplateListResponse,
-  TemplateRetrieveParams,
-  Templates,
-} from './templates';
-import * as UsersTenantsAPI from '../users/tenants';
+import { TemplateListParams, TemplateListResponse, TemplateRetrieveParams, Templates } from './templates';
 import * as DefaultPreferencesAPI from './default-preferences/default-preferences';
-import * as ItemsAPI from './default-preferences/items';
+import { DefaultPreferences } from './default-preferences/default-preferences';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -32,7 +25,7 @@ export class Tenants extends APIResource {
    * const tenant = await client.tenants.retrieve('tenant_id');
    * ```
    */
-  retrieve(tenantID: string, options?: RequestOptions): APIPromise<Tenant> {
+  retrieve(tenantID: string, options?: RequestOptions): APIPromise<Shared.Tenant> {
     return this._client.get(path`/tenants/${tenantID}`, options);
   }
 
@@ -46,7 +39,7 @@ export class Tenants extends APIResource {
    * });
    * ```
    */
-  update(tenantID: string, body: TenantUpdateParams, options?: RequestOptions): APIPromise<Tenant> {
+  update(tenantID: string, body: TenantUpdateParams, options?: RequestOptions): APIPromise<Shared.Tenant> {
     return this._client.put(path`/tenants/${tenantID}`, { body, ...options });
   }
 
@@ -99,57 +92,6 @@ export class Tenants extends APIResource {
   }
 }
 
-export interface DefaultPreferences {
-  items?: Array<DefaultPreferences.Item> | null;
-}
-
-export namespace DefaultPreferences {
-  export interface Item extends ItemsAPI.SubscriptionTopicNew {
-    /**
-     * Topic ID
-     */
-    id: string;
-  }
-}
-
-export interface Tenant {
-  /**
-   * Id of the tenant.
-   */
-  id: string;
-
-  /**
-   * Name of the tenant.
-   */
-  name: string;
-
-  /**
-   * Brand to be used for the account when one is not specified by the send call.
-   */
-  brand_id?: string | null;
-
-  /**
-   * Defines the preferences used for the account when the user hasn't specified
-   * their own.
-   */
-  default_preferences?: DefaultPreferences | null;
-
-  /**
-   * Tenant's parent id (if any).
-   */
-  parent_tenant_id?: string | null;
-
-  /**
-   * Arbitrary properties accessible to a template.
-   */
-  properties?: { [key: string]: unknown } | null;
-
-  /**
-   * A user profile object merged with user profile on send.
-   */
-  user_profile?: { [key: string]: unknown } | null;
-}
-
 export interface TenantListResponse {
   /**
    * Set to true when there are more pages that can be retrieved.
@@ -159,7 +101,7 @@ export interface TenantListResponse {
   /**
    * An array of Tenants
    */
-  items: Array<Tenant>;
+  items: Array<Shared.Tenant>;
 
   /**
    * Always set to "list". Represents the type of this object.
@@ -206,7 +148,7 @@ export interface TenantListUsersResponse {
    */
   cursor?: string | null;
 
-  items?: Array<UsersTenantsAPI.TenantAssociation> | null;
+  items?: Array<Shared.TenantAssociation> | null;
 
   /**
    * A url that may be used to generate fetch the next set of results. Defined only
@@ -230,7 +172,7 @@ export interface TenantUpdateParams {
    * Defines the preferences used for the tenant when the user hasn't specified their
    * own.
    */
-  default_preferences?: DefaultPreferences | null;
+  default_preferences?: Shared.DefaultPreferences | null;
 
   /**
    * Tenant's parent id (if any).
@@ -277,12 +219,11 @@ export interface TenantListUsersParams {
   limit?: number | null;
 }
 
+Tenants.DefaultPreferences = DefaultPreferences;
 Tenants.Templates = Templates;
 
 export declare namespace Tenants {
   export {
-    type DefaultPreferences as DefaultPreferences,
-    type Tenant as Tenant,
     type TenantListResponse as TenantListResponse,
     type TenantListUsersResponse as TenantListUsersResponse,
     type TenantUpdateParams as TenantUpdateParams,
@@ -290,10 +231,10 @@ export declare namespace Tenants {
     type TenantListUsersParams as TenantListUsersParams,
   };
 
+  export { DefaultPreferences as DefaultPreferences };
+
   export {
     Templates as Templates,
-    type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
-    type ElementalContent as ElementalContent,
     type TemplateListResponse as TemplateListResponse,
     type TemplateRetrieveParams as TemplateRetrieveParams,
     type TemplateListParams as TemplateListParams,

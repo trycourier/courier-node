@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as SubscriptionsAPI from '../lists/subscriptions';
+import * as Shared from '../shared';
 import * as ListsAPI from './lists';
 import {
   ListDeleteResponse,
@@ -82,7 +82,7 @@ export interface ProfileCreateResponse {
 export interface ProfileRetrieveResponse {
   profile: { [key: string]: unknown };
 
-  preferences?: SubscriptionsAPI.RecipientPreferences | null;
+  preferences?: Shared.RecipientPreferences | null;
 }
 
 export interface ProfileReplaceResponse {
