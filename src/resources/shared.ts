@@ -110,9 +110,9 @@ export interface Brand {
 }
 
 export interface BrandColors {
-  primary?: string | null;
+  primary?: string;
 
-  secondary?: string | null;
+  secondary?: string;
 
   [k: string]: string | undefined;
 }
