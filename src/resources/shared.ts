@@ -699,6 +699,9 @@ export interface Recipient {
 
   data?: { [key: string]: unknown } | null;
 
+  /**
+   * The user's email address.
+   */
   email?: string | null;
 
   /**
@@ -706,15 +709,22 @@ export interface Recipient {
    */
   locale?: string | null;
 
+  /**
+   * The user's phone number.
+   */
   phone_number?: string | null;
 
   preferences?: Recipient.Preferences | null;
 
   /**
-   * Tenant id. Will load brand, default preferences and base context data.
+   * The id of the tenant the user is associated with.
    */
   tenant_id?: string | null;
 
+  /**
+   * The user's unique identifier. Typically, this will match the user id of a user
+   * in your system.
+   */
   user_id?: string | null;
 }
 
@@ -738,6 +748,16 @@ export interface Rule {
   until: string;
 
   start?: string | null;
+}
+
+export interface SubscriptionList {
+  id: string;
+
+  name: string;
+
+  created?: string | null;
+
+  updated?: string | null;
 }
 
 export interface SubscriptionTopicNew {
@@ -833,16 +853,6 @@ export interface TopicPreference {
   has_custom_routing?: boolean | null;
 }
 
-export interface UserList {
-  id: string;
-
-  name: string;
-
-  created?: string | null;
-
-  updated?: string | null;
-}
-
 export interface UserRecipient {
   /**
    * Use `tenant_id` instead.
@@ -856,6 +866,9 @@ export interface UserRecipient {
 
   data?: { [key: string]: unknown } | null;
 
+  /**
+   * The user's email address.
+   */
   email?: string | null;
 
   /**
@@ -863,15 +876,22 @@ export interface UserRecipient {
    */
   locale?: string | null;
 
+  /**
+   * The user's phone number.
+   */
   phone_number?: string | null;
 
   preferences?: UserRecipient.Preferences | null;
 
   /**
-   * Tenant id. Will load brand, default preferences and base context data.
+   * The id of the tenant the user is associated with.
    */
   tenant_id?: string | null;
 
+  /**
+   * The user's unique identifier. Typically, this will match the user id of a user
+   * in your system.
+   */
   user_id?: string | null;
 }
 

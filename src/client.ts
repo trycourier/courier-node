@@ -972,12 +972,12 @@ export declare namespace Courier {
   export type Recipient = API.Recipient;
   export type RecipientPreferences = API.RecipientPreferences;
   export type Rule = API.Rule;
+  export type SubscriptionList = API.SubscriptionList;
   export type SubscriptionTopicNew = API.SubscriptionTopicNew;
   export type Tenant = API.Tenant;
   export type TenantAssociation = API.TenantAssociation;
   export type TextStyle = API.TextStyle;
   export type TopicPreference = API.TopicPreference;
-  export type UserList = API.UserList;
   export type UserRecipient = API.UserRecipient;
   export type UserToken = API.UserToken;
   export type Utm = API.Utm;
