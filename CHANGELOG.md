@@ -1,5 +1,20 @@
 # Changelog
 
+## 6.7.0-alpha5 (2025-10-10)
+
+Full Changelog: [v6.7.0-alpha4...v6.7.0-alpha5](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha4...v6.7.0-alpha5)
+
+### Features
+
+* **api:** manual updates ([e471eac](https://github.com/trycourier/courier-node/commit/e471eaca1fa56158bb19c29d4ec605cc509874d2))
+* Examples and ref polish ([1650602](https://github.com/trycourier/courier-node/commit/165060251b8db0303f94c0492a68cff5a087ae1a))
+* Kick of merge attempt ([54184b4](https://github.com/trycourier/courier-node/commit/54184b4ba18a1ed6a02e3d98b12e6a5e36ca82e0))
+* Model sync ([cb668d9](https://github.com/trycourier/courier-node/commit/cb668d9a149ba6b43dd7634c6e561dedc7bd4baf))
+* Polish and Kick of Java Kit Gen ([4d53a63](https://github.com/trycourier/courier-node/commit/4d53a63b1da6c0b01b592bf37a14a48cfc0a7d7a))
+* Template Id ([c6657b2](https://github.com/trycourier/courier-node/commit/c6657b2bf9516b860a68091094dbd84adc445cb5))
+* Test Github Action ([c394568](https://github.com/trycourier/courier-node/commit/c394568b2ce593afd62c03905a781082b2ef222c))
+* Test stainless open action ([d558f6a](https://github.com/trycourier/courier-node/commit/d558f6a5d01d1a870c13314bb5a682006bd51896))
+
 ## 6.7.0-alpha4 (2025-10-07)
 
 Full Changelog: [v6.7.0-alpha3...v6.7.0-alpha4](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha3...v6.7.0-alpha4)
