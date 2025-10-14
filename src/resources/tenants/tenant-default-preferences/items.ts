@@ -13,7 +13,7 @@ export class Items extends APIResource {
    *
    * @example
    * ```ts
-   * await client.tenants.defaultPreferences.items.update(
+   * await client.tenants.tenantDefaultPreferences.items.update(
    *   'topic_id',
    *   {
    *     tenant_id: 'tenant_id',
@@ -38,7 +38,7 @@ export class Items extends APIResource {
    *
    * @example
    * ```ts
-   * await client.tenants.defaultPreferences.items.delete(
+   * await client.tenants.tenantDefaultPreferences.items.delete(
    *   'topic_id',
    *   { tenant_id: 'tenant_id' },
    * );
