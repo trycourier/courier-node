@@ -1,3 +1,3 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export * from './default-preferences/index';
+export * from './tenant-default-preferences/index';

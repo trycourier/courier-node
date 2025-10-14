@@ -287,14 +287,14 @@ Methods:
 - <code title="delete /tenants/{tenant_id}">client.tenants.<a href="./src/resources/tenants/tenants.ts">delete</a>(tenantID) -> void</code>
 - <code title="get /tenants/{tenant_id}/users">client.tenants.<a href="./src/resources/tenants/tenants.ts">listUsers</a>(tenantID, { ...params }) -> TenantListUsersResponse</code>
 
-## DefaultPreferences
+## TenantDefaultPreferences
 
 ### Items
 
 Methods:
 
-- <code title="put /tenants/{tenant_id}/default_preferences/items/{topic_id}">client.tenants.defaultPreferences.items.<a href="./src/resources/tenants/default-preferences/items.ts">update</a>(topicID, { ...params }) -> void</code>
-- <code title="delete /tenants/{tenant_id}/default_preferences/items/{topic_id}">client.tenants.defaultPreferences.items.<a href="./src/resources/tenants/default-preferences/items.ts">delete</a>(topicID, { ...params }) -> void</code>
+- <code title="put /tenants/{tenant_id}/default_preferences/items/{topic_id}">client.tenants.tenantDefaultPreferences.items.<a href="./src/resources/tenants/tenant-default-preferences/items.ts">update</a>(topicID, { ...params }) -> void</code>
+- <code title="delete /tenants/{tenant_id}/default_preferences/items/{topic_id}">client.tenants.tenantDefaultPreferences.items.<a href="./src/resources/tenants/tenant-default-preferences/items.ts">delete</a>(topicID, { ...params }) -> void</code>
 
 ## Templates
 
