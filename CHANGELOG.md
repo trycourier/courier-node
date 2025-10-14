@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.7.0-alpha6 (2025-10-14)
+
+Full Changelog: [v6.7.0-alpha5...v6.7.0-alpha6](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha5...v6.7.0-alpha6)
+
+### Features
+
+* Changes to spec, examples and scripts ([ab64e67](https://github.com/trycourier/courier-node/commit/ab64e6721b85ace43d4c0808b1b369488d86f5b3))
+
 ## 6.7.0-alpha5 (2025-10-10)
 
 Full Changelog: [v6.7.0-alpha4...v6.7.0-alpha5](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha4...v6.7.0-alpha5)
