@@ -88,15 +88,7 @@ export interface ListRetrieveParams {
 }
 
 export interface ListSubscribeParams {
-  lists: Array<ListSubscribeParams.List>;
-}
-
-export namespace ListSubscribeParams {
-  export interface List {
-    listId: string;
-
-    preferences?: Shared.RecipientPreferences | null;
-  }
+  lists: Array<Shared.SubscribeToListsRequestItem>;
 }
 
 export declare namespace Lists {

@@ -972,6 +972,7 @@ export declare namespace Courier {
   export type Recipient = API.Recipient;
   export type RecipientPreferences = API.RecipientPreferences;
   export type Rule = API.Rule;
+  export type SubscribeToListsRequestItem = API.SubscribeToListsRequestItem;
   export type SubscriptionList = API.SubscriptionList;
   export type SubscriptionTopicNew = API.SubscriptionTopicNew;
   export type Tenant = API.Tenant;
