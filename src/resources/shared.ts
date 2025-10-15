@@ -750,6 +750,12 @@ export interface Rule {
   start?: string | null;
 }
 
+export interface SubscribeToListsRequestItem {
+  listId: string;
+
+  preferences?: RecipientPreferences | null;
+}
+
 export interface SubscriptionList {
   id: string;
 
