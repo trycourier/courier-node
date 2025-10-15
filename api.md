@@ -54,6 +54,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">Recipient</a></code>
 - <code><a href="./src/resources/shared.ts">RecipientPreferences</a></code>
 - <code><a href="./src/resources/shared.ts">Rule</a></code>
+- <code><a href="./src/resources/shared.ts">SubscribeToListsRequestItem</a></code>
 - <code><a href="./src/resources/shared.ts">SubscriptionList</a></code>
 - <code><a href="./src/resources/shared.ts">SubscriptionTopicNew</a></code>
 - <code><a href="./src/resources/shared.ts">Tenant</a></code>
