@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.7.0-alpha8 (2025-10-17)
+
+Full Changelog: [v6.7.0-alpha7...v6.7.0-alpha8](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha7...v6.7.0-alpha8)
+
+### Bug Fixes
+
+* Dep Warning ([c38c270](https://github.com/trycourier/courier-node/commit/c38c27021d0ab20c5df419472bb3e62c4464c409))
+
 ## 6.7.0-alpha7 (2025-10-17)
 
 Full Changelog: [v6.7.0-alpha6...v6.7.0-alpha7](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha6...v6.7.0-alpha7)
