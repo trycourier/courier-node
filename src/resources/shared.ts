@@ -176,7 +176,7 @@ export type PreferenceStatus = 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED';
 
 export interface Recipient {
   /**
-   * Use `tenant_id` instead.
+   * Deprecated - Use `tenant_id` instead.
    */
   account_id?: string | null;
 
@@ -242,7 +242,7 @@ export type TextStyle = 'text' | 'h1' | 'h2' | 'subtext';
 
 export interface UserRecipient {
   /**
-   * Use `tenant_id` instead.
+   * Deprecated - Use `tenant_id` instead.
    */
   account_id?: string | null;
 
