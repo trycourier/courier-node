@@ -2,6 +2,7 @@
 
 export {
   Preferences,
+  type TopicPreference,
   type PreferenceRetrieveResponse,
   type PreferenceRetrieveTopicResponse,
   type PreferenceUpdateOrCreateTopicResponse,
@@ -19,6 +20,7 @@ export {
 } from './tenants';
 export {
   Tokens,
+  type UserToken,
   type TokenRetrieveResponse,
   type TokenListResponse,
   type TokenRetrieveParams,

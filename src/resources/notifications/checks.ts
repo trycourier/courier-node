@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as Shared from '../shared';
+import * as NotificationsAPI from './notifications';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -36,11 +36,11 @@ export class Checks extends APIResource {
 }
 
 export interface CheckUpdateResponse {
-  checks: Array<Shared.Check>;
+  checks: Array<NotificationsAPI.Check>;
 }
 
 export interface CheckListResponse {
-  checks: Array<Shared.Check>;
+  checks: Array<NotificationsAPI.Check>;
 }
 
 export interface CheckUpdateParams {
@@ -52,7 +52,7 @@ export interface CheckUpdateParams {
   /**
    * Body param:
    */
-  checks: Array<Shared.BaseCheck>;
+  checks: Array<NotificationsAPI.BaseCheck>;
 }
 
 export interface CheckListParams {

@@ -2,6 +2,8 @@
 
 export {
   Lists,
+  type PutSubscriptionsRecipient,
+  type SubscriptionList,
   type ListListResponse,
   type ListUpdateParams,
   type ListListParams,

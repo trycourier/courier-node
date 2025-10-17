@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as Shared from '../shared';
+import * as ProfilesAPI from './profiles';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -88,7 +89,7 @@ export interface ListRetrieveParams {
 }
 
 export interface ListSubscribeParams {
-  lists: Array<Shared.SubscribeToListsRequestItem>;
+  lists: Array<ProfilesAPI.SubscribeToListsRequestItem>;
 }
 
 export declare namespace Lists {

@@ -11,7 +11,7 @@ export class Audiences extends APIResource {
   /**
    * Returns the specified audience by id.
    */
-  retrieve(audienceID: string, options?: RequestOptions): APIPromise<Shared.Audience> {
+  retrieve(audienceID: string, options?: RequestOptions): APIPromise<Audience> {
     return this._client.get(path`/audiences/${audienceID}`, options);
   }
 
@@ -58,12 +58,104 @@ export class Audiences extends APIResource {
   }
 }
 
+export interface Audience {
+  /**
+   * A unique identifier representing the audience_id
+   */
+  id: string;
+
+  created_at: string;
+
+  /**
+   * A description of the audience
+   */
+  description: string;
+
+  /**
+   * A single filter to use for filtering
+   */
+  filter: Filter;
+
+  /**
+   * The name of the audience
+   */
+  name: string;
+
+  updated_at: string;
+}
+
+export interface Filter {
+  /**
+   * The operator to use for filtering
+   */
+  operator:
+    | 'ENDS_WITH'
+    | 'EQ'
+    | 'EXISTS'
+    | 'GT'
+    | 'GTE'
+    | 'INCLUDES'
+    | 'IS_AFTER'
+    | 'IS_BEFORE'
+    | 'LT'
+    | 'LTE'
+    | 'NEQ'
+    | 'OMIT'
+    | 'STARTS_WITH'
+    | 'AND'
+    | 'OR';
+
+  /**
+   * The attribe name from profile whose value will be operated against the filter
+   * value
+   */
+  path: string;
+
+  /**
+   * The value to use for filtering
+   */
+  value: string;
+}
+
+export interface FilterConfig {
+  /**
+   * The operator to use for filtering
+   */
+  operator:
+    | 'ENDS_WITH'
+    | 'EQ'
+    | 'EXISTS'
+    | 'GT'
+    | 'GTE'
+    | 'INCLUDES'
+    | 'IS_AFTER'
+    | 'IS_BEFORE'
+    | 'LT'
+    | 'LTE'
+    | 'NEQ'
+    | 'OMIT'
+    | 'STARTS_WITH'
+    | 'AND'
+    | 'OR';
+
+  /**
+   * The attribe name from profile whose value will be operated against the filter
+   * value
+   */
+  path: string;
+
+  /**
+   * The value to use for filtering
+   */
+  value: string;
+}
+
 export interface AudienceUpdateResponse {
-  audience: Shared.Audience;
+  audience: Audience;
 }
 
 export interface AudienceListResponse {
-  items: Array<Shared.Audience>;
+  items: Array<Audience>;
 
   paging: Shared.Paging;
 }
@@ -97,7 +189,7 @@ export interface AudienceUpdateParams {
   /**
    * A single filter to use for filtering
    */
-  filter?: Shared.Filter | null;
+  filter?: Filter | null;
 
   /**
    * The name of the audience
@@ -121,6 +213,9 @@ export interface AudienceListMembersParams {
 
 export declare namespace Audiences {
   export {
+    type Audience as Audience,
+    type Filter as Filter,
+    type FilterConfig as FilterConfig,
     type AudienceUpdateResponse as AudienceUpdateResponse,
     type AudienceListResponse as AudienceListResponse,
     type AudienceListMembersResponse as AudienceListMembersResponse,
