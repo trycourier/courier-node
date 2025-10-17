@@ -9,4 +9,11 @@ export {
   type CheckDeleteParams,
 } from './checks';
 export { Draft } from './draft';
-export { Notifications, type NotificationListResponse, type NotificationListParams } from './notifications';
+export {
+  Notifications,
+  type BaseCheck,
+  type Check,
+  type NotificationGetContent,
+  type NotificationListResponse,
+  type NotificationListParams,
+} from './notifications';

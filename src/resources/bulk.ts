@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as BulkAPI from './bulk';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
@@ -55,6 +56,55 @@ export class Bulk extends APIResource {
   }
 }
 
+export type InboundBulkMessage =
+  | InboundBulkMessage.InboundBulkTemplateMessage
+  | InboundBulkMessage.InboundBulkContentMessage;
+
+export namespace InboundBulkMessage {
+  export interface InboundBulkTemplateMessage {
+    template: string;
+
+    brand?: string | null;
+
+    data?: { [key: string]: unknown } | null;
+
+    event?: string | null;
+
+    locale?: { [key: string]: { [key: string]: unknown } } | null;
+
+    override?: { [key: string]: unknown } | null;
+  }
+
+  export interface InboundBulkContentMessage {
+    /**
+     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+     */
+    content: Shared.ElementalContentSugar | Shared.ElementalContent;
+
+    brand?: string | null;
+
+    data?: { [key: string]: unknown } | null;
+
+    event?: string | null;
+
+    locale?: { [key: string]: { [key: string]: unknown } } | null;
+
+    override?: { [key: string]: unknown } | null;
+  }
+}
+
+export interface InboundBulkMessageUser {
+  data?: unknown;
+
+  preferences?: Shared.RecipientPreferences | null;
+
+  profile?: unknown;
+
+  recipient?: string | null;
+
+  to?: Shared.UserRecipient | null;
+}
+
 export interface BulkCreateJobResponse {
   jobId: string;
 }
@@ -66,7 +116,7 @@ export interface BulkListUsersResponse {
 }
 
 export namespace BulkListUsersResponse {
-  export interface Item extends Shared.InboundBulkMessageUser {
+  export interface Item extends BulkAPI.InboundBulkMessageUser {
     status: 'PENDING' | 'ENQUEUED' | 'ERROR';
 
     messageId?: string | null;
@@ -79,7 +129,7 @@ export interface BulkRetrieveJobResponse {
 
 export namespace BulkRetrieveJobResponse {
   export interface Job {
-    definition: Shared.InboundBulkMessage;
+    definition: BulkAPI.InboundBulkMessage;
 
     enqueued: number;
 
@@ -92,11 +142,11 @@ export namespace BulkRetrieveJobResponse {
 }
 
 export interface BulkAddUsersParams {
-  users: Array<Shared.InboundBulkMessageUser>;
+  users: Array<InboundBulkMessageUser>;
 }
 
 export interface BulkCreateJobParams {
-  message: Shared.InboundBulkMessage;
+  message: InboundBulkMessage;
 }
 
 export interface BulkListUsersParams {
@@ -109,6 +159,8 @@ export interface BulkListUsersParams {
 
 export declare namespace Bulk {
   export {
+    type InboundBulkMessage as InboundBulkMessage,
+    type InboundBulkMessageUser as InboundBulkMessageUser,
     type BulkCreateJobResponse as BulkCreateJobResponse,
     type BulkListUsersResponse as BulkListUsersResponse,
     type BulkRetrieveJobResponse as BulkRetrieveJobResponse,

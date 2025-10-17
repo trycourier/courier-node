@@ -9,6 +9,11 @@ export {
 export { TenantDefaultPreferences } from './tenant-default-preferences/index';
 export {
   Tenants,
+  type BaseTemplateTenantAssociation,
+  type DefaultPreferences,
+  type SubscriptionTopicNew,
+  type Tenant,
+  type TenantAssociation,
   type TenantListResponse,
   type TenantListUsersResponse,
   type TenantUpdateParams,

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as Shared from '../shared';
+import * as TenantsAPI from '../tenants/tenants';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -126,7 +126,7 @@ export interface TenantListResponse {
    */
   cursor?: string | null;
 
-  items?: Array<Shared.TenantAssociation> | null;
+  items?: Array<TenantsAPI.TenantAssociation> | null;
 
   /**
    * A url that may be used to generate fetch the next set of results. Defined only
@@ -148,7 +148,7 @@ export interface TenantListParams {
 }
 
 export interface TenantAddMultipleParams {
-  tenants: Array<Shared.TenantAssociation>;
+  tenants: Array<TenantsAPI.TenantAssociation>;
 }
 
 export interface TenantAddSingleParams {

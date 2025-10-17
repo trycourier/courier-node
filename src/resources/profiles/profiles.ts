@@ -75,6 +75,12 @@ export class Profiles extends APIResource {
   }
 }
 
+export interface SubscribeToListsRequestItem {
+  listId: string;
+
+  preferences?: Shared.RecipientPreferences | null;
+}
+
 export interface ProfileCreateResponse {
   status: 'SUCCESS';
 }
@@ -127,6 +133,7 @@ Profiles.Lists = Lists;
 
 export declare namespace Profiles {
   export {
+    type SubscribeToListsRequestItem as SubscribeToListsRequestItem,
     type ProfileCreateResponse as ProfileCreateResponse,
     type ProfileRetrieveResponse as ProfileRetrieveResponse,
     type ProfileReplaceResponse as ProfileReplaceResponse,

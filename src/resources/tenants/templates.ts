@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as Shared from '../shared';
+import * as TenantsAPI from './tenants';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -22,7 +23,7 @@ export class Templates extends APIResource {
     templateID: string,
     params: TemplateRetrieveParams,
     options?: RequestOptions,
-  ): APIPromise<Shared.BaseTemplateTenantAssociation> {
+  ): APIPromise<TenantsAPI.BaseTemplateTenantAssociation> {
     const { tenant_id } = params;
     return this._client.get(path`/tenants/${tenant_id}/templates/${templateID}`, options);
   }
@@ -78,7 +79,7 @@ export interface TemplateListResponse {
 }
 
 export namespace TemplateListResponse {
-  export interface Item extends Shared.BaseTemplateTenantAssociation {
+  export interface Item extends TenantsAPI.BaseTemplateTenantAssociation {
     /**
      * The template's data containing it's routing configs
      */
