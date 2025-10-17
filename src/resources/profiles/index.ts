@@ -10,6 +10,7 @@ export {
 } from './lists';
 export {
   Profiles,
+  type SubscribeToListsRequestItem,
   type ProfileCreateResponse,
   type ProfileRetrieveResponse,
   type ProfileReplaceResponse,

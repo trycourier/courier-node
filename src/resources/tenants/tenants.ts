@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as TenantsAPI from './tenants';
 import * as Shared from '../shared';
 import * as TemplatesAPI from './templates';
 import { TemplateListParams, TemplateListResponse, TemplateRetrieveParams, Templates } from './templates';
@@ -24,7 +25,7 @@ export class Tenants extends APIResource {
    * const tenant = await client.tenants.retrieve('tenant_id');
    * ```
    */
-  retrieve(tenantID: string, options?: RequestOptions): APIPromise<Shared.Tenant> {
+  retrieve(tenantID: string, options?: RequestOptions): APIPromise<Tenant> {
     return this._client.get(path`/tenants/${tenantID}`, options);
   }
 
@@ -38,7 +39,7 @@ export class Tenants extends APIResource {
    * });
    * ```
    */
-  update(tenantID: string, body: TenantUpdateParams, options?: RequestOptions): APIPromise<Shared.Tenant> {
+  update(tenantID: string, body: TenantUpdateParams, options?: RequestOptions): APIPromise<Tenant> {
     return this._client.put(path`/tenants/${tenantID}`, { body, ...options });
   }
 
@@ -91,6 +92,120 @@ export class Tenants extends APIResource {
   }
 }
 
+export interface BaseTemplateTenantAssociation {
+  /**
+   * The template's id
+   */
+  id: string;
+
+  /**
+   * The timestamp at which the template was created
+   */
+  created_at: string;
+
+  /**
+   * The timestamp at which the template was published
+   */
+  published_at: string;
+
+  /**
+   * The timestamp at which the template was last updated
+   */
+  updated_at: string;
+
+  /**
+   * The version of the template
+   */
+  version: string;
+}
+
+export interface DefaultPreferences {
+  items?: Array<DefaultPreferences.Item> | null;
+}
+
+export namespace DefaultPreferences {
+  export interface Item extends TenantsAPI.SubscriptionTopicNew {
+    /**
+     * Topic ID
+     */
+    id: string;
+  }
+}
+
+export interface SubscriptionTopicNew {
+  status: 'OPTED_OUT' | 'OPTED_IN' | 'REQUIRED';
+
+  /**
+   * The default channels to send to this tenant when has_custom_routing is enabled
+   */
+  custom_routing?: Array<Shared.ChannelClassification> | null;
+
+  /**
+   * Override channel routing with custom preferences. This will override any
+   * template prefernces that are set, but a user can still customize their
+   * preferences
+   */
+  has_custom_routing?: boolean | null;
+}
+
+export interface Tenant {
+  /**
+   * Id of the tenant.
+   */
+  id: string;
+
+  /**
+   * Name of the tenant.
+   */
+  name: string;
+
+  /**
+   * Brand to be used for the account when one is not specified by the send call.
+   */
+  brand_id?: string | null;
+
+  /**
+   * Defines the preferences used for the account when the user hasn't specified
+   * their own.
+   */
+  default_preferences?: DefaultPreferences | null;
+
+  /**
+   * Tenant's parent id (if any).
+   */
+  parent_tenant_id?: string | null;
+
+  /**
+   * Arbitrary properties accessible to a template.
+   */
+  properties?: { [key: string]: unknown } | null;
+
+  /**
+   * A user profile object merged with user profile on send.
+   */
+  user_profile?: { [key: string]: unknown } | null;
+}
+
+export interface TenantAssociation {
+  /**
+   * Tenant ID for the association between tenant and user
+   */
+  tenant_id: string;
+
+  /**
+   * Additional metadata to be applied to a user profile when used in a tenant
+   * context
+   */
+  profile?: { [key: string]: unknown } | null;
+
+  type?: 'user' | null;
+
+  /**
+   * User ID for the association between tenant and user
+   */
+  user_id?: string | null;
+}
+
 export interface TenantListResponse {
   /**
    * Set to true when there are more pages that can be retrieved.
@@ -100,7 +215,7 @@ export interface TenantListResponse {
   /**
    * An array of Tenants
    */
-  items: Array<Shared.Tenant>;
+  items: Array<Tenant>;
 
   /**
    * Always set to "list". Represents the type of this object.
@@ -147,7 +262,7 @@ export interface TenantListUsersResponse {
    */
   cursor?: string | null;
 
-  items?: Array<Shared.TenantAssociation> | null;
+  items?: Array<TenantAssociation> | null;
 
   /**
    * A url that may be used to generate fetch the next set of results. Defined only
@@ -171,7 +286,7 @@ export interface TenantUpdateParams {
    * Defines the preferences used for the tenant when the user hasn't specified their
    * own.
    */
-  default_preferences?: Shared.DefaultPreferences | null;
+  default_preferences?: DefaultPreferences | null;
 
   /**
    * Tenant's parent id (if any).
@@ -223,6 +338,11 @@ Tenants.Templates = Templates;
 
 export declare namespace Tenants {
   export {
+    type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
+    type DefaultPreferences as DefaultPreferences,
+    type SubscriptionTopicNew as SubscriptionTopicNew,
+    type Tenant as Tenant,
+    type TenantAssociation as TenantAssociation,
     type TenantListResponse as TenantListResponse,
     type TenantListUsersResponse as TenantListUsersResponse,
     type TenantUpdateParams as TenantUpdateParams,

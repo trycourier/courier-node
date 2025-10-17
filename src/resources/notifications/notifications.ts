@@ -28,8 +28,86 @@ export class Notifications extends APIResource {
     return this._client.get('/notifications', { query, ...options });
   }
 
-  retrieveContent(id: string, options?: RequestOptions): APIPromise<Shared.NotificationGetContent> {
+  retrieveContent(id: string, options?: RequestOptions): APIPromise<NotificationGetContent> {
     return this._client.get(path`/notifications/${id}/content`, options);
+  }
+}
+
+export interface BaseCheck {
+  id: string;
+
+  status: 'RESOLVED' | 'FAILED' | 'PENDING';
+
+  type: 'custom';
+}
+
+export interface Check extends BaseCheck {
+  updated: number;
+}
+
+export interface NotificationGetContent {
+  blocks?: Array<NotificationGetContent.Block> | null;
+
+  channels?: Array<NotificationGetContent.Channel> | null;
+
+  checksum?: string | null;
+}
+
+export namespace NotificationGetContent {
+  export interface Block {
+    id: string;
+
+    type: 'action' | 'divider' | 'image' | 'jsonnet' | 'list' | 'markdown' | 'quote' | 'template' | 'text';
+
+    alias?: string | null;
+
+    checksum?: string | null;
+
+    content?: string | Block.NotificationContentHierarchy | null;
+
+    context?: string | null;
+
+    locales?: { [key: string]: string | Block.NotificationContentHierarchy } | null;
+  }
+
+  export namespace Block {
+    export interface NotificationContentHierarchy {
+      children?: string | null;
+
+      parent?: string | null;
+    }
+
+    export interface NotificationContentHierarchy {
+      children?: string | null;
+
+      parent?: string | null;
+    }
+  }
+
+  export interface Channel {
+    id: string;
+
+    checksum?: string | null;
+
+    content?: Channel.Content | null;
+
+    locales?: { [key: string]: Channel.Locales } | null;
+
+    type?: string | null;
+  }
+
+  export namespace Channel {
+    export interface Content {
+      subject?: string | null;
+
+      title?: string | null;
+    }
+
+    export interface Locales {
+      subject?: string | null;
+
+      title?: string | null;
+    }
   }
 }
 
@@ -87,6 +165,9 @@ Notifications.Checks = Checks;
 
 export declare namespace Notifications {
   export {
+    type BaseCheck as BaseCheck,
+    type Check as Check,
+    type NotificationGetContent as NotificationGetContent,
     type NotificationListResponse as NotificationListResponse,
     type NotificationListParams as NotificationListParams,
   };

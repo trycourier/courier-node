@@ -23,7 +23,7 @@ export class Lists extends APIResource {
   /**
    * Returns a list based on the list ID provided.
    */
-  retrieve(listID: string, options?: RequestOptions): APIPromise<Shared.SubscriptionList> {
+  retrieve(listID: string, options?: RequestOptions): APIPromise<SubscriptionList> {
     return this._client.get(path`/lists/${listID}`, options);
   }
 
@@ -70,8 +70,24 @@ export class Lists extends APIResource {
   }
 }
 
+export interface PutSubscriptionsRecipient {
+  recipientId: string;
+
+  preferences?: Shared.RecipientPreferences | null;
+}
+
+export interface SubscriptionList {
+  id: string;
+
+  name: string;
+
+  created?: string | null;
+
+  updated?: string | null;
+}
+
 export interface ListListResponse {
-  items: Array<Shared.SubscriptionList>;
+  items: Array<SubscriptionList>;
 
   paging: Shared.Paging;
 }
@@ -103,6 +119,8 @@ Lists.Subscriptions = Subscriptions;
 
 export declare namespace Lists {
   export {
+    type PutSubscriptionsRecipient as PutSubscriptionsRecipient,
+    type SubscriptionList as SubscriptionList,
     type ListListResponse as ListListResponse,
     type ListUpdateParams as ListUpdateParams,
     type ListListParams as ListListParams,

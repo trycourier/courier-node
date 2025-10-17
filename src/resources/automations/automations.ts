@@ -8,9 +8,15 @@ export class Automations extends APIResource {
   invoke: InvokeAPI.Invoke = new InvokeAPI.Invoke(this._client);
 }
 
+export interface AutomationInvokeResponse {
+  runId: string;
+}
+
 Automations.Invoke = Invoke;
 
 export declare namespace Automations {
+  export { type AutomationInvokeResponse as AutomationInvokeResponse };
+
   export {
     Invoke as Invoke,
     type InvokeInvokeAdHocParams as InvokeInvokeAdHocParams,

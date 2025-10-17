@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as Shared from '../shared';
+import * as ListsAPI from './lists';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -100,11 +101,11 @@ export interface SubscriptionListParams {
 }
 
 export interface SubscriptionAddParams {
-  recipients: Array<Shared.PutSubscriptionsRecipient>;
+  recipients: Array<ListsAPI.PutSubscriptionsRecipient>;
 }
 
 export interface SubscriptionSubscribeParams {
-  recipients: Array<Shared.PutSubscriptionsRecipient>;
+  recipients: Array<ListsAPI.PutSubscriptionsRecipient>;
 }
 
 export interface SubscriptionSubscribeUserParams {

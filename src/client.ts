@@ -18,6 +18,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  Audience,
   AudienceListMembersParams,
   AudienceListMembersResponse,
   AudienceListParams,
@@ -25,15 +26,36 @@ import {
   AudienceUpdateParams,
   AudienceUpdateResponse,
   Audiences,
+  Filter,
+  FilterConfig,
 } from './resources/audiences';
-import { AuditEventListParams, AuditEventListResponse, AuditEvents } from './resources/audit-events';
+import {
+  AuditEvent,
+  AuditEventListParams,
+  AuditEventListResponse,
+  AuditEvents,
+} from './resources/audit-events';
 import { Auth, AuthIssueTokenParams, AuthIssueTokenResponse } from './resources/auth';
 import {
+  Brand,
+  BrandColors,
   BrandCreateParams,
   BrandListParams,
   BrandListResponse,
+  BrandSettings,
+  BrandSettingsEmail,
+  BrandSettingsInApp,
+  BrandSnippet,
+  BrandSnippets,
+  BrandTemplate,
   BrandUpdateParams,
   Brands,
+  EmailFooter,
+  EmailHead,
+  EmailHeader,
+  Icons,
+  Logo,
+  WidgetBackground,
 } from './resources/brands';
 import {
   Bulk,
@@ -43,10 +65,13 @@ import {
   BulkListUsersParams,
   BulkListUsersResponse,
   BulkRetrieveJobResponse,
+  InboundBulkMessage,
+  InboundBulkMessageUser,
 } from './resources/bulk';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
   MessageContentResponse,
+  MessageDetails,
   MessageHistoryParams,
   MessageHistoryResponse,
   MessageListParams,
@@ -62,15 +87,20 @@ import {
   TranslationUpdateParams,
   Translations,
 } from './resources/translations';
-import { Automations } from './resources/automations/automations';
+import { AutomationInvokeResponse, Automations } from './resources/automations/automations';
 import {
   ListListParams,
   ListListResponse,
   ListRestoreParams,
   ListUpdateParams,
   Lists,
+  PutSubscriptionsRecipient,
+  SubscriptionList,
 } from './resources/lists/lists';
 import {
+  BaseCheck,
+  Check,
+  NotificationGetContent,
   NotificationListParams,
   NotificationListResponse,
   Notifications,
@@ -83,8 +113,14 @@ import {
   ProfileRetrieveResponse,
   ProfileUpdateParams,
   Profiles,
+  SubscribeToListsRequestItem,
 } from './resources/profiles/profiles';
 import {
+  BaseTemplateTenantAssociation,
+  DefaultPreferences,
+  SubscriptionTopicNew,
+  Tenant,
+  TenantAssociation,
   TenantListParams,
   TenantListResponse,
   TenantListUsersParams,
@@ -820,6 +856,9 @@ export declare namespace Courier {
 
   export {
     Audiences as Audiences,
+    type Audience as Audience,
+    type Filter as Filter,
+    type FilterConfig as FilterConfig,
     type AudienceUpdateResponse as AudienceUpdateResponse,
     type AudienceListResponse as AudienceListResponse,
     type AudienceListMembersResponse as AudienceListMembersResponse,
@@ -830,6 +869,7 @@ export declare namespace Courier {
 
   export {
     AuditEvents as AuditEvents,
+    type AuditEvent as AuditEvent,
     type AuditEventListResponse as AuditEventListResponse,
     type AuditEventListParams as AuditEventListParams,
   };
@@ -840,10 +880,24 @@ export declare namespace Courier {
     type AuthIssueTokenParams as AuthIssueTokenParams,
   };
 
-  export { Automations as Automations };
+  export { Automations as Automations, type AutomationInvokeResponse as AutomationInvokeResponse };
 
   export {
     Brands as Brands,
+    type Brand as Brand,
+    type BrandColors as BrandColors,
+    type BrandSettings as BrandSettings,
+    type BrandSettingsEmail as BrandSettingsEmail,
+    type BrandSettingsInApp as BrandSettingsInApp,
+    type BrandSnippet as BrandSnippet,
+    type BrandSnippets as BrandSnippets,
+    type BrandTemplate as BrandTemplate,
+    type EmailFooter as EmailFooter,
+    type EmailHead as EmailHead,
+    type EmailHeader as EmailHeader,
+    type Icons as Icons,
+    type Logo as Logo,
+    type WidgetBackground as WidgetBackground,
     type BrandListResponse as BrandListResponse,
     type BrandCreateParams as BrandCreateParams,
     type BrandUpdateParams as BrandUpdateParams,
@@ -852,6 +906,8 @@ export declare namespace Courier {
 
   export {
     Bulk as Bulk,
+    type InboundBulkMessage as InboundBulkMessage,
+    type InboundBulkMessageUser as InboundBulkMessageUser,
     type BulkCreateJobResponse as BulkCreateJobResponse,
     type BulkListUsersResponse as BulkListUsersResponse,
     type BulkRetrieveJobResponse as BulkRetrieveJobResponse,
@@ -868,6 +924,8 @@ export declare namespace Courier {
 
   export {
     Lists as Lists,
+    type PutSubscriptionsRecipient as PutSubscriptionsRecipient,
+    type SubscriptionList as SubscriptionList,
     type ListListResponse as ListListResponse,
     type ListUpdateParams as ListUpdateParams,
     type ListListParams as ListListParams,
@@ -876,6 +934,7 @@ export declare namespace Courier {
 
   export {
     Messages as Messages,
+    type MessageDetails as MessageDetails,
     type MessageRetrieveResponse as MessageRetrieveResponse,
     type MessageListResponse as MessageListResponse,
     type MessageContentResponse as MessageContentResponse,
@@ -888,12 +947,16 @@ export declare namespace Courier {
 
   export {
     Notifications as Notifications,
+    type BaseCheck as BaseCheck,
+    type Check as Check,
+    type NotificationGetContent as NotificationGetContent,
     type NotificationListResponse as NotificationListResponse,
     type NotificationListParams as NotificationListParams,
   };
 
   export {
     Profiles as Profiles,
+    type SubscribeToListsRequestItem as SubscribeToListsRequestItem,
     type ProfileCreateResponse as ProfileCreateResponse,
     type ProfileRetrieveResponse as ProfileRetrieveResponse,
     type ProfileReplaceResponse as ProfileReplaceResponse,
@@ -904,6 +967,11 @@ export declare namespace Courier {
 
   export {
     Tenants as Tenants,
+    type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
+    type DefaultPreferences as DefaultPreferences,
+    type SubscriptionTopicNew as SubscriptionTopicNew,
+    type Tenant as Tenant,
+    type TenantAssociation as TenantAssociation,
     type TenantListResponse as TenantListResponse,
     type TenantListUsersResponse as TenantListUsersResponse,
     type TenantUpdateParams as TenantUpdateParams,
@@ -921,23 +989,8 @@ export declare namespace Courier {
   export { Users as Users };
 
   export type Alignment = API.Alignment;
-  export type Audience = API.Audience;
-  export type AuditEvent = API.AuditEvent;
-  export type AutomationInvokeResponse = API.AutomationInvokeResponse;
-  export type BaseCheck = API.BaseCheck;
-  export type BaseTemplateTenantAssociation = API.BaseTemplateTenantAssociation;
-  export type Brand = API.Brand;
-  export type BrandColors = API.BrandColors;
-  export type BrandSettings = API.BrandSettings;
-  export type BrandSettingsEmail = API.BrandSettingsEmail;
-  export type BrandSettingsInApp = API.BrandSettingsInApp;
-  export type BrandSnippet = API.BrandSnippet;
-  export type BrandSnippets = API.BrandSnippets;
-  export type BrandTemplate = API.BrandTemplate;
   export type ChannelClassification = API.ChannelClassification;
   export type ChannelPreference = API.ChannelPreference;
-  export type Check = API.Check;
-  export type DefaultPreferences = API.DefaultPreferences;
   export type ElementalActionNodeWithType = API.ElementalActionNodeWithType;
   export type ElementalBaseNode = API.ElementalBaseNode;
   export type ElementalChannelNode = API.ElementalChannelNode;
@@ -950,37 +1003,17 @@ export declare namespace Courier {
   export type ElementalNode = API.ElementalNode;
   export type ElementalQuoteNodeWithType = API.ElementalQuoteNodeWithType;
   export type ElementalTextNodeWithType = API.ElementalTextNodeWithType;
-  export type EmailFooter = API.EmailFooter;
-  export type EmailHead = API.EmailHead;
-  export type EmailHeader = API.EmailHeader;
-  export type Filter = API.Filter;
-  export type FilterConfig = API.FilterConfig;
-  export type Icons = API.Icons;
-  export type InboundBulkMessage = API.InboundBulkMessage;
-  export type InboundBulkMessageUser = API.InboundBulkMessageUser;
-  export type Logo = API.Logo;
   export type MessageContext = API.MessageContext;
-  export type MessageDetails = API.MessageDetails;
   export type MessageRouting = API.MessageRouting;
   export type MessageRoutingChannel = API.MessageRoutingChannel;
-  export type NotificationGetContent = API.NotificationGetContent;
   export type NotificationPreferenceDetails = API.NotificationPreferenceDetails;
   export type Paging = API.Paging;
   export type Preference = API.Preference;
   export type PreferenceStatus = API.PreferenceStatus;
-  export type PutSubscriptionsRecipient = API.PutSubscriptionsRecipient;
   export type Recipient = API.Recipient;
   export type RecipientPreferences = API.RecipientPreferences;
   export type Rule = API.Rule;
-  export type SubscribeToListsRequestItem = API.SubscribeToListsRequestItem;
-  export type SubscriptionList = API.SubscriptionList;
-  export type SubscriptionTopicNew = API.SubscriptionTopicNew;
-  export type Tenant = API.Tenant;
-  export type TenantAssociation = API.TenantAssociation;
   export type TextStyle = API.TextStyle;
-  export type TopicPreference = API.TopicPreference;
   export type UserRecipient = API.UserRecipient;
-  export type UserToken = API.UserToken;
   export type Utm = API.Utm;
-  export type WidgetBackground = API.WidgetBackground;
 }

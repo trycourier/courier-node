@@ -10,7 +10,7 @@ export class AuditEvents extends APIResource {
   /**
    * Fetch a specific audit event by ID.
    */
-  retrieve(auditEventID: string, options?: RequestOptions): APIPromise<Shared.AuditEvent> {
+  retrieve(auditEventID: string, options?: RequestOptions): APIPromise<AuditEvent> {
     return this._client.get(path`/audit-events/${auditEventID}`, options);
   }
 
@@ -25,10 +25,32 @@ export class AuditEvents extends APIResource {
   }
 }
 
+export interface AuditEvent {
+  actor: AuditEvent.Actor;
+
+  auditEventId: string;
+
+  source: string;
+
+  target: string;
+
+  timestamp: string;
+
+  type: string;
+}
+
+export namespace AuditEvent {
+  export interface Actor {
+    id: string;
+
+    email?: string | null;
+  }
+}
+
 export interface AuditEventListResponse {
   paging: Shared.Paging;
 
-  results: Array<Shared.AuditEvent>;
+  results: Array<AuditEvent>;
 }
 
 export interface AuditEventListParams {
@@ -40,6 +62,7 @@ export interface AuditEventListParams {
 
 export declare namespace AuditEvents {
   export {
+    type AuditEvent as AuditEvent,
     type AuditEventListResponse as AuditEventListResponse,
     type AuditEventListParams as AuditEventListParams,
   };

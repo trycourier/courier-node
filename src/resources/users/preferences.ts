@@ -78,11 +78,28 @@ export class Preferences extends APIResource {
   }
 }
 
+export interface TopicPreference {
+  default_status: Shared.PreferenceStatus;
+
+  status: Shared.PreferenceStatus;
+
+  topic_id: string;
+
+  topic_name: string;
+
+  /**
+   * The Channels a user has chosen to receive notifications through for this topic
+   */
+  custom_routing?: Array<Shared.ChannelClassification> | null;
+
+  has_custom_routing?: boolean | null;
+}
+
 export interface PreferenceRetrieveResponse {
   /**
    * The Preferences associated with the user_id.
    */
-  items: Array<Shared.TopicPreference>;
+  items: Array<TopicPreference>;
 
   /**
    * Deprecated - Paging not implemented on this endpoint
@@ -91,7 +108,7 @@ export interface PreferenceRetrieveResponse {
 }
 
 export interface PreferenceRetrieveTopicResponse {
-  topic: Shared.TopicPreference;
+  topic: TopicPreference;
 }
 
 export interface PreferenceUpdateOrCreateTopicResponse {
@@ -151,6 +168,7 @@ export namespace PreferenceUpdateOrCreateTopicParams {
 
 export declare namespace Preferences {
   export {
+    type TopicPreference as TopicPreference,
     type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
     type PreferenceRetrieveTopicResponse as PreferenceRetrieveTopicResponse,
     type PreferenceUpdateOrCreateTopicResponse as PreferenceUpdateOrCreateTopicResponse,
