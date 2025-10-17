@@ -1,5 +1,18 @@
 # Changelog
 
+## 6.7.0-alpha7 (2025-10-17)
+
+Full Changelog: [v6.7.0-alpha6...v6.7.0-alpha7](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha6...v6.7.0-alpha7)
+
+### Features
+
+* More PHP and attempted node automerge ([ff08178](https://github.com/trycourier/courier-node/commit/ff0817814f05429a44e0035ffdf22ae1d8892a9f))
+
+
+### Bug Fixes
+
+* Updated paths for each model and go example updates ([cb651e0](https://github.com/trycourier/courier-node/commit/cb651e09153a1f366af64f6ef1c33865a80b2ad5))
+
 ## 6.7.0-alpha6 (2025-10-14)
 
 Full Changelog: [v6.7.0-alpha5...v6.7.0-alpha6](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha5...v6.7.0-alpha6)
