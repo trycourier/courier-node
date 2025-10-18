@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.7.0-alpha11 (2025-10-18)
+
+Full Changelog: [v6.7.0-alpha10...v6.7.0-alpha11](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha10...v6.7.0-alpha11)
+
 ## 6.7.0-alpha10 (2025-10-18)
 
 Full Changelog: [v6.7.0-alpha9...v6.7.0-alpha10](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha9...v6.7.0-alpha10)
