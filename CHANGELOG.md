@@ -1,5 +1,14 @@
 # Changelog
 
+## 6.7.0-alpha10 (2025-10-18)
+
+Full Changelog: [v6.7.0-alpha9...v6.7.0-alpha10](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha9...v6.7.0-alpha10)
+
+### Chores
+
+* update SDK settings ([ab6e7ec](https://github.com/trycourier/courier-node/commit/ab6e7ec94c6f910f15d712cb2b29bbcdf54401dc))
+* update SDK settings ([43fbbdb](https://github.com/trycourier/courier-node/commit/43fbbdb2322c1e1287962a660187c8b6211510b4))
+
 ## 6.7.0-alpha9 (2025-10-17)
 
 Full Changelog: [v6.7.0-alpha8...v6.7.0-alpha9](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha8...v6.7.0-alpha9)

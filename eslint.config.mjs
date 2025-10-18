@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^courier(/.*)?',
+              regex: '^@trycourier/courier(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],
