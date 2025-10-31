@@ -1,5 +1,5 @@
 {
-  "name": "@trycourier/courier",
+  "name": "courier",
   "version": "6.7.0-alpha10",
   "description": "The official TypeScript library for the Courier API",
   "author": "Courier <>",
