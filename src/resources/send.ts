@@ -7,7 +7,7 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Send extends APIResource {
   /**
-   * Use the send API to send a message to one or more recipients.
+   * API to send a message to one or more recipients.
    *
    * @example
    * ```ts
