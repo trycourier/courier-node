@@ -45,7 +45,7 @@ export interface ElementalChannelNode extends ElementalBaseNode {
 
   /**
    * Raw data to apply to the channel. If `elements` has not been specified, `raw` is
-   * `required`.
+   * required.
    */
   raw?: { [key: string]: unknown } | null;
 }
