@@ -1,5 +1,18 @@
 # Changelog
 
+## 6.7.0-alpha12 (2025-10-31)
+
+Full Changelog: [v6.7.0-alpha11...v6.7.0-alpha12](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha11...v6.7.0-alpha12)
+
+### Features
+
+* Comment adjustment to kick of build ([81431dd](https://github.com/trycourier/courier-node/commit/81431dd1f1635329199f14ec897a78dffcab9147))
+
+
+### Bug Fixes
+
+* Comment to kick off build ([6ffb869](https://github.com/trycourier/courier-node/commit/6ffb869766427741d4afcf95f685ded65a87df6e))
+
 ## 6.7.0-alpha11 (2025-10-31)
 
 Full Changelog: [v6.7.0-alpha10...v6.7.0-alpha11](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha10...v6.7.0-alpha11)
