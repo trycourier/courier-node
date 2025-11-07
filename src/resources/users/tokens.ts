@@ -124,7 +124,7 @@ export interface UserToken {
   provider_key: 'firebase-fcm' | 'apn' | 'expo' | 'onesignal';
 
   /**
-   * Information about the device the token is associated with.
+   * Information about the device the token came from.
    */
   device?: UserToken.Device | null;
 
@@ -140,14 +140,14 @@ export interface UserToken {
   properties?: unknown;
 
   /**
-   * Information about the device the token is associated with.
+   * Tracking information about the device the token came from.
    */
   tracking?: UserToken.Tracking | null;
 }
 
 export namespace UserToken {
   /**
-   * Information about the device the token is associated with.
+   * Information about the device the token came from.
    */
   export interface Device {
     /**
@@ -182,7 +182,7 @@ export namespace UserToken {
   }
 
   /**
-   * Information about the device the token is associated with.
+   * Tracking information about the device the token came from.
    */
   export interface Tracking {
     /**
@@ -283,7 +283,7 @@ export interface TokenAddSingleParams {
   provider_key: 'firebase-fcm' | 'apn' | 'expo' | 'onesignal';
 
   /**
-   * Body param: Information about the device the token is associated with.
+   * Body param: Information about the device the token came from.
    */
   device?: TokenAddSingleParams.Device | null;
 
@@ -299,14 +299,14 @@ export interface TokenAddSingleParams {
   properties?: unknown;
 
   /**
-   * Body param: Information about the device the token is associated with.
+   * Body param: Tracking information about the device the token came from.
    */
   tracking?: TokenAddSingleParams.Tracking | null;
 }
 
 export namespace TokenAddSingleParams {
   /**
-   * Information about the device the token is associated with.
+   * Information about the device the token came from.
    */
   export interface Device {
     /**
@@ -341,7 +341,7 @@ export namespace TokenAddSingleParams {
   }
 
   /**
-   * Information about the device the token is associated with.
+   * Tracking information about the device the token came from.
    */
   export interface Tracking {
     /**
