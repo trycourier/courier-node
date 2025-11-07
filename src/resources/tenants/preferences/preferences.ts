@@ -4,13 +4,13 @@ import { APIResource } from '../../../core/resource';
 import * as ItemsAPI from './items';
 import { ItemDeleteParams, ItemUpdateParams, Items } from './items';
 
-export class TenantDefaultPreferences extends APIResource {
+export class Preferences extends APIResource {
   items: ItemsAPI.Items = new ItemsAPI.Items(this._client);
 }
 
-TenantDefaultPreferences.Items = Items;
+Preferences.Items = Items;
 
-export declare namespace TenantDefaultPreferences {
+export declare namespace Preferences {
   export {
     Items as Items,
     type ItemUpdateParams as ItemUpdateParams,
