@@ -1,5 +1,19 @@
 # Changelog
 
+## 6.7.0-alpha13 (2025-11-07)
+
+Full Changelog: [v6.7.0-alpha12...v6.7.0-alpha13](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha12...v6.7.0-alpha13)
+
+### Features
+
+* Attempt kick off again ([6d5c140](https://github.com/trycourier/courier-node/commit/6d5c140ba1d1e57556e4249399a3bbddaa967528))
+* Organization update ([02a4c84](https://github.com/trycourier/courier-node/commit/02a4c84ab4741fdc2e32337d2adb0e1dc138e7e8))
+
+
+### Bug Fixes
+
+* Better Python Samples + Updates to naming ([1b35460](https://github.com/trycourier/courier-node/commit/1b35460ce29ddef34d784dfe19ec5650bf6bfda1))
+
 ## 6.7.0-alpha12 (2025-10-31)
 
 Full Changelog: [v6.7.0-alpha11...v6.7.0-alpha12](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha11...v6.7.0-alpha12)
