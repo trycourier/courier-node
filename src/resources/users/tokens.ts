@@ -100,6 +100,7 @@ export class Tokens extends APIResource {
    * ```ts
    * await client.users.tokens.addSingle('token', {
    *   user_id: 'user_id',
+   *   body_token: 'token',
    *   provider_key: 'firebase-fcm',
    * });
    * ```
@@ -115,12 +116,12 @@ export class Tokens extends APIResource {
 }
 
 export interface UserToken {
-  provider_key: 'firebase-fcm' | 'apn' | 'expo' | 'onesignal';
-
   /**
-   * Full body of the token. Must match token in URL.
+   * Full body of the token. Must match token in URL path parameter.
    */
-  token?: string | null;
+  token: string;
+
+  provider_key: 'firebase-fcm' | 'apn' | 'expo' | 'onesignal';
 
   /**
    * Information about the device the token is associated with.
@@ -272,14 +273,14 @@ export interface TokenAddSingleParams {
   user_id: string;
 
   /**
+   * Body param: Full body of the token. Must match token in URL path parameter.
+   */
+  body_token: string;
+
+  /**
    * Body param:
    */
   provider_key: 'firebase-fcm' | 'apn' | 'expo' | 'onesignal';
-
-  /**
-   * Body param: Full body of the token. Must match token in URL.
-   */
-  body_token?: string | null;
 
   /**
    * Body param: Information about the device the token is associated with.

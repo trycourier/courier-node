@@ -13,15 +13,12 @@ export class Items extends APIResource {
    *
    * @example
    * ```ts
-   * await client.tenants.tenantDefaultPreferences.items.update(
-   *   'topic_id',
-   *   {
-   *     tenant_id: 'tenant_id',
-   *     status: 'OPTED_IN',
-   *     custom_routing: ['inbox'],
-   *     has_custom_routing: true,
-   *   },
-   * );
+   * await client.tenants.preferences.items.update('topic_id', {
+   *   tenant_id: 'tenant_id',
+   *   status: 'OPTED_IN',
+   *   custom_routing: ['inbox'],
+   *   has_custom_routing: true,
+   * });
    * ```
    */
   update(topicID: string, params: ItemUpdateParams, options?: RequestOptions): APIPromise<void> {
@@ -38,10 +35,9 @@ export class Items extends APIResource {
    *
    * @example
    * ```ts
-   * await client.tenants.tenantDefaultPreferences.items.delete(
-   *   'topic_id',
-   *   { tenant_id: 'tenant_id' },
-   * );
+   * await client.tenants.preferences.items.delete('topic_id', {
+   *   tenant_id: 'tenant_id',
+   * });
    * ```
    */
   delete(topicID: string, params: ItemDeleteParams, options?: RequestOptions): APIPromise<void> {
