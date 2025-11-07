@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export { Preferences } from './preferences/index';
 export {
   Templates,
   type TemplateListResponse,
   type TemplateRetrieveParams,
   type TemplateListParams,
 } from './templates';
-export { TenantDefaultPreferences } from './tenant-default-preferences/index';
 export {
   Tenants,
   type BaseTemplateTenantAssociation,

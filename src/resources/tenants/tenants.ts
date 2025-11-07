@@ -5,16 +5,15 @@ import * as TenantsAPI from './tenants';
 import * as Shared from '../shared';
 import * as TemplatesAPI from './templates';
 import { TemplateListParams, TemplateListResponse, TemplateRetrieveParams, Templates } from './templates';
-import * as TenantDefaultPreferencesAPI from './tenant-default-preferences/tenant-default-preferences';
-import { TenantDefaultPreferences } from './tenant-default-preferences/tenant-default-preferences';
+import * as PreferencesAPI from './preferences/preferences';
+import { Preferences } from './preferences/preferences';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Tenants extends APIResource {
-  tenantDefaultPreferences: TenantDefaultPreferencesAPI.TenantDefaultPreferences =
-    new TenantDefaultPreferencesAPI.TenantDefaultPreferences(this._client);
+  preferences: PreferencesAPI.Preferences = new PreferencesAPI.Preferences(this._client);
   templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
 
   /**
@@ -333,7 +332,7 @@ export interface TenantListUsersParams {
   limit?: number | null;
 }
 
-Tenants.TenantDefaultPreferences = TenantDefaultPreferences;
+Tenants.Preferences = Preferences;
 Tenants.Templates = Templates;
 
 export declare namespace Tenants {
@@ -350,7 +349,7 @@ export declare namespace Tenants {
     type TenantListUsersParams as TenantListUsersParams,
   };
 
-  export { TenantDefaultPreferences as TenantDefaultPreferences };
+  export { Preferences as Preferences };
 
   export {
     Templates as Templates,
