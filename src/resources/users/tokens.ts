@@ -135,7 +135,7 @@ export interface UserToken {
   expiry_date?: string | boolean | null;
 
   /**
-   * Properties sent to the provider along with the token
+   * Properties about the token.
    */
   properties?: unknown;
 
@@ -294,7 +294,7 @@ export interface TokenAddSingleParams {
   expiry_date?: string | boolean | null;
 
   /**
-   * Body param: Properties sent to the provider along with the token
+   * Body param: Properties about the token.
    */
   properties?: unknown;
 
