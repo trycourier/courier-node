@@ -193,6 +193,11 @@ export interface Recipient {
   email?: string | null;
 
   /**
+   * The id of the list to send the message to.
+   */
+  list_id?: string | null;
+
+  /**
    * The user's preferred ISO 639-1 language code.
    */
   locale?: string | null;
@@ -257,6 +262,11 @@ export interface UserRecipient {
    * The user's email address.
    */
   email?: string | null;
+
+  /**
+   * The id of the list to send the message to.
+   */
+  list_id?: string | null;
 
   /**
    * The user's preferred ISO 639-1 language code.
