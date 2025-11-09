@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.7.0-alpha14 (2025-11-09)
+
+Full Changelog: [v6.7.0-alpha13...v6.7.0-alpha14](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha13...v6.7.0-alpha14)
+
+### Features
+
+* **api:** api update ([d4f7b94](https://github.com/trycourier/courier-node/commit/d4f7b946b21ea9d2cc9eaabed2af2213fa096ee3))
+* Spec Comment Change ([61b50d5](https://github.com/trycourier/courier-node/commit/61b50d5503ab1ea03d423b56b17f42cba389d538))
+* Token Prop Description Change ([af719b7](https://github.com/trycourier/courier-node/commit/af719b77c1c96a6116d98bea350bdad94137d86c))
+
 ## 6.7.0-alpha13 (2025-11-07)
 
 Full Changelog: [v6.7.0-alpha12...v6.7.0-alpha13](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha12...v6.7.0-alpha13)
