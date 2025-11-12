@@ -55,12 +55,12 @@ $ cd courier-node
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link courier
+$ yarn link @trycourier/courier
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global courier
+$ pnpm link -—global @trycourier/courier
 ```
 
 ## Running tests
