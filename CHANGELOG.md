@@ -1,5 +1,19 @@
 # Changelog
 
+## 7.0.0 (2025-11-12)
+
+Full Changelog: [v6.7.0-alpha14...v7.0.0](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha14...v7.0.0)
+
+### Features
+
+* NPM enabled ([9ffc8b8](https://github.com/trycourier/courier-node/commit/9ffc8b87e88bbe42ddb638833f2d8729d0fb2fce))
+
+
+### Chores
+
+* update SDK settings ([c02aae7](https://github.com/trycourier/courier-node/commit/c02aae701bc83595cab3de554481d6adb478d815))
+* update SDK settings ([b05f621](https://github.com/trycourier/courier-node/commit/b05f621c0fc674c0a251e245ba852cc4f297e26f))
+
 ## 6.7.0-alpha14 (2025-11-09)
 
 Full Changelog: [v6.7.0-alpha13...v6.7.0-alpha14](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha13...v6.7.0-alpha14)
