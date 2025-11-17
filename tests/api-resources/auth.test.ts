@@ -10,7 +10,11 @@ const client = new Courier({
 describe('resource auth', () => {
   // Prism tests are disabled
   test.skip('issueToken: only required params', async () => {
-    const responsePromise = client.auth.issueToken({ expires_in: 'expires_in', scope: 'scope' });
+    const responsePromise = client.auth.issueToken({
+      expires_in: '$YOUR_NUMBER days',
+      scope:
+        'user_id:$YOUR_USER_ID write:user-tokens inbox:read:messages inbox:write:events read:preferences write:preferences read:brands',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,6 +26,10 @@ describe('resource auth', () => {
 
   // Prism tests are disabled
   test.skip('issueToken: required and optional params', async () => {
-    const response = await client.auth.issueToken({ expires_in: 'expires_in', scope: 'scope' });
+    const response = await client.auth.issueToken({
+      expires_in: '$YOUR_NUMBER days',
+      scope:
+        'user_id:$YOUR_USER_ID write:user-tokens inbox:read:messages inbox:write:events read:preferences write:preferences read:brands',
+    });
   });
 });
