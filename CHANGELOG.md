@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.1.0 (2025-11-18)
+
+Full Changelog: [v7.0.0...v7.1.0](https://github.com/trycourier/courier-node/compare/v7.0.0...v7.1.0)
+
+### Features
+
+* JWT scope updates ([d9fb88a](https://github.com/trycourier/courier-node/commit/d9fb88ad4c217438b599c7e9102fdaec3ae83602))
+* Test ([3353a72](https://github.com/trycourier/courier-node/commit/3353a72311650979908b120068bbcd40328753c4))
+
 ## 7.0.0 (2025-11-12)
 
 Full Changelog: [v6.7.0-alpha14...v7.0.0](https://github.com/trycourier/courier-node/compare/v6.7.0-alpha14...v7.0.0)
