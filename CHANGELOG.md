@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.1.1 (2025-12-02)
+
+Full Changelog: [v7.1.0...v7.1.1](https://github.com/trycourier/courier-node/compare/v7.1.0...v7.1.1)
+
+### Chores
+
+* **client:** fix logger property type ([cca7ad7](https://github.com/trycourier/courier-node/commit/cca7ad7e5b118379ea12cdaac084cf8853e7aaec))
+
 ## 7.1.0 (2025-11-18)
 
 Full Changelog: [v7.0.0...v7.1.0](https://github.com/trycourier/courier-node/compare/v7.0.0...v7.1.0)
