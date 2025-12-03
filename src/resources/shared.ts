@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Shared from './shared';
-
 export type Alignment = 'center' | 'left' | 'right' | 'full';
 
 export type ChannelClassification = 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox';
@@ -174,6 +172,14 @@ export interface Preference {
 
 export type PreferenceStatus = 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED';
 
+export interface ProfilePreferences {
+  notifications: { [key: string]: Preference };
+
+  categories?: { [key: string]: Preference } | null;
+
+  templateId?: string | null;
+}
+
 export interface Recipient {
   /**
    * Deprecated - Use `tenant_id` instead.
@@ -207,7 +213,7 @@ export interface Recipient {
    */
   phone_number?: string | null;
 
-  preferences?: Recipient.Preferences | null;
+  preferences?: ProfilePreferences | null;
 
   /**
    * The id of the tenant the user is associated with.
@@ -219,16 +225,6 @@ export interface Recipient {
    * in your system.
    */
   user_id?: string | null;
-}
-
-export namespace Recipient {
-  export interface Preferences {
-    notifications: { [key: string]: Shared.Preference };
-
-    categories?: { [key: string]: Shared.Preference } | null;
-
-    templateId?: string | null;
-  }
 }
 
 export interface RecipientPreferences {
@@ -278,7 +274,7 @@ export interface UserRecipient {
    */
   phone_number?: string | null;
 
-  preferences?: UserRecipient.Preferences | null;
+  preferences?: ProfilePreferences | null;
 
   /**
    * The id of the tenant the user is associated with.
@@ -290,16 +286,6 @@ export interface UserRecipient {
    * in your system.
    */
   user_id?: string | null;
-}
-
-export namespace UserRecipient {
-  export interface Preferences {
-    notifications: { [key: string]: Shared.Preference };
-
-    categories?: { [key: string]: Shared.Preference } | null;
-
-    templateId?: string | null;
-  }
 }
 
 export interface Utm {
