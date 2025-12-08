@@ -1010,7 +1010,6 @@ export declare namespace Courier {
   export type Paging = API.Paging;
   export type Preference = API.Preference;
   export type PreferenceStatus = API.PreferenceStatus;
-  export type ProfilePreferences = API.ProfilePreferences;
   export type Recipient = API.Recipient;
   export type RecipientPreferences = API.RecipientPreferences;
   export type Rule = API.Rule;

@@ -24,7 +24,6 @@ Types:
 - <code><a href="./src/resources/shared.ts">Paging</a></code>
 - <code><a href="./src/resources/shared.ts">Preference</a></code>
 - <code><a href="./src/resources/shared.ts">PreferenceStatus</a></code>
-- <code><a href="./src/resources/shared.ts">ProfilePreferences</a></code>
 - <code><a href="./src/resources/shared.ts">Recipient</a></code>
 - <code><a href="./src/resources/shared.ts">RecipientPreferences</a></code>
 - <code><a href="./src/resources/shared.ts">Rule</a></code>
