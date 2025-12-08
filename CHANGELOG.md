@@ -1,5 +1,27 @@
 # Changelog
 
+## 7.2.0 (2025-12-08)
+
+Full Changelog: [v7.1.1...v7.2.0](https://github.com/trycourier/courier-node/compare/v7.1.1...v7.2.0)
+
+### Features
+
+* Add event_ids field to Notification schema ([18c7b8b](https://github.com/trycourier/courier-node/commit/18c7b8bac4b0ced730b0e66dbaec51ceb2ce7664))
+
+
+### Bug Fixes
+
+* **client:** fix duplicate Go struct resulting from name derivations schema ([1160ef0](https://github.com/trycourier/courier-node/commit/1160ef07b47b8e8aae8d54cae4db64d3a12acd8b))
+* **mcp:** correct code tool API endpoint ([72e7467](https://github.com/trycourier/courier-node/commit/72e74678aef30cfa05e1cc0693073c30288f98d7))
+* **mcp:** return correct lines on typescript errors ([6529d6c](https://github.com/trycourier/courier-node/commit/6529d6ccacb21c8f578070c878a77325fc4450a5))
+
+
+### Chores
+
+* **internal:** codegen related update ([cc37d70](https://github.com/trycourier/courier-node/commit/cc37d7046f603f2cf299f305a6baa4c929dbc559))
+* **internal:** codegen related update ([9a2a060](https://github.com/trycourier/courier-node/commit/9a2a06024865a3379eb9245e733f75a892606632))
+* **internal:** upgrade eslint ([c6ecc47](https://github.com/trycourier/courier-node/commit/c6ecc47ba3f3dfcd12ecc9219b4d10b2aa380296))
+
 ## 7.1.1 (2025-12-02)
 
 Full Changelog: [v7.1.0...v7.1.1](https://github.com/trycourier/courier-node/compare/v7.1.0...v7.1.1)
