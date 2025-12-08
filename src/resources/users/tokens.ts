@@ -51,9 +51,7 @@ export class Tokens extends APIResource {
    *
    * @example
    * ```ts
-   * const userTokens = await client.users.tokens.list(
-   *   'user_id',
-   * );
+   * const tokens = await client.users.tokens.list('user_id');
    * ```
    */
   list(userID: string, options?: RequestOptions): APIPromise<TokenListResponse> {
@@ -219,7 +217,9 @@ export interface TokenRetrieveResponse extends UserToken {
 /**
  * A list of tokens registered with the user.
  */
-export type TokenListResponse = Array<UserToken>;
+export interface TokenListResponse {
+  tokens: Array<UserToken>;
+}
 
 export interface TokenRetrieveParams {
   /**
