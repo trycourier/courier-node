@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.3.0 (2025-12-08)
+
+Full Changelog: [v7.2.0...v7.3.0](https://github.com/trycourier/courier-node/compare/v7.2.0...v7.3.0)
+
+### Features
+
+* Fix UsersGetAllTokensResponse to return object with tokens property i… ([18b27ab](https://github.com/trycourier/courier-node/commit/18b27abc52af02b8b50b8b87ea7edc51cd9f56c8))
+
 ## 7.2.0 (2025-12-08)
 
 Full Changelog: [v7.1.1...v7.2.0](https://github.com/trycourier/courier-node/compare/v7.1.1...v7.2.0)
