@@ -123,6 +123,11 @@ export namespace NotificationListResponse {
 
     created_at: number;
 
+    /**
+     * Array of event IDs associated with this notification
+     */
+    event_ids: Array<string>;
+
     note: string;
 
     routing: Shared.MessageRouting;
