@@ -143,6 +143,13 @@ export namespace SendMessageParams {
       duration?: number | null;
 
       /**
+       * IANA timezone identifier (e.g., "America/Los_Angeles", "UTC"). Used when
+       * resolving opening hours expressions. Takes precedence over user profile timezone
+       * settings.
+       */
+      timezone?: string | null;
+
+      /**
        * ISO 8601 timestamp or opening_hours-like format.
        */
       until?: string | null;
