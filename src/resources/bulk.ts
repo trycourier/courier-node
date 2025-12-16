@@ -10,7 +10,11 @@ import { path } from '../internal/utils/path';
 
 export class Bulk extends APIResource {
   /**
-   * Ingest user data into a Bulk Job
+   * Ingest user data into a Bulk Job.
+   *
+   * **Important**: For email-based bulk jobs, each user must include `profile.email`
+   * for provider routing to work correctly. The `to.email` field is not sufficient
+   * for email provider routing.
    */
   addUsers(jobID: string, body: BulkAddUsersParams, options?: RequestOptions): APIPromise<void> {
     return this._client.post(path`/bulk/${jobID}`, {
@@ -21,7 +25,13 @@ export class Bulk extends APIResource {
   }
 
   /**
-   * Create a bulk job
+   * Creates a new bulk job for sending messages to multiple recipients.
+   *
+   * **Required**: `message.event` (event ID or notification ID)
+   *
+   * **Optional (V2 format)**: `message.template` (notification ID) or
+   * `message.content` (Elemental content) can be provided to override the
+   * notification associated with the event.
    */
   createJob(body: BulkCreateJobParams, options?: RequestOptions): APIPromise<BulkCreateJobResponse> {
     return this._client.post('/bulk', { body, ...options });
@@ -56,52 +66,67 @@ export class Bulk extends APIResource {
   }
 }
 
-export type InboundBulkMessage =
-  | InboundBulkMessage.InboundBulkTemplateMessage
-  | InboundBulkMessage.InboundBulkContentMessage;
+/**
+ * Bulk message definition. Supports two formats:
+ *
+ * - V1 format: Requires `event` field (event ID or notification ID)
+ * - V2 format: Optionally use `template` (notification ID) or `content` (Elemental
+ *   content) in addition to `event`
+ */
+export interface InboundBulkMessage {
+  /**
+   * Event ID or Notification ID (required). Can be either a Notification ID (e.g.,
+   * "FRH3QXM9E34W4RKP7MRC8NZ1T8V8") or a custom Event ID (e.g., "welcome-email")
+   * mapped to a notification.
+   */
+  event: string;
 
-export namespace InboundBulkMessage {
-  export interface InboundBulkTemplateMessage {
-    template: string;
+  brand?: string | null;
 
-    brand?: string | null;
+  /**
+   * Elemental content (optional, for V2 format). When provided, this will be used
+   * instead of the notification associated with the `event` field.
+   */
+  content?: Shared.ElementalContentSugar | Shared.ElementalContent | null;
 
-    data?: { [key: string]: unknown } | null;
+  data?: { [key: string]: unknown } | null;
 
-    event?: string | null;
+  locale?: { [key: string]: { [key: string]: unknown } } | null;
 
-    locale?: { [key: string]: { [key: string]: unknown } } | null;
+  override?: { [key: string]: unknown } | null;
 
-    override?: { [key: string]: unknown } | null;
-  }
-
-  export interface InboundBulkContentMessage {
-    /**
-     * Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
-     */
-    content: Shared.ElementalContentSugar | Shared.ElementalContent;
-
-    brand?: string | null;
-
-    data?: { [key: string]: unknown } | null;
-
-    event?: string | null;
-
-    locale?: { [key: string]: { [key: string]: unknown } } | null;
-
-    override?: { [key: string]: unknown } | null;
-  }
+  /**
+   * Notification ID or template ID (optional, for V2 format). When provided, this
+   * will be used instead of the notification associated with the `event` field.
+   */
+  template?: string | null;
 }
 
 export interface InboundBulkMessageUser {
+  /**
+   * User-specific data that will be merged with message.data
+   */
   data?: unknown;
 
   preferences?: Shared.RecipientPreferences | null;
 
-  profile?: unknown;
+  /**
+   * User profile information. For email-based bulk jobs, `profile.email` is required
+   * for provider routing to determine if the message can be delivered. The email
+   * address should be provided here rather than in `to.email`.
+   */
+  profile?: { [key: string]: unknown } | null;
 
+  /**
+   * User ID (legacy field, use profile or to.user_id instead)
+   */
   recipient?: string | null;
 
+  /**
+   * Optional recipient information. Note: For email provider routing, use
+   * `profile.email` instead of `to.email`. The `to` field is primarily used for
+   * recipient identification and data merging.
+   */
   to?: Shared.UserRecipient | null;
 }
 
@@ -129,6 +154,13 @@ export interface BulkRetrieveJobResponse {
 
 export namespace BulkRetrieveJobResponse {
   export interface Job {
+    /**
+     * Bulk message definition. Supports two formats:
+     *
+     * - V1 format: Requires `event` field (event ID or notification ID)
+     * - V2 format: Optionally use `template` (notification ID) or `content` (Elemental
+     *   content) in addition to `event`
+     */
     definition: BulkAPI.InboundBulkMessage;
 
     enqueued: number;
@@ -146,6 +178,13 @@ export interface BulkAddUsersParams {
 }
 
 export interface BulkCreateJobParams {
+  /**
+   * Bulk message definition. Supports two formats:
+   *
+   * - V1 format: Requires `event` field (event ID or notification ID)
+   * - V2 format: Optionally use `template` (notification ID) or `content` (Elemental
+   *   content) in addition to `event`
+   */
   message: InboundBulkMessage;
 }
 
