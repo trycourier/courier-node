@@ -42,7 +42,7 @@ describe('resource bulk', () => {
               },
             },
           },
-          profile: {},
+          profile: { foo: 'bar' },
           recipient: 'recipient',
           to: {
             account_id: 'account_id',
@@ -81,7 +81,7 @@ describe('resource bulk', () => {
 
   // Prism tests are disabled
   test.skip('createJob: only required params', async () => {
-    const responsePromise = client.bulk.createJob({ message: { template: 'template' } });
+    const responsePromise = client.bulk.createJob({ message: { event: 'event' } });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -95,12 +95,13 @@ describe('resource bulk', () => {
   test.skip('createJob: required and optional params', async () => {
     const response = await client.bulk.createJob({
       message: {
-        template: 'template',
-        brand: 'brand',
-        data: { foo: 'bar' },
         event: 'event',
+        brand: 'brand',
+        content: { body: 'body', title: 'title' },
+        data: { foo: 'bar' },
         locale: { foo: { foo: 'bar' } },
         override: { foo: 'bar' },
+        template: 'template',
       },
     });
   });
