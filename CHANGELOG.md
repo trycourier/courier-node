@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.4.0 (2025-12-16)
+
+Full Changelog: [v7.3.0...v7.4.0](https://github.com/trycourier/courier-node/compare/v7.3.0...v7.4.0)
+
+### Features
+
+* Add timezone field to Delay schema ([30ff0dd](https://github.com/trycourier/courier-node/commit/30ff0dd269c78f2025c68c8ff161bb88027e381f))
+* Update bulk API spec: make event required, document profile.email req… ([ec59104](https://github.com/trycourier/courier-node/commit/ec5910407ff2f6b5f7f11699ac4a275d0b6c9375))
+
 ## 7.3.0 (2025-12-08)
 
 Full Changelog: [v7.2.0...v7.3.0](https://github.com/trycourier/courier-node/compare/v7.2.0...v7.3.0)
