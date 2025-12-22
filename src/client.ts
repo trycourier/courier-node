@@ -28,6 +28,8 @@ import {
   Audiences,
   Filter,
   FilterConfig,
+  NestedFilterConfig,
+  SingleFilterConfig,
 } from './resources/audiences';
 import {
   AuditEvent,
@@ -859,6 +861,8 @@ export declare namespace Courier {
     type Audience as Audience,
     type Filter as Filter,
     type FilterConfig as FilterConfig,
+    type NestedFilterConfig as NestedFilterConfig,
+    type SingleFilterConfig as SingleFilterConfig,
     type AudienceUpdateResponse as AudienceUpdateResponse,
     type AudienceListResponse as AudienceListResponse,
     type AudienceListMembersResponse as AudienceListMembersResponse,
@@ -988,9 +992,15 @@ export declare namespace Courier {
 
   export { Users as Users };
 
+  export type AirshipProfile = API.AirshipProfile;
+  export type AirshipProfileAudience = API.AirshipProfileAudience;
   export type Alignment = API.Alignment;
+  export type AudienceFilter = API.AudienceFilter;
+  export type AudienceRecipient = API.AudienceRecipient;
   export type ChannelClassification = API.ChannelClassification;
   export type ChannelPreference = API.ChannelPreference;
+  export type DeviceType = API.DeviceType;
+  export type Discord = API.Discord;
   export type ElementalActionNodeWithType = API.ElementalActionNodeWithType;
   export type ElementalBaseNode = API.ElementalBaseNode;
   export type ElementalChannelNode = API.ElementalChannelNode;
@@ -1003,17 +1013,50 @@ export declare namespace Courier {
   export type ElementalNode = API.ElementalNode;
   export type ElementalQuoteNodeWithType = API.ElementalQuoteNodeWithType;
   export type ElementalTextNodeWithType = API.ElementalTextNodeWithType;
+  export type Expo = API.Expo;
+  export type Intercom = API.Intercom;
+  export type IntercomRecipient = API.IntercomRecipient;
+  export type ListFilter = API.ListFilter;
+  export type ListPatternRecipient = API.ListPatternRecipient;
+  export type ListRecipient = API.ListRecipient;
   export type MessageContext = API.MessageContext;
   export type MessageRouting = API.MessageRouting;
   export type MessageRoutingChannel = API.MessageRoutingChannel;
+  export type MsTeams = API.MsTeams;
+  export type MsTeamsBaseProperties = API.MsTeamsBaseProperties;
+  export type MsTeamsRecipient = API.MsTeamsRecipient;
+  export type MultipleTokens = API.MultipleTokens;
   export type NotificationPreferenceDetails = API.NotificationPreferenceDetails;
+  export type Pagerduty = API.Pagerduty;
+  export type PagerdutyRecipient = API.PagerdutyRecipient;
   export type Paging = API.Paging;
   export type Preference = API.Preference;
   export type PreferenceStatus = API.PreferenceStatus;
-  export type Recipient = API.Recipient;
   export type RecipientPreferences = API.RecipientPreferences;
   export type Rule = API.Rule;
+  export type SendDirectMessage = API.SendDirectMessage;
+  export type SendToChannel = API.SendToChannel;
+  export type SendToMsTeamsChannelID = API.SendToMsTeamsChannelID;
+  export type SendToMsTeamsChannelName = API.SendToMsTeamsChannelName;
+  export type SendToMsTeamsConversationID = API.SendToMsTeamsConversationID;
+  export type SendToMsTeamsEmail = API.SendToMsTeamsEmail;
+  export type SendToMsTeamsUserID = API.SendToMsTeamsUserID;
+  export type SendToSlackChannel = API.SendToSlackChannel;
+  export type SendToSlackEmail = API.SendToSlackEmail;
+  export type SendToSlackUserID = API.SendToSlackUserID;
+  export type Slack = API.Slack;
+  export type SlackBaseProperties = API.SlackBaseProperties;
+  export type SlackRecipient = API.SlackRecipient;
   export type TextStyle = API.TextStyle;
+  export type Token = API.Token;
+  export type UserProfile = API.UserProfile;
+  export type UserProfileFirebaseToken = API.UserProfileFirebaseToken;
   export type UserRecipient = API.UserRecipient;
   export type Utm = API.Utm;
+  export type WebhookAuthMode = API.WebhookAuthMode;
+  export type WebhookAuthentication = API.WebhookAuthentication;
+  export type WebhookMethod = API.WebhookMethod;
+  export type WebhookProfile = API.WebhookProfile;
+  export type WebhookProfileType = API.WebhookProfileType;
+  export type WebhookRecipient = API.WebhookRecipient;
 }
