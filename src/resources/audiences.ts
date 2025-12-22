@@ -84,7 +84,17 @@ export interface Audience {
   updated_at: string;
 }
 
-export interface Filter {
+/**
+ * A single filter to use for filtering
+ */
+export type Filter = SingleFilterConfig | NestedFilterConfig;
+
+/**
+ * A single filter to use for filtering
+ */
+export type FilterConfig = SingleFilterConfig | NestedFilterConfig;
+
+export interface NestedFilterConfig {
   /**
    * The operator to use for filtering
    */
@@ -105,19 +115,10 @@ export interface Filter {
     | 'AND'
     | 'OR';
 
-  /**
-   * The attribe name from profile whose value will be operated against the filter
-   * value
-   */
-  path: string;
-
-  /**
-   * The value to use for filtering
-   */
-  value: string;
+  rules: Array<FilterConfig>;
 }
 
-export interface FilterConfig {
+export interface SingleFilterConfig {
   /**
    * The operator to use for filtering
    */
@@ -216,6 +217,8 @@ export declare namespace Audiences {
     type Audience as Audience,
     type Filter as Filter,
     type FilterConfig as FilterConfig,
+    type NestedFilterConfig as NestedFilterConfig,
+    type SingleFilterConfig as SingleFilterConfig,
     type AudienceUpdateResponse as AudienceUpdateResponse,
     type AudienceListResponse as AudienceListResponse,
     type AudienceListMembersResponse as AudienceListMembersResponse,
