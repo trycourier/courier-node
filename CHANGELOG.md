@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.5.0 (2025-12-29)
+
+Full Changelog: [v7.4.0...v7.5.0](https://github.com/trycourier/courier-node/compare/v7.4.0...v7.5.0)
+
+### Features
+
+* **api:** add audience/slack/ms_teams/pagerduty/webhook recipient types to send.message ([236fa8b](https://github.com/trycourier/courier-node/commit/236fa8bfddfd5261c0058b78d7d44d0e060728e9))
+
 ## 7.4.0 (2025-12-16)
 
 Full Changelog: [v7.3.0...v7.4.0](https://github.com/trycourier/courier-node/compare/v7.3.0...v7.4.0)
