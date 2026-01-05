@@ -109,7 +109,7 @@ describe('resource send', () => {
             templateId: 'templateId',
           },
           tenant_id: 'tenant_id',
-          user_id: 'example_user',
+          user_id: 'user_id',
         },
       },
     });

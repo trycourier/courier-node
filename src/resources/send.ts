@@ -13,7 +13,7 @@ export class Send extends APIResource {
    * ```ts
    * const response = await client.send.message({
    *   message: {
-   *     to: { user_id: 'example_user' },
+   *     to: { user_id: 'user_id' },
    *     template: 'template_id',
    *     data: { foo: 'bar' },
    *   },
@@ -89,7 +89,16 @@ export namespace SendMessageParams {
     /**
      * The recipient or a list of recipients of the message
      */
-    to?: Shared.UserRecipient | Array<Shared.Recipient> | null;
+    to?:
+      | Shared.UserRecipient
+      | Shared.AudienceRecipient
+      | Shared.ListRecipient
+      | Shared.ListPatternRecipient
+      | Shared.SlackRecipient
+      | Shared.MsTeamsRecipient
+      | Shared.PagerdutyRecipient
+      | Shared.WebhookRecipient
+      | null;
   }
 
   export namespace Message {

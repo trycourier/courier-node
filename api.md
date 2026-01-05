@@ -2,9 +2,15 @@
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">AirshipProfile</a></code>
+- <code><a href="./src/resources/shared.ts">AirshipProfileAudience</a></code>
 - <code><a href="./src/resources/shared.ts">Alignment</a></code>
+- <code><a href="./src/resources/shared.ts">AudienceFilter</a></code>
+- <code><a href="./src/resources/shared.ts">AudienceRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelClassification</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
+- <code><a href="./src/resources/shared.ts">DeviceType</a></code>
+- <code><a href="./src/resources/shared.ts">Discord</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalActionNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalBaseNode</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalChannelNode</a></code>
@@ -17,19 +23,52 @@ Types:
 - <code><a href="./src/resources/shared.ts">ElementalNode</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalQuoteNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalTextNodeWithType</a></code>
+- <code><a href="./src/resources/shared.ts">Expo</a></code>
+- <code><a href="./src/resources/shared.ts">Intercom</a></code>
+- <code><a href="./src/resources/shared.ts">IntercomRecipient</a></code>
+- <code><a href="./src/resources/shared.ts">ListFilter</a></code>
+- <code><a href="./src/resources/shared.ts">ListPatternRecipient</a></code>
+- <code><a href="./src/resources/shared.ts">ListRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">MessageContext</a></code>
 - <code><a href="./src/resources/shared.ts">MessageRouting</a></code>
 - <code><a href="./src/resources/shared.ts">MessageRoutingChannel</a></code>
+- <code><a href="./src/resources/shared.ts">MsTeams</a></code>
+- <code><a href="./src/resources/shared.ts">MsTeamsBaseProperties</a></code>
+- <code><a href="./src/resources/shared.ts">MsTeamsRecipient</a></code>
+- <code><a href="./src/resources/shared.ts">MultipleTokens</a></code>
 - <code><a href="./src/resources/shared.ts">NotificationPreferenceDetails</a></code>
+- <code><a href="./src/resources/shared.ts">Pagerduty</a></code>
+- <code><a href="./src/resources/shared.ts">PagerdutyRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">Paging</a></code>
 - <code><a href="./src/resources/shared.ts">Preference</a></code>
 - <code><a href="./src/resources/shared.ts">PreferenceStatus</a></code>
-- <code><a href="./src/resources/shared.ts">Recipient</a></code>
 - <code><a href="./src/resources/shared.ts">RecipientPreferences</a></code>
 - <code><a href="./src/resources/shared.ts">Rule</a></code>
+- <code><a href="./src/resources/shared.ts">SendDirectMessage</a></code>
+- <code><a href="./src/resources/shared.ts">SendToChannel</a></code>
+- <code><a href="./src/resources/shared.ts">SendToMsTeamsChannelID</a></code>
+- <code><a href="./src/resources/shared.ts">SendToMsTeamsChannelName</a></code>
+- <code><a href="./src/resources/shared.ts">SendToMsTeamsConversationID</a></code>
+- <code><a href="./src/resources/shared.ts">SendToMsTeamsEmail</a></code>
+- <code><a href="./src/resources/shared.ts">SendToMsTeamsUserID</a></code>
+- <code><a href="./src/resources/shared.ts">SendToSlackChannel</a></code>
+- <code><a href="./src/resources/shared.ts">SendToSlackEmail</a></code>
+- <code><a href="./src/resources/shared.ts">SendToSlackUserID</a></code>
+- <code><a href="./src/resources/shared.ts">Slack</a></code>
+- <code><a href="./src/resources/shared.ts">SlackBaseProperties</a></code>
+- <code><a href="./src/resources/shared.ts">SlackRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">TextStyle</a></code>
+- <code><a href="./src/resources/shared.ts">Token</a></code>
+- <code><a href="./src/resources/shared.ts">UserProfile</a></code>
+- <code><a href="./src/resources/shared.ts">UserProfileFirebaseToken</a></code>
 - <code><a href="./src/resources/shared.ts">UserRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">Utm</a></code>
+- <code><a href="./src/resources/shared.ts">WebhookAuthMode</a></code>
+- <code><a href="./src/resources/shared.ts">WebhookAuthentication</a></code>
+- <code><a href="./src/resources/shared.ts">WebhookMethod</a></code>
+- <code><a href="./src/resources/shared.ts">WebhookProfile</a></code>
+- <code><a href="./src/resources/shared.ts">WebhookProfileType</a></code>
+- <code><a href="./src/resources/shared.ts">WebhookRecipient</a></code>
 
 # Send
 
@@ -48,6 +87,8 @@ Types:
 - <code><a href="./src/resources/audiences.ts">Audience</a></code>
 - <code><a href="./src/resources/audiences.ts">Filter</a></code>
 - <code><a href="./src/resources/audiences.ts">FilterConfig</a></code>
+- <code><a href="./src/resources/audiences.ts">NestedFilterConfig</a></code>
+- <code><a href="./src/resources/audiences.ts">SingleFilterConfig</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceUpdateResponse</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceListResponse</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceListMembersResponse</a></code>
