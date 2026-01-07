@@ -27,7 +27,11 @@ const client = new Courier({
 });
 
 const response = await client.send.message({
-  message: { to: { user_id: 'your_user_id' }, template: 'your_template_id', data: { foo: 'bar' } },
+  message: {
+    to: { user_id: 'your_user_id' },
+    template: 'your_template_id',
+    data: { foo: 'bar' },
+  },
 });
 
 console.log(response.requestId);
@@ -46,7 +50,11 @@ const client = new Courier({
 });
 
 const params: Courier.SendMessageParams = {
-  message: { to: { user_id: 'your_user_id' }, template: 'your_template_id', data: { foo: 'bar' } },
+  message: {
+    to: { user_id: 'your_user_id' },
+    template: 'your_template_id',
+    data: { foo: 'bar' },
+  },
 };
 const response: Courier.SendMessageResponse = await client.send.message(params);
 ```
@@ -63,7 +71,11 @@ a subclass of `APIError` will be thrown:
 ```ts
 const response = await client.send
   .message({
-    message: { to: { user_id: 'your_user_id' }, template: 'your_template_id', data: { foo: 'bar' } },
+    message: {
+      to: { user_id: 'your_user_id' },
+      template: 'your_template_id',
+      data: { foo: 'bar' },
+    },
   })
   .catch(async (err) => {
     if (err instanceof Courier.APIError) {
@@ -105,7 +117,11 @@ const client = new Courier({
 });
 
 // Or, configure per-request:
-await client.send.message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template_id', data: { foo: 'bar' } } }, {
+await client.send.message({ message: {
+  to: { user_id: 'your_user_id' },
+  template: 'your_template_id',
+  data: { foo: 'bar' },
+} }, {
   maxRetries: 5,
 });
 ```
@@ -122,7 +138,11 @@ const client = new Courier({
 });
 
 // Override per-request:
-await client.send.message({ message: { to: { user_id: 'your_user_id' }, template: 'your_template_id', data: { foo: 'bar' } } }, {
+await client.send.message({ message: {
+  to: { user_id: 'your_user_id' },
+  template: 'your_template_id',
+  data: { foo: 'bar' },
+} }, {
   timeout: 5 * 1000,
 });
 ```
@@ -147,7 +167,11 @@ const client = new Courier();
 
 const response = await client.send
   .message({
-    message: { to: { user_id: 'your_user_id' }, template: 'your_template_id', data: { foo: 'bar' } },
+    message: {
+      to: { user_id: 'your_user_id' },
+      template: 'your_template_id',
+      data: { foo: 'bar' },
+    },
   })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
@@ -155,7 +179,11 @@ console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.send
   .message({
-    message: { to: { user_id: 'your_user_id' }, template: 'your_template_id', data: { foo: 'bar' } },
+    message: {
+      to: { user_id: 'your_user_id' },
+      template: 'your_template_id',
+      data: { foo: 'bar' },
+    },
   })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));

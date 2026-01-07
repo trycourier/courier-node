@@ -71,7 +71,11 @@ describe('resource preferences', () => {
   test.skip('updateOrCreateTopic: required and optional params', async () => {
     const response = await client.users.preferences.updateOrCreateTopic('topic_id', {
       user_id: 'user_id',
-      topic: { status: 'OPTED_IN', custom_routing: ['inbox', 'email'], has_custom_routing: true },
+      topic: {
+        status: 'OPTED_IN',
+        custom_routing: ['inbox', 'email'],
+        has_custom_routing: true,
+      },
       tenant_id: 'tenant_id',
     });
   });

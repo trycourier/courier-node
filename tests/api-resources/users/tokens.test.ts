@@ -44,7 +44,13 @@ describe('resource tokens', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.users.tokens.update('token', {
       user_id: 'user_id',
-      patch: [{ op: 'op', path: 'path', value: 'value' }],
+      patch: [
+        {
+          op: 'op',
+          path: 'path',
+          value: 'value',
+        },
+      ],
     });
   });
 
@@ -121,7 +127,12 @@ describe('resource tokens', () => {
       },
       expiry_date: 'string',
       properties: {},
-      tracking: { ip: 'ip', lat: 'lat', long: 'long', os_version: 'os_version' },
+      tracking: {
+        ip: 'ip',
+        lat: 'lat',
+        long: 'long',
+        os_version: 'os_version',
+      },
     });
   });
 });
