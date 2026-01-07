@@ -47,13 +47,23 @@ describe('resource send', () => {
         content: { body: 'body', title: 'title' },
         context: { tenant_id: 'tenant_id' },
         data: { foo: 'bar' },
-        delay: { duration: 0, timezone: 'timezone', until: 'until' },
+        delay: {
+          duration: 0,
+          timezone: 'timezone',
+          until: 'until',
+        },
         expiry: { expires_in: 'string', expires_at: 'expires_at' },
         metadata: {
           event: 'event',
           tags: ['string'],
           trace_id: 'trace_id',
-          utm: { campaign: 'campaign', content: 'content', medium: 'medium', source: 'source', term: 'term' },
+          utm: {
+            campaign: 'campaign',
+            content: 'content',
+            medium: 'medium',
+            source: 'source',
+            term: 'term',
+          },
         },
         preferences: { subscription_topic_id: 'subscription_topic_id' },
         providers: {

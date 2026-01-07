@@ -49,7 +49,14 @@ describe('resource tenants', () => {
   // Prism tests are disabled
   test.skip('addMultiple: required and optional params', async () => {
     const response = await client.users.tenants.addMultiple('user_id', {
-      tenants: [{ tenant_id: 'tenant_id', profile: { foo: 'bar' }, type: 'user', user_id: 'user_id' }],
+      tenants: [
+        {
+          tenant_id: 'tenant_id',
+          profile: { foo: 'bar' },
+          type: 'user',
+          user_id: 'user_id',
+        },
+      ],
     });
   });
 

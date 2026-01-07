@@ -30,7 +30,11 @@ describe('resource brands', () => {
         email: {
           footer: { content: 'content', inheritDefault: true },
           head: { inheritDefault: true, content: 'content' },
-          header: { logo: { href: 'href', image: 'image' }, barColor: 'barColor', inheritDefault: true },
+          header: {
+            logo: { href: 'href', image: 'image' },
+            barColor: 'barColor',
+            inheritDefault: true,
+          },
           templateOverride: {
             enabled: true,
             backgroundColor: 'backgroundColor',
@@ -99,7 +103,11 @@ describe('resource brands', () => {
         email: {
           footer: { content: 'content', inheritDefault: true },
           head: { inheritDefault: true, content: 'content' },
-          header: { logo: { href: 'href', image: 'image' }, barColor: 'barColor', inheritDefault: true },
+          header: {
+            logo: { href: 'href', image: 'image' },
+            barColor: 'barColor',
+            inheritDefault: true,
+          },
           templateOverride: {
             enabled: true,
             backgroundColor: 'backgroundColor',

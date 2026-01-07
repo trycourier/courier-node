@@ -39,7 +39,12 @@ describe('resource tenants', () => {
       brand_id: 'brand_id',
       default_preferences: {
         items: [
-          { status: 'OPTED_OUT', custom_routing: ['direct_message'], has_custom_routing: true, id: 'id' },
+          {
+            status: 'OPTED_OUT',
+            custom_routing: ['direct_message'],
+            has_custom_routing: true,
+            id: 'id',
+          },
         ],
       },
       parent_tenant_id: 'parent_tenant_id',
@@ -65,7 +70,11 @@ describe('resource tenants', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.tenants.list(
-        { cursor: 'cursor', limit: 0, parent_tenant_id: 'parent_tenant_id' },
+        {
+          cursor: 'cursor',
+          limit: 0,
+          parent_tenant_id: 'parent_tenant_id',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Courier.NotFoundError);
