@@ -89,7 +89,13 @@ import {
   TranslationUpdateParams,
   Translations,
 } from './resources/translations';
-import { AutomationInvokeResponse, Automations } from './resources/automations/automations';
+import {
+  AutomationInvokeResponse,
+  AutomationListParams,
+  AutomationTemplate,
+  AutomationTemplateListResponse,
+  Automations,
+} from './resources/automations/automations';
 import {
   ListListParams,
   ListListResponse,
@@ -884,7 +890,13 @@ export declare namespace Courier {
     type AuthIssueTokenParams as AuthIssueTokenParams,
   };
 
-  export { Automations as Automations, type AutomationInvokeResponse as AutomationInvokeResponse };
+  export {
+    Automations as Automations,
+    type AutomationInvokeResponse as AutomationInvokeResponse,
+    type AutomationTemplate as AutomationTemplate,
+    type AutomationTemplateListResponse as AutomationTemplateListResponse,
+    type AutomationListParams as AutomationListParams,
+  };
 
   export {
     Brands as Brands,
