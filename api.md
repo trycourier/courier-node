@@ -128,6 +128,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/automations/automations.ts">AutomationInvokeResponse</a></code>
+- <code><a href="./src/resources/automations/automations.ts">AutomationTemplate</a></code>
+- <code><a href="./src/resources/automations/automations.ts">AutomationTemplateListResponse</a></code>
+
+Methods:
+
+- <code title="get /automations">client.automations.<a href="./src/resources/automations/automations.ts">list</a>({ ...params }) -> AutomationTemplateListResponse</code>
 
 ## Invoke
 

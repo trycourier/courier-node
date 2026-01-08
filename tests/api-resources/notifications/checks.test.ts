@@ -12,7 +12,13 @@ describe('resource checks', () => {
   test.skip('update: only required params', async () => {
     const responsePromise = client.notifications.checks.update('submissionId', {
       id: 'id',
-      checks: [{ id: 'id', status: 'RESOLVED', type: 'custom' }],
+      checks: [
+        {
+          id: 'id',
+          status: 'RESOLVED',
+          type: 'custom',
+        },
+      ],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -27,7 +33,13 @@ describe('resource checks', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.notifications.checks.update('submissionId', {
       id: 'id',
-      checks: [{ id: 'id', status: 'RESOLVED', type: 'custom' }],
+      checks: [
+        {
+          id: 'id',
+          status: 'RESOLVED',
+          type: 'custom',
+        },
+      ],
     });
   });
 

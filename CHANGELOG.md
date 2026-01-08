@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.6.0 (2026-01-08)
+
+Full Changelog: [v7.5.0...v7.6.0](https://github.com/trycourier/courier-node/compare/v7.5.0...v7.6.0)
+
+### Features
+
+* **api:** remove methods across audit-events/brands/bulk/automations/translations/tenants ([459d7de](https://github.com/trycourier/courier-node/commit/459d7deb6ec73b2f06de57c590b46f26b157f15b))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([3c43d25](https://github.com/trycourier/courier-node/commit/3c43d2512f4bb4937fb40db54de74221d7d115ef))
+
 ## 7.5.0 (2025-12-29)
 
 Full Changelog: [v7.4.0...v7.5.0](https://github.com/trycourier/courier-node/compare/v7.4.0...v7.5.0)

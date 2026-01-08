@@ -27,7 +27,11 @@ describe('resource invoke', () => {
     const response = await client.automations.invoke.invokeAdHoc({
       automation: {
         steps: [
-          { action: 'delay', duration: 'duration', until: '20240408T080910.123' },
+          {
+            action: 'delay',
+            duration: 'duration',
+            until: '20240408T080910.123',
+          },
           {
             action: 'send',
             brand: 'brand',
