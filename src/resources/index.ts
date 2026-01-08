@@ -22,7 +22,13 @@ export {
   type AuditEventListParams,
 } from './audit-events';
 export { Auth, type AuthIssueTokenResponse, type AuthIssueTokenParams } from './auth';
-export { Automations, type AutomationInvokeResponse } from './automations/automations';
+export {
+  Automations,
+  type AutomationInvokeResponse,
+  type AutomationTemplate,
+  type AutomationTemplateListResponse,
+  type AutomationListParams,
+} from './automations/automations';
 export {
   Brands,
   type Brand,
