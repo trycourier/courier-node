@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.6.1 (2026-01-12)
+
+Full Changelog: [v7.6.0...v7.6.1](https://github.com/trycourier/courier-node/compare/v7.6.0...v7.6.1)
+
+### Bug Fixes
+
+* **types:** correct rules field type in NestedFilterConfig ([20636ec](https://github.com/trycourier/courier-node/commit/20636ecec7405c9c5370ac0842a8cf70a9cd16bc))
+
+
+### Chores
+
+* **internal:** regenerate SDK with no functional changes ([2230886](https://github.com/trycourier/courier-node/commit/22308868766859b3e40cf9854bec627a4a3680b1))
+
 ## 7.6.0 (2026-01-08)
 
 Full Changelog: [v7.5.0...v7.6.0](https://github.com/trycourier/courier-node/compare/v7.5.0...v7.6.0)
