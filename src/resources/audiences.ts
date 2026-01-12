@@ -89,11 +89,6 @@ export interface Audience {
  */
 export type Filter = SingleFilterConfig | NestedFilterConfig;
 
-/**
- * A single filter to use for filtering
- */
-export type FilterConfig = SingleFilterConfig | NestedFilterConfig;
-
 export interface NestedFilterConfig {
   /**
    * The operator to use for filtering
@@ -115,7 +110,7 @@ export interface NestedFilterConfig {
     | 'AND'
     | 'OR';
 
-  rules: Array<FilterConfig>;
+  rules: Array<Filter>;
 }
 
 export interface SingleFilterConfig {
@@ -216,7 +211,6 @@ export declare namespace Audiences {
   export {
     type Audience as Audience,
     type Filter as Filter,
-    type FilterConfig as FilterConfig,
     type NestedFilterConfig as NestedFilterConfig,
     type SingleFilterConfig as SingleFilterConfig,
     type AudienceUpdateResponse as AudienceUpdateResponse,
