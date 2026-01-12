@@ -141,7 +141,7 @@ export interface SubscriptionTopicNew {
 
   /**
    * Override channel routing with custom preferences. This will override any
-   * template prefernces that are set, but a user can still customize their
+   * template preferences that are set, but a user can still customize their
    * preferences
    */
   has_custom_routing?: boolean | null;
