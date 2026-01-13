@@ -27,6 +27,7 @@ import {
   AudienceUpdateResponse,
   Audiences,
   Filter,
+  FilterConfig,
   NestedFilterConfig,
   SingleFilterConfig,
 } from './resources/audiences';
@@ -865,6 +866,7 @@ export declare namespace Courier {
     Audiences as Audiences,
     type Audience as Audience,
     type Filter as Filter,
+    type FilterConfig as FilterConfig,
     type NestedFilterConfig as NestedFilterConfig,
     type SingleFilterConfig as SingleFilterConfig,
     type AudienceUpdateResponse as AudienceUpdateResponse,
