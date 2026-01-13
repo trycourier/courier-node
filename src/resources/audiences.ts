@@ -72,24 +72,38 @@ export interface Audience {
   description: string;
 
   /**
-   * A single filter to use for filtering
-   */
-  filter: Filter;
-
-  /**
    * The name of the audience
    */
   name: string;
 
   updated_at: string;
+
+  /**
+   * Filter that contains an array of FilterConfig items
+   */
+  filter?: Filter | null;
+
+  /**
+   * The logical operator (AND/OR) for the top-level filter
+   */
+  operator?: 'AND' | 'OR';
+}
+
+/**
+ * Filter that contains an array of FilterConfig items
+ */
+export interface Filter {
+  filters: Array<FilterConfig>;
 }
 
 /**
  * A single filter to use for filtering
  */
-export type Filter = SingleFilterConfig | NestedFilterConfig;
+export type FilterConfig = SingleFilterConfig | NestedFilterConfig;
 
 export interface NestedFilterConfig {
+  filters: Array<FilterConfig>;
+
   /**
    * The operator to use for filtering
    */
@@ -109,8 +123,6 @@ export interface NestedFilterConfig {
     | 'STARTS_WITH'
     | 'AND'
     | 'OR';
-
-  rules: Array<Filter>;
 }
 
 export interface SingleFilterConfig {
@@ -183,7 +195,7 @@ export interface AudienceUpdateParams {
   description?: string | null;
 
   /**
-   * A single filter to use for filtering
+   * Filter that contains an array of FilterConfig items
    */
   filter?: Filter | null;
 
@@ -191,6 +203,11 @@ export interface AudienceUpdateParams {
    * The name of the audience
    */
   name?: string | null;
+
+  /**
+   * The logical operator (AND/OR) for the top-level filter
+   */
+  operator?: 'AND' | 'OR' | null;
 }
 
 export interface AudienceListParams {
@@ -211,6 +228,7 @@ export declare namespace Audiences {
   export {
     type Audience as Audience,
     type Filter as Filter,
+    type FilterConfig as FilterConfig,
     type NestedFilterConfig as NestedFilterConfig,
     type SingleFilterConfig as SingleFilterConfig,
     type AudienceUpdateResponse as AudienceUpdateResponse,

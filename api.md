@@ -86,6 +86,7 @@ Types:
 
 - <code><a href="./src/resources/audiences.ts">Audience</a></code>
 - <code><a href="./src/resources/audiences.ts">Filter</a></code>
+- <code><a href="./src/resources/audiences.ts">FilterConfig</a></code>
 - <code><a href="./src/resources/audiences.ts">NestedFilterConfig</a></code>
 - <code><a href="./src/resources/audiences.ts">SingleFilterConfig</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceUpdateResponse</a></code>

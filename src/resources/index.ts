@@ -5,6 +5,7 @@ export {
   Audiences,
   type Audience,
   type Filter,
+  type FilterConfig,
   type NestedFilterConfig,
   type SingleFilterConfig,
   type AudienceUpdateResponse,
