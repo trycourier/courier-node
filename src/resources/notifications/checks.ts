@@ -45,12 +45,12 @@ export interface CheckListResponse {
 
 export interface CheckUpdateParams {
   /**
-   * Path param:
+   * Path param
    */
   id: string;
 
   /**
-   * Body param:
+   * Body param
    */
   checks: Array<NotificationsAPI.BaseCheck>;
 }

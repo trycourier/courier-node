@@ -143,7 +143,7 @@ export interface PreferenceUpdateOrCreateTopicParams {
   user_id: string;
 
   /**
-   * Body param:
+   * Body param
    */
   topic: PreferenceUpdateOrCreateTopicParams.Topic;
 

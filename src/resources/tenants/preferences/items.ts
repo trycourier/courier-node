@@ -56,7 +56,7 @@ export interface ItemUpdateParams {
   tenant_id: string;
 
   /**
-   * Body param:
+   * Body param
    */
   status: 'OPTED_OUT' | 'OPTED_IN' | 'REQUIRED';
 

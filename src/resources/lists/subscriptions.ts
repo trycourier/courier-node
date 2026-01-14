@@ -115,7 +115,7 @@ export interface SubscriptionSubscribeUserParams {
   list_id: string;
 
   /**
-   * Body param:
+   * Body param
    */
   preferences?: Shared.RecipientPreferences | null;
 }
