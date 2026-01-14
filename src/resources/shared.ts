@@ -26,6 +26,16 @@ export interface AudienceFilter {
 }
 
 /**
+ * Filter configuration for audience membership containing an array of filter rules
+ */
+export interface AudienceFilterConfig {
+  /**
+   * Array of filter rules (single conditions or nested groups)
+   */
+  filters: Array<FilterConfig>;
+}
+
+/**
  * Send to all users in an audience
  */
 export interface AudienceRecipient {
@@ -81,7 +91,7 @@ export interface ElementalChannelNode extends ElementalBaseNode {
    * The channel the contents of this element should be applied to. Can be `email`,
    * `push`, `direct_message`, `sms` or a provider such as slack
    */
-  channel: string;
+  channel?: string;
 
   /**
    * Raw data to apply to the channel. If `elements` has not been specified, `raw` is
@@ -174,6 +184,38 @@ export interface ElementalTextNodeWithType extends ElementalBaseNode {
 }
 
 export type Expo = Token | MultipleTokens;
+
+/**
+ * A filter rule that can be either a single condition (with path/value) or a
+ * nested group (with filters array). Use comparison operators (EQ, GT, etc.) for
+ * single conditions, and logical operators (AND, OR) for nested groups.
+ */
+export interface FilterConfig {
+  /**
+   * The operator for this filter. Use comparison operators (EQ, GT, LT, GTE, LTE,
+   * NEQ, EXISTS, INCLUDES, STARTS_WITH, ENDS_WITH, IS_BEFORE, IS_AFTER, OMIT) for
+   * single conditions, or logical operators (AND, OR) for nested filter groups.
+   */
+  operator: string;
+
+  /**
+   * Nested filter rules to combine with AND/OR. Required for nested filter groups,
+   * not used for single filter conditions.
+   */
+  filters?: Array<FilterConfig>;
+
+  /**
+   * The attribute path from the user profile to filter on. Required for single
+   * filter conditions, not used for nested filter groups.
+   */
+  path?: string;
+
+  /**
+   * The value to compare against. Required for single filter conditions, not used
+   * for nested filter groups.
+   */
+  value?: string;
+}
 
 export interface Intercom {
   from: string;
