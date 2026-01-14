@@ -4,9 +4,6 @@ export * from './shared';
 export {
   Audiences,
   type Audience,
-  type Filter,
-  type NestedFilterConfig,
-  type SingleFilterConfig,
   type AudienceUpdateResponse,
   type AudienceListResponse,
   type AudienceListMembersResponse,

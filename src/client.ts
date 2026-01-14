@@ -26,9 +26,6 @@ import {
   AudienceUpdateParams,
   AudienceUpdateResponse,
   Audiences,
-  Filter,
-  NestedFilterConfig,
-  SingleFilterConfig,
 } from './resources/audiences';
 import {
   AuditEvent,
@@ -864,9 +861,6 @@ export declare namespace Courier {
   export {
     Audiences as Audiences,
     type Audience as Audience,
-    type Filter as Filter,
-    type NestedFilterConfig as NestedFilterConfig,
-    type SingleFilterConfig as SingleFilterConfig,
     type AudienceUpdateResponse as AudienceUpdateResponse,
     type AudienceListResponse as AudienceListResponse,
     type AudienceListMembersResponse as AudienceListMembersResponse,
@@ -1006,6 +1000,7 @@ export declare namespace Courier {
   export type AirshipProfileAudience = API.AirshipProfileAudience;
   export type Alignment = API.Alignment;
   export type AudienceFilter = API.AudienceFilter;
+  export type AudienceFilterConfig = API.AudienceFilterConfig;
   export type AudienceRecipient = API.AudienceRecipient;
   export type ChannelClassification = API.ChannelClassification;
   export type ChannelPreference = API.ChannelPreference;
@@ -1024,6 +1019,7 @@ export declare namespace Courier {
   export type ElementalQuoteNodeWithType = API.ElementalQuoteNodeWithType;
   export type ElementalTextNodeWithType = API.ElementalTextNodeWithType;
   export type Expo = API.Expo;
+  export type FilterConfig = API.FilterConfig;
   export type Intercom = API.Intercom;
   export type IntercomRecipient = API.IntercomRecipient;
   export type ListFilter = API.ListFilter;

@@ -6,6 +6,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">AirshipProfileAudience</a></code>
 - <code><a href="./src/resources/shared.ts">Alignment</a></code>
 - <code><a href="./src/resources/shared.ts">AudienceFilter</a></code>
+- <code><a href="./src/resources/shared.ts">AudienceFilterConfig</a></code>
 - <code><a href="./src/resources/shared.ts">AudienceRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelClassification</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
@@ -24,6 +25,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">ElementalQuoteNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalTextNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">Expo</a></code>
+- <code><a href="./src/resources/shared.ts">FilterConfig</a></code>
 - <code><a href="./src/resources/shared.ts">Intercom</a></code>
 - <code><a href="./src/resources/shared.ts">IntercomRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">ListFilter</a></code>
@@ -85,9 +87,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/audiences.ts">Audience</a></code>
-- <code><a href="./src/resources/audiences.ts">Filter</a></code>
-- <code><a href="./src/resources/audiences.ts">NestedFilterConfig</a></code>
-- <code><a href="./src/resources/audiences.ts">SingleFilterConfig</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceUpdateResponse</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceListResponse</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceListMembersResponse</a></code>

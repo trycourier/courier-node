@@ -72,78 +72,21 @@ export interface Audience {
   description: string;
 
   /**
-   * A single filter to use for filtering
-   */
-  filter: Filter;
-
-  /**
    * The name of the audience
    */
   name: string;
 
   updated_at: string;
-}
-
-/**
- * A single filter to use for filtering
- */
-export type Filter = SingleFilterConfig | NestedFilterConfig;
-
-export interface NestedFilterConfig {
-  /**
-   * The operator to use for filtering
-   */
-  operator:
-    | 'ENDS_WITH'
-    | 'EQ'
-    | 'EXISTS'
-    | 'GT'
-    | 'GTE'
-    | 'INCLUDES'
-    | 'IS_AFTER'
-    | 'IS_BEFORE'
-    | 'LT'
-    | 'LTE'
-    | 'NEQ'
-    | 'OMIT'
-    | 'STARTS_WITH'
-    | 'AND'
-    | 'OR';
-
-  rules: Array<Filter>;
-}
-
-export interface SingleFilterConfig {
-  /**
-   * The operator to use for filtering
-   */
-  operator:
-    | 'ENDS_WITH'
-    | 'EQ'
-    | 'EXISTS'
-    | 'GT'
-    | 'GTE'
-    | 'INCLUDES'
-    | 'IS_AFTER'
-    | 'IS_BEFORE'
-    | 'LT'
-    | 'LTE'
-    | 'NEQ'
-    | 'OMIT'
-    | 'STARTS_WITH'
-    | 'AND'
-    | 'OR';
 
   /**
-   * The attribute name from profile whose value will be operated against the filter
-   * value
+   * Filter configuration for audience membership containing an array of filter rules
    */
-  path: string;
+  filter?: Shared.AudienceFilterConfig | null;
 
   /**
-   * The value to use for filtering
+   * The logical operator (AND/OR) for the top-level filter
    */
-  value: string;
+  operator?: 'AND' | 'OR';
 }
 
 export interface AudienceUpdateResponse {
@@ -183,14 +126,19 @@ export interface AudienceUpdateParams {
   description?: string | null;
 
   /**
-   * A single filter to use for filtering
+   * Filter configuration for audience membership containing an array of filter rules
    */
-  filter?: Filter | null;
+  filter?: Shared.AudienceFilterConfig | null;
 
   /**
    * The name of the audience
    */
   name?: string | null;
+
+  /**
+   * The logical operator (AND/OR) for the top-level filter
+   */
+  operator?: 'AND' | 'OR' | null;
 }
 
 export interface AudienceListParams {
@@ -210,9 +158,6 @@ export interface AudienceListMembersParams {
 export declare namespace Audiences {
   export {
     type Audience as Audience,
-    type Filter as Filter,
-    type NestedFilterConfig as NestedFilterConfig,
-    type SingleFilterConfig as SingleFilterConfig,
     type AudienceUpdateResponse as AudienceUpdateResponse,
     type AudienceListResponse as AudienceListResponse,
     type AudienceListMembersResponse as AudienceListMembersResponse,
