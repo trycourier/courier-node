@@ -235,7 +235,7 @@ export interface TokenUpdateParams {
   user_id: string;
 
   /**
-   * Body param:
+   * Body param
    */
   patch: Array<TokenUpdateParams.Patch>;
 }
@@ -278,7 +278,7 @@ export interface TokenAddSingleParams {
   body_token: string;
 
   /**
-   * Body param:
+   * Body param
    */
   provider_key: 'firebase-fcm' | 'apn' | 'expo' | 'onesignal';
 

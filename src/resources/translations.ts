@@ -46,7 +46,7 @@ export interface TranslationUpdateParams {
   domain: string;
 
   /**
-   * Body param:
+   * Body param
    */
   body: string;
 }

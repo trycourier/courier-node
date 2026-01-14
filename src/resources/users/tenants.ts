@@ -158,7 +158,7 @@ export interface TenantAddSingleParams {
   user_id: string;
 
   /**
-   * Body param:
+   * Body param
    */
   profile?: { [key: string]: unknown } | null;
 }
