@@ -1,5 +1,16 @@
 # Changelog
 
+## 7.6.2 (2026-01-14)
+
+Full Changelog: [v7.6.1...v7.6.2](https://github.com/trycourier/courier-node/compare/v7.6.1...v7.6.2)
+
+### Chores
+
+* fix typo in descriptions ([3e9304a](https://github.com/trycourier/courier-node/commit/3e9304abd0cb3ee2905a1c8ef2ca6add6de40d76))
+* **internal:** regenerate SDK with no functional changes ([1eabb0d](https://github.com/trycourier/courier-node/commit/1eabb0d4747af6eb1077c56d0c701de3dfc4720d))
+* **internal:** regenerate SDK with no functional changes ([fdf454c](https://github.com/trycourier/courier-node/commit/fdf454c4f56a9562eb4821d067a0dda22e8af4df))
+* remove custom code ([68b45da](https://github.com/trycourier/courier-node/commit/68b45da055191f5b0a86995791dc5880dbed29e4))
+
 ## 7.6.1 (2026-01-12)
 
 Full Changelog: [v7.6.0...v7.6.1](https://github.com/trycourier/courier-node/compare/v7.6.0...v7.6.1)
