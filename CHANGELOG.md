@@ -1,5 +1,20 @@
 # Changelog
 
+## 7.6.3 (2026-01-27)
+
+Full Changelog: [v7.6.2...v7.6.3](https://github.com/trycourier/courier-node/compare/v7.6.2...v7.6.3)
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([9be20f2](https://github.com/trycourier/courier-node/commit/9be20f262f8e308e07f27d7f577c029a24a5729c))
+* **internal:** update `actions/checkout` version ([ff49d84](https://github.com/trycourier/courier-node/commit/ff49d84985ceb2f0abd1a1672d060f171fb4773e))
+* **internal:** upgrade babel, qs, js-yaml ([69281b2](https://github.com/trycourier/courier-node/commit/69281b23561b6dc18cf5da460a3cfc4dc3563936))
+
+
+### Documentation
+
+* **types:** clarify version field description in AutomationTemplate ([3b61dec](https://github.com/trycourier/courier-node/commit/3b61dec839fd7e97f8cb8877d045d2a53dcca809))
+
 ## 7.6.2 (2026-01-14)
 
 Full Changelog: [v7.6.1...v7.6.2](https://github.com/trycourier/courier-node/compare/v7.6.1...v7.6.2)
