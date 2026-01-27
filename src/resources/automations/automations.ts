@@ -42,7 +42,7 @@ export interface AutomationTemplate {
   name: string;
 
   /**
-   * The version of the template published, draft.
+   * The version of the template published or drafted.
    */
   version: 'published' | 'draft';
 
