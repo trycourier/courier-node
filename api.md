@@ -320,9 +320,14 @@ Types:
 
 - <code><a href="./src/resources/tenants/tenants.ts">BaseTemplateTenantAssociation</a></code>
 - <code><a href="./src/resources/tenants/tenants.ts">DefaultPreferences</a></code>
+- <code><a href="./src/resources/tenants/tenants.ts">PostTenantTemplatePublishRequest</a></code>
+- <code><a href="./src/resources/tenants/tenants.ts">PostTenantTemplatePublishResponse</a></code>
+- <code><a href="./src/resources/tenants/tenants.ts">PutTenantTemplateRequest</a></code>
+- <code><a href="./src/resources/tenants/tenants.ts">PutTenantTemplateResponse</a></code>
 - <code><a href="./src/resources/tenants/tenants.ts">SubscriptionTopicNew</a></code>
 - <code><a href="./src/resources/tenants/tenants.ts">Tenant</a></code>
 - <code><a href="./src/resources/tenants/tenants.ts">TenantAssociation</a></code>
+- <code><a href="./src/resources/tenants/tenants.ts">TenantTemplateInput</a></code>
 - <code><a href="./src/resources/tenants/tenants.ts">TenantListResponse</a></code>
 - <code><a href="./src/resources/tenants/tenants.ts">TenantListUsersResponse</a></code>
 
@@ -347,12 +352,20 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/tenants/templates.ts">TemplateListResponse</a></code>
+- <code><a href="./src/resources/tenants/templates/templates.ts">TemplateListResponse</a></code>
 
 Methods:
 
-- <code title="get /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates.ts">retrieve</a>(templateID, { ...params }) -> BaseTemplateTenantAssociation</code>
-- <code title="get /tenants/{tenant_id}/templates">client.tenants.templates.<a href="./src/resources/tenants/templates.ts">list</a>(tenantID, { ...params }) -> TemplateListResponse</code>
+- <code title="get /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates/templates.ts">retrieve</a>(templateID, { ...params }) -> BaseTemplateTenantAssociation</code>
+- <code title="get /tenants/{tenant_id}/templates">client.tenants.templates.<a href="./src/resources/tenants/templates/templates.ts">list</a>(tenantID, { ...params }) -> TemplateListResponse</code>
+- <code title="post /tenants/{tenant_id}/templates/{template_id}/publish">client.tenants.templates.<a href="./src/resources/tenants/templates/templates.ts">publish</a>(templateID, { ...params }) -> PostTenantTemplatePublishResponse</code>
+- <code title="put /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates/templates.ts">replace</a>(templateID, { ...params }) -> PutTenantTemplateResponse</code>
+
+### Versions
+
+Methods:
+
+- <code title="get /tenants/{tenant_id}/templates/{template_id}/versions/{version}">client.tenants.templates.versions.<a href="./src/resources/tenants/templates/versions.ts">retrieve</a>(version, { ...params }) -> BaseTemplateTenantAssociation</code>
 
 # Translations
 

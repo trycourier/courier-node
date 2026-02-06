@@ -3,10 +3,17 @@
 import { APIResource } from '../../core/resource';
 import * as TenantsAPI from './tenants';
 import * as Shared from '../shared';
-import * as TemplatesAPI from './templates';
-import { TemplateListParams, TemplateListResponse, TemplateRetrieveParams, Templates } from './templates';
 import * as PreferencesAPI from './preferences/preferences';
 import { Preferences } from './preferences/preferences';
+import * as TemplatesAPI from './templates/templates';
+import {
+  TemplateListParams,
+  TemplateListResponse,
+  TemplatePublishParams,
+  TemplateReplaceParams,
+  TemplateRetrieveParams,
+  Templates,
+} from './templates/templates';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -131,6 +138,75 @@ export namespace DefaultPreferences {
   }
 }
 
+/**
+ * Request body for publishing a tenant template version
+ */
+export interface PostTenantTemplatePublishRequest {
+  /**
+   * The version of the template to publish (e.g., "v1", "v2", "latest"). If not
+   * provided, defaults to "latest".
+   */
+  version?: string;
+}
+
+/**
+ * Response from publishing a tenant template
+ */
+export interface PostTenantTemplatePublishResponse {
+  /**
+   * The template ID
+   */
+  id: string;
+
+  /**
+   * The timestamp when the template was published
+   */
+  published_at: string;
+
+  /**
+   * The published version of the template
+   */
+  version: string;
+}
+
+/**
+ * Request body for creating or updating a tenant notification template
+ */
+export interface PutTenantTemplateRequest {
+  /**
+   * Template configuration for creating or updating a tenant notification template
+   */
+  template: TenantTemplateInput;
+
+  /**
+   * Whether to publish the template immediately after saving. When true, the
+   * template becomes the active/published version. When false (default), the
+   * template is saved as a draft.
+   */
+  published?: boolean;
+}
+
+/**
+ * Response from creating or updating a tenant notification template
+ */
+export interface PutTenantTemplateResponse {
+  /**
+   * The template ID
+   */
+  id: string;
+
+  /**
+   * The version of the saved template
+   */
+  version: string;
+
+  /**
+   * The timestamp when the template was published. Only present if the template was
+   * published as part of this request.
+   */
+  published_at?: string | null;
+}
+
 export interface SubscriptionTopicNew {
   status: 'OPTED_OUT' | 'OPTED_IN' | 'REQUIRED';
 
@@ -203,6 +279,99 @@ export interface TenantAssociation {
    * User ID for the association between tenant and user
    */
   user_id?: string | null;
+}
+
+/**
+ * Template configuration for creating or updating a tenant notification template
+ */
+export interface TenantTemplateInput {
+  /**
+   * Template content configuration including blocks, elements, and message structure
+   */
+  content: Shared.ElementalContent;
+
+  /**
+   * Channel-specific delivery configuration (email, SMS, push, etc.)
+   */
+  channels?: { [key: string]: TenantTemplateInput.Channels };
+
+  /**
+   * Provider-specific delivery configuration for routing to specific email/SMS
+   * providers
+   */
+  providers?: { [key: string]: TenantTemplateInput.Providers };
+
+  /**
+   * Message routing configuration for multi-channel delivery strategies
+   */
+  routing?: Shared.MessageRouting;
+}
+
+export namespace TenantTemplateInput {
+  export interface Channels {
+    /**
+     * Brand id used for rendering.
+     */
+    brand_id?: string | null;
+
+    /**
+     * JS conditional with access to data/profile.
+     */
+    if?: string | null;
+
+    metadata?: Channels.Metadata | null;
+
+    /**
+     * Channel specific overrides.
+     */
+    override?: { [key: string]: unknown } | null;
+
+    /**
+     * Providers enabled for this channel.
+     */
+    providers?: Array<string> | null;
+
+    /**
+     * Defaults to `single`.
+     */
+    routing_method?: 'all' | 'single' | null;
+
+    timeouts?: Channels.Timeouts | null;
+  }
+
+  export namespace Channels {
+    export interface Metadata {
+      utm?: Shared.Utm | null;
+    }
+
+    export interface Timeouts {
+      channel?: number | null;
+
+      provider?: number | null;
+    }
+  }
+
+  export interface Providers {
+    /**
+     * JS conditional with access to data/profile.
+     */
+    if?: string | null;
+
+    metadata?: Providers.Metadata | null;
+
+    /**
+     * Provider-specific overrides.
+     */
+    override?: { [key: string]: unknown } | null;
+
+    timeouts?: number | null;
+  }
+
+  export namespace Providers {
+    export interface Metadata {
+      utm?: Shared.Utm | null;
+    }
+  }
 }
 
 export interface TenantListResponse {
@@ -339,9 +508,14 @@ export declare namespace Tenants {
   export {
     type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
     type DefaultPreferences as DefaultPreferences,
+    type PostTenantTemplatePublishRequest as PostTenantTemplatePublishRequest,
+    type PostTenantTemplatePublishResponse as PostTenantTemplatePublishResponse,
+    type PutTenantTemplateRequest as PutTenantTemplateRequest,
+    type PutTenantTemplateResponse as PutTenantTemplateResponse,
     type SubscriptionTopicNew as SubscriptionTopicNew,
     type Tenant as Tenant,
     type TenantAssociation as TenantAssociation,
+    type TenantTemplateInput as TenantTemplateInput,
     type TenantListResponse as TenantListResponse,
     type TenantListUsersResponse as TenantListUsersResponse,
     type TenantUpdateParams as TenantUpdateParams,
@@ -356,5 +530,7 @@ export declare namespace Tenants {
     type TemplateListResponse as TemplateListResponse,
     type TemplateRetrieveParams as TemplateRetrieveParams,
     type TemplateListParams as TemplateListParams,
+    type TemplatePublishParams as TemplatePublishParams,
+    type TemplateReplaceParams as TemplateReplaceParams,
   };
 }
