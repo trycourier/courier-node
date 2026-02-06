@@ -98,6 +98,16 @@ export namespace SendMessageParams {
       | Shared.MsTeamsRecipient
       | Shared.PagerdutyRecipient
       | Shared.WebhookRecipient
+      | Array<
+          | Shared.UserRecipient
+          | Shared.AudienceRecipient
+          | Shared.ListRecipient
+          | Shared.ListPatternRecipient
+          | Shared.SlackRecipient
+          | Shared.MsTeamsRecipient
+          | Shared.PagerdutyRecipient
+          | Shared.WebhookRecipient
+        >
       | null;
   }
 

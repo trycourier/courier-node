@@ -122,6 +122,10 @@ import {
 import {
   BaseTemplateTenantAssociation,
   DefaultPreferences,
+  PostTenantTemplatePublishRequest,
+  PostTenantTemplatePublishResponse,
+  PutTenantTemplateRequest,
+  PutTenantTemplateResponse,
   SubscriptionTopicNew,
   Tenant,
   TenantAssociation,
@@ -129,6 +133,7 @@ import {
   TenantListResponse,
   TenantListUsersParams,
   TenantListUsersResponse,
+  TenantTemplateInput,
   TenantUpdateParams,
   Tenants,
 } from './resources/tenants/tenants';
@@ -589,9 +594,10 @@ export class Courier {
     controller: AbortController,
   ): Promise<Response> {
     const { signal, method, ...options } = init || {};
-    if (signal) signal.addEventListener('abort', () => controller.abort());
+    const abort = this._makeAbort(controller);
+    if (signal) signal.addEventListener('abort', abort, { once: true });
 
-    const timeout = setTimeout(() => controller.abort(), ms);
+    const timeout = setTimeout(abort, ms);
 
     const isReadableBody =
       ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
@@ -756,6 +762,12 @@ export class Courier {
     this.validateHeaders(headers);
 
     return headers.values;
+  }
+
+  private _makeAbort(controller: AbortController) {
+    // note: we can't just inline this method inside `fetchWithTimeout()` because then the closure
+    //       would capture all request options, and cause a memory leak.
+    return () => controller.abort();
   }
 
   private buildBody({ options: { body, headers: rawHeaders } }: { options: FinalRequestOptions }): {
@@ -977,9 +989,14 @@ export declare namespace Courier {
     Tenants as Tenants,
     type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
     type DefaultPreferences as DefaultPreferences,
+    type PostTenantTemplatePublishRequest as PostTenantTemplatePublishRequest,
+    type PostTenantTemplatePublishResponse as PostTenantTemplatePublishResponse,
+    type PutTenantTemplateRequest as PutTenantTemplateRequest,
+    type PutTenantTemplateResponse as PutTenantTemplateResponse,
     type SubscriptionTopicNew as SubscriptionTopicNew,
     type Tenant as Tenant,
     type TenantAssociation as TenantAssociation,
+    type TenantTemplateInput as TenantTemplateInput,
     type TenantListResponse as TenantListResponse,
     type TenantListUsersResponse as TenantListUsersResponse,
     type TenantUpdateParams as TenantUpdateParams,

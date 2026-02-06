@@ -1,5 +1,26 @@
 # Changelog
 
+## 7.7.0 (2026-02-06)
+
+Full Changelog: [v7.6.3...v7.7.0](https://github.com/trycourier/courier-node/compare/v7.6.3...v7.7.0)
+
+### Features
+
+* **api:** add publish/replace methods to tenants.templates, versions sub-resource ([a479e13](https://github.com/trycourier/courier-node/commit/a479e1356e4c924dd93959faccc2f0bc5b220706))
+* **api:** support array of recipients in send message to parameter ([e122396](https://github.com/trycourier/courier-node/commit/e1223964750961c6605fce9b5534b7f47c5912e4))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([456f32b](https://github.com/trycourier/courier-node/commit/456f32b5857119e3bce1b98d684452089f0dac25))
+* **client:** avoid removing abort listener too early ([955a0ac](https://github.com/trycourier/courier-node/commit/955a0acd0c3562b8744f2d6ebcfc1a3afd3a81f0))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([f6a0da2](https://github.com/trycourier/courier-node/commit/f6a0da2fc5de72f899350b471e635a26ae5fe22b))
+* **client:** restructure abort controller binding ([ebbf307](https://github.com/trycourier/courier-node/commit/ebbf30710e44dfe85ffd89a021c102381210f61c))
+
 ## 7.6.3 (2026-01-27)
 
 Full Changelog: [v7.6.2...v7.6.3](https://github.com/trycourier/courier-node/compare/v7.6.2...v7.6.3)
