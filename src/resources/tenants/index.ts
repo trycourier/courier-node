@@ -6,14 +6,21 @@ export {
   type TemplateListResponse,
   type TemplateRetrieveParams,
   type TemplateListParams,
-} from './templates';
+  type TemplatePublishParams,
+  type TemplateReplaceParams,
+} from './templates/index';
 export {
   Tenants,
   type BaseTemplateTenantAssociation,
   type DefaultPreferences,
+  type PostTenantTemplatePublishRequest,
+  type PostTenantTemplatePublishResponse,
+  type PutTenantTemplateRequest,
+  type PutTenantTemplateResponse,
   type SubscriptionTopicNew,
   type Tenant,
   type TenantAssociation,
+  type TenantTemplateInput,
   type TenantListResponse,
   type TenantListUsersResponse,
   type TenantUpdateParams,
