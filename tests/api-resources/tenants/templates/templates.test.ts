@@ -100,7 +100,6 @@ describe('resource templates', () => {
             },
           ],
           version: 'version',
-          brand: 'brand',
         },
         channels: {
           foo: {
