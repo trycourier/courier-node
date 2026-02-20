@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource inbound', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('trackEvent: only required params', async () => {
     const responsePromise = client.inbound.trackEvent({
       event: 'New Order Placed',
@@ -29,7 +29,7 @@ describe('resource inbound', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('trackEvent: required and optional params', async () => {
     const response = await client.inbound.trackEvent({
       event: 'New Order Placed',

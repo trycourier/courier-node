@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource checks', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.notifications.checks.update('submissionId', {
       id: 'id',
@@ -29,7 +29,7 @@ describe('resource checks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.notifications.checks.update('submissionId', {
       id: 'id',
@@ -43,7 +43,7 @@ describe('resource checks', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.notifications.checks.list('submissionId', { id: 'id' });
     const rawResponse = await responsePromise.asResponse();
@@ -55,12 +55,12 @@ describe('resource checks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.notifications.checks.list('submissionId', { id: 'id' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.notifications.checks.delete('submissionId', { id: 'id' });
     const rawResponse = await responsePromise.asResponse();
@@ -72,7 +72,7 @@ describe('resource checks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.notifications.checks.delete('submissionId', { id: 'id' });
   });
