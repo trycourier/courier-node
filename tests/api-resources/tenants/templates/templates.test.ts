@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource templates', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.tenants.templates.retrieve('template_id', { tenant_id: 'tenant_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource templates', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.tenants.templates.retrieve('template_id', { tenant_id: 'tenant_id' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.tenants.templates.list('tenant_id');
     const rawResponse = await responsePromise.asResponse();
@@ -37,7 +37,7 @@ describe('resource templates', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -49,7 +49,7 @@ describe('resource templates', () => {
     ).rejects.toThrow(Courier.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('publish: only required params', async () => {
     const responsePromise = client.tenants.templates.publish('template_id', { tenant_id: 'tenant_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -61,7 +61,7 @@ describe('resource templates', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('publish: required and optional params', async () => {
     const response = await client.tenants.templates.publish('template_id', {
       tenant_id: 'tenant_id',
@@ -69,7 +69,7 @@ describe('resource templates', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('replace: only required params', async () => {
     const responsePromise = client.tenants.templates.replace('template_id', {
       tenant_id: 'tenant_id',
@@ -84,7 +84,7 @@ describe('resource templates', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('replace: required and optional params', async () => {
     const response = await client.tenants.templates.replace('template_id', {
       tenant_id: 'tenant_id',

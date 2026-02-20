@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource send', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('message: only required params', async () => {
     const responsePromise = client.send.message({ message: {} });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource send', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('message: required and optional params', async () => {
     const response = await client.send.message({
       message: {

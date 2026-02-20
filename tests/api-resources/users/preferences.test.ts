@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource preferences', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.users.preferences.retrieve('user_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource preferences', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -32,7 +32,7 @@ describe('resource preferences', () => {
     ).rejects.toThrow(Courier.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieveTopic: only required params', async () => {
     const responsePromise = client.users.preferences.retrieveTopic('topic_id', { user_id: 'user_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource preferences', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieveTopic: required and optional params', async () => {
     const response = await client.users.preferences.retrieveTopic('topic_id', {
       user_id: 'user_id',
@@ -52,7 +52,7 @@ describe('resource preferences', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('updateOrCreateTopic: only required params', async () => {
     const responsePromise = client.users.preferences.updateOrCreateTopic('topic_id', {
       user_id: 'user_id',
@@ -67,7 +67,7 @@ describe('resource preferences', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('updateOrCreateTopic: required and optional params', async () => {
     const response = await client.users.preferences.updateOrCreateTopic('topic_id', {
       user_id: 'user_id',
