@@ -1,3 +1,4 @@
+<!-- AUTO-GENERATED-OVERVIEW:START — Do not edit this section. It is synced from mintlify-docs. -->
 # Courier TypeScript API Library
 
 [![NPM version](<https://img.shields.io/npm/v/@trycourier/courier.svg?label=npm%20(stable)>)](https://npmjs.org/package/@trycourier/courier) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@trycourier/courier)
@@ -401,3 +402,4 @@ If you are interested in other runtime environments, please open or upvote an is
 ## Contributing
 
 See [the contributing documentation](./CONTRIBUTING.md).
+<!-- AUTO-GENERATED-OVERVIEW:END -->
