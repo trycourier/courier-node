@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource items', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.tenants.preferences.items.update('topic_id', {
       tenant_id: 'tenant_id',
@@ -23,7 +23,7 @@ describe('resource items', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.tenants.preferences.items.update('topic_id', {
       tenant_id: 'tenant_id',
@@ -33,7 +33,7 @@ describe('resource items', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.tenants.preferences.items.delete('topic_id', { tenant_id: 'tenant_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -45,7 +45,7 @@ describe('resource items', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.tenants.preferences.items.delete('topic_id', { tenant_id: 'tenant_id' });
   });

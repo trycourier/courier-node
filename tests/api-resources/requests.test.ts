@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource requests', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('archive', async () => {
     const responsePromise = client.requests.archive('request_id');
     const rawResponse = await responsePromise.asResponse();
