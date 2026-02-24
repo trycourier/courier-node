@@ -60,7 +60,7 @@ $ yarn link @trycourier/courier
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global @trycourier/courier
+$ pnpm link --global @trycourier/courier
 ```
 
 ## Running tests
