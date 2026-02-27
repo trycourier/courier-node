@@ -123,8 +123,6 @@ export interface ElementalContent {
    * For example, "2022-01-01"
    */
   version: string;
-
-  brand?: string | null;
 }
 
 /**
