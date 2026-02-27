@@ -1,5 +1,28 @@
 # Changelog
 
+## 7.7.1 (2026-02-27)
+
+Full Changelog: [v7.7.0...v7.7.1](https://github.com/trycourier/courier-node/compare/v7.7.0...v7.7.1)
+
+### Bug Fixes
+
+* **api:** remove brand field from ElementalContent ([2a3d25d](https://github.com/trycourier/courier-node/commit/2a3d25dac9b544179e928800dba0f53623cd3734))
+* **docs/contributing:** correct pnpm link command ([d3b4a96](https://github.com/trycourier/courier-node/commit/d3b4a96b0d1112692832cff49bfd7897ec77df8c))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([45deac0](https://github.com/trycourier/courier-node/commit/45deac06aa22be68b4ac57136d065dd85668901c))
+* **internal:** avoid type checking errors with ts-reset ([88b8c18](https://github.com/trycourier/courier-node/commit/88b8c18a47ac0d71e5a58274eeb705b41dfb42c3))
+* **internal:** remove mock server code ([cbd7d67](https://github.com/trycourier/courier-node/commit/cbd7d675567742542d481cf9275fa765524f2dae))
+* update mock server docs ([f4a7c1f](https://github.com/trycourier/courier-node/commit/f4a7c1f3590b16463dd8edb1ef81a188ae276d06))
+
+
+### Documentation
+
+* add AUTO-GENERATED-OVERVIEW markers for README sync ([#228](https://github.com/trycourier/courier-node/issues/228)) ([63dc300](https://github.com/trycourier/courier-node/commit/63dc300ce3d67d339942446c86edeaa0f4aa69ee))
+* sync README from mintlify-docs (2026-02-20 18:11 UTC) ([#229](https://github.com/trycourier/courier-node/issues/229)) ([f35a2aa](https://github.com/trycourier/courier-node/commit/f35a2aa144409b12c125a564a003421a9b8a7a5b))
+
 ## 7.7.0 (2026-02-06)
 
 Full Changelog: [v7.6.3...v7.7.0](https://github.com/trycourier/courier-node/compare/v7.6.3...v7.7.0)
