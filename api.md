@@ -424,4 +424,4 @@ Methods:
 - <code title="get /users/{user_id}/tokens">client.users.tokens.<a href="./src/resources/users/tokens.ts">list</a>(userID) -> TokenListResponse</code>
 - <code title="delete /users/{user_id}/tokens/{token}">client.users.tokens.<a href="./src/resources/users/tokens.ts">delete</a>(token, { ...params }) -> void</code>
 - <code title="put /users/{user_id}/tokens">client.users.tokens.<a href="./src/resources/users/tokens.ts">addMultiple</a>(userID) -> void</code>
-- <code title="put /users/{user_id}/tokens/{token}">client.users.tokens.<a href="./src/resources/users/tokens.ts">addSingle</a>(pathToken, { ...params }) -> void</code>
+- <code title="put /users/{user_id}/tokens/{token}">client.users.tokens.<a href="./src/resources/users/tokens.ts">addSingle</a>(token, { ...params }) -> void</code>

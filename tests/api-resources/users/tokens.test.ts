@@ -99,7 +99,6 @@ describe('resource tokens', () => {
   test.skip('addSingle: only required params', async () => {
     const responsePromise = client.users.tokens.addSingle('token', {
       user_id: 'user_id',
-      body_token: 'token',
       provider_key: 'firebase-fcm',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -115,7 +114,6 @@ describe('resource tokens', () => {
   test.skip('addSingle: required and optional params', async () => {
     const response = await client.users.tokens.addSingle('token', {
       user_id: 'user_id',
-      body_token: 'token',
       provider_key: 'firebase-fcm',
       device: {
         ad_id: 'ad_id',
