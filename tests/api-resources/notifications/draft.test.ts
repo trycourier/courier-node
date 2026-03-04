@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource draft', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieveContent', async () => {
     const responsePromise = client.notifications.draft.retrieveContent('id');
     const rawResponse = await responsePromise.asResponse();

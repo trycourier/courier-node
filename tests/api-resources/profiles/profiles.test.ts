@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource profiles', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.profiles.create('user_id', { profile: { foo: 'bar' } });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource profiles', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.profiles.create('user_id', { profile: { foo: 'bar' } });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.profiles.retrieve('user_id');
     const rawResponse = await responsePromise.asResponse();
@@ -37,7 +37,7 @@ describe('resource profiles', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.profiles.update('user_id', {
       patch: [
@@ -57,7 +57,7 @@ describe('resource profiles', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.profiles.update('user_id', {
       patch: [
@@ -70,7 +70,7 @@ describe('resource profiles', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.profiles.delete('user_id');
     const rawResponse = await responsePromise.asResponse();
@@ -82,7 +82,7 @@ describe('resource profiles', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('replace: only required params', async () => {
     const responsePromise = client.profiles.replace('user_id', { profile: { foo: 'bar' } });
     const rawResponse = await responsePromise.asResponse();
@@ -94,7 +94,7 @@ describe('resource profiles', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('replace: required and optional params', async () => {
     const response = await client.profiles.replace('user_id', { profile: { foo: 'bar' } });
   });

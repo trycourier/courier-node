@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource bulk', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addUsers: only required params', async () => {
     const responsePromise = client.bulk.addUsers('job_id', { users: [{}] });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addUsers: required and optional params', async () => {
     const response = await client.bulk.addUsers('job_id', {
       users: [
@@ -79,7 +79,7 @@ describe('resource bulk', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createJob: only required params', async () => {
     const responsePromise = client.bulk.createJob({ message: { event: 'event' } });
     const rawResponse = await responsePromise.asResponse();
@@ -91,7 +91,7 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createJob: required and optional params', async () => {
     const response = await client.bulk.createJob({
       message: {
@@ -106,7 +106,7 @@ describe('resource bulk', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listUsers', async () => {
     const responsePromise = client.bulk.listUsers('job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -118,7 +118,7 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listUsers: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -126,7 +126,7 @@ describe('resource bulk', () => {
     ).rejects.toThrow(Courier.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieveJob', async () => {
     const responsePromise = client.bulk.retrieveJob('job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -138,7 +138,7 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('runJob', async () => {
     const responsePromise = client.bulk.runJob('job_id');
     const rawResponse = await responsePromise.asResponse();

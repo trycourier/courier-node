@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource invoke', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('invokeAdHoc: only required params', async () => {
     const responsePromise = client.automations.invoke.invokeAdHoc({
       automation: { steps: [{ action: 'delay' }, { action: 'send' }] },
@@ -22,7 +22,7 @@ describe('resource invoke', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('invokeAdHoc: required and optional params', async () => {
     const response = await client.automations.invoke.invokeAdHoc({
       automation: {
@@ -51,7 +51,7 @@ describe('resource invoke', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('invokeByTemplate: only required params', async () => {
     const responsePromise = client.automations.invoke.invokeByTemplate('templateId', {
       recipient: 'recipient',
@@ -65,7 +65,7 @@ describe('resource invoke', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('invokeByTemplate: required and optional params', async () => {
     const response = await client.automations.invoke.invokeByTemplate('templateId', {
       recipient: 'recipient',

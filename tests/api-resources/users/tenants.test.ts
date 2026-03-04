@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource tenants', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.users.tenants.list('user_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource tenants', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -32,7 +32,7 @@ describe('resource tenants', () => {
     ).rejects.toThrow(Courier.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addMultiple: only required params', async () => {
     const responsePromise = client.users.tenants.addMultiple('user_id', {
       tenants: [{ tenant_id: 'tenant_id' }],
@@ -46,7 +46,7 @@ describe('resource tenants', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addMultiple: required and optional params', async () => {
     const response = await client.users.tenants.addMultiple('user_id', {
       tenants: [
@@ -60,7 +60,7 @@ describe('resource tenants', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addSingle: only required params', async () => {
     const responsePromise = client.users.tenants.addSingle('tenant_id', { user_id: 'user_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -72,7 +72,7 @@ describe('resource tenants', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addSingle: required and optional params', async () => {
     const response = await client.users.tenants.addSingle('tenant_id', {
       user_id: 'user_id',
@@ -80,7 +80,7 @@ describe('resource tenants', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('removeAll', async () => {
     const responsePromise = client.users.tenants.removeAll('user_id');
     const rawResponse = await responsePromise.asResponse();
@@ -92,7 +92,7 @@ describe('resource tenants', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('removeSingle: only required params', async () => {
     const responsePromise = client.users.tenants.removeSingle('tenant_id', { user_id: 'user_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -104,7 +104,7 @@ describe('resource tenants', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('removeSingle: required and optional params', async () => {
     const response = await client.users.tenants.removeSingle('tenant_id', { user_id: 'user_id' });
   });

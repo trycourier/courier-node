@@ -8,7 +8,7 @@ const client = new Courier({
 });
 
 describe('resource versions', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.tenants.templates.versions.retrieve('version', {
       tenant_id: 'tenant_id',
@@ -23,7 +23,7 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.tenants.templates.versions.retrieve('version', {
       tenant_id: 'tenant_id',

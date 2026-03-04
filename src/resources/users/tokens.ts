@@ -98,14 +98,13 @@ export class Tokens extends APIResource {
    * ```ts
    * await client.users.tokens.addSingle('token', {
    *   user_id: 'user_id',
-   *   body_token: 'token',
    *   provider_key: 'firebase-fcm',
    * });
    * ```
    */
-  addSingle(pathToken: string, params: TokenAddSingleParams, options?: RequestOptions): APIPromise<void> {
+  addSingle(token: string, params: TokenAddSingleParams, options?: RequestOptions): APIPromise<void> {
     const { user_id, ...body } = params;
-    return this._client.put(path`/users/${user_id}/tokens/${pathToken}`, {
+    return this._client.put(path`/users/${user_id}/tokens/${token}`, {
       body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
@@ -271,11 +270,6 @@ export interface TokenAddSingleParams {
    * Path param: The user's ID. This can be any uniquely identifiable string.
    */
   user_id: string;
-
-  /**
-   * Body param: Full body of the token. Must match token in URL path parameter.
-   */
-  body_token: string;
 
   /**
    * Body param
