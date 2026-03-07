@@ -1,5 +1,19 @@
 # Changelog
 
+## 7.7.2 (2026-03-07)
+
+Full Changelog: [v7.7.1...v7.7.2](https://github.com/trycourier/courier-node/compare/v7.7.1...v7.7.2)
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([4a5307f](https://github.com/trycourier/courier-node/commit/4a5307f2571ffebd68ee7fb92f776887cbb2f801))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([982eea2](https://github.com/trycourier/courier-node/commit/982eea2623aed2b3f0657ddab135b5528361164e))
+* **internal:** codegen related update ([4549f6e](https://github.com/trycourier/courier-node/commit/4549f6e148d525bf189113c50c840484e6718d62))
+
 ## 7.7.1 (2026-03-03)
 
 Full Changelog: [v7.7.0...v7.7.1](https://github.com/trycourier/courier-node/compare/v7.7.0...v7.7.1)
