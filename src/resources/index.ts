@@ -59,6 +59,15 @@ export {
 } from './bulk';
 export { Inbound, type InboundTrackEventResponse, type InboundTrackEventParams } from './inbound';
 export {
+  Journeys,
+  type Journey,
+  type JourneysInvokeRequest,
+  type JourneysInvokeResponse,
+  type JourneysListResponse,
+  type JourneyListParams,
+  type JourneyInvokeParams,
+} from './journeys';
+export {
   Lists,
   type PutSubscriptionsRecipient,
   type SubscriptionList,

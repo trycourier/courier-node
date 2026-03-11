@@ -140,6 +140,20 @@ Methods:
 - <code title="post /automations/invoke">client.automations.invoke.<a href="./src/resources/automations/invoke.ts">invokeAdHoc</a>({ ...params }) -> AutomationInvokeResponse</code>
 - <code title="post /automations/{templateId}/invoke">client.automations.invoke.<a href="./src/resources/automations/invoke.ts">invokeByTemplate</a>(templateID, { ...params }) -> AutomationInvokeResponse</code>
 
+# Journeys
+
+Types:
+
+- <code><a href="./src/resources/journeys.ts">Journey</a></code>
+- <code><a href="./src/resources/journeys.ts">JourneysInvokeRequest</a></code>
+- <code><a href="./src/resources/journeys.ts">JourneysInvokeResponse</a></code>
+- <code><a href="./src/resources/journeys.ts">JourneysListResponse</a></code>
+
+Methods:
+
+- <code title="get /journeys">client.journeys.<a href="./src/resources/journeys.ts">list</a>({ ...params }) -> JourneysListResponse</code>
+- <code title="post /journeys/{templateId}/invoke">client.journeys.<a href="./src/resources/journeys.ts">invoke</a>(templateID, { ...params }) -> JourneysInvokeResponse</code>
+
 # Brands
 
 Types:

@@ -68,6 +68,15 @@ import {
 } from './resources/bulk';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
+  Journey,
+  JourneyInvokeParams,
+  JourneyListParams,
+  Journeys,
+  JourneysInvokeRequest,
+  JourneysInvokeResponse,
+  JourneysListResponse,
+} from './resources/journeys';
+import {
   MessageContentResponse,
   MessageDetails,
   MessageHistoryParams,
@@ -840,6 +849,7 @@ export class Courier {
   auditEvents: API.AuditEvents = new API.AuditEvents(this);
   auth: API.Auth = new API.Auth(this);
   automations: API.Automations = new API.Automations(this);
+  journeys: API.Journeys = new API.Journeys(this);
   brands: API.Brands = new API.Brands(this);
   bulk: API.Bulk = new API.Bulk(this);
   inbound: API.Inbound = new API.Inbound(this);
@@ -858,6 +868,7 @@ Courier.Audiences = Audiences;
 Courier.AuditEvents = AuditEvents;
 Courier.Auth = Auth;
 Courier.Automations = Automations;
+Courier.Journeys = Journeys;
 Courier.Brands = Brands;
 Courier.Bulk = Bulk;
 Courier.Inbound = Inbound;
@@ -909,6 +920,16 @@ export declare namespace Courier {
     type AutomationTemplate as AutomationTemplate,
     type AutomationTemplateListResponse as AutomationTemplateListResponse,
     type AutomationListParams as AutomationListParams,
+  };
+
+  export {
+    Journeys as Journeys,
+    type Journey as Journey,
+    type JourneysInvokeRequest as JourneysInvokeRequest,
+    type JourneysInvokeResponse as JourneysInvokeResponse,
+    type JourneysListResponse as JourneysListResponse,
+    type JourneyListParams as JourneyListParams,
+    type JourneyInvokeParams as JourneyInvokeParams,
   };
 
   export {
