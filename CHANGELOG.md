@@ -1,5 +1,26 @@
 # Changelog
 
+## 7.8.0 (2026-03-12)
+
+Full Changelog: [v7.7.1...v7.8.0](https://github.com/trycourier/courier-node/compare/v7.7.1...v7.8.0)
+
+### Features
+
+* **api:** add journeys resource with list and invoke methods ([fa91ce8](https://github.com/trycourier/courier-node/commit/fa91ce8ccf3dae80a6b6195ee2090d7c690352c3))
+
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([4a5307f](https://github.com/trycourier/courier-node/commit/4a5307f2571ffebd68ee7fb92f776887cbb2f801))
+* **types:** make timestamp fields optional in MessageDetails ([6cd35c3](https://github.com/trycourier/courier-node/commit/6cd35c3f9b8682077be6e7677e88e646d1a9b59a))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([982eea2](https://github.com/trycourier/courier-node/commit/982eea2623aed2b3f0657ddab135b5528361164e))
+* **internal:** codegen related update ([4549f6e](https://github.com/trycourier/courier-node/commit/4549f6e148d525bf189113c50c840484e6718d62))
+* **internal:** update dependencies to address dependabot vulnerabilities ([a69843f](https://github.com/trycourier/courier-node/commit/a69843f50b7d00a7ebde2061f923fc4be5f9e7c3))
+
 ## 7.7.1 (2026-03-03)
 
 Full Changelog: [v7.7.0...v7.7.1](https://github.com/trycourier/courier-node/compare/v7.7.0...v7.7.1)
