@@ -68,6 +68,15 @@ import {
 } from './resources/bulk';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
+  Journey,
+  JourneyInvokeParams,
+  JourneyListParams,
+  Journeys,
+  JourneysInvokeRequest,
+  JourneysInvokeResponse,
+  JourneysListResponse,
+} from './resources/journeys';
+import {
   MessageContentResponse,
   MessageDetails,
   MessageHistoryParams,
@@ -364,8 +373,9 @@ export class Courier {
       : new URL(baseURL + (baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
 
     const defaultQuery = this.defaultQuery();
-    if (!isEmptyObj(defaultQuery)) {
-      query = { ...defaultQuery, ...query };
+    const pathQuery = Object.fromEntries(url.searchParams);
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
@@ -674,9 +684,9 @@ export class Courier {
       }
     }
 
-    // If the API asks us to wait a certain amount of time (and it's a reasonable amount),
-    // just do what it says, but otherwise calculate a default
-    if (!(timeoutMillis && 0 <= timeoutMillis && timeoutMillis < 60 * 1000)) {
+    // If the API asks us to wait a certain amount of time, just do what it
+    // says, but otherwise calculate a default
+    if (timeoutMillis === undefined) {
       const maxRetries = options.maxRetries ?? this.maxRetries;
       timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
     }
@@ -839,6 +849,7 @@ export class Courier {
   auditEvents: API.AuditEvents = new API.AuditEvents(this);
   auth: API.Auth = new API.Auth(this);
   automations: API.Automations = new API.Automations(this);
+  journeys: API.Journeys = new API.Journeys(this);
   brands: API.Brands = new API.Brands(this);
   bulk: API.Bulk = new API.Bulk(this);
   inbound: API.Inbound = new API.Inbound(this);
@@ -857,6 +868,7 @@ Courier.Audiences = Audiences;
 Courier.AuditEvents = AuditEvents;
 Courier.Auth = Auth;
 Courier.Automations = Automations;
+Courier.Journeys = Journeys;
 Courier.Brands = Brands;
 Courier.Bulk = Bulk;
 Courier.Inbound = Inbound;
@@ -908,6 +920,16 @@ export declare namespace Courier {
     type AutomationTemplate as AutomationTemplate,
     type AutomationTemplateListResponse as AutomationTemplateListResponse,
     type AutomationListParams as AutomationListParams,
+  };
+
+  export {
+    Journeys as Journeys,
+    type Journey as Journey,
+    type JourneysInvokeRequest as JourneysInvokeRequest,
+    type JourneysInvokeResponse as JourneysInvokeResponse,
+    type JourneysListResponse as JourneysListResponse,
+    type JourneyListParams as JourneyListParams,
+    type JourneyInvokeParams as JourneyInvokeParams,
   };
 
   export {

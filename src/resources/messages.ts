@@ -62,18 +62,6 @@ export interface MessageDetails {
   id: string;
 
   /**
-   * A UTC timestamp at which the recipient clicked on a tracked link for the first
-   * time. Stored as a millisecond representation of the Unix epoch.
-   */
-  clicked: number;
-
-  /**
-   * A UTC timestamp at which the Integration provider delivered the message. Stored
-   * as a millisecond representation of the Unix epoch.
-   */
-  delivered: number;
-
-  /**
    * A UTC timestamp at which Courier received the message request. Stored as a
    * millisecond representation of the Unix epoch.
    */
@@ -90,21 +78,9 @@ export interface MessageDetails {
   notification: string;
 
   /**
-   * A UTC timestamp at which the recipient opened a message for the first time.
-   * Stored as a millisecond representation of the Unix epoch.
-   */
-  opened: number;
-
-  /**
    * A unique identifier associated with the recipient of the delivered message.
    */
   recipient: string;
-
-  /**
-   * A UTC timestamp at which Courier passed the message to the Integration provider.
-   * Stored as a millisecond representation of the Unix epoch.
-   */
-  sent: number;
 
   /**
    * The current status of the message.
@@ -127,9 +103,27 @@ export interface MessageDetails {
     | 'UNROUTABLE';
 
   /**
+   * A UTC timestamp at which the recipient clicked on a tracked link for the first
+   * time. Stored as a millisecond representation of the Unix epoch.
+   */
+  clicked?: number;
+
+  /**
+   * A UTC timestamp at which the Integration provider delivered the message. Stored
+   * as a millisecond representation of the Unix epoch.
+   */
+  delivered?: number;
+
+  /**
    * A message describing the error that occurred.
    */
   error?: string | null;
+
+  /**
+   * A UTC timestamp at which the recipient opened a message for the first time.
+   * Stored as a millisecond representation of the Unix epoch.
+   */
+  opened?: number;
 
   /**
    * The reason for the current status of the message.
@@ -145,6 +139,12 @@ export interface MessageDetails {
     | 'UNPUBLISHED'
     | 'UNSUBSCRIBED'
     | null;
+
+  /**
+   * A UTC timestamp at which Courier passed the message to the Integration provider.
+   * Stored as a millisecond representation of the Unix epoch.
+   */
+  sent?: number;
 }
 
 export interface MessageRetrieveResponse extends MessageDetails {
