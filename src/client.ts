@@ -113,9 +113,18 @@ import {
 import {
   BaseCheck,
   Check,
+  NotificationCreateParams,
   NotificationGetContent,
   NotificationListParams,
   NotificationListResponse,
+  NotificationReplaceParams,
+  NotificationRetrieveParams,
+  NotificationTemplateCreateRequest,
+  NotificationTemplateGetResponse,
+  NotificationTemplateMutationResponse,
+  NotificationTemplatePayload,
+  NotificationTemplateSummary,
+  NotificationTemplateUpdateRequest,
   Notifications,
 } from './resources/notifications/notifications';
 import {
@@ -1000,8 +1009,17 @@ export declare namespace Courier {
     type BaseCheck as BaseCheck,
     type Check as Check,
     type NotificationGetContent as NotificationGetContent,
+    type NotificationTemplateCreateRequest as NotificationTemplateCreateRequest,
+    type NotificationTemplateGetResponse as NotificationTemplateGetResponse,
+    type NotificationTemplateMutationResponse as NotificationTemplateMutationResponse,
+    type NotificationTemplatePayload as NotificationTemplatePayload,
+    type NotificationTemplateSummary as NotificationTemplateSummary,
+    type NotificationTemplateUpdateRequest as NotificationTemplateUpdateRequest,
     type NotificationListResponse as NotificationListResponse,
+    type NotificationCreateParams as NotificationCreateParams,
+    type NotificationRetrieveParams as NotificationRetrieveParams,
     type NotificationListParams as NotificationListParams,
+    type NotificationReplaceParams as NotificationReplaceParams,
   };
 
   export {
