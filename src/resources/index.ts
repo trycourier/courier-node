@@ -91,8 +91,17 @@ export {
   type BaseCheck,
   type Check,
   type NotificationGetContent,
+  type NotificationTemplateCreateRequest,
+  type NotificationTemplateGetResponse,
+  type NotificationTemplateMutationResponse,
+  type NotificationTemplatePayload,
+  type NotificationTemplateSummary,
+  type NotificationTemplateUpdateRequest,
   type NotificationListResponse,
+  type NotificationCreateParams,
+  type NotificationRetrieveParams,
   type NotificationListParams,
+  type NotificationReplaceParams,
 } from './notifications/notifications';
 export {
   Profiles,
