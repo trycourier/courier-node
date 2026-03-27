@@ -102,15 +102,38 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Publish the current draft of a notification template.
+   * List versions of a notification template.
+   *
+   * @example
+   * ```ts
+   * const notificationTemplateVersionListResponse =
+   *   await client.notifications.listVersions('id');
+   * ```
+   */
+  listVersions(
+    id: string,
+    query: NotificationListVersionsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<NotificationTemplateVersionListResponse> {
+    return this._client.get(path`/notifications/${id}/versions`, { query, ...options });
+  }
+
+  /**
+   * Publish a notification template. Publishes the current draft by default. Pass a
+   * version in the request body to publish a specific historical version.
    *
    * @example
    * ```ts
    * await client.notifications.publish('id');
    * ```
    */
-  publish(id: string, options?: RequestOptions): APIPromise<void> {
+  publish(
+    id: string,
+    body: NotificationPublishParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
     return this._client.post(path`/notifications/${id}/publish`, {
+      body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -384,6 +407,17 @@ export namespace NotificationTemplatePayload {
 }
 
 /**
+ * Optional request body for publishing a notification template. Omit or send an
+ * empty object to publish the current draft.
+ */
+export interface NotificationTemplatePublishRequest {
+  /**
+   * Historical version to publish (e.g. "v001"). Omit to publish the current draft.
+   */
+  version?: string;
+}
+
+/**
  * V2 (CDS) template summary returned in list responses.
  */
 export interface NotificationTemplateSummary {
@@ -432,6 +466,38 @@ export interface NotificationTemplateUpdateRequest {
    * the response. Defaults to "DRAFT".
    */
   state?: 'DRAFT' | 'PUBLISHED';
+}
+
+export interface NotificationTemplateVersionListResponse {
+  paging: Shared.Paging;
+
+  versions: Array<VersionNode>;
+}
+
+/**
+ * A version entry for a notification template.
+ */
+export interface VersionNode {
+  /**
+   * Epoch milliseconds when this version was created.
+   */
+  created: number;
+
+  /**
+   * User ID of the version creator.
+   */
+  creator: string;
+
+  /**
+   * Version identifier. One of "draft", "published:vNNN" (current published
+   * version), or "vNNN" (historical version).
+   */
+  version: string;
+
+  /**
+   * Whether the draft has unpublished changes. Only present on the draft version.
+   */
+  has_changes?: boolean;
 }
 
 export interface NotificationListResponse {
@@ -521,6 +587,25 @@ export interface NotificationListParams {
   notes?: boolean | null;
 }
 
+export interface NotificationListVersionsParams {
+  /**
+   * Opaque pagination cursor from a previous response. Omit for the first page.
+   */
+  cursor?: string;
+
+  /**
+   * Maximum number of versions to return per page. Default 10, max 10.
+   */
+  limit?: number;
+}
+
+export interface NotificationPublishParams {
+  /**
+   * Historical version to publish (e.g. "v001"). Omit to publish the current draft.
+   */
+  version?: string;
+}
+
 export interface NotificationReplaceParams {
   /**
    * Full document shape used in POST and PUT request bodies, and returned inside the
@@ -547,12 +632,17 @@ export declare namespace Notifications {
     type NotificationTemplateGetResponse as NotificationTemplateGetResponse,
     type NotificationTemplateMutationResponse as NotificationTemplateMutationResponse,
     type NotificationTemplatePayload as NotificationTemplatePayload,
+    type NotificationTemplatePublishRequest as NotificationTemplatePublishRequest,
     type NotificationTemplateSummary as NotificationTemplateSummary,
     type NotificationTemplateUpdateRequest as NotificationTemplateUpdateRequest,
+    type NotificationTemplateVersionListResponse as NotificationTemplateVersionListResponse,
+    type VersionNode as VersionNode,
     type NotificationListResponse as NotificationListResponse,
     type NotificationCreateParams as NotificationCreateParams,
     type NotificationRetrieveParams as NotificationRetrieveParams,
     type NotificationListParams as NotificationListParams,
+    type NotificationListVersionsParams as NotificationListVersionsParams,
+    type NotificationPublishParams as NotificationPublishParams,
     type NotificationReplaceParams as NotificationReplaceParams,
   };
 

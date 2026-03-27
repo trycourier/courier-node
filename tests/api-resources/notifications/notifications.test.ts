@@ -104,6 +104,30 @@ describe('resource notifications', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('listVersions', async () => {
+    const responsePromise = client.notifications.listVersions('id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('listVersions: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.notifications.listVersions(
+        'id',
+        { cursor: 'cursor', limit: 10 },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Courier.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('publish', async () => {
     const responsePromise = client.notifications.publish('id');
     const rawResponse = await responsePromise.asResponse();
@@ -113,6 +137,14 @@ describe('resource notifications', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('publish: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.notifications.publish('id', { version: 'v321669910225' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Courier.NotFoundError);
   });
 
   // Mock server tests are disabled
