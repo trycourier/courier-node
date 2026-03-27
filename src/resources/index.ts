@@ -95,12 +95,17 @@ export {
   type NotificationTemplateGetResponse,
   type NotificationTemplateMutationResponse,
   type NotificationTemplatePayload,
+  type NotificationTemplatePublishRequest,
   type NotificationTemplateSummary,
   type NotificationTemplateUpdateRequest,
+  type NotificationTemplateVersionListResponse,
+  type VersionNode,
   type NotificationListResponse,
   type NotificationCreateParams,
   type NotificationRetrieveParams,
   type NotificationListParams,
+  type NotificationListVersionsParams,
+  type NotificationPublishParams,
   type NotificationReplaceParams,
 } from './notifications/notifications';
 export {

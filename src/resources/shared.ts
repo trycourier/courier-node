@@ -171,7 +171,14 @@ export type ElementalNode =
   | ElementalImageNodeWithType
   | ElementalActionNodeWithType
   | ElementalDividerNodeWithType
-  | ElementalQuoteNodeWithType;
+  | ElementalQuoteNodeWithType
+  | ElementalNode.UnionMember7;
+
+export namespace ElementalNode {
+  export interface UnionMember7 extends Shared.ElementalBaseNode {
+    type?: 'html';
+  }
+}
 
 export interface ElementalQuoteNodeWithType extends ElementalBaseNode {
   type?: 'quote';
