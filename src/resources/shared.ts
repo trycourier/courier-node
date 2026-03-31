@@ -144,6 +144,10 @@ export interface ElementalDividerNodeWithType extends ElementalBaseNode {
   type?: 'divider';
 }
 
+export interface ElementalHTMLNodeWithType extends ElementalBaseNode {
+  type?: 'html';
+}
+
 export interface ElementalImageNodeWithType extends ElementalBaseNode {
   type?: 'image';
 }
@@ -172,13 +176,7 @@ export type ElementalNode =
   | ElementalActionNodeWithType
   | ElementalDividerNodeWithType
   | ElementalQuoteNodeWithType
-  | ElementalNode.UnionMember7;
-
-export namespace ElementalNode {
-  export interface UnionMember7 extends Shared.ElementalBaseNode {
-    type?: 'html';
-  }
-}
+  | ElementalHTMLNodeWithType;
 
 export interface ElementalQuoteNodeWithType extends ElementalBaseNode {
   type?: 'quote';

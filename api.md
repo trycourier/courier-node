@@ -19,6 +19,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">ElementalContent</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalContentSugar</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalDividerNodeWithType</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalHTMLNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalImageNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalMetaNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalNode</a></code>
