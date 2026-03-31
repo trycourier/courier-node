@@ -1088,6 +1088,7 @@ export declare namespace Courier {
   export type ElementalContent = API.ElementalContent;
   export type ElementalContentSugar = API.ElementalContentSugar;
   export type ElementalDividerNodeWithType = API.ElementalDividerNodeWithType;
+  export type ElementalHTMLNodeWithType = API.ElementalHTMLNodeWithType;
   export type ElementalImageNodeWithType = API.ElementalImageNodeWithType;
   export type ElementalMetaNodeWithType = API.ElementalMetaNodeWithType;
   export type ElementalNode = API.ElementalNode;
