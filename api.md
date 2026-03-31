@@ -8,7 +8,9 @@ Types:
 - <code><a href="./src/resources/shared.ts">AudienceFilter</a></code>
 - <code><a href="./src/resources/shared.ts">AudienceFilterConfig</a></code>
 - <code><a href="./src/resources/shared.ts">AudienceRecipient</a></code>
+- <code><a href="./src/resources/shared.ts">Channel</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelClassification</a></code>
+- <code><a href="./src/resources/shared.ts">ChannelMetadata</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
 - <code><a href="./src/resources/shared.ts">DeviceType</a></code>
 - <code><a href="./src/resources/shared.ts">Discord</a></code>
@@ -32,9 +34,13 @@ Types:
 - <code><a href="./src/resources/shared.ts">ListFilter</a></code>
 - <code><a href="./src/resources/shared.ts">ListPatternRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">ListRecipient</a></code>
+- <code><a href="./src/resources/shared.ts">MessageChannels</a></code>
 - <code><a href="./src/resources/shared.ts">MessageContext</a></code>
+- <code><a href="./src/resources/shared.ts">MessageProviders</a></code>
+- <code><a href="./src/resources/shared.ts">MessageProvidersType</a></code>
 - <code><a href="./src/resources/shared.ts">MessageRouting</a></code>
 - <code><a href="./src/resources/shared.ts">MessageRoutingChannel</a></code>
+- <code><a href="./src/resources/shared.ts">Metadata</a></code>
 - <code><a href="./src/resources/shared.ts">MsTeams</a></code>
 - <code><a href="./src/resources/shared.ts">MsTeamsBaseProperties</a></code>
 - <code><a href="./src/resources/shared.ts">MsTeamsRecipient</a></code>
@@ -61,6 +67,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">SlackBaseProperties</a></code>
 - <code><a href="./src/resources/shared.ts">SlackRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">TextStyle</a></code>
+- <code><a href="./src/resources/shared.ts">Timeouts</a></code>
 - <code><a href="./src/resources/shared.ts">Token</a></code>
 - <code><a href="./src/resources/shared.ts">UserProfile</a></code>
 - <code><a href="./src/resources/shared.ts">UserProfileFirebaseToken</a></code>
@@ -312,6 +319,25 @@ Methods:
 - <code title="put /notifications/{id}/{submissionId}/checks">client.notifications.checks.<a href="./src/resources/notifications/checks.ts">update</a>(submissionID, { ...params }) -> CheckUpdateResponse</code>
 - <code title="get /notifications/{id}/{submissionId}/checks">client.notifications.checks.<a href="./src/resources/notifications/checks.ts">list</a>(submissionID, { ...params }) -> CheckListResponse</code>
 - <code title="delete /notifications/{id}/{submissionId}/checks">client.notifications.checks.<a href="./src/resources/notifications/checks.ts">delete</a>(submissionID, { ...params }) -> void</code>
+
+# RoutingStrategies
+
+Types:
+
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyCreateRequest</a></code>
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyGetResponse</a></code>
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyListResponse</a></code>
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyMutationResponse</a></code>
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyReplaceRequest</a></code>
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategySummary</a></code>
+
+Methods:
+
+- <code title="post /routing-strategies">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">create</a>({ ...params }) -> RoutingStrategyMutationResponse</code>
+- <code title="get /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">retrieve</a>(id) -> RoutingStrategyGetResponse</code>
+- <code title="get /routing-strategies">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">list</a>({ ...params }) -> RoutingStrategyListResponse</code>
+- <code title="delete /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">archive</a>(id) -> void</code>
+- <code title="put /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">replace</a>(id, { ...params }) -> RoutingStrategyMutationResponse</code>
 
 # Profiles
 

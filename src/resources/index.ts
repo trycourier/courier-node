@@ -119,6 +119,18 @@ export {
   type ProfileReplaceParams,
 } from './profiles/profiles';
 export { Requests } from './requests';
+export {
+  RoutingStrategies,
+  type RoutingStrategyCreateRequest,
+  type RoutingStrategyGetResponse,
+  type RoutingStrategyListResponse,
+  type RoutingStrategyMutationResponse,
+  type RoutingStrategyReplaceRequest,
+  type RoutingStrategySummary,
+  type RoutingStrategyCreateParams,
+  type RoutingStrategyListParams,
+  type RoutingStrategyReplaceParams,
+} from './routing-strategies';
 export { Send, type SendMessageResponse, type SendMessageParams } from './send';
 export {
   Tenants,
