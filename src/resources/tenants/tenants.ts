@@ -293,85 +293,18 @@ export interface TenantTemplateInput {
   /**
    * Channel-specific delivery configuration (email, SMS, push, etc.)
    */
-  channels?: { [key: string]: TenantTemplateInput.Channels };
+  channels?: Shared.MessageChannels;
 
   /**
    * Provider-specific delivery configuration for routing to specific email/SMS
    * providers
    */
-  providers?: { [key: string]: TenantTemplateInput.Providers };
+  providers?: Shared.MessageProviders;
 
   /**
    * Message routing configuration for multi-channel delivery strategies
    */
   routing?: Shared.MessageRouting;
-}
-
-export namespace TenantTemplateInput {
-  export interface Channels {
-    /**
-     * Brand id used for rendering.
-     */
-    brand_id?: string | null;
-
-    /**
-     * JS conditional with access to data/profile.
-     */
-    if?: string | null;
-
-    metadata?: Channels.Metadata | null;
-
-    /**
-     * Channel specific overrides.
-     */
-    override?: { [key: string]: unknown } | null;
-
-    /**
-     * Providers enabled for this channel.
-     */
-    providers?: Array<string> | null;
-
-    /**
-     * Defaults to `single`.
-     */
-    routing_method?: 'all' | 'single' | null;
-
-    timeouts?: Channels.Timeouts | null;
-  }
-
-  export namespace Channels {
-    export interface Metadata {
-      utm?: Shared.Utm | null;
-    }
-
-    export interface Timeouts {
-      channel?: number | null;
-
-      provider?: number | null;
-    }
-  }
-
-  export interface Providers {
-    /**
-     * JS conditional with access to data/profile.
-     */
-    if?: string | null;
-
-    metadata?: Providers.Metadata | null;
-
-    /**
-     * Provider-specific overrides.
-     */
-    override?: { [key: string]: unknown } | null;
-
-    timeouts?: number | null;
-  }
-
-  export namespace Providers {
-    export interface Metadata {
-      utm?: Shared.Utm | null;
-    }
-  }
 }
 
 export interface TenantListResponse {

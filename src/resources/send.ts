@@ -55,7 +55,7 @@ export namespace SendMessageParams {
      * Define run-time configuration for channels. Valid ChannelId's: email, sms, push,
      * inbox, direct_message, banner, webhook.
      */
-    channels?: { [key: string]: Message.Channels } | null;
+    channels?: Shared.MessageChannels | null;
 
     /**
      * Describes content that will work for email, inbox, push, chat, or any channel
@@ -75,7 +75,7 @@ export namespace SendMessageParams {
 
     preferences?: Message.Preferences | null;
 
-    providers?: { [key: string]: Message.Providers } | null;
+    providers?: Shared.MessageProviders | null;
 
     /**
      * Customize which channels/providers Courier may deliver the message through.
@@ -112,49 +112,6 @@ export namespace SendMessageParams {
   }
 
   export namespace Message {
-    export interface Channels {
-      /**
-       * Brand id used for rendering.
-       */
-      brand_id?: string | null;
-
-      /**
-       * JS conditional with access to data/profile.
-       */
-      if?: string | null;
-
-      metadata?: Channels.Metadata | null;
-
-      /**
-       * Channel specific overrides.
-       */
-      override?: { [key: string]: unknown } | null;
-
-      /**
-       * Providers enabled for this channel.
-       */
-      providers?: Array<string> | null;
-
-      /**
-       * Defaults to `single`.
-       */
-      routing_method?: 'all' | 'single' | null;
-
-      timeouts?: Channels.Timeouts | null;
-    }
-
-    export namespace Channels {
-      export interface Metadata {
-        utm?: Shared.Utm | null;
-      }
-
-      export interface Timeouts {
-        channel?: number | null;
-
-        provider?: number | null;
-      }
-    }
-
     export interface Delay {
       /**
        * The duration of the delay in milliseconds.
@@ -201,28 +158,6 @@ export namespace SendMessageParams {
        * The subscription topic to apply to the message.
        */
       subscription_topic_id: string;
-    }
-
-    export interface Providers {
-      /**
-       * JS conditional with access to data/profile.
-       */
-      if?: string | null;
-
-      metadata?: Providers.Metadata | null;
-
-      /**
-       * Provider-specific overrides.
-       */
-      override?: { [key: string]: unknown } | null;
-
-      timeouts?: number | null;
-    }
-
-    export namespace Providers {
-      export interface Metadata {
-        utm?: Shared.Utm | null;
-      }
     }
 
     /**

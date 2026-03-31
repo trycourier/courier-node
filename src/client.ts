@@ -87,6 +87,18 @@ import {
   Messages,
 } from './resources/messages';
 import { Requests } from './resources/requests';
+import {
+  RoutingStrategies,
+  RoutingStrategyCreateParams,
+  RoutingStrategyCreateRequest,
+  RoutingStrategyGetResponse,
+  RoutingStrategyListParams,
+  RoutingStrategyListResponse,
+  RoutingStrategyMutationResponse,
+  RoutingStrategyReplaceParams,
+  RoutingStrategyReplaceRequest,
+  RoutingStrategySummary,
+} from './resources/routing-strategies';
 import { Send, SendMessageParams, SendMessageResponse } from './resources/send';
 import {
   TranslationRetrieveParams,
@@ -871,6 +883,7 @@ export class Courier {
   messages: API.Messages = new API.Messages(this);
   requests: API.Requests = new API.Requests(this);
   notifications: API.Notifications = new API.Notifications(this);
+  routingStrategies: API.RoutingStrategies = new API.RoutingStrategies(this);
   profiles: API.Profiles = new API.Profiles(this);
   tenants: API.Tenants = new API.Tenants(this);
   translations: API.Translations = new API.Translations(this);
@@ -890,6 +903,7 @@ Courier.Lists = Lists;
 Courier.Messages = Messages;
 Courier.Requests = Requests;
 Courier.Notifications = Notifications;
+Courier.RoutingStrategies = RoutingStrategies;
 Courier.Profiles = Profiles;
 Courier.Tenants = Tenants;
 Courier.Translations = Translations;
@@ -1033,6 +1047,19 @@ export declare namespace Courier {
   };
 
   export {
+    RoutingStrategies as RoutingStrategies,
+    type RoutingStrategyCreateRequest as RoutingStrategyCreateRequest,
+    type RoutingStrategyGetResponse as RoutingStrategyGetResponse,
+    type RoutingStrategyListResponse as RoutingStrategyListResponse,
+    type RoutingStrategyMutationResponse as RoutingStrategyMutationResponse,
+    type RoutingStrategyReplaceRequest as RoutingStrategyReplaceRequest,
+    type RoutingStrategySummary as RoutingStrategySummary,
+    type RoutingStrategyCreateParams as RoutingStrategyCreateParams,
+    type RoutingStrategyListParams as RoutingStrategyListParams,
+    type RoutingStrategyReplaceParams as RoutingStrategyReplaceParams,
+  };
+
+  export {
     Profiles as Profiles,
     type SubscribeToListsRequestItem as SubscribeToListsRequestItem,
     type ProfileCreateResponse as ProfileCreateResponse,
@@ -1077,7 +1104,9 @@ export declare namespace Courier {
   export type AudienceFilter = API.AudienceFilter;
   export type AudienceFilterConfig = API.AudienceFilterConfig;
   export type AudienceRecipient = API.AudienceRecipient;
+  export type Channel = API.Channel;
   export type ChannelClassification = API.ChannelClassification;
+  export type ChannelMetadata = API.ChannelMetadata;
   export type ChannelPreference = API.ChannelPreference;
   export type DeviceType = API.DeviceType;
   export type Discord = API.Discord;
@@ -1101,9 +1130,13 @@ export declare namespace Courier {
   export type ListFilter = API.ListFilter;
   export type ListPatternRecipient = API.ListPatternRecipient;
   export type ListRecipient = API.ListRecipient;
+  export type MessageChannels = API.MessageChannels;
   export type MessageContext = API.MessageContext;
+  export type MessageProviders = API.MessageProviders;
+  export type MessageProvidersType = API.MessageProvidersType;
   export type MessageRouting = API.MessageRouting;
   export type MessageRoutingChannel = API.MessageRoutingChannel;
+  export type Metadata = API.Metadata;
   export type MsTeams = API.MsTeams;
   export type MsTeamsBaseProperties = API.MsTeamsBaseProperties;
   export type MsTeamsRecipient = API.MsTeamsRecipient;
@@ -1130,6 +1163,7 @@ export declare namespace Courier {
   export type SlackBaseProperties = API.SlackBaseProperties;
   export type SlackRecipient = API.SlackRecipient;
   export type TextStyle = API.TextStyle;
+  export type Timeouts = API.Timeouts;
   export type Token = API.Token;
   export type UserProfile = API.UserProfile;
   export type UserProfileFirebaseToken = API.UserProfileFirebaseToken;
