@@ -107,6 +107,32 @@ Methods:
 - <code title="delete /audiences/{audience_id}">client.audiences.<a href="./src/resources/audiences.ts">delete</a>(audienceID) -> void</code>
 - <code title="get /audiences/{audience_id}/members">client.audiences.<a href="./src/resources/audiences.ts">listMembers</a>(audienceID, { ...params }) -> AudienceListMembersResponse</code>
 
+# Providers
+
+Types:
+
+- <code><a href="./src/resources/providers/providers.ts">Provider</a></code>
+- <code><a href="./src/resources/providers/providers.ts">ProvidersCatalogEntry</a></code>
+- <code><a href="./src/resources/providers/providers.ts">ProviderListResponse</a></code>
+
+Methods:
+
+- <code title="post /providers">client.providers.<a href="./src/resources/providers/providers.ts">create</a>({ ...params }) -> Provider</code>
+- <code title="get /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">retrieve</a>(id) -> Provider</code>
+- <code title="post /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">update</a>(id, { ...params }) -> Provider</code>
+- <code title="get /providers">client.providers.<a href="./src/resources/providers/providers.ts">list</a>({ ...params }) -> ProviderListResponse</code>
+- <code title="delete /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">delete</a>(id) -> void</code>
+
+## Catalog
+
+Types:
+
+- <code><a href="./src/resources/providers/catalog.ts">CatalogListResponse</a></code>
+
+Methods:
+
+- <code title="get /providers/catalog">client.providers.catalog.<a href="./src/resources/providers/catalog.ts">list</a>({ ...params }) -> CatalogListResponse</code>
+
 # AuditEvents
 
 Types:

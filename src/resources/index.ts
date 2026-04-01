@@ -118,6 +118,15 @@ export {
   type ProfileUpdateParams,
   type ProfileReplaceParams,
 } from './profiles/profiles';
+export {
+  Providers,
+  type Provider,
+  type ProvidersCatalogEntry,
+  type ProviderListResponse,
+  type ProviderCreateParams,
+  type ProviderUpdateParams,
+  type ProviderListParams,
+} from './providers/providers';
 export { Requests } from './requests';
 export {
   RoutingStrategies,
