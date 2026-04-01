@@ -155,6 +155,15 @@ import {
   SubscribeToListsRequestItem,
 } from './resources/profiles/profiles';
 import {
+  Provider,
+  ProviderCreateParams,
+  ProviderListParams,
+  ProviderListResponse,
+  ProviderUpdateParams,
+  Providers,
+  ProvidersCatalogEntry,
+} from './resources/providers/providers';
+import {
   BaseTemplateTenantAssociation,
   DefaultPreferences,
   PostTenantTemplatePublishRequest,
@@ -872,6 +881,7 @@ export class Courier {
 
   send: API.Send = new API.Send(this);
   audiences: API.Audiences = new API.Audiences(this);
+  providers: API.Providers = new API.Providers(this);
   auditEvents: API.AuditEvents = new API.AuditEvents(this);
   auth: API.Auth = new API.Auth(this);
   automations: API.Automations = new API.Automations(this);
@@ -892,6 +902,7 @@ export class Courier {
 
 Courier.Send = Send;
 Courier.Audiences = Audiences;
+Courier.Providers = Providers;
 Courier.AuditEvents = AuditEvents;
 Courier.Auth = Auth;
 Courier.Automations = Automations;
@@ -927,6 +938,16 @@ export declare namespace Courier {
     type AudienceUpdateParams as AudienceUpdateParams,
     type AudienceListParams as AudienceListParams,
     type AudienceListMembersParams as AudienceListMembersParams,
+  };
+
+  export {
+    Providers as Providers,
+    type Provider as Provider,
+    type ProvidersCatalogEntry as ProvidersCatalogEntry,
+    type ProviderListResponse as ProviderListResponse,
+    type ProviderCreateParams as ProviderCreateParams,
+    type ProviderUpdateParams as ProviderUpdateParams,
+    type ProviderListParams as ProviderListParams,
   };
 
   export {
