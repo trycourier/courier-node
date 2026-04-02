@@ -8,6 +8,24 @@ import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Checks extends APIResource {
+  /**
+   * @example
+   * ```ts
+   * const check = await client.notifications.checks.update(
+   *   'submissionId',
+   *   {
+   *     id: 'id',
+   *     checks: [
+   *       {
+   *         id: 'id',
+   *         status: 'RESOLVED',
+   *         type: 'custom',
+   *       },
+   *     ],
+   *   },
+   * );
+   * ```
+   */
   update(
     submissionID: string,
     params: CheckUpdateParams,
@@ -17,6 +35,15 @@ export class Checks extends APIResource {
     return this._client.put(path`/notifications/${id}/${submissionID}/checks`, { body, ...options });
   }
 
+  /**
+   * @example
+   * ```ts
+   * const checks = await client.notifications.checks.list(
+   *   'submissionId',
+   *   { id: 'id' },
+   * );
+   * ```
+   */
   list(
     submissionID: string,
     params: CheckListParams,
@@ -26,6 +53,14 @@ export class Checks extends APIResource {
     return this._client.get(path`/notifications/${id}/${submissionID}/checks`, options);
   }
 
+  /**
+   * @example
+   * ```ts
+   * await client.notifications.checks.delete('submissionId', {
+   *   id: 'id',
+   * });
+   * ```
+   */
   delete(submissionID: string, params: CheckDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { id } = params;
     return this._client.delete(path`/notifications/${id}/${submissionID}/checks`, {

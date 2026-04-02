@@ -50,7 +50,42 @@ export interface AudienceRecipient {
   filters?: Array<AudienceFilter> | null;
 }
 
+export interface Channel {
+  /**
+   * Brand id used for rendering.
+   */
+  brand_id?: string | null;
+
+  /**
+   * JS conditional with access to data/profile.
+   */
+  if?: string | null;
+
+  metadata?: ChannelMetadata | null;
+
+  /**
+   * Channel specific overrides.
+   */
+  override?: { [key: string]: unknown } | null;
+
+  /**
+   * Providers enabled for this channel.
+   */
+  providers?: Array<string> | null;
+
+  /**
+   * Defaults to `single`.
+   */
+  routing_method?: 'all' | 'single' | null;
+
+  timeouts?: Timeouts | null;
+}
+
 export type ChannelClassification = 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox';
+
+export interface ChannelMetadata {
+  utm?: Utm | null;
+}
 
 export interface ChannelPreference {
   channel: ChannelClassification;
@@ -144,6 +179,10 @@ export interface ElementalDividerNodeWithType extends ElementalBaseNode {
   type?: 'divider';
 }
 
+export interface ElementalHTMLNodeWithType extends ElementalBaseNode {
+  type?: 'html';
+}
+
 export interface ElementalImageNodeWithType extends ElementalBaseNode {
   type?: 'image';
 }
@@ -171,7 +210,8 @@ export type ElementalNode =
   | ElementalImageNodeWithType
   | ElementalActionNodeWithType
   | ElementalDividerNodeWithType
-  | ElementalQuoteNodeWithType;
+  | ElementalQuoteNodeWithType
+  | ElementalHTMLNodeWithType;
 
 export interface ElementalQuoteNodeWithType extends ElementalBaseNode {
   type?: 'quote';
@@ -256,11 +296,31 @@ export interface ListRecipient {
   list_id?: string | null;
 }
 
+export type MessageChannels = { [key: string]: Channel };
+
 export interface MessageContext {
   /**
    * Tenant id used to load brand/default preferences/context.
    */
   tenant_id?: string | null;
+}
+
+export type MessageProviders = { [key: string]: MessageProvidersType };
+
+export interface MessageProvidersType {
+  /**
+   * JS conditional with access to data/profile.
+   */
+  if?: string | null;
+
+  metadata?: Metadata | null;
+
+  /**
+   * Provider-specific overrides.
+   */
+  override?: { [key: string]: unknown } | null;
+
+  timeouts?: number | null;
 }
 
 export interface MessageRouting {
@@ -270,6 +330,10 @@ export interface MessageRouting {
 }
 
 export type MessageRoutingChannel = string | MessageRouting;
+
+export interface Metadata {
+  utm?: Utm | null;
+}
 
 export type MsTeams =
   | SendToMsTeamsUserID
@@ -432,6 +496,12 @@ export interface SlackRecipient {
 }
 
 export type TextStyle = 'text' | 'h1' | 'h2' | 'subtext';
+
+export interface Timeouts {
+  channel?: number | null;
+
+  provider?: number | null;
+}
 
 export interface Token {
   token: string;

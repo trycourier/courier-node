@@ -1,5 +1,29 @@
 # Changelog
 
+## 7.9.0 (2026-04-01)
+
+Full Changelog: [v7.8.0...v7.9.0](https://github.com/trycourier/courier-node/compare/v7.8.0...v7.9.0)
+
+### Features
+
+* **api:** add create/retrieve/archive/publish/replace methods to notifications ([7c8e91f](https://github.com/trycourier/courier-node/commit/7c8e91f69567f279fc2697b3b5e267cf4aa1c69f))
+* **api:** add providers resource with CRUD and catalog endpoints ([a81a418](https://github.com/trycourier/courier-node/commit/a81a418a5f26c46dfb32f09d452f7c9d617226f8))
+* **api:** add routing strategies resource ([2287006](https://github.com/trycourier/courier-node/commit/2287006e9f3a461db7063c908940a73879bc1418))
+* **types:** add ElementalHTMLNodeWithType type ([e9bc05a](https://github.com/trycourier/courier-node/commit/e9bc05adea1f711c0a4d7460f91b27222119cbd2))
+* **types:** add html node variant to ElementalNode ([d24c791](https://github.com/trycourier/courier-node/commit/d24c791ad66fca04c4af1c8533391c1fb1201d69))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([7ccbdd7](https://github.com/trycourier/courier-node/commit/7ccbdd751f8bf30339d38815f087c7eff977fc3e))
+* **internal:** tweak CI branches ([9c79ef7](https://github.com/trycourier/courier-node/commit/9c79ef7bd1b804a9872c567e3f2aee93295805a9))
+* **internal:** update gitignore ([843949b](https://github.com/trycourier/courier-node/commit/843949b7a9a0dfee2e6a5a8ab4cf8b734f40addf))
+
+
+### Documentation
+
+* add AGENTS.md for AI coding assistants ([#232](https://github.com/trycourier/courier-node/issues/232)) ([1f7de4d](https://github.com/trycourier/courier-node/commit/1f7de4d0b66be43ccfe8c7d4864fa73cb7a96e42))
+
 ## 7.8.0 (2026-03-12)
 
 Full Changelog: [v7.7.1...v7.8.0](https://github.com/trycourier/courier-node/compare/v7.7.1...v7.8.0)

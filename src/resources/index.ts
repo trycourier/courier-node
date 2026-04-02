@@ -91,8 +91,22 @@ export {
   type BaseCheck,
   type Check,
   type NotificationGetContent,
+  type NotificationTemplateCreateRequest,
+  type NotificationTemplateGetResponse,
+  type NotificationTemplateMutationResponse,
+  type NotificationTemplatePayload,
+  type NotificationTemplatePublishRequest,
+  type NotificationTemplateSummary,
+  type NotificationTemplateUpdateRequest,
+  type NotificationTemplateVersionListResponse,
+  type VersionNode,
   type NotificationListResponse,
+  type NotificationCreateParams,
+  type NotificationRetrieveParams,
   type NotificationListParams,
+  type NotificationListVersionsParams,
+  type NotificationPublishParams,
+  type NotificationReplaceParams,
 } from './notifications/notifications';
 export {
   Profiles,
@@ -104,7 +118,28 @@ export {
   type ProfileUpdateParams,
   type ProfileReplaceParams,
 } from './profiles/profiles';
+export {
+  Providers,
+  type Provider,
+  type ProvidersCatalogEntry,
+  type ProviderListResponse,
+  type ProviderCreateParams,
+  type ProviderUpdateParams,
+  type ProviderListParams,
+} from './providers/providers';
 export { Requests } from './requests';
+export {
+  RoutingStrategies,
+  type RoutingStrategyCreateRequest,
+  type RoutingStrategyGetResponse,
+  type RoutingStrategyListResponse,
+  type RoutingStrategyMutationResponse,
+  type RoutingStrategyReplaceRequest,
+  type RoutingStrategySummary,
+  type RoutingStrategyCreateParams,
+  type RoutingStrategyListParams,
+  type RoutingStrategyReplaceParams,
+} from './routing-strategies';
 export { Send, type SendMessageResponse, type SendMessageParams } from './send';
 export {
   Tenants,

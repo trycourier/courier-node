@@ -8,7 +8,9 @@ Types:
 - <code><a href="./src/resources/shared.ts">AudienceFilter</a></code>
 - <code><a href="./src/resources/shared.ts">AudienceFilterConfig</a></code>
 - <code><a href="./src/resources/shared.ts">AudienceRecipient</a></code>
+- <code><a href="./src/resources/shared.ts">Channel</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelClassification</a></code>
+- <code><a href="./src/resources/shared.ts">ChannelMetadata</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelPreference</a></code>
 - <code><a href="./src/resources/shared.ts">DeviceType</a></code>
 - <code><a href="./src/resources/shared.ts">Discord</a></code>
@@ -19,6 +21,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">ElementalContent</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalContentSugar</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalDividerNodeWithType</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalHTMLNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalImageNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalMetaNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalNode</a></code>
@@ -31,9 +34,13 @@ Types:
 - <code><a href="./src/resources/shared.ts">ListFilter</a></code>
 - <code><a href="./src/resources/shared.ts">ListPatternRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">ListRecipient</a></code>
+- <code><a href="./src/resources/shared.ts">MessageChannels</a></code>
 - <code><a href="./src/resources/shared.ts">MessageContext</a></code>
+- <code><a href="./src/resources/shared.ts">MessageProviders</a></code>
+- <code><a href="./src/resources/shared.ts">MessageProvidersType</a></code>
 - <code><a href="./src/resources/shared.ts">MessageRouting</a></code>
 - <code><a href="./src/resources/shared.ts">MessageRoutingChannel</a></code>
+- <code><a href="./src/resources/shared.ts">Metadata</a></code>
 - <code><a href="./src/resources/shared.ts">MsTeams</a></code>
 - <code><a href="./src/resources/shared.ts">MsTeamsBaseProperties</a></code>
 - <code><a href="./src/resources/shared.ts">MsTeamsRecipient</a></code>
@@ -60,6 +67,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">SlackBaseProperties</a></code>
 - <code><a href="./src/resources/shared.ts">SlackRecipient</a></code>
 - <code><a href="./src/resources/shared.ts">TextStyle</a></code>
+- <code><a href="./src/resources/shared.ts">Timeouts</a></code>
 - <code><a href="./src/resources/shared.ts">Token</a></code>
 - <code><a href="./src/resources/shared.ts">UserProfile</a></code>
 - <code><a href="./src/resources/shared.ts">UserProfileFirebaseToken</a></code>
@@ -98,6 +106,32 @@ Methods:
 - <code title="get /audiences">client.audiences.<a href="./src/resources/audiences.ts">list</a>({ ...params }) -> AudienceListResponse</code>
 - <code title="delete /audiences/{audience_id}">client.audiences.<a href="./src/resources/audiences.ts">delete</a>(audienceID) -> void</code>
 - <code title="get /audiences/{audience_id}/members">client.audiences.<a href="./src/resources/audiences.ts">listMembers</a>(audienceID, { ...params }) -> AudienceListMembersResponse</code>
+
+# Providers
+
+Types:
+
+- <code><a href="./src/resources/providers/providers.ts">Provider</a></code>
+- <code><a href="./src/resources/providers/providers.ts">ProvidersCatalogEntry</a></code>
+- <code><a href="./src/resources/providers/providers.ts">ProviderListResponse</a></code>
+
+Methods:
+
+- <code title="post /providers">client.providers.<a href="./src/resources/providers/providers.ts">create</a>({ ...params }) -> Provider</code>
+- <code title="get /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">retrieve</a>(id) -> Provider</code>
+- <code title="post /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">update</a>(id, { ...params }) -> Provider</code>
+- <code title="get /providers">client.providers.<a href="./src/resources/providers/providers.ts">list</a>({ ...params }) -> ProviderListResponse</code>
+- <code title="delete /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">delete</a>(id) -> void</code>
+
+## Catalog
+
+Types:
+
+- <code><a href="./src/resources/providers/catalog.ts">CatalogListResponse</a></code>
+
+Methods:
+
+- <code title="get /providers/catalog">client.providers.catalog.<a href="./src/resources/providers/catalog.ts">list</a>({ ...params }) -> CatalogListResponse</code>
 
 # AuditEvents
 
@@ -271,11 +305,26 @@ Types:
 - <code><a href="./src/resources/notifications/notifications.ts">BaseCheck</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">Check</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationGetContent</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateCreateRequest</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateGetResponse</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateMutationResponse</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplatePayload</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplatePublishRequest</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateSummary</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateUpdateRequest</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateVersionListResponse</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">VersionNode</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationListResponse</a></code>
 
 Methods:
 
+- <code title="post /notifications">client.notifications.<a href="./src/resources/notifications/notifications.ts">create</a>({ ...params }) -> NotificationTemplateMutationResponse</code>
+- <code title="get /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">retrieve</a>(id, { ...params }) -> NotificationTemplateGetResponse</code>
 - <code title="get /notifications">client.notifications.<a href="./src/resources/notifications/notifications.ts">list</a>({ ...params }) -> NotificationListResponse</code>
+- <code title="delete /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">archive</a>(id) -> void</code>
+- <code title="get /notifications/{id}/versions">client.notifications.<a href="./src/resources/notifications/notifications.ts">listVersions</a>(id, { ...params }) -> NotificationTemplateVersionListResponse</code>
+- <code title="post /notifications/{id}/publish">client.notifications.<a href="./src/resources/notifications/notifications.ts">publish</a>(id, { ...params }) -> void</code>
+- <code title="put /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">replace</a>(id, { ...params }) -> NotificationTemplateMutationResponse</code>
 - <code title="get /notifications/{id}/content">client.notifications.<a href="./src/resources/notifications/notifications.ts">retrieveContent</a>(id) -> NotificationGetContent</code>
 
 ## Draft
@@ -296,6 +345,25 @@ Methods:
 - <code title="put /notifications/{id}/{submissionId}/checks">client.notifications.checks.<a href="./src/resources/notifications/checks.ts">update</a>(submissionID, { ...params }) -> CheckUpdateResponse</code>
 - <code title="get /notifications/{id}/{submissionId}/checks">client.notifications.checks.<a href="./src/resources/notifications/checks.ts">list</a>(submissionID, { ...params }) -> CheckListResponse</code>
 - <code title="delete /notifications/{id}/{submissionId}/checks">client.notifications.checks.<a href="./src/resources/notifications/checks.ts">delete</a>(submissionID, { ...params }) -> void</code>
+
+# RoutingStrategies
+
+Types:
+
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyCreateRequest</a></code>
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyGetResponse</a></code>
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyListResponse</a></code>
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyMutationResponse</a></code>
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyReplaceRequest</a></code>
+- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategySummary</a></code>
+
+Methods:
+
+- <code title="post /routing-strategies">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">create</a>({ ...params }) -> RoutingStrategyMutationResponse</code>
+- <code title="get /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">retrieve</a>(id) -> RoutingStrategyGetResponse</code>
+- <code title="get /routing-strategies">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">list</a>({ ...params }) -> RoutingStrategyListResponse</code>
+- <code title="delete /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">archive</a>(id) -> void</code>
+- <code title="put /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">replace</a>(id, { ...params }) -> RoutingStrategyMutationResponse</code>
 
 # Profiles
 

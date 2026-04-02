@@ -87,6 +87,18 @@ import {
   Messages,
 } from './resources/messages';
 import { Requests } from './resources/requests';
+import {
+  RoutingStrategies,
+  RoutingStrategyCreateParams,
+  RoutingStrategyCreateRequest,
+  RoutingStrategyGetResponse,
+  RoutingStrategyListParams,
+  RoutingStrategyListResponse,
+  RoutingStrategyMutationResponse,
+  RoutingStrategyReplaceParams,
+  RoutingStrategyReplaceRequest,
+  RoutingStrategySummary,
+} from './resources/routing-strategies';
 import { Send, SendMessageParams, SendMessageResponse } from './resources/send';
 import {
   TranslationRetrieveParams,
@@ -113,10 +125,24 @@ import {
 import {
   BaseCheck,
   Check,
+  NotificationCreateParams,
   NotificationGetContent,
   NotificationListParams,
   NotificationListResponse,
+  NotificationListVersionsParams,
+  NotificationPublishParams,
+  NotificationReplaceParams,
+  NotificationRetrieveParams,
+  NotificationTemplateCreateRequest,
+  NotificationTemplateGetResponse,
+  NotificationTemplateMutationResponse,
+  NotificationTemplatePayload,
+  NotificationTemplatePublishRequest,
+  NotificationTemplateSummary,
+  NotificationTemplateUpdateRequest,
+  NotificationTemplateVersionListResponse,
   Notifications,
+  VersionNode,
 } from './resources/notifications/notifications';
 import {
   ProfileCreateParams,
@@ -128,6 +154,15 @@ import {
   Profiles,
   SubscribeToListsRequestItem,
 } from './resources/profiles/profiles';
+import {
+  Provider,
+  ProviderCreateParams,
+  ProviderListParams,
+  ProviderListResponse,
+  ProviderUpdateParams,
+  Providers,
+  ProvidersCatalogEntry,
+} from './resources/providers/providers';
 import {
   BaseTemplateTenantAssociation,
   DefaultPreferences,
@@ -846,6 +881,7 @@ export class Courier {
 
   send: API.Send = new API.Send(this);
   audiences: API.Audiences = new API.Audiences(this);
+  providers: API.Providers = new API.Providers(this);
   auditEvents: API.AuditEvents = new API.AuditEvents(this);
   auth: API.Auth = new API.Auth(this);
   automations: API.Automations = new API.Automations(this);
@@ -857,6 +893,7 @@ export class Courier {
   messages: API.Messages = new API.Messages(this);
   requests: API.Requests = new API.Requests(this);
   notifications: API.Notifications = new API.Notifications(this);
+  routingStrategies: API.RoutingStrategies = new API.RoutingStrategies(this);
   profiles: API.Profiles = new API.Profiles(this);
   tenants: API.Tenants = new API.Tenants(this);
   translations: API.Translations = new API.Translations(this);
@@ -865,6 +902,7 @@ export class Courier {
 
 Courier.Send = Send;
 Courier.Audiences = Audiences;
+Courier.Providers = Providers;
 Courier.AuditEvents = AuditEvents;
 Courier.Auth = Auth;
 Courier.Automations = Automations;
@@ -876,6 +914,7 @@ Courier.Lists = Lists;
 Courier.Messages = Messages;
 Courier.Requests = Requests;
 Courier.Notifications = Notifications;
+Courier.RoutingStrategies = RoutingStrategies;
 Courier.Profiles = Profiles;
 Courier.Tenants = Tenants;
 Courier.Translations = Translations;
@@ -899,6 +938,16 @@ export declare namespace Courier {
     type AudienceUpdateParams as AudienceUpdateParams,
     type AudienceListParams as AudienceListParams,
     type AudienceListMembersParams as AudienceListMembersParams,
+  };
+
+  export {
+    Providers as Providers,
+    type Provider as Provider,
+    type ProvidersCatalogEntry as ProvidersCatalogEntry,
+    type ProviderListResponse as ProviderListResponse,
+    type ProviderCreateParams as ProviderCreateParams,
+    type ProviderUpdateParams as ProviderUpdateParams,
+    type ProviderListParams as ProviderListParams,
   };
 
   export {
@@ -1000,8 +1049,35 @@ export declare namespace Courier {
     type BaseCheck as BaseCheck,
     type Check as Check,
     type NotificationGetContent as NotificationGetContent,
+    type NotificationTemplateCreateRequest as NotificationTemplateCreateRequest,
+    type NotificationTemplateGetResponse as NotificationTemplateGetResponse,
+    type NotificationTemplateMutationResponse as NotificationTemplateMutationResponse,
+    type NotificationTemplatePayload as NotificationTemplatePayload,
+    type NotificationTemplatePublishRequest as NotificationTemplatePublishRequest,
+    type NotificationTemplateSummary as NotificationTemplateSummary,
+    type NotificationTemplateUpdateRequest as NotificationTemplateUpdateRequest,
+    type NotificationTemplateVersionListResponse as NotificationTemplateVersionListResponse,
+    type VersionNode as VersionNode,
     type NotificationListResponse as NotificationListResponse,
+    type NotificationCreateParams as NotificationCreateParams,
+    type NotificationRetrieveParams as NotificationRetrieveParams,
     type NotificationListParams as NotificationListParams,
+    type NotificationListVersionsParams as NotificationListVersionsParams,
+    type NotificationPublishParams as NotificationPublishParams,
+    type NotificationReplaceParams as NotificationReplaceParams,
+  };
+
+  export {
+    RoutingStrategies as RoutingStrategies,
+    type RoutingStrategyCreateRequest as RoutingStrategyCreateRequest,
+    type RoutingStrategyGetResponse as RoutingStrategyGetResponse,
+    type RoutingStrategyListResponse as RoutingStrategyListResponse,
+    type RoutingStrategyMutationResponse as RoutingStrategyMutationResponse,
+    type RoutingStrategyReplaceRequest as RoutingStrategyReplaceRequest,
+    type RoutingStrategySummary as RoutingStrategySummary,
+    type RoutingStrategyCreateParams as RoutingStrategyCreateParams,
+    type RoutingStrategyListParams as RoutingStrategyListParams,
+    type RoutingStrategyReplaceParams as RoutingStrategyReplaceParams,
   };
 
   export {
@@ -1049,7 +1125,9 @@ export declare namespace Courier {
   export type AudienceFilter = API.AudienceFilter;
   export type AudienceFilterConfig = API.AudienceFilterConfig;
   export type AudienceRecipient = API.AudienceRecipient;
+  export type Channel = API.Channel;
   export type ChannelClassification = API.ChannelClassification;
+  export type ChannelMetadata = API.ChannelMetadata;
   export type ChannelPreference = API.ChannelPreference;
   export type DeviceType = API.DeviceType;
   export type Discord = API.Discord;
@@ -1060,6 +1138,7 @@ export declare namespace Courier {
   export type ElementalContent = API.ElementalContent;
   export type ElementalContentSugar = API.ElementalContentSugar;
   export type ElementalDividerNodeWithType = API.ElementalDividerNodeWithType;
+  export type ElementalHTMLNodeWithType = API.ElementalHTMLNodeWithType;
   export type ElementalImageNodeWithType = API.ElementalImageNodeWithType;
   export type ElementalMetaNodeWithType = API.ElementalMetaNodeWithType;
   export type ElementalNode = API.ElementalNode;
@@ -1072,9 +1151,13 @@ export declare namespace Courier {
   export type ListFilter = API.ListFilter;
   export type ListPatternRecipient = API.ListPatternRecipient;
   export type ListRecipient = API.ListRecipient;
+  export type MessageChannels = API.MessageChannels;
   export type MessageContext = API.MessageContext;
+  export type MessageProviders = API.MessageProviders;
+  export type MessageProvidersType = API.MessageProvidersType;
   export type MessageRouting = API.MessageRouting;
   export type MessageRoutingChannel = API.MessageRoutingChannel;
+  export type Metadata = API.Metadata;
   export type MsTeams = API.MsTeams;
   export type MsTeamsBaseProperties = API.MsTeamsBaseProperties;
   export type MsTeamsRecipient = API.MsTeamsRecipient;
@@ -1101,6 +1184,7 @@ export declare namespace Courier {
   export type SlackBaseProperties = API.SlackBaseProperties;
   export type SlackRecipient = API.SlackRecipient;
   export type TextStyle = API.TextStyle;
+  export type Timeouts = API.Timeouts;
   export type Token = API.Token;
   export type UserProfile = API.UserProfile;
   export type UserProfileFirebaseToken = API.UserProfileFirebaseToken;
