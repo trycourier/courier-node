@@ -142,6 +142,7 @@ export {
 export { Requests } from './requests';
 export {
   RoutingStrategies,
+  type AssociatedNotificationListResponse,
   type RoutingStrategyCreateRequest,
   type RoutingStrategyGetResponse,
   type RoutingStrategyListResponse,
@@ -150,6 +151,7 @@ export {
   type RoutingStrategySummary,
   type RoutingStrategyCreateParams,
   type RoutingStrategyListParams,
+  type RoutingStrategyListNotificationsParams,
   type RoutingStrategyReplaceParams,
 } from './routing-strategies';
 export { Send, type SendMessageResponse, type SendMessageParams } from './send';

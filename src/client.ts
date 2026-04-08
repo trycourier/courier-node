@@ -88,10 +88,12 @@ import {
 } from './resources/messages';
 import { Requests } from './resources/requests';
 import {
+  AssociatedNotificationListResponse,
   RoutingStrategies,
   RoutingStrategyCreateParams,
   RoutingStrategyCreateRequest,
   RoutingStrategyGetResponse,
+  RoutingStrategyListNotificationsParams,
   RoutingStrategyListParams,
   RoutingStrategyListResponse,
   RoutingStrategyMutationResponse,
@@ -1093,6 +1095,7 @@ export declare namespace Courier {
 
   export {
     RoutingStrategies as RoutingStrategies,
+    type AssociatedNotificationListResponse as AssociatedNotificationListResponse,
     type RoutingStrategyCreateRequest as RoutingStrategyCreateRequest,
     type RoutingStrategyGetResponse as RoutingStrategyGetResponse,
     type RoutingStrategyListResponse as RoutingStrategyListResponse,
@@ -1101,6 +1104,7 @@ export declare namespace Courier {
     type RoutingStrategySummary as RoutingStrategySummary,
     type RoutingStrategyCreateParams as RoutingStrategyCreateParams,
     type RoutingStrategyListParams as RoutingStrategyListParams,
+    type RoutingStrategyListNotificationsParams as RoutingStrategyListNotificationsParams,
     type RoutingStrategyReplaceParams as RoutingStrategyReplaceParams,
   };
 
