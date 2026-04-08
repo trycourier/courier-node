@@ -12,15 +12,12 @@ import {
   CheckUpdateResponse,
   Checks,
 } from './checks';
-import * as DraftAPI from './draft';
-import { Draft } from './draft';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Notifications extends APIResource {
-  draft: DraftAPI.Draft = new DraftAPI.Draft(this._client);
   checks: ChecksAPI.Checks = new ChecksAPI.Checks(this._client);
 
   /**
@@ -140,6 +137,82 @@ export class Notifications extends APIResource {
   }
 
   /**
+   * Replace the elemental content of a notification template. Overwrites all
+   * elements in the template with the provided content. Only supported for V2
+   * (elemental) templates.
+   *
+   * @example
+   * ```ts
+   * const notificationContentMutationResponse =
+   *   await client.notifications.putContent('id', {
+   *     content: {
+   *       version: '2022-01-01',
+   *       elements: [{ type: 'channel' }],
+   *     },
+   *     state: 'DRAFT',
+   *   });
+   * ```
+   */
+  putContent(
+    id: string,
+    body: NotificationPutContentParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationContentMutationResponse> {
+    return this._client.put(path`/notifications/${id}/content`, { body, ...options });
+  }
+
+  /**
+   * Update a single element within a notification template. Only supported for V2
+   * (elemental) templates.
+   *
+   * @example
+   * ```ts
+   * const notificationContentMutationResponse =
+   *   await client.notifications.putElement('elementId', {
+   *     id: 'id',
+   *     type: 'text',
+   *     data: { content: 'Updated text content' },
+   *     state: 'DRAFT',
+   *   });
+   * ```
+   */
+  putElement(
+    elementID: string,
+    params: NotificationPutElementParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationContentMutationResponse> {
+    const { id, ...body } = params;
+    return this._client.put(path`/notifications/${id}/elements/${elementID}`, { body, ...options });
+  }
+
+  /**
+   * Set locale-specific content overrides for a notification template. Each element
+   * override must reference an existing element by ID. Only supported for V2
+   * (elemental) templates.
+   *
+   * @example
+   * ```ts
+   * const notificationContentMutationResponse =
+   *   await client.notifications.putLocale('localeId', {
+   *     id: 'id',
+   *     elements: [
+   *       { id: 'elem_1', content: 'Hola {{data.name}}.' },
+   *       { id: 'elem_2', title: 'Bienvenido!' },
+   *     ],
+   *     state: 'DRAFT',
+   *   });
+   * ```
+   */
+  putLocale(
+    localeID: string,
+    params: NotificationPutLocaleParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationContentMutationResponse> {
+    const { id, ...body } = params;
+    return this._client.put(path`/notifications/${id}/locales/${localeID}`, { body, ...options });
+  }
+
+  /**
    * Replace a notification template. All fields are required.
    *
    * @example
@@ -170,14 +243,24 @@ export class Notifications extends APIResource {
   }
 
   /**
+   * Retrieve the content of a notification template. The response shape depends on
+   * whether the template uses V1 (blocks/channels) or V2 (elemental) content. Use
+   * the `version` query parameter to select draft, published, or a specific
+   * historical version.
+   *
    * @example
    * ```ts
-   * const notificationGetContent =
-   *   await client.notifications.retrieveContent('id');
+   * const response = await client.notifications.retrieveContent(
+   *   'id',
+   * );
    * ```
    */
-  retrieveContent(id: string, options?: RequestOptions): APIPromise<NotificationGetContent> {
-    return this._client.get(path`/notifications/${id}/content`, options);
+  retrieveContent(
+    id: string,
+    query: NotificationRetrieveContentParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<NotificationRetrieveContentResponse> {
+    return this._client.get(path`/notifications/${id}/content`, { query, ...options });
   }
 }
 
@@ -191,6 +274,145 @@ export interface BaseCheck {
 
 export interface Check extends BaseCheck {
   updated: number;
+}
+
+/**
+ * An element with its content checksum and optional nested elements and locale
+ * checksums.
+ */
+export interface ElementWithChecksums {
+  /**
+   * MD5 hash of translatable content.
+   */
+  checksum: string;
+
+  /**
+   * Element type (text, meta, action, etc.).
+   */
+  type: string;
+
+  id?: string;
+
+  /**
+   * Nested child elements (for group-type elements).
+   */
+  elements?: Array<ElementWithChecksums>;
+
+  /**
+   * Locale-specific content with checksums.
+   */
+  locales?: { [key: string]: ElementWithChecksums.Locales };
+
+  [k: string]: unknown;
+}
+
+export namespace ElementWithChecksums {
+  export interface Locales {
+    checksum: string;
+  }
+}
+
+/**
+ * Elemental content response for V2 templates. Contains versioned elements with
+ * content checksums.
+ */
+export interface NotificationContentGetResponse {
+  elements: Array<ElementWithChecksums>;
+
+  /**
+   * Content version identifier.
+   */
+  version: string;
+}
+
+/**
+ * Shared mutation response for `PUT` content, `PUT` element, and `PUT` locale
+ * operations. Contains the template ID, content version, per-element checksums,
+ * and resulting state.
+ */
+export interface NotificationContentMutationResponse {
+  /**
+   * Template ID.
+   */
+  id: string;
+
+  elements: Array<NotificationContentMutationResponse.Element>;
+
+  /**
+   * Template state. Defaults to `DRAFT`.
+   */
+  state: NotificationTemplateState;
+
+  /**
+   * Content version identifier.
+   */
+  version: string;
+}
+
+export namespace NotificationContentMutationResponse {
+  export interface Element {
+    id: string;
+
+    checksum: string;
+  }
+}
+
+/**
+ * Request body for replacing the elemental content of a notification template.
+ */
+export interface NotificationContentPutRequest {
+  /**
+   * Elemental content payload. The server defaults `version` when omitted.
+   */
+  content: NotificationContentPutRequest.Content;
+
+  /**
+   * Template state. Defaults to `DRAFT`.
+   */
+  state?: NotificationTemplateState;
+}
+
+export namespace NotificationContentPutRequest {
+  /**
+   * Elemental content payload. The server defaults `version` when omitted.
+   */
+  export interface Content {
+    elements: Array<Shared.ElementalNode>;
+
+    /**
+     * Content version identifier (e.g., `2022-01-01`). Optional; server defaults when
+     * omitted.
+     */
+    version?: string;
+  }
+}
+
+/**
+ * Request body for updating a single element. Additional type-specific fields are
+ * allowed.
+ */
+export interface NotificationElementPutRequest {
+  /**
+   * Element type (text, meta, action, image, etc.).
+   */
+  type: string;
+
+  channels?: Array<string>;
+
+  data?: { [key: string]: unknown };
+
+  if?: string;
+
+  loop?: string;
+
+  ref?: string;
+
+  /**
+   * Template state. Defaults to `DRAFT`.
+   */
+  state?: NotificationTemplateState;
+
+  [k: string]: unknown;
 }
 
 export interface NotificationGetContent {
@@ -256,6 +478,33 @@ export namespace NotificationGetContent {
 
       title?: string | null;
     }
+  }
+}
+
+/**
+ * Request body for setting locale-specific content overrides. Each element
+ * override must include the target element ID.
+ */
+export interface NotificationLocalePutRequest {
+  /**
+   * Elements with locale-specific content overrides.
+   */
+  elements: Array<NotificationLocalePutRequest.Element>;
+
+  /**
+   * Template state. Defaults to `DRAFT`.
+   */
+  state?: NotificationTemplateState;
+}
+
+export namespace NotificationLocalePutRequest {
+  export interface Element {
+    /**
+     * Target element ID.
+     */
+    id: string;
+
+    [k: string]: unknown;
   }
 }
 
@@ -418,6 +667,11 @@ export interface NotificationTemplatePublishRequest {
 }
 
 /**
+ * Template state. Defaults to `DRAFT`.
+ */
+export type NotificationTemplateState = 'DRAFT' | 'PUBLISHED';
+
+/**
  * V2 (CDS) template summary returned in list responses.
  */
 export interface NotificationTemplateSummary {
@@ -548,6 +802,12 @@ export namespace NotificationListResponse {
   }
 }
 
+/**
+ * Elemental content response for V2 templates. Contains versioned elements with
+ * content checksums.
+ */
+export type NotificationRetrieveContentResponse = NotificationContentGetResponse | NotificationGetContent;
+
 export interface NotificationCreateParams {
   /**
    * Full document shape used in POST and PUT request bodies, and returned inside the
@@ -606,6 +866,105 @@ export interface NotificationPublishParams {
   version?: string;
 }
 
+export interface NotificationPutContentParams {
+  /**
+   * Elemental content payload. The server defaults `version` when omitted.
+   */
+  content: NotificationPutContentParams.Content;
+
+  /**
+   * Template state. Defaults to `DRAFT`.
+   */
+  state?: NotificationTemplateState;
+}
+
+export namespace NotificationPutContentParams {
+  /**
+   * Elemental content payload. The server defaults `version` when omitted.
+   */
+  export interface Content {
+    elements: Array<Shared.ElementalNode>;
+
+    /**
+     * Content version identifier (e.g., `2022-01-01`). Optional; server defaults when
+     * omitted.
+     */
+    version?: string;
+  }
+}
+
+export interface NotificationPutElementParams {
+  /**
+   * Path param: Notification template ID (`nt_` prefix).
+   */
+  id: string;
+
+  /**
+   * Body param: Element type (text, meta, action, image, etc.).
+   */
+  type: string;
+
+  /**
+   * Body param
+   */
+  channels?: Array<string>;
+
+  /**
+   * Body param
+   */
+  data?: { [key: string]: unknown };
+
+  /**
+   * Body param
+   */
+  if?: string;
+
+  /**
+   * Body param
+   */
+  loop?: string;
+
+  /**
+   * Body param
+   */
+  ref?: string;
+
+  /**
+   * Body param: Template state. Defaults to `DRAFT`.
+   */
+  state?: NotificationTemplateState;
+
+  [k: string]: unknown;
+}
+
+export interface NotificationPutLocaleParams {
+  /**
+   * Path param: Notification template ID (`nt_` prefix).
+   */
+  id: string;
+
+  /**
+   * Body param: Elements with locale-specific content overrides.
+   */
+  elements: Array<NotificationPutLocaleParams.Element>;
+
+  /**
+   * Body param: Template state. Defaults to `DRAFT`.
+   */
+  state?: NotificationTemplateState;
+}
+
+export namespace NotificationPutLocaleParams {
+  export interface Element {
+    /**
+     * Target element ID.
+     */
+    id: string;
+
+    [k: string]: unknown;
+  }
+}
+
 export interface NotificationReplaceParams {
   /**
    * Full document shape used in POST and PUT request bodies, and returned inside the
@@ -620,33 +979,50 @@ export interface NotificationReplaceParams {
   state?: 'DRAFT' | 'PUBLISHED';
 }
 
-Notifications.Draft = Draft;
+export interface NotificationRetrieveContentParams {
+  /**
+   * Accepts `draft`, `published`, or a version string (e.g., `v001`). Defaults to
+   * `published`.
+   */
+  version?: string;
+}
+
 Notifications.Checks = Checks;
 
 export declare namespace Notifications {
   export {
     type BaseCheck as BaseCheck,
     type Check as Check,
+    type ElementWithChecksums as ElementWithChecksums,
+    type NotificationContentGetResponse as NotificationContentGetResponse,
+    type NotificationContentMutationResponse as NotificationContentMutationResponse,
+    type NotificationContentPutRequest as NotificationContentPutRequest,
+    type NotificationElementPutRequest as NotificationElementPutRequest,
     type NotificationGetContent as NotificationGetContent,
+    type NotificationLocalePutRequest as NotificationLocalePutRequest,
     type NotificationTemplateCreateRequest as NotificationTemplateCreateRequest,
     type NotificationTemplateGetResponse as NotificationTemplateGetResponse,
     type NotificationTemplateMutationResponse as NotificationTemplateMutationResponse,
     type NotificationTemplatePayload as NotificationTemplatePayload,
     type NotificationTemplatePublishRequest as NotificationTemplatePublishRequest,
+    type NotificationTemplateState as NotificationTemplateState,
     type NotificationTemplateSummary as NotificationTemplateSummary,
     type NotificationTemplateUpdateRequest as NotificationTemplateUpdateRequest,
     type NotificationTemplateVersionListResponse as NotificationTemplateVersionListResponse,
     type VersionNode as VersionNode,
     type NotificationListResponse as NotificationListResponse,
+    type NotificationRetrieveContentResponse as NotificationRetrieveContentResponse,
     type NotificationCreateParams as NotificationCreateParams,
     type NotificationRetrieveParams as NotificationRetrieveParams,
     type NotificationListParams as NotificationListParams,
     type NotificationListVersionsParams as NotificationListVersionsParams,
     type NotificationPublishParams as NotificationPublishParams,
+    type NotificationPutContentParams as NotificationPutContentParams,
+    type NotificationPutElementParams as NotificationPutElementParams,
+    type NotificationPutLocaleParams as NotificationPutLocaleParams,
     type NotificationReplaceParams as NotificationReplaceParams,
+    type NotificationRetrieveContentParams as NotificationRetrieveContentParams,
   };
-
-  export { Draft as Draft };
 
   export {
     Checks as Checks,

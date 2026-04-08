@@ -304,17 +304,25 @@ Types:
 
 - <code><a href="./src/resources/notifications/notifications.ts">BaseCheck</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">Check</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">ElementWithChecksums</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationContentGetResponse</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationContentMutationResponse</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationContentPutRequest</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationElementPutRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationGetContent</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationLocalePutRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateCreateRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateGetResponse</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateMutationResponse</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplatePayload</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplatePublishRequest</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateState</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateSummary</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateUpdateRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateVersionListResponse</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">VersionNode</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationListResponse</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationRetrieveContentResponse</a></code>
 
 Methods:
 
@@ -324,14 +332,11 @@ Methods:
 - <code title="delete /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">archive</a>(id) -> void</code>
 - <code title="get /notifications/{id}/versions">client.notifications.<a href="./src/resources/notifications/notifications.ts">listVersions</a>(id, { ...params }) -> NotificationTemplateVersionListResponse</code>
 - <code title="post /notifications/{id}/publish">client.notifications.<a href="./src/resources/notifications/notifications.ts">publish</a>(id, { ...params }) -> void</code>
+- <code title="put /notifications/{id}/content">client.notifications.<a href="./src/resources/notifications/notifications.ts">putContent</a>(id, { ...params }) -> NotificationContentMutationResponse</code>
+- <code title="put /notifications/{id}/elements/{elementId}">client.notifications.<a href="./src/resources/notifications/notifications.ts">putElement</a>(elementID, { ...params }) -> NotificationContentMutationResponse</code>
+- <code title="put /notifications/{id}/locales/{localeId}">client.notifications.<a href="./src/resources/notifications/notifications.ts">putLocale</a>(localeID, { ...params }) -> NotificationContentMutationResponse</code>
 - <code title="put /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">replace</a>(id, { ...params }) -> NotificationTemplateMutationResponse</code>
-- <code title="get /notifications/{id}/content">client.notifications.<a href="./src/resources/notifications/notifications.ts">retrieveContent</a>(id) -> NotificationGetContent</code>
-
-## Draft
-
-Methods:
-
-- <code title="get /notifications/{id}/draft/content">client.notifications.draft.<a href="./src/resources/notifications/draft.ts">retrieveContent</a>(id) -> NotificationGetContent</code>
+- <code title="get /notifications/{id}/content">client.notifications.<a href="./src/resources/notifications/notifications.ts">retrieveContent</a>(id, { ...params }) -> NotificationRetrieveContentResponse</code>
 
 ## Checks
 
