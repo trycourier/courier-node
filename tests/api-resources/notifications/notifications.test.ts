@@ -148,6 +148,76 @@ describe('resource notifications', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('putContent: only required params', async () => {
+    const responsePromise = client.notifications.putContent('id', { content: { elements: [{}] } });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('putContent: required and optional params', async () => {
+    const response = await client.notifications.putContent('id', {
+      content: { elements: [{ type: 'channel' }], version: '2022-01-01' },
+      state: 'DRAFT',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('putElement: only required params', async () => {
+    const responsePromise = client.notifications.putElement('elementId', { id: 'id', type: 'text' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('putElement: required and optional params', async () => {
+    const response = await client.notifications.putElement('elementId', {
+      id: 'id',
+      type: 'text',
+      channels: ['string'],
+      data: { content: 'bar' },
+      if: 'if',
+      loop: 'loop',
+      ref: 'ref',
+      state: 'DRAFT',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('putLocale: only required params', async () => {
+    const responsePromise = client.notifications.putLocale('localeId', {
+      id: 'id',
+      elements: [{ id: 'elem_1' }, { id: 'elem_2' }],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('putLocale: required and optional params', async () => {
+    const response = await client.notifications.putLocale('localeId', {
+      id: 'id',
+      elements: [{ id: 'elem_1' }, { id: 'elem_2' }],
+      state: 'DRAFT',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('replace: only required params', async () => {
     const responsePromise = client.notifications.replace('id', {
       notification: {
@@ -193,5 +263,17 @@ describe('resource notifications', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('retrieveContent: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.notifications.retrieveContent(
+        'id',
+        { version: 'version' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Courier.NotFoundError);
   });
 });

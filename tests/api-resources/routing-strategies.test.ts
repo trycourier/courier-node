@@ -113,6 +113,30 @@ describe('resource routingStrategies', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('listNotifications', async () => {
+    const responsePromise = client.routingStrategies.listNotifications('id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('listNotifications: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.routingStrategies.listNotifications(
+        'id',
+        { cursor: 'cursor', limit: 1 },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Courier.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('replace: only required params', async () => {
     const responsePromise = client.routingStrategies.replace('id', {
       name: 'Email via SendGrid v2',
