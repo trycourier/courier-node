@@ -355,6 +355,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/routing-strategies.ts">AssociatedNotificationListResponse</a></code>
 - <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyCreateRequest</a></code>
 - <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyGetResponse</a></code>
 - <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyListResponse</a></code>
@@ -368,6 +369,7 @@ Methods:
 - <code title="get /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">retrieve</a>(id) -> RoutingStrategyGetResponse</code>
 - <code title="get /routing-strategies">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">list</a>({ ...params }) -> RoutingStrategyListResponse</code>
 - <code title="delete /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">archive</a>(id) -> void</code>
+- <code title="get /routing-strategies/{id}/notifications">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">listNotifications</a>(id, { ...params }) -> AssociatedNotificationListResponse</code>
 - <code title="put /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">replace</a>(id, { ...params }) -> RoutingStrategyMutationResponse</code>
 
 # Profiles

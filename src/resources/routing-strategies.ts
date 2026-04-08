@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import * as Shared from './shared';
+import * as NotificationsAPI from './notifications/notifications';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -82,6 +83,24 @@ export class RoutingStrategies extends APIResource {
   }
 
   /**
+   * List notification templates associated with a routing strategy. Includes
+   * template metadata only, not full content.
+   *
+   * @example
+   * ```ts
+   * const associatedNotificationListResponse =
+   *   await client.routingStrategies.listNotifications('id');
+   * ```
+   */
+  listNotifications(
+    id: string,
+    query: RoutingStrategyListNotificationsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AssociatedNotificationListResponse> {
+    return this._client.get(path`/routing-strategies/${id}/notifications`, { query, ...options });
+  }
+
+  /**
    * Replace a routing strategy. Full document replacement; the caller must send the
    * complete desired state. Missing optional fields are cleared.
    *
@@ -105,6 +124,15 @@ export class RoutingStrategies extends APIResource {
   ): APIPromise<RoutingStrategyMutationResponse> {
     return this._client.put(path`/routing-strategies/${id}`, { body, ...options });
   }
+}
+
+/**
+ * Paginated list of notification templates associated with a routing strategy.
+ */
+export interface AssociatedNotificationListResponse {
+  paging: Shared.Paging;
+
+  results: Array<NotificationsAPI.NotificationTemplateSummary>;
 }
 
 /**
@@ -347,6 +375,18 @@ export interface RoutingStrategyListParams {
   limit?: number;
 }
 
+export interface RoutingStrategyListNotificationsParams {
+  /**
+   * Opaque pagination cursor from a previous response. Omit for the first page.
+   */
+  cursor?: string | null;
+
+  /**
+   * Maximum number of results per page. Default 20, max 100.
+   */
+  limit?: number;
+}
+
 export interface RoutingStrategyReplaceParams {
   /**
    * Human-readable name for the routing strategy.
@@ -381,6 +421,7 @@ export interface RoutingStrategyReplaceParams {
 
 export declare namespace RoutingStrategies {
   export {
+    type AssociatedNotificationListResponse as AssociatedNotificationListResponse,
     type RoutingStrategyCreateRequest as RoutingStrategyCreateRequest,
     type RoutingStrategyGetResponse as RoutingStrategyGetResponse,
     type RoutingStrategyListResponse as RoutingStrategyListResponse,
@@ -389,6 +430,7 @@ export declare namespace RoutingStrategies {
     type RoutingStrategySummary as RoutingStrategySummary,
     type RoutingStrategyCreateParams as RoutingStrategyCreateParams,
     type RoutingStrategyListParams as RoutingStrategyListParams,
+    type RoutingStrategyListNotificationsParams as RoutingStrategyListNotificationsParams,
     type RoutingStrategyReplaceParams as RoutingStrategyReplaceParams,
   };
 }
