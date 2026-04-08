@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.10.0 (2026-04-08)
+
+Full Changelog: [v7.9.0...v7.10.0](https://github.com/trycourier/courier-node/compare/v7.9.0...v7.10.0)
+
+### Features
+
+* **api:** add content endpoints, remove draft resource, update checks/types in notifications ([05fc09f](https://github.com/trycourier/courier-node/commit/05fc09f28ec2cd14e5dd3c5541e88274e82e416e))
+* **api:** add listNotifications method to routing strategies ([0bc2d84](https://github.com/trycourier/courier-node/commit/0bc2d84d10b30e689ac7450b6b858c937e6862db))
+
 ## 7.9.0 (2026-04-01)
 
 Full Changelog: [v7.8.0...v7.9.0](https://github.com/trycourier/courier-node/compare/v7.8.0...v7.9.0)
