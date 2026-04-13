@@ -26,7 +26,7 @@ export class Notifications extends APIResource {
    *
    * @example
    * ```ts
-   * const notificationTemplateMutationResponse =
+   * const notificationTemplateGetResponse =
    *   await client.notifications.create({
    *     notification: {
    *       name: 'Welcome Email',
@@ -46,7 +46,7 @@ export class Notifications extends APIResource {
   create(
     body: NotificationCreateParams,
     options?: RequestOptions,
-  ): APIPromise<NotificationTemplateMutationResponse> {
+  ): APIPromise<NotificationTemplateGetResponse> {
     return this._client.post('/notifications', { body, ...options });
   }
 
@@ -217,7 +217,7 @@ export class Notifications extends APIResource {
    *
    * @example
    * ```ts
-   * const notificationTemplateMutationResponse =
+   * const notificationTemplateGetResponse =
    *   await client.notifications.replace('id', {
    *     notification: {
    *       name: 'Updated Name',
@@ -238,7 +238,7 @@ export class Notifications extends APIResource {
     id: string,
     body: NotificationReplaceParams,
     options?: RequestOptions,
-  ): APIPromise<NotificationTemplateMutationResponse> {
+  ): APIPromise<NotificationTemplateGetResponse> {
     return this._client.put(path`/notifications/${id}`, { body, ...options });
   }
 
@@ -570,27 +570,6 @@ export namespace NotificationTemplateGetResponse {
   export interface Notification extends NotificationsAPI.NotificationTemplatePayload {
     /**
      * The template ID.
-     */
-    id: string;
-  }
-}
-
-/**
- * Response returned by POST and PUT operations.
- */
-export interface NotificationTemplateMutationResponse {
-  notification: NotificationTemplateMutationResponse.Notification;
-
-  /**
-   * The template state after the operation. Always uppercase.
-   */
-  state: 'DRAFT' | 'PUBLISHED';
-}
-
-export namespace NotificationTemplateMutationResponse {
-  export interface Notification {
-    /**
-     * The ID of the created or updated template.
      */
     id: string;
   }
@@ -1002,7 +981,6 @@ export declare namespace Notifications {
     type NotificationLocalePutRequest as NotificationLocalePutRequest,
     type NotificationTemplateCreateRequest as NotificationTemplateCreateRequest,
     type NotificationTemplateGetResponse as NotificationTemplateGetResponse,
-    type NotificationTemplateMutationResponse as NotificationTemplateMutationResponse,
     type NotificationTemplatePayload as NotificationTemplatePayload,
     type NotificationTemplatePublishRequest as NotificationTemplatePublishRequest,
     type NotificationTemplateState as NotificationTemplateState,

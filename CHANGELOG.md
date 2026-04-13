@@ -1,5 +1,19 @@
 # Changelog
 
+## 7.10.1 (2026-04-13)
+
+Full Changelog: [v7.10.0...v7.10.1](https://github.com/trycourier/courier-node/compare/v7.10.0...v7.10.1)
+
+### Bug Fixes
+
+* **api:** correct providers update method, notifications/routing-strategies return types ([4f7a0ad](https://github.com/trycourier/courier-node/commit/4f7a0adc0e5e43847de7b26b97393f345301d03c))
+
+
+### Chores
+
+* **internal:** codegen related update ([87114df](https://github.com/trycourier/courier-node/commit/87114df9623e87b498bf9938b1d574b8ba723ea8))
+* **internal:** codegen related update ([4844fd4](https://github.com/trycourier/courier-node/commit/4844fd47027894a23b3f4d3f4ab4db960c10f738))
+
 ## 7.10.0 (2026-04-08)
 
 Full Changelog: [v7.9.0...v7.10.0](https://github.com/trycourier/courier-node/compare/v7.9.0...v7.10.0)
