@@ -15,7 +15,7 @@ export class RoutingStrategies extends APIResource {
    *
    * @example
    * ```ts
-   * const routingStrategyMutationResponse =
+   * const routingStrategyGetResponse =
    *   await client.routingStrategies.create({
    *     name: 'Email via SendGrid',
    *     routing: { method: 'single', channels: ['email'] },
@@ -30,7 +30,7 @@ export class RoutingStrategies extends APIResource {
   create(
     body: RoutingStrategyCreateParams,
     options?: RequestOptions,
-  ): APIPromise<RoutingStrategyMutationResponse> {
+  ): APIPromise<RoutingStrategyGetResponse> {
     return this._client.post('/routing-strategies', { body, ...options });
   }
 
@@ -106,7 +106,7 @@ export class RoutingStrategies extends APIResource {
    *
    * @example
    * ```ts
-   * const routingStrategyMutationResponse =
+   * const routingStrategyGetResponse =
    *   await client.routingStrategies.replace('id', {
    *     name: 'Email via SendGrid v2',
    *     routing: { method: 'single', channels: ['email'] },
@@ -121,7 +121,7 @@ export class RoutingStrategies extends APIResource {
     id: string,
     body: RoutingStrategyReplaceParams,
     options?: RequestOptions,
-  ): APIPromise<RoutingStrategyMutationResponse> {
+  ): APIPromise<RoutingStrategyGetResponse> {
     return this._client.put(path`/routing-strategies/${id}`, { body, ...options });
   }
 }
@@ -237,16 +237,6 @@ export interface RoutingStrategyListResponse {
   paging: Shared.Paging;
 
   results: Array<RoutingStrategySummary>;
-}
-
-/**
- * Response returned by create and replace operations.
- */
-export interface RoutingStrategyMutationResponse {
-  /**
-   * The routing strategy ID (rs\_ prefix).
-   */
-  id: string;
 }
 
 /**
@@ -425,7 +415,6 @@ export declare namespace RoutingStrategies {
     type RoutingStrategyCreateRequest as RoutingStrategyCreateRequest,
     type RoutingStrategyGetResponse as RoutingStrategyGetResponse,
     type RoutingStrategyListResponse as RoutingStrategyListResponse,
-    type RoutingStrategyMutationResponse as RoutingStrategyMutationResponse,
     type RoutingStrategyReplaceRequest as RoutingStrategyReplaceRequest,
     type RoutingStrategySummary as RoutingStrategySummary,
     type RoutingStrategyCreateParams as RoutingStrategyCreateParams,

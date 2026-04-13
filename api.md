@@ -119,7 +119,7 @@ Methods:
 
 - <code title="post /providers">client.providers.<a href="./src/resources/providers/providers.ts">create</a>({ ...params }) -> Provider</code>
 - <code title="get /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">retrieve</a>(id) -> Provider</code>
-- <code title="post /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">update</a>(id, { ...params }) -> Provider</code>
+- <code title="put /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">update</a>(id, { ...params }) -> Provider</code>
 - <code title="get /providers">client.providers.<a href="./src/resources/providers/providers.ts">list</a>({ ...params }) -> ProviderListResponse</code>
 - <code title="delete /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">delete</a>(id) -> void</code>
 
@@ -313,7 +313,6 @@ Types:
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationLocalePutRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateCreateRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateGetResponse</a></code>
-- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateMutationResponse</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplatePayload</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplatePublishRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateState</a></code>
@@ -326,7 +325,7 @@ Types:
 
 Methods:
 
-- <code title="post /notifications">client.notifications.<a href="./src/resources/notifications/notifications.ts">create</a>({ ...params }) -> NotificationTemplateMutationResponse</code>
+- <code title="post /notifications">client.notifications.<a href="./src/resources/notifications/notifications.ts">create</a>({ ...params }) -> NotificationTemplateGetResponse</code>
 - <code title="get /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">retrieve</a>(id, { ...params }) -> NotificationTemplateGetResponse</code>
 - <code title="get /notifications">client.notifications.<a href="./src/resources/notifications/notifications.ts">list</a>({ ...params }) -> NotificationListResponse</code>
 - <code title="delete /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">archive</a>(id) -> void</code>
@@ -335,7 +334,7 @@ Methods:
 - <code title="put /notifications/{id}/content">client.notifications.<a href="./src/resources/notifications/notifications.ts">putContent</a>(id, { ...params }) -> NotificationContentMutationResponse</code>
 - <code title="put /notifications/{id}/elements/{elementId}">client.notifications.<a href="./src/resources/notifications/notifications.ts">putElement</a>(elementID, { ...params }) -> NotificationContentMutationResponse</code>
 - <code title="put /notifications/{id}/locales/{localeId}">client.notifications.<a href="./src/resources/notifications/notifications.ts">putLocale</a>(localeID, { ...params }) -> NotificationContentMutationResponse</code>
-- <code title="put /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">replace</a>(id, { ...params }) -> NotificationTemplateMutationResponse</code>
+- <code title="put /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">replace</a>(id, { ...params }) -> NotificationTemplateGetResponse</code>
 - <code title="get /notifications/{id}/content">client.notifications.<a href="./src/resources/notifications/notifications.ts">retrieveContent</a>(id, { ...params }) -> NotificationRetrieveContentResponse</code>
 
 ## Checks
@@ -359,18 +358,17 @@ Types:
 - <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyCreateRequest</a></code>
 - <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyGetResponse</a></code>
 - <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyListResponse</a></code>
-- <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyMutationResponse</a></code>
 - <code><a href="./src/resources/routing-strategies.ts">RoutingStrategyReplaceRequest</a></code>
 - <code><a href="./src/resources/routing-strategies.ts">RoutingStrategySummary</a></code>
 
 Methods:
 
-- <code title="post /routing-strategies">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">create</a>({ ...params }) -> RoutingStrategyMutationResponse</code>
+- <code title="post /routing-strategies">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">create</a>({ ...params }) -> RoutingStrategyGetResponse</code>
 - <code title="get /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">retrieve</a>(id) -> RoutingStrategyGetResponse</code>
 - <code title="get /routing-strategies">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">list</a>({ ...params }) -> RoutingStrategyListResponse</code>
 - <code title="delete /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">archive</a>(id) -> void</code>
 - <code title="get /routing-strategies/{id}/notifications">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">listNotifications</a>(id, { ...params }) -> AssociatedNotificationListResponse</code>
-- <code title="put /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">replace</a>(id, { ...params }) -> RoutingStrategyMutationResponse</code>
+- <code title="put /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">replace</a>(id, { ...params }) -> RoutingStrategyGetResponse</code>
 
 # Profiles
 

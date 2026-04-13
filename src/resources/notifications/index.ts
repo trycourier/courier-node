@@ -21,7 +21,6 @@ export {
   type NotificationLocalePutRequest,
   type NotificationTemplateCreateRequest,
   type NotificationTemplateGetResponse,
-  type NotificationTemplateMutationResponse,
   type NotificationTemplatePayload,
   type NotificationTemplatePublishRequest,
   type NotificationTemplateState,
