@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.10.2 (2026-04-14)
+
+Full Changelog: [v7.10.1...v7.10.2](https://github.com/trycourier/courier-node/compare/v7.10.1...v7.10.2)
+
+### Bug Fixes
+
+* **types:** flatten NotificationTemplateGetResponse, make note optional in notifications ([8d287be](https://github.com/trycourier/courier-node/commit/8d287bec01446125aaa799dad1e13f7f38785158))
+* **types:** flatten NotificationTemplateResponse type structure ([238d48e](https://github.com/trycourier/courier-node/commit/238d48e57d6e3aef1d4c8fea868fd733b94fe259))
+
 ## 7.10.1 (2026-04-13)
 
 Full Changelog: [v7.10.0...v7.10.1](https://github.com/trycourier/courier-node/compare/v7.10.0...v7.10.1)
