@@ -9,6 +9,8 @@ import { path } from '../../internal/utils/path';
 
 export class Checks extends APIResource {
   /**
+   * Replace the checks for a notification template submission.
+   *
    * @example
    * ```ts
    * const check = await client.notifications.checks.update(
@@ -36,6 +38,8 @@ export class Checks extends APIResource {
   }
 
   /**
+   * Retrieve the checks for a notification template submission.
+   *
    * @example
    * ```ts
    * const checks = await client.notifications.checks.list(
@@ -54,6 +58,8 @@ export class Checks extends APIResource {
   }
 
   /**
+   * Cancel a notification template submission.
+   *
    * @example
    * ```ts
    * await client.notifications.checks.delete('submissionId', {
@@ -80,7 +86,7 @@ export interface CheckListResponse {
 
 export interface CheckUpdateParams {
   /**
-   * Path param
+   * Path param: Notification template ID.
    */
   id: string;
 
@@ -91,10 +97,16 @@ export interface CheckUpdateParams {
 }
 
 export interface CheckListParams {
+  /**
+   * Notification template ID.
+   */
   id: string;
 }
 
 export interface CheckDeleteParams {
+  /**
+   * Notification template ID.
+   */
   id: string;
 }
 

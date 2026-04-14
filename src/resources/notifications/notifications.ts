@@ -26,7 +26,7 @@ export class Notifications extends APIResource {
    *
    * @example
    * ```ts
-   * const notificationTemplateGetResponse =
+   * const notificationTemplateResponse =
    *   await client.notifications.create({
    *     notification: {
    *       name: 'Welcome Email',
@@ -43,10 +43,7 @@ export class Notifications extends APIResource {
    *   });
    * ```
    */
-  create(
-    body: NotificationCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<NotificationTemplateGetResponse> {
+  create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<NotificationTemplateResponse> {
     return this._client.post('/notifications', { body, ...options });
   }
 
@@ -56,7 +53,7 @@ export class Notifications extends APIResource {
    *
    * @example
    * ```ts
-   * const notificationTemplateGetResponse =
+   * const notificationTemplateResponse =
    *   await client.notifications.retrieve('id');
    * ```
    */
@@ -64,7 +61,7 @@ export class Notifications extends APIResource {
     id: string,
     query: NotificationRetrieveParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<NotificationTemplateGetResponse> {
+  ): APIPromise<NotificationTemplateResponse> {
     return this._client.get(path`/notifications/${id}`, { query, ...options });
   }
 
@@ -217,7 +214,7 @@ export class Notifications extends APIResource {
    *
    * @example
    * ```ts
-   * const notificationTemplateGetResponse =
+   * const notificationTemplateResponse =
    *   await client.notifications.replace('id', {
    *     notification: {
    *       name: 'Updated Name',
@@ -238,7 +235,7 @@ export class Notifications extends APIResource {
     id: string,
     body: NotificationReplaceParams,
     options?: RequestOptions,
-  ): APIPromise<NotificationTemplateGetResponse> {
+  ): APIPromise<NotificationTemplateResponse> {
     return this._client.put(path`/notifications/${id}`, { body, ...options });
   }
 
@@ -526,56 +523,6 @@ export interface NotificationTemplateCreateRequest {
 }
 
 /**
- * Envelope response for GET /notifications/{id}. The notification object mirrors
- * the POST/PUT input shape. Nullable fields return null when unset.
- */
-export interface NotificationTemplateGetResponse {
-  /**
-   * Epoch milliseconds when the template was created.
-   */
-  created: number;
-
-  /**
-   * User ID of the creator.
-   */
-  creator: string;
-
-  /**
-   * Full document shape used in POST and PUT request bodies, and returned inside the
-   * GET response envelope.
-   */
-  notification: NotificationTemplateGetResponse.Notification;
-
-  /**
-   * The template state. Always uppercase.
-   */
-  state: 'DRAFT' | 'PUBLISHED';
-
-  /**
-   * Epoch milliseconds of last update.
-   */
-  updated?: number;
-
-  /**
-   * User ID of the last updater.
-   */
-  updater?: string;
-}
-
-export namespace NotificationTemplateGetResponse {
-  /**
-   * Full document shape used in POST and PUT request bodies, and returned inside the
-   * GET response envelope.
-   */
-  export interface Notification extends NotificationsAPI.NotificationTemplatePayload {
-    /**
-     * The template ID.
-     */
-    id: string;
-  }
-}
-
-/**
  * Full document shape used in POST and PUT request bodies, and returned inside the
  * GET response envelope.
  */
@@ -643,6 +590,57 @@ export interface NotificationTemplatePublishRequest {
    * Historical version to publish (e.g. "v001"). Omit to publish the current draft.
    */
   version?: string;
+}
+
+/**
+ * Response for GET /notifications/{id}, POST /notifications, and PUT
+ * /notifications/{id}. Wraps the template payload inside a `notification` key
+ * alongside metadata.
+ */
+export interface NotificationTemplateResponse {
+  /**
+   * Epoch milliseconds when the template was created.
+   */
+  created: number;
+
+  /**
+   * User ID of the creator.
+   */
+  creator: string;
+
+  /**
+   * Full document shape used in POST and PUT request bodies, and returned inside the
+   * GET response envelope.
+   */
+  notification: NotificationTemplateResponse.Notification;
+
+  /**
+   * The template state. Always uppercase.
+   */
+  state: 'DRAFT' | 'PUBLISHED';
+
+  /**
+   * Epoch milliseconds of last update.
+   */
+  updated?: number;
+
+  /**
+   * User ID of the last updater.
+   */
+  updater?: string;
+}
+
+export namespace NotificationTemplateResponse {
+  /**
+   * Full document shape used in POST and PUT request bodies, and returned inside the
+   * GET response envelope.
+   */
+  export interface Notification extends NotificationsAPI.NotificationTemplatePayload {
+    /**
+     * The template ID.
+     */
+    id: string;
+  }
 }
 
 /**
@@ -753,13 +751,13 @@ export namespace NotificationListResponse {
      */
     event_ids: Array<string>;
 
-    note: string;
-
     routing: Shared.MessageRouting;
 
     topic_id: string;
 
     updated_at: number;
+
+    note?: string;
 
     tags?: Notification.Tags | null;
 
@@ -980,9 +978,9 @@ export declare namespace Notifications {
     type NotificationGetContent as NotificationGetContent,
     type NotificationLocalePutRequest as NotificationLocalePutRequest,
     type NotificationTemplateCreateRequest as NotificationTemplateCreateRequest,
-    type NotificationTemplateGetResponse as NotificationTemplateGetResponse,
     type NotificationTemplatePayload as NotificationTemplatePayload,
     type NotificationTemplatePublishRequest as NotificationTemplatePublishRequest,
+    type NotificationTemplateResponse as NotificationTemplateResponse,
     type NotificationTemplateState as NotificationTemplateState,
     type NotificationTemplateSummary as NotificationTemplateSummary,
     type NotificationTemplateUpdateRequest as NotificationTemplateUpdateRequest,
