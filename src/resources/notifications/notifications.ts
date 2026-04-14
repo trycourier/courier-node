@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as NotificationsAPI from './notifications';
 import * as Shared from '../shared';
 import * as ChecksAPI from './checks';
 import {
@@ -510,8 +509,8 @@ export namespace NotificationLocalePutRequest {
  */
 export interface NotificationTemplateCreateRequest {
   /**
-   * Full document shape used in POST and PUT request bodies, and returned inside the
-   * GET response envelope.
+   * Core template fields used in POST and PUT request bodies (nested under a
+   * `notification` key) and returned at the top level in responses.
    */
   notification: NotificationTemplatePayload;
 
@@ -523,8 +522,8 @@ export interface NotificationTemplateCreateRequest {
 }
 
 /**
- * Full document shape used in POST and PUT request bodies, and returned inside the
- * GET response envelope.
+ * Core template fields used in POST and PUT request bodies (nested under a
+ * `notification` key) and returned at the top level in responses.
  */
 export interface NotificationTemplatePayload {
   /**
@@ -594,10 +593,14 @@ export interface NotificationTemplatePublishRequest {
 
 /**
  * Response for GET /notifications/{id}, POST /notifications, and PUT
- * /notifications/{id}. Wraps the template payload inside a `notification` key
- * alongside metadata.
+ * /notifications/{id}. Returns all template fields at the top level.
  */
-export interface NotificationTemplateResponse {
+export interface NotificationTemplateResponse extends NotificationTemplatePayload {
+  /**
+   * The template ID.
+   */
+  id: string;
+
   /**
    * Epoch milliseconds when the template was created.
    */
@@ -607,12 +610,6 @@ export interface NotificationTemplateResponse {
    * User ID of the creator.
    */
   creator: string;
-
-  /**
-   * Full document shape used in POST and PUT request bodies, and returned inside the
-   * GET response envelope.
-   */
-  notification: NotificationTemplateResponse.Notification;
 
   /**
    * The template state. Always uppercase.
@@ -628,19 +625,6 @@ export interface NotificationTemplateResponse {
    * User ID of the last updater.
    */
   updater?: string;
-}
-
-export namespace NotificationTemplateResponse {
-  /**
-   * Full document shape used in POST and PUT request bodies, and returned inside the
-   * GET response envelope.
-   */
-  export interface Notification extends NotificationsAPI.NotificationTemplatePayload {
-    /**
-     * The template ID.
-     */
-    id: string;
-  }
 }
 
 /**
@@ -687,8 +671,8 @@ export interface NotificationTemplateSummary {
  */
 export interface NotificationTemplateUpdateRequest {
   /**
-   * Full document shape used in POST and PUT request bodies, and returned inside the
-   * GET response envelope.
+   * Core template fields used in POST and PUT request bodies (nested under a
+   * `notification` key) and returned at the top level in responses.
    */
   notification: NotificationTemplatePayload;
 
@@ -787,8 +771,8 @@ export type NotificationRetrieveContentResponse = NotificationContentGetResponse
 
 export interface NotificationCreateParams {
   /**
-   * Full document shape used in POST and PUT request bodies, and returned inside the
-   * GET response envelope.
+   * Core template fields used in POST and PUT request bodies (nested under a
+   * `notification` key) and returned at the top level in responses.
    */
   notification: NotificationTemplatePayload;
 
@@ -944,8 +928,8 @@ export namespace NotificationPutLocaleParams {
 
 export interface NotificationReplaceParams {
   /**
-   * Full document shape used in POST and PUT request bodies, and returned inside the
-   * GET response envelope.
+   * Core template fields used in POST and PUT request bodies (nested under a
+   * `notification` key) and returned at the top level in responses.
    */
   notification: NotificationTemplatePayload;
 
