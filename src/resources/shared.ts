@@ -12,7 +12,7 @@ export interface AirshipProfileAudience {
   named_user: string;
 }
 
-export type Alignment = 'center' | 'left' | 'right' | 'full';
+export type Alignment = 'center' | 'left' | 'right' | 'full'
 
 export interface AudienceFilter {
   /**
@@ -81,7 +81,7 @@ export interface Channel {
   timeouts?: Timeouts | null;
 }
 
-export type ChannelClassification = 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox';
+export type ChannelClassification = 'direct_message' | 'email' | 'push' | 'sms' | 'webhook' | 'inbox'
 
 export interface ChannelMetadata {
   utm?: Utm | null;
@@ -91,9 +91,9 @@ export interface ChannelPreference {
   channel: ChannelClassification;
 }
 
-export type DeviceType = string;
+export type DeviceType = string
 
-export type Discord = SendToChannel | SendDirectMessage;
+export type Discord = SendToChannel | SendDirectMessage
 
 export interface ElementalActionNodeWithType extends ElementalBaseNode {
   type?: 'action';
@@ -203,15 +203,7 @@ export interface ElementalMetaNodeWithType extends ElementalBaseNode {
  * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
  * for more details.
  */
-export type ElementalNode =
-  | ElementalTextNodeWithType
-  | ElementalMetaNodeWithType
-  | ElementalChannelNodeWithType
-  | ElementalImageNodeWithType
-  | ElementalActionNodeWithType
-  | ElementalDividerNodeWithType
-  | ElementalQuoteNodeWithType
-  | ElementalHTMLNodeWithType;
+export type ElementalNode = ElementalTextNodeWithType | ElementalMetaNodeWithType | ElementalChannelNodeWithType | ElementalImageNodeWithType | ElementalActionNodeWithType | ElementalDividerNodeWithType | ElementalQuoteNodeWithType | ElementalHTMLNodeWithType
 
 export interface ElementalQuoteNodeWithType extends ElementalBaseNode {
   type?: 'quote';
@@ -221,7 +213,7 @@ export interface ElementalTextNodeWithType extends ElementalBaseNode {
   type?: 'text';
 }
 
-export type Expo = Token | MultipleTokens;
+export type Expo = Token | MultipleTokens
 
 /**
  * A filter rule that can be either a single condition (with path/value) or a
@@ -296,7 +288,7 @@ export interface ListRecipient {
   list_id?: string | null;
 }
 
-export type MessageChannels = { [key: string]: Channel };
+export type MessageChannels = { [key: string]: Channel }
 
 export interface MessageContext {
   /**
@@ -305,7 +297,7 @@ export interface MessageContext {
   tenant_id?: string | null;
 }
 
-export type MessageProviders = { [key: string]: MessageProvidersType };
+export type MessageProviders = { [key: string]: MessageProvidersType }
 
 export interface MessageProvidersType {
   /**
@@ -329,18 +321,13 @@ export interface MessageRouting {
   method: 'all' | 'single';
 }
 
-export type MessageRoutingChannel = string | MessageRouting;
+export type MessageRoutingChannel = string | MessageRouting
 
 export interface Metadata {
   utm?: Utm | null;
 }
 
-export type MsTeams =
-  | SendToMsTeamsUserID
-  | SendToMsTeamsEmail
-  | SendToMsTeamsChannelID
-  | SendToMsTeamsConversationID
-  | SendToMsTeamsChannelName;
+export type MsTeams = SendToMsTeamsUserID | SendToMsTeamsEmail | SendToMsTeamsChannelID | SendToMsTeamsConversationID | SendToMsTeamsChannelName
 
 export interface MsTeamsBaseProperties {
   service_url: string;
@@ -400,7 +387,7 @@ export interface Preference {
   source?: 'subscription' | 'list' | 'recipient' | null;
 }
 
-export type PreferenceStatus = 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED';
+export type PreferenceStatus = 'OPTED_IN' | 'OPTED_OUT' | 'REQUIRED'
 
 export interface RecipientPreferences {
   categories?: { [key: string]: NotificationPreferenceDetails } | null;
@@ -482,7 +469,7 @@ export interface SendToSlackUserID {
   user_id: string;
 }
 
-export type Slack = SendToSlackChannel | SendToSlackEmail | SendToSlackUserID;
+export type Slack = SendToSlackChannel | SendToSlackEmail | SendToSlackUserID
 
 export interface SlackBaseProperties {
   access_token: string;
@@ -495,7 +482,7 @@ export interface SlackRecipient {
   slack: Slack;
 }
 
-export type TextStyle = 'text' | 'h1' | 'h2' | 'subtext';
+export type TextStyle = 'text' | 'h1' | 'h2' | 'subtext'
 
 export interface Timeouts {
   channel?: number | null;
@@ -591,7 +578,7 @@ export namespace UserProfile {
   }
 }
 
-export type UserProfileFirebaseToken = string | Array<string>;
+export type UserProfileFirebaseToken = string | Array<string>
 
 export interface UserRecipient {
   /**
@@ -662,7 +649,7 @@ export interface Utm {
   term?: string | null;
 }
 
-export type WebhookAuthMode = 'none' | 'basic' | 'bearer';
+export type WebhookAuthMode = 'none' | 'basic' | 'bearer'
 
 export interface WebhookAuthentication {
   /**
@@ -686,7 +673,7 @@ export interface WebhookAuthentication {
   username?: string | null;
 }
 
-export type WebhookMethod = 'POST' | 'PUT';
+export type WebhookMethod = 'POST' | 'PUT'
 
 export interface WebhookProfile {
   /**
@@ -717,7 +704,7 @@ export interface WebhookProfile {
   profile?: WebhookProfileType | null;
 }
 
-export type WebhookProfileType = 'limited' | 'expanded';
+export type WebhookProfileType = 'limited' | 'expanded'
 
 /**
  * Send via webhook

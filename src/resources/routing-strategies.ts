@@ -27,10 +27,7 @@ export class RoutingStrategies extends APIResource {
    *   });
    * ```
    */
-  create(
-    body: RoutingStrategyCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<RoutingStrategyGetResponse> {
+  create(body: RoutingStrategyCreateParams, options?: RequestOptions): APIPromise<RoutingStrategyGetResponse> {
     return this._client.post('/routing-strategies', { body, ...options });
   }
 
@@ -59,10 +56,7 @@ export class RoutingStrategies extends APIResource {
    *   await client.routingStrategies.list();
    * ```
    */
-  list(
-    query: RoutingStrategyListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<RoutingStrategyListResponse> {
+  list(query: RoutingStrategyListParams | null | undefined = {}, options?: RequestOptions): APIPromise<RoutingStrategyListResponse> {
     return this._client.get('/routing-strategies', { query, ...options });
   }
 
@@ -76,10 +70,7 @@ export class RoutingStrategies extends APIResource {
    * ```
    */
   archive(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/routing-strategies/${id}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/routing-strategies/${id}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
@@ -92,11 +83,7 @@ export class RoutingStrategies extends APIResource {
    *   await client.routingStrategies.listNotifications('id');
    * ```
    */
-  listNotifications(
-    id: string,
-    query: RoutingStrategyListNotificationsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AssociatedNotificationListResponse> {
+  listNotifications(id: string, query: RoutingStrategyListNotificationsParams | null | undefined = {}, options?: RequestOptions): APIPromise<AssociatedNotificationListResponse> {
     return this._client.get(path`/routing-strategies/${id}/notifications`, { query, ...options });
   }
 
@@ -117,11 +104,7 @@ export class RoutingStrategies extends APIResource {
    *   });
    * ```
    */
-  replace(
-    id: string,
-    body: RoutingStrategyReplaceParams,
-    options?: RequestOptions,
-  ): APIPromise<RoutingStrategyGetResponse> {
+  replace(id: string, body: RoutingStrategyReplaceParams, options?: RequestOptions): APIPromise<RoutingStrategyGetResponse> {
     return this._client.put(path`/routing-strategies/${id}`, { body, ...options });
   }
 }
@@ -420,6 +403,6 @@ export declare namespace RoutingStrategies {
     type RoutingStrategyCreateParams as RoutingStrategyCreateParams,
     type RoutingStrategyListParams as RoutingStrategyListParams,
     type RoutingStrategyListNotificationsParams as RoutingStrategyListNotificationsParams,
-    type RoutingStrategyReplaceParams as RoutingStrategyReplaceParams,
+    type RoutingStrategyReplaceParams as RoutingStrategyReplaceParams
   };
 }

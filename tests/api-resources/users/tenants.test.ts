@@ -2,10 +2,7 @@
 
 import Courier from '@trycourier/courier';
 
-const client = new Courier({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Courier({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource tenants', () => {
   // Mock server tests are disabled
@@ -23,20 +20,14 @@ describe('resource tenants', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.users.tenants.list(
-        'user_id',
-        { cursor: 'cursor', limit: 0 },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Courier.NotFoundError);
+    await expect(client.users.tenants.list('user_id', { cursor: 'cursor', limit: 0 }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Courier.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('addMultiple: only required params', async () => {
-    const responsePromise = client.users.tenants.addMultiple('user_id', {
-      tenants: [{ tenant_id: 'tenant_id' }],
-    });
+    const responsePromise = client.users.tenants.addMultiple('user_id', { tenants: [{ tenant_id: 'tenant_id' }] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -48,16 +39,12 @@ describe('resource tenants', () => {
 
   // Mock server tests are disabled
   test.skip('addMultiple: required and optional params', async () => {
-    const response = await client.users.tenants.addMultiple('user_id', {
-      tenants: [
-        {
-          tenant_id: 'tenant_id',
-          profile: { foo: 'bar' },
-          type: 'user',
-          user_id: 'user_id',
-        },
-      ],
-    });
+    const response = await client.users.tenants.addMultiple('user_id', { tenants: [{
+    tenant_id: 'tenant_id',
+    profile: { foo: 'bar' },
+    type: 'user',
+    user_id: 'user_id',
+  }] });
   });
 
   // Mock server tests are disabled
@@ -75,9 +62,9 @@ describe('resource tenants', () => {
   // Mock server tests are disabled
   test.skip('addSingle: required and optional params', async () => {
     const response = await client.users.tenants.addSingle('tenant_id', {
-      user_id: 'user_id',
-      profile: { foo: 'bar' },
-    });
+    user_id: 'user_id',
+    profile: { foo: 'bar' },
+  });
   });
 
   // Mock server tests are disabled

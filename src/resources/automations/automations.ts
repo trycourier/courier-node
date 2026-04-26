@@ -18,10 +18,7 @@ export class Automations extends APIResource {
    *   await client.automations.list();
    * ```
    */
-  list(
-    query: AutomationListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AutomationTemplateListResponse> {
+  list(query: AutomationListParams | null | undefined = {}, options?: RequestOptions): APIPromise<AutomationTemplateListResponse> {
     return this._client.get('/automations', { query, ...options });
   }
 }
@@ -87,12 +84,12 @@ export declare namespace Automations {
     type AutomationInvokeResponse as AutomationInvokeResponse,
     type AutomationTemplate as AutomationTemplate,
     type AutomationTemplateListResponse as AutomationTemplateListResponse,
-    type AutomationListParams as AutomationListParams,
+    type AutomationListParams as AutomationListParams
   };
 
   export {
     Invoke as Invoke,
     type InvokeInvokeAdHocParams as InvokeInvokeAdHocParams,
-    type InvokeInvokeByTemplateParams as InvokeInvokeByTemplateParams,
+    type InvokeInvokeByTemplateParams as InvokeInvokeByTemplateParams
   };
 }

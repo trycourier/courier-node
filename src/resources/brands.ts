@@ -33,10 +33,7 @@ export class Brands extends APIResource {
   /**
    * Get the list of brands.
    */
-  list(
-    query: BrandListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<BrandListResponse> {
+  list(query: BrandListParams | null | undefined = {}, options?: RequestOptions): APIPromise<BrandListResponse> {
     return this._client.get('/brands', { query, ...options });
   }
 
@@ -44,10 +41,7 @@ export class Brands extends APIResource {
    * Delete a brand by brand ID.
    */
   delete(brandID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/brands/${brandID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/brands/${brandID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
@@ -74,7 +68,7 @@ export interface BrandColors {
 
   secondary?: string;
 
-  [k: string]: string | undefined;
+[k: string]: string | undefined
 }
 
 export interface BrandSettings {
@@ -238,6 +232,6 @@ export declare namespace Brands {
     type BrandListResponse as BrandListResponse,
     type BrandCreateParams as BrandCreateParams,
     type BrandUpdateParams as BrandUpdateParams,
-    type BrandListParams as BrandListParams,
+    type BrandListParams as BrandListParams
   };
 }

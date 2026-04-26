@@ -18,21 +18,14 @@ export class Audiences extends APIResource {
   /**
    * Creates or updates audience.
    */
-  update(
-    audienceID: string,
-    body: AudienceUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<AudienceUpdateResponse> {
+  update(audienceID: string, body: AudienceUpdateParams, options?: RequestOptions): APIPromise<AudienceUpdateResponse> {
     return this._client.put(path`/audiences/${audienceID}`, { body, ...options });
   }
 
   /**
    * Get the audiences associated with the authorization token.
    */
-  list(
-    query: AudienceListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AudienceListResponse> {
+  list(query: AudienceListParams | null | undefined = {}, options?: RequestOptions): APIPromise<AudienceListResponse> {
     return this._client.get('/audiences', { query, ...options });
   }
 
@@ -40,20 +33,13 @@ export class Audiences extends APIResource {
    * Deletes the specified audience.
    */
   delete(audienceID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/audiences/${audienceID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/audiences/${audienceID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
    * Get list of members of an audience.
    */
-  listMembers(
-    audienceID: string,
-    query: AudienceListMembersParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AudienceListMembersResponse> {
+  listMembers(audienceID: string, query: AudienceListMembersParams | null | undefined = {}, options?: RequestOptions): APIPromise<AudienceListMembersResponse> {
     return this._client.get(path`/audiences/${audienceID}/members`, { query, ...options });
   }
 }
@@ -163,6 +149,6 @@ export declare namespace Audiences {
     type AudienceListMembersResponse as AudienceListMembersResponse,
     type AudienceUpdateParams as AudienceUpdateParams,
     type AudienceListParams as AudienceListParams,
-    type AudienceListMembersParams as AudienceListMembersParams,
+    type AudienceListMembersParams as AudienceListMembersParams
   };
 }

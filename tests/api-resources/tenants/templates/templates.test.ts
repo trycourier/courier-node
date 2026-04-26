@@ -2,10 +2,7 @@
 
 import Courier from '@trycourier/courier';
 
-const client = new Courier({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Courier({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource templates', () => {
   // Mock server tests are disabled
@@ -40,13 +37,9 @@ describe('resource templates', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.tenants.templates.list(
-        'tenant_id',
-        { cursor: 'cursor', limit: 0 },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Courier.NotFoundError);
+    await expect(client.tenants.templates.list('tenant_id', { cursor: 'cursor', limit: 0 }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Courier.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -63,18 +56,15 @@ describe('resource templates', () => {
 
   // Mock server tests are disabled
   test.skip('publish: required and optional params', async () => {
-    const response = await client.tenants.templates.publish('template_id', {
-      tenant_id: 'tenant_id',
-      version: 'version',
-    });
+    const response = await client.tenants.templates.publish('template_id', { tenant_id: 'tenant_id', version: 'version' });
   });
 
   // Mock server tests are disabled
   test.skip('replace: only required params', async () => {
     const responsePromise = client.tenants.templates.replace('template_id', {
-      tenant_id: 'tenant_id',
-      template: { content: { elements: [{}], version: 'version' } },
-    });
+    tenant_id: 'tenant_id',
+    template: { content: { elements: [{}], version: 'version' } },
+  });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -87,58 +77,45 @@ describe('resource templates', () => {
   // Mock server tests are disabled
   test.skip('replace: required and optional params', async () => {
     const response = await client.tenants.templates.replace('template_id', {
-      tenant_id: 'tenant_id',
-      template: {
-        content: {
-          elements: [
-            {
-              channels: ['string'],
-              if: 'if',
-              loop: 'loop',
-              ref: 'ref',
-              type: 'text',
-            },
-          ],
-          version: 'version',
-        },
-        channels: {
-          foo: {
-            brand_id: 'brand_id',
-            if: 'if',
-            metadata: {
-              utm: {
-                campaign: 'campaign',
-                content: 'content',
-                medium: 'medium',
-                source: 'source',
-                term: 'term',
-              },
-            },
-            override: { foo: 'bar' },
-            providers: ['string'],
-            routing_method: 'all',
-            timeouts: { channel: 0, provider: 0 },
-          },
-        },
-        providers: {
-          foo: {
-            if: 'if',
-            metadata: {
-              utm: {
-                campaign: 'campaign',
-                content: 'content',
-                medium: 'medium',
-                source: 'source',
-                term: 'term',
-              },
-            },
-            override: { foo: 'bar' },
-            timeouts: 0,
-          },
-        },
-        routing: { channels: ['string'], method: 'all' },
-      },
-      published: true,
-    });
+    tenant_id: 'tenant_id',
+    template: {
+    content: { elements: [{
+    channels: ['string'],
+    if: 'if',
+    loop: 'loop',
+    ref: 'ref',
+    type: 'text',
+  }], version: 'version' },
+    channels: { foo: {
+    brand_id: 'brand_id',
+    if: 'if',
+    metadata: { utm: {
+    campaign: 'campaign',
+    content: 'content',
+    medium: 'medium',
+    source: 'source',
+    term: 'term',
+  } },
+    override: { foo: 'bar' },
+    providers: ['string'],
+    routing_method: 'all',
+    timeouts: { channel: 0, provider: 0 },
+  } },
+    providers: { foo: {
+    if: 'if',
+    metadata: { utm: {
+    campaign: 'campaign',
+    content: 'content',
+    medium: 'medium',
+    source: 'source',
+    term: 'term',
+  } },
+    override: { foo: 'bar' },
+    timeouts: 0,
+  } },
+    routing: { channels: ['string'], method: 'all' },
+  },
+    published: true,
+  });
   });
 });

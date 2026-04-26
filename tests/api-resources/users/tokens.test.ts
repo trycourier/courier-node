@@ -2,10 +2,7 @@
 
 import Courier from '@trycourier/courier';
 
-const client = new Courier({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Courier({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource tokens', () => {
   // Mock server tests are disabled
@@ -27,10 +24,7 @@ describe('resource tokens', () => {
 
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.users.tokens.update('token', {
-      user_id: 'user_id',
-      patch: [{ op: 'op', path: 'path' }],
-    });
+    const responsePromise = client.users.tokens.update('token', { user_id: 'user_id', patch: [{ op: 'op', path: 'path' }] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -42,16 +36,11 @@ describe('resource tokens', () => {
 
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
-    const response = await client.users.tokens.update('token', {
-      user_id: 'user_id',
-      patch: [
-        {
-          op: 'op',
-          path: 'path',
-          value: 'value',
-        },
-      ],
-    });
+    const response = await client.users.tokens.update('token', { user_id: 'user_id', patch: [{
+    op: 'op',
+    path: 'path',
+    value: 'value',
+  }] });
   });
 
   // Mock server tests are disabled
@@ -97,10 +86,7 @@ describe('resource tokens', () => {
 
   // Mock server tests are disabled
   test.skip('addSingle: only required params', async () => {
-    const responsePromise = client.users.tokens.addSingle('token', {
-      user_id: 'user_id',
-      provider_key: 'firebase-fcm',
-    });
+    const responsePromise = client.users.tokens.addSingle('token', { user_id: 'user_id', provider_key: 'firebase-fcm' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -113,24 +99,24 @@ describe('resource tokens', () => {
   // Mock server tests are disabled
   test.skip('addSingle: required and optional params', async () => {
     const response = await client.users.tokens.addSingle('token', {
-      user_id: 'user_id',
-      provider_key: 'firebase-fcm',
-      device: {
-        ad_id: 'ad_id',
-        app_id: 'app_id',
-        device_id: 'device_id',
-        manufacturer: 'manufacturer',
-        model: 'model',
-        platform: 'platform',
-      },
-      expiry_date: 'string',
-      properties: {},
-      tracking: {
-        ip: 'ip',
-        lat: 'lat',
-        long: 'long',
-        os_version: 'os_version',
-      },
-    });
+    user_id: 'user_id',
+    provider_key: 'firebase-fcm',
+    device: {
+    ad_id: 'ad_id',
+    app_id: 'app_id',
+    device_id: 'device_id',
+    manufacturer: 'manufacturer',
+    model: 'model',
+    platform: 'platform',
+  },
+    expiry_date: 'string',
+    properties: {},
+    tracking: {
+    ip: 'ip',
+    lat: 'lat',
+    long: 'long',
+    os_version: 'os_version',
+  },
+  });
   });
 });
