@@ -17,11 +17,7 @@ export class Bulk extends APIResource {
    * for email provider routing.
    */
   addUsers(jobID: string, body: BulkAddUsersParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/bulk/${jobID}`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.post(path`/bulk/${jobID}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
@@ -40,11 +36,7 @@ export class Bulk extends APIResource {
   /**
    * Get Bulk Job Users
    */
-  listUsers(
-    jobID: string,
-    query: BulkListUsersParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<BulkListUsersResponse> {
+  listUsers(jobID: string, query: BulkListUsersParams | null | undefined = {}, options?: RequestOptions): APIPromise<BulkListUsersResponse> {
     return this._client.get(path`/bulk/${jobID}/users`, { query, ...options });
   }
 
@@ -59,10 +51,7 @@ export class Bulk extends APIResource {
    * Run a bulk job
    */
   runJob(jobID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/bulk/${jobID}/run`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.post(path`/bulk/${jobID}/run`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
@@ -205,6 +194,6 @@ export declare namespace Bulk {
     type BulkRetrieveJobResponse as BulkRetrieveJobResponse,
     type BulkAddUsersParams as BulkAddUsersParams,
     type BulkCreateJobParams as BulkCreateJobParams,
-    type BulkListUsersParams as BulkListUsersParams,
+    type BulkListUsersParams as BulkListUsersParams
   };
 }

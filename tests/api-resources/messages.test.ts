@@ -2,10 +2,7 @@
 
 import Courier from '@trycourier/courier';
 
-const client = new Courier({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Courier({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource messages', () => {
   // Mock server tests are disabled
@@ -35,27 +32,24 @@ describe('resource messages', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.messages.list(
-        {
-          archived: true,
-          cursor: 'cursor',
-          enqueued_after: 'enqueued_after',
-          event: 'event',
-          list: 'list',
-          messageId: 'messageId',
-          notification: 'notification',
-          provider: ['string'],
-          recipient: 'recipient',
-          status: ['string'],
-          tag: ['string'],
-          tags: 'tags',
-          tenant_id: 'tenant_id',
-          traceId: 'traceId',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Courier.NotFoundError);
+    await expect(client.messages.list({
+    archived: true,
+    cursor: 'cursor',
+    enqueued_after: 'enqueued_after',
+    event: 'event',
+    list: 'list',
+    messageId: 'messageId',
+    notification: 'notification',
+    provider: ['string'],
+    recipient: 'recipient',
+    status: ['string'],
+    tag: ['string'],
+    tags: 'tags',
+    tenant_id: 'tenant_id',
+    traceId: 'traceId',
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Courier.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -97,8 +91,8 @@ describe('resource messages', () => {
   // Mock server tests are disabled
   test.skip('history: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.messages.history('message_id', { type: 'type' }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Courier.NotFoundError);
+    await expect(client.messages.history('message_id', { type: 'type' }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(Courier.NotFoundError);
   });
 });

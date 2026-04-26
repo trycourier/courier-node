@@ -17,12 +17,8 @@ export class Tokens extends APIResource {
    * });
    * ```
    */
-  retrieve(
-    token: string,
-    params: TokenRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<TokenRetrieveResponse> {
-    const { user_id } = params;
+  retrieve(token: string, params: TokenRetrieveParams, options?: RequestOptions): APIPromise<TokenRetrieveResponse> {
+    const { user_id } = params
     return this._client.get(path`/users/${user_id}/tokens/${token}`, options);
   }
 
@@ -38,12 +34,8 @@ export class Tokens extends APIResource {
    * ```
    */
   update(token: string, params: TokenUpdateParams, options?: RequestOptions): APIPromise<void> {
-    const { user_id, ...body } = params;
-    return this._client.patch(path`/users/${user_id}/tokens/${token}`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    const { user_id, ...body } = params
+    return this._client.patch(path`/users/${user_id}/tokens/${token}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
@@ -69,11 +61,8 @@ export class Tokens extends APIResource {
    * ```
    */
   delete(token: string, params: TokenDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { user_id } = params;
-    return this._client.delete(path`/users/${user_id}/tokens/${token}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    const { user_id } = params
+    return this._client.delete(path`/users/${user_id}/tokens/${token}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
@@ -85,10 +74,7 @@ export class Tokens extends APIResource {
    * ```
    */
   addMultiple(userID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.put(path`/users/${userID}/tokens`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.put(path`/users/${userID}/tokens`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
@@ -103,12 +89,8 @@ export class Tokens extends APIResource {
    * ```
    */
   addSingle(token: string, params: TokenAddSingleParams, options?: RequestOptions): APIPromise<void> {
-    const { user_id, ...body } = params;
-    return this._client.put(path`/users/${user_id}/tokens/${token}`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    const { user_id, ...body } = params
+    return this._client.put(path`/users/${user_id}/tokens/${token}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
@@ -368,6 +350,6 @@ export declare namespace Tokens {
     type TokenRetrieveParams as TokenRetrieveParams,
     type TokenUpdateParams as TokenUpdateParams,
     type TokenDeleteParams as TokenDeleteParams,
-    type TokenAddSingleParams as TokenAddSingleParams,
+    type TokenAddSingleParams as TokenAddSingleParams
   };
 }

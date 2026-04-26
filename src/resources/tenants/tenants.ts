@@ -6,14 +6,7 @@ import * as Shared from '../shared';
 import * as PreferencesAPI from './preferences/preferences';
 import { Preferences } from './preferences/preferences';
 import * as TemplatesAPI from './templates/templates';
-import {
-  TemplateListParams,
-  TemplateListResponse,
-  TemplatePublishParams,
-  TemplateReplaceParams,
-  TemplateRetrieveParams,
-  Templates,
-} from './templates/templates';
+import { TemplateListParams, TemplateListResponse, TemplatePublishParams, TemplateReplaceParams, TemplateRetrieveParams, Templates } from './templates/templates';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -57,10 +50,7 @@ export class Tenants extends APIResource {
    * const tenants = await client.tenants.list();
    * ```
    */
-  list(
-    query: TenantListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<TenantListResponse> {
+  list(query: TenantListParams | null | undefined = {}, options?: RequestOptions): APIPromise<TenantListResponse> {
     return this._client.get('/tenants', { query, ...options });
   }
 
@@ -73,10 +63,7 @@ export class Tenants extends APIResource {
    * ```
    */
   delete(tenantID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/tenants/${tenantID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/tenants/${tenantID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
@@ -89,11 +76,7 @@ export class Tenants extends APIResource {
    * );
    * ```
    */
-  listUsers(
-    tenantID: string,
-    query: TenantListUsersParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<TenantListUsersResponse> {
+  listUsers(tenantID: string, query: TenantListUsersParams | null | undefined = {}, options?: RequestOptions): APIPromise<TenantListUsersResponse> {
     return this._client.get(path`/tenants/${tenantID}/users`, { query, ...options });
   }
 }
@@ -453,10 +436,12 @@ export declare namespace Tenants {
     type TenantListUsersResponse as TenantListUsersResponse,
     type TenantUpdateParams as TenantUpdateParams,
     type TenantListParams as TenantListParams,
-    type TenantListUsersParams as TenantListUsersParams,
+    type TenantListUsersParams as TenantListUsersParams
   };
 
-  export { Preferences as Preferences };
+  export {
+    Preferences as Preferences
+  };
 
   export {
     Templates as Templates,
@@ -464,6 +449,6 @@ export declare namespace Tenants {
     type TemplateRetrieveParams as TemplateRetrieveParams,
     type TemplateListParams as TemplateListParams,
     type TemplatePublishParams as TemplatePublishParams,
-    type TemplateReplaceParams as TemplateReplaceParams,
+    type TemplateReplaceParams as TemplateReplaceParams
   };
 }

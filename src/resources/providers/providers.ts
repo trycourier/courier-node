@@ -42,10 +42,7 @@ export class Providers extends APIResource {
    * List configured provider integrations for the current workspace. Supports
    * cursor-based pagination.
    */
-  list(
-    query: ProviderListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ProviderListResponse> {
+  list(query: ProviderListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ProviderListResponse> {
     return this._client.get('/providers', { query, ...options });
   }
 
@@ -54,10 +51,7 @@ export class Providers extends APIResource {
    * by routing or notifications.
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/providers/${id}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/providers/${id}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
@@ -232,12 +226,12 @@ export declare namespace Providers {
     type ProviderListResponse as ProviderListResponse,
     type ProviderCreateParams as ProviderCreateParams,
     type ProviderUpdateParams as ProviderUpdateParams,
-    type ProviderListParams as ProviderListParams,
+    type ProviderListParams as ProviderListParams
   };
 
   export {
     Catalog as Catalog,
     type CatalogListResponse as CatalogListResponse,
-    type CatalogListParams as CatalogListParams,
+    type CatalogListParams as CatalogListParams
   };
 }

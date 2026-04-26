@@ -28,12 +28,8 @@ export class Checks extends APIResource {
    * );
    * ```
    */
-  update(
-    submissionID: string,
-    params: CheckUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<CheckUpdateResponse> {
-    const { id, ...body } = params;
+  update(submissionID: string, params: CheckUpdateParams, options?: RequestOptions): APIPromise<CheckUpdateResponse> {
+    const { id, ...body } = params
     return this._client.put(path`/notifications/${id}/${submissionID}/checks`, { body, ...options });
   }
 
@@ -48,12 +44,8 @@ export class Checks extends APIResource {
    * );
    * ```
    */
-  list(
-    submissionID: string,
-    params: CheckListParams,
-    options?: RequestOptions,
-  ): APIPromise<CheckListResponse> {
-    const { id } = params;
+  list(submissionID: string, params: CheckListParams, options?: RequestOptions): APIPromise<CheckListResponse> {
+    const { id } = params
     return this._client.get(path`/notifications/${id}/${submissionID}/checks`, options);
   }
 
@@ -68,11 +60,8 @@ export class Checks extends APIResource {
    * ```
    */
   delete(submissionID: string, params: CheckDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { id } = params;
-    return this._client.delete(path`/notifications/${id}/${submissionID}/checks`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    const { id } = params
+    return this._client.delete(path`/notifications/${id}/${submissionID}/checks`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
@@ -116,6 +105,6 @@ export declare namespace Checks {
     type CheckListResponse as CheckListResponse,
     type CheckUpdateParams as CheckUpdateParams,
     type CheckListParams as CheckListParams,
-    type CheckDeleteParams as CheckDeleteParams,
+    type CheckDeleteParams as CheckDeleteParams
   };
 }

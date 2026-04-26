@@ -11,11 +11,7 @@ export class Lists extends APIResource {
   /**
    * Returns the subscribed lists for a specified user.
    */
-  retrieve(
-    userID: string,
-    query: ListRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ListRetrieveResponse> {
+  retrieve(userID: string, query: ListRetrieveParams | null | undefined = {}, options?: RequestOptions): APIPromise<ListRetrieveResponse> {
     return this._client.get(path`/profiles/${userID}/lists`, { query, ...options });
   }
 
@@ -30,11 +26,7 @@ export class Lists extends APIResource {
    * Subscribes the given user to one or more lists. If the list does not exist, it
    * will be created.
    */
-  subscribe(
-    userID: string,
-    body: ListSubscribeParams,
-    options?: RequestOptions,
-  ): APIPromise<ListSubscribeResponse> {
+  subscribe(userID: string, body: ListSubscribeParams, options?: RequestOptions): APIPromise<ListSubscribeResponse> {
     return this._client.post(path`/profiles/${userID}/lists`, { body, ...options });
   }
 }
@@ -98,6 +90,6 @@ export declare namespace Lists {
     type ListDeleteResponse as ListDeleteResponse,
     type ListSubscribeResponse as ListSubscribeResponse,
     type ListRetrieveParams as ListRetrieveParams,
-    type ListSubscribeParams as ListSubscribeParams,
+    type ListSubscribeParams as ListSubscribeParams
   };
 }

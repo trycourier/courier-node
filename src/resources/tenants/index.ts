@@ -1,29 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Preferences } from './preferences/index';
-export {
-  Templates,
-  type TemplateListResponse,
-  type TemplateRetrieveParams,
-  type TemplateListParams,
-  type TemplatePublishParams,
-  type TemplateReplaceParams,
-} from './templates/index';
-export {
-  Tenants,
-  type BaseTemplateTenantAssociation,
-  type DefaultPreferences,
-  type PostTenantTemplatePublishRequest,
-  type PostTenantTemplatePublishResponse,
-  type PutTenantTemplateRequest,
-  type PutTenantTemplateResponse,
-  type SubscriptionTopicNew,
-  type Tenant,
-  type TenantAssociation,
-  type TenantTemplateInput,
-  type TenantListResponse,
-  type TenantListUsersResponse,
-  type TenantUpdateParams,
-  type TenantListParams,
-  type TenantListUsersParams,
-} from './tenants';
+export { Preferences } from './preferences/index';;
+export { Templates, type TemplateListResponse, type TemplateRetrieveParams, type TemplateListParams, type TemplatePublishParams, type TemplateReplaceParams } from './templates/index';;
+export { Tenants, type BaseTemplateTenantAssociation, type DefaultPreferences, type PostTenantTemplatePublishRequest, type PostTenantTemplatePublishResponse, type PutTenantTemplateRequest, type PutTenantTemplateResponse, type SubscriptionTopicNew, type Tenant, type TenantAssociation, type TenantTemplateInput, type TenantListResponse, type TenantListUsersResponse, type TenantUpdateParams, type TenantListParams, type TenantListUsersParams } from './tenants';;

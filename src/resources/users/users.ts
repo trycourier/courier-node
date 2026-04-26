@@ -2,36 +2,11 @@
 
 import { APIResource } from '../../core/resource';
 import * as PreferencesAPI from './preferences';
-import {
-  PreferenceRetrieveParams,
-  PreferenceRetrieveResponse,
-  PreferenceRetrieveTopicParams,
-  PreferenceRetrieveTopicResponse,
-  PreferenceUpdateOrCreateTopicParams,
-  PreferenceUpdateOrCreateTopicResponse,
-  Preferences,
-  TopicPreference,
-} from './preferences';
+import { PreferenceRetrieveParams, PreferenceRetrieveResponse, PreferenceRetrieveTopicParams, PreferenceRetrieveTopicResponse, PreferenceUpdateOrCreateTopicParams, PreferenceUpdateOrCreateTopicResponse, Preferences, TopicPreference } from './preferences';
 import * as TenantsAPI from './tenants';
-import {
-  TenantAddMultipleParams,
-  TenantAddSingleParams,
-  TenantListParams,
-  TenantListResponse,
-  TenantRemoveSingleParams,
-  Tenants,
-} from './tenants';
+import { TenantAddMultipleParams, TenantAddSingleParams, TenantListParams, TenantListResponse, TenantRemoveSingleParams, Tenants } from './tenants';
 import * as TokensAPI from './tokens';
-import {
-  TokenAddSingleParams,
-  TokenDeleteParams,
-  TokenListResponse,
-  TokenRetrieveParams,
-  TokenRetrieveResponse,
-  TokenUpdateParams,
-  Tokens,
-  UserToken,
-} from './tokens';
+import { TokenAddSingleParams, TokenDeleteParams, TokenListResponse, TokenRetrieveParams, TokenRetrieveResponse, TokenUpdateParams, Tokens, UserToken } from './tokens';
 
 export class Users extends APIResource {
   preferences: PreferencesAPI.Preferences = new PreferencesAPI.Preferences(this._client);
@@ -52,7 +27,7 @@ export declare namespace Users {
     type PreferenceUpdateOrCreateTopicResponse as PreferenceUpdateOrCreateTopicResponse,
     type PreferenceRetrieveParams as PreferenceRetrieveParams,
     type PreferenceRetrieveTopicParams as PreferenceRetrieveTopicParams,
-    type PreferenceUpdateOrCreateTopicParams as PreferenceUpdateOrCreateTopicParams,
+    type PreferenceUpdateOrCreateTopicParams as PreferenceUpdateOrCreateTopicParams
   };
 
   export {
@@ -61,7 +36,7 @@ export declare namespace Users {
     type TenantListParams as TenantListParams,
     type TenantAddMultipleParams as TenantAddMultipleParams,
     type TenantAddSingleParams as TenantAddSingleParams,
-    type TenantRemoveSingleParams as TenantRemoveSingleParams,
+    type TenantRemoveSingleParams as TenantRemoveSingleParams
   };
 
   export {
@@ -72,6 +47,6 @@ export declare namespace Users {
     type TokenRetrieveParams as TokenRetrieveParams,
     type TokenUpdateParams as TokenUpdateParams,
     type TokenDeleteParams as TokenDeleteParams,
-    type TokenAddSingleParams as TokenAddSingleParams,
+    type TokenAddSingleParams as TokenAddSingleParams
   };
 }

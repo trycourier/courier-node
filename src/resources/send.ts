@@ -89,26 +89,7 @@ export namespace SendMessageParams {
     /**
      * The recipient or a list of recipients of the message
      */
-    to?:
-      | Shared.UserRecipient
-      | Shared.AudienceRecipient
-      | Shared.ListRecipient
-      | Shared.ListPatternRecipient
-      | Shared.SlackRecipient
-      | Shared.MsTeamsRecipient
-      | Shared.PagerdutyRecipient
-      | Shared.WebhookRecipient
-      | Array<
-          | Shared.UserRecipient
-          | Shared.AudienceRecipient
-          | Shared.ListRecipient
-          | Shared.ListPatternRecipient
-          | Shared.SlackRecipient
-          | Shared.MsTeamsRecipient
-          | Shared.PagerdutyRecipient
-          | Shared.WebhookRecipient
-        >
-      | null;
+    to?: Shared.UserRecipient | Shared.AudienceRecipient | Shared.ListRecipient | Shared.ListPatternRecipient | Shared.SlackRecipient | Shared.MsTeamsRecipient | Shared.PagerdutyRecipient | Shared.WebhookRecipient | Array<Shared.UserRecipient | Shared.AudienceRecipient | Shared.ListRecipient | Shared.ListPatternRecipient | Shared.SlackRecipient | Shared.MsTeamsRecipient | Shared.PagerdutyRecipient | Shared.WebhookRecipient> | null;
   }
 
   export namespace Message {
@@ -187,5 +168,8 @@ export namespace SendMessageParams {
 }
 
 export declare namespace Send {
-  export { type SendMessageResponse as SendMessageResponse, type SendMessageParams as SendMessageParams };
+  export {
+    type SendMessageResponse as SendMessageResponse,
+    type SendMessageParams as SendMessageParams
+  };
 }

@@ -62,6 +62,6 @@ export interface InboundTrackEventParams {
 export declare namespace Inbound {
   export {
     type InboundTrackEventResponse as InboundTrackEventResponse,
-    type InboundTrackEventParams as InboundTrackEventParams,
+    type InboundTrackEventParams as InboundTrackEventParams
   };
 }

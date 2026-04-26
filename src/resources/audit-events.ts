@@ -17,10 +17,7 @@ export class AuditEvents extends APIResource {
   /**
    * Fetch the list of audit events
    */
-  list(
-    query: AuditEventListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AuditEventListResponse> {
+  list(query: AuditEventListParams | null | undefined = {}, options?: RequestOptions): APIPromise<AuditEventListResponse> {
     return this._client.get('/audit-events', { query, ...options });
   }
 }
@@ -64,6 +61,6 @@ export declare namespace AuditEvents {
   export {
     type AuditEvent as AuditEvent,
     type AuditEventListResponse as AuditEventListResponse,
-    type AuditEventListParams as AuditEventListParams,
+    type AuditEventListParams as AuditEventListParams
   };
 }
