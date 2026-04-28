@@ -3,7 +3,14 @@
 import { APIResource } from '../../core/resource';
 import * as Shared from '../shared';
 import * as ChecksAPI from './checks';
-import { CheckDeleteParams, CheckListParams, CheckListResponse, CheckUpdateParams, CheckUpdateResponse, Checks } from './checks';
+import {
+  CheckDeleteParams,
+  CheckListParams,
+  CheckListResponse,
+  CheckUpdateParams,
+  CheckUpdateResponse,
+  Checks,
+} from './checks';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -49,7 +56,11 @@ export class Notifications extends APIResource {
    *   await client.notifications.retrieve('id');
    * ```
    */
-  retrieve(id: string, query: NotificationRetrieveParams | null | undefined = {}, options?: RequestOptions): APIPromise<NotificationTemplateResponse> {
+  retrieve(
+    id: string,
+    query: NotificationRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<NotificationTemplateResponse> {
     return this._client.get(path`/notifications/${id}`, { query, ...options });
   }
 
@@ -61,7 +72,10 @@ export class Notifications extends APIResource {
    * const notifications = await client.notifications.list();
    * ```
    */
-  list(query: NotificationListParams | null | undefined = {}, options?: RequestOptions): APIPromise<NotificationListResponse> {
+  list(
+    query: NotificationListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<NotificationListResponse> {
     return this._client.get('/notifications', { query, ...options });
   }
 
@@ -74,7 +88,10 @@ export class Notifications extends APIResource {
    * ```
    */
   archive(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/notifications/${id}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/notifications/${id}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -86,7 +103,11 @@ export class Notifications extends APIResource {
    *   await client.notifications.listVersions('id');
    * ```
    */
-  listVersions(id: string, query: NotificationListVersionsParams | null | undefined = {}, options?: RequestOptions): APIPromise<NotificationTemplateVersionListResponse> {
+  listVersions(
+    id: string,
+    query: NotificationListVersionsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<NotificationTemplateVersionListResponse> {
     return this._client.get(path`/notifications/${id}/versions`, { query, ...options });
   }
 
@@ -99,8 +120,16 @@ export class Notifications extends APIResource {
    * await client.notifications.publish('id');
    * ```
    */
-  publish(id: string, body: NotificationPublishParams | null | undefined = {}, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/notifications/${id}/publish`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+  publish(
+    id: string,
+    body: NotificationPublishParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    return this._client.post(path`/notifications/${id}/publish`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -120,7 +149,11 @@ export class Notifications extends APIResource {
    *   });
    * ```
    */
-  putContent(id: string, body: NotificationPutContentParams, options?: RequestOptions): APIPromise<NotificationContentMutationResponse> {
+  putContent(
+    id: string,
+    body: NotificationPutContentParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationContentMutationResponse> {
     return this._client.put(path`/notifications/${id}/content`, { body, ...options });
   }
 
@@ -139,8 +172,12 @@ export class Notifications extends APIResource {
    *   });
    * ```
    */
-  putElement(elementID: string, params: NotificationPutElementParams, options?: RequestOptions): APIPromise<NotificationContentMutationResponse> {
-    const { id, ...body } = params
+  putElement(
+    elementID: string,
+    params: NotificationPutElementParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationContentMutationResponse> {
+    const { id, ...body } = params;
     return this._client.put(path`/notifications/${id}/elements/${elementID}`, { body, ...options });
   }
 
@@ -162,8 +199,12 @@ export class Notifications extends APIResource {
    *   });
    * ```
    */
-  putLocale(localeID: string, params: NotificationPutLocaleParams, options?: RequestOptions): APIPromise<NotificationContentMutationResponse> {
-    const { id, ...body } = params
+  putLocale(
+    localeID: string,
+    params: NotificationPutLocaleParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationContentMutationResponse> {
+    const { id, ...body } = params;
     return this._client.put(path`/notifications/${id}/locales/${localeID}`, { body, ...options });
   }
 
@@ -189,7 +230,11 @@ export class Notifications extends APIResource {
    *   });
    * ```
    */
-  replace(id: string, body: NotificationReplaceParams, options?: RequestOptions): APIPromise<NotificationTemplateResponse> {
+  replace(
+    id: string,
+    body: NotificationReplaceParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationTemplateResponse> {
     return this._client.put(path`/notifications/${id}`, { body, ...options });
   }
 
@@ -206,7 +251,11 @@ export class Notifications extends APIResource {
    * );
    * ```
    */
-  retrieveContent(id: string, query: NotificationRetrieveContentParams | null | undefined = {}, options?: RequestOptions): APIPromise<NotificationRetrieveContentResponse> {
+  retrieveContent(
+    id: string,
+    query: NotificationRetrieveContentParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<NotificationRetrieveContentResponse> {
     return this._client.get(path`/notifications/${id}/content`, { query, ...options });
   }
 }
@@ -250,7 +299,7 @@ export interface ElementWithChecksums {
    */
   locales?: { [key: string]: ElementWithChecksums.Locales };
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace ElementWithChecksums {
@@ -359,7 +408,7 @@ export interface NotificationElementPutRequest {
    */
   state?: NotificationTemplateState;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface NotificationGetContent {
@@ -451,7 +500,7 @@ export namespace NotificationLocalePutRequest {
      */
     id: string;
 
-  [k: string]: unknown
+    [k: string]: unknown;
   }
 }
 
@@ -581,7 +630,7 @@ export interface NotificationTemplateResponse extends NotificationTemplatePayloa
 /**
  * Template state. Defaults to `DRAFT`.
  */
-export type NotificationTemplateState = 'DRAFT' | 'PUBLISHED'
+export type NotificationTemplateState = 'DRAFT' | 'PUBLISHED';
 
 /**
  * V2 (CDS) template summary returned in list responses.
@@ -718,7 +767,7 @@ export namespace NotificationListResponse {
  * Elemental content response for V2 templates. Contains versioned elements with
  * content checksums.
  */
-export type NotificationRetrieveContentResponse = NotificationContentGetResponse | NotificationGetContent
+export type NotificationRetrieveContentResponse = NotificationContentGetResponse | NotificationGetContent;
 
 export interface NotificationCreateParams {
   /**
@@ -846,7 +895,7 @@ export interface NotificationPutElementParams {
    */
   state?: NotificationTemplateState;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface NotificationPutLocaleParams {
@@ -873,7 +922,7 @@ export namespace NotificationPutLocaleParams {
      */
     id: string;
 
-  [k: string]: unknown
+    [k: string]: unknown;
   }
 }
 
@@ -932,7 +981,7 @@ export declare namespace Notifications {
     type NotificationPutElementParams as NotificationPutElementParams,
     type NotificationPutLocaleParams as NotificationPutLocaleParams,
     type NotificationReplaceParams as NotificationReplaceParams,
-    type NotificationRetrieveContentParams as NotificationRetrieveContentParams
+    type NotificationRetrieveContentParams as NotificationRetrieveContentParams,
   };
 
   export {
@@ -941,6 +990,6 @@ export declare namespace Notifications {
     type CheckListResponse as CheckListResponse,
     type CheckUpdateParams as CheckUpdateParams,
     type CheckListParams as CheckListParams,
-    type CheckDeleteParams as CheckDeleteParams
+    type CheckDeleteParams as CheckDeleteParams,
   };
 }

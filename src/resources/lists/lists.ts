@@ -3,7 +3,15 @@
 import { APIResource } from '../../core/resource';
 import * as Shared from '../shared';
 import * as SubscriptionsAPI from './subscriptions';
-import { SubscriptionAddParams, SubscriptionListParams, SubscriptionListResponse, SubscriptionSubscribeParams, SubscriptionSubscribeUserParams, SubscriptionUnsubscribeUserParams, Subscriptions } from './subscriptions';
+import {
+  SubscriptionAddParams,
+  SubscriptionListParams,
+  SubscriptionListResponse,
+  SubscriptionSubscribeParams,
+  SubscriptionSubscribeUserParams,
+  SubscriptionUnsubscribeUserParams,
+  Subscriptions,
+} from './subscriptions';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -23,13 +31,20 @@ export class Lists extends APIResource {
    * Create or replace an existing list with the supplied values.
    */
   update(listID: string, body: ListUpdateParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.put(path`/lists/${listID}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.put(path`/lists/${listID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
    * Returns all of the lists, with the ability to filter based on a pattern.
    */
-  list(query: ListListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ListListResponse> {
+  list(
+    query: ListListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ListListResponse> {
     return this._client.get('/lists', { query, ...options });
   }
 
@@ -37,14 +52,21 @@ export class Lists extends APIResource {
    * Delete a list by list ID.
    */
   delete(listID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/lists/${listID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/lists/${listID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
    * Restore a previously deleted list.
    */
   restore(listID: string, body: ListRestoreParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.put(path`/lists/${listID}/restore`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.put(path`/lists/${listID}/restore`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -91,8 +113,7 @@ export interface ListListParams {
   pattern?: string | null;
 }
 
-export interface ListRestoreParams {
-}
+export interface ListRestoreParams {}
 
 Lists.Subscriptions = Subscriptions;
 
@@ -103,7 +124,7 @@ export declare namespace Lists {
     type ListListResponse as ListListResponse,
     type ListUpdateParams as ListUpdateParams,
     type ListListParams as ListListParams,
-    type ListRestoreParams as ListRestoreParams
+    type ListRestoreParams as ListRestoreParams,
   };
 
   export {
@@ -113,6 +134,6 @@ export declare namespace Lists {
     type SubscriptionAddParams as SubscriptionAddParams,
     type SubscriptionSubscribeParams as SubscriptionSubscribeParams,
     type SubscriptionSubscribeUserParams as SubscriptionSubscribeUserParams,
-    type SubscriptionUnsubscribeUserParams as SubscriptionUnsubscribeUserParams
+    type SubscriptionUnsubscribeUserParams as SubscriptionUnsubscribeUserParams,
   };
 }

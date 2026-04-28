@@ -33,7 +33,10 @@ export class Invoke extends APIResource {
    *   });
    * ```
    */
-  invokeAdHoc(body: InvokeInvokeAdHocParams, options?: RequestOptions): APIPromise<AutomationsAPI.AutomationInvokeResponse> {
+  invokeAdHoc(
+    body: InvokeInvokeAdHocParams,
+    options?: RequestOptions,
+  ): APIPromise<AutomationsAPI.AutomationInvokeResponse> {
     return this._client.post('/automations/invoke', { body, ...options });
   }
 
@@ -49,7 +52,11 @@ export class Invoke extends APIResource {
    *   );
    * ```
    */
-  invokeByTemplate(templateID: string, body: InvokeInvokeByTemplateParams, options?: RequestOptions): APIPromise<AutomationsAPI.AutomationInvokeResponse> {
+  invokeByTemplate(
+    templateID: string,
+    body: InvokeInvokeByTemplateParams,
+    options?: RequestOptions,
+  ): APIPromise<AutomationsAPI.AutomationInvokeResponse> {
     return this._client.post(path`/automations/${templateID}/invoke`, { body, ...options });
   }
 }
@@ -70,7 +77,15 @@ export interface InvokeInvokeAdHocParams {
 
 export namespace InvokeInvokeAdHocParams {
   export interface Automation {
-    steps: Array<Automation.AutomationDelayStep | Automation.AutomationSendStep | Automation.AutomationSendListStep | Automation.AutomationUpdateProfileStep | Automation.AutomationCancelStep | Automation.AutomationFetchDataStep | Automation.AutomationInvokeStep>;
+    steps: Array<
+      | Automation.AutomationDelayStep
+      | Automation.AutomationSendStep
+      | Automation.AutomationSendListStep
+      | Automation.AutomationUpdateProfileStep
+      | Automation.AutomationCancelStep
+      | Automation.AutomationFetchDataStep
+      | Automation.AutomationInvokeStep
+    >;
 
     cancelation_token?: string | null;
   }
@@ -167,6 +182,6 @@ export interface InvokeInvokeByTemplateParams {
 export declare namespace Invoke {
   export {
     type InvokeInvokeAdHocParams as InvokeInvokeAdHocParams,
-    type InvokeInvokeByTemplateParams as InvokeInvokeByTemplateParams
+    type InvokeInvokeByTemplateParams as InvokeInvokeByTemplateParams,
   };
 }

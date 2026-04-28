@@ -14,7 +14,10 @@ export class Journeys extends APIResource {
    * const journeysListResponse = await client.journeys.list();
    * ```
    */
-  list(query: JourneyListParams | null | undefined = {}, options?: RequestOptions): APIPromise<JourneysListResponse> {
+  list(
+    query: JourneyListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<JourneysListResponse> {
     return this._client.get('/journeys', { query, ...options });
   }
 
@@ -32,7 +35,11 @@ export class Journeys extends APIResource {
    * );
    * ```
    */
-  invoke(templateID: string, body: JourneyInvokeParams, options?: RequestOptions): APIPromise<JourneysInvokeResponse> {
+  invoke(
+    templateID: string,
+    body: JourneyInvokeParams,
+    options?: RequestOptions,
+  ): APIPromise<JourneysInvokeResponse> {
     return this._client.post(path`/journeys/${templateID}/invoke`, { body, ...options });
   }
 }
@@ -162,6 +169,6 @@ export declare namespace Journeys {
     type JourneysInvokeResponse as JourneysInvokeResponse,
     type JourneysListResponse as JourneysListResponse,
     type JourneyListParams as JourneyListParams,
-    type JourneyInvokeParams as JourneyInvokeParams
+    type JourneyInvokeParams as JourneyInvokeParams,
   };
 }

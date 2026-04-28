@@ -2,7 +2,10 @@
 
 import Courier from '@trycourier/courier';
 
-const client = new Courier({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new Courier({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource subscriptions', () => {
   // Mock server tests are disabled
@@ -20,14 +23,16 @@ describe('resource subscriptions', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.lists.subscriptions.list('list_id', { cursor: 'cursor' }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(Courier.NotFoundError);
+    await expect(
+      client.lists.subscriptions.list('list_id', { cursor: 'cursor' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Courier.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('add: only required params', async () => {
-    const responsePromise = client.lists.subscriptions.add('list_id', { recipients: [{ recipientId: 'recipientId' }] });
+    const responsePromise = client.lists.subscriptions.add('list_id', {
+      recipients: [{ recipientId: 'recipientId' }],
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -39,26 +44,36 @@ describe('resource subscriptions', () => {
 
   // Mock server tests are disabled
   test.skip('add: required and optional params', async () => {
-    const response = await client.lists.subscriptions.add('list_id', { recipients: [{
-    recipientId: 'recipientId',
-    preferences: {
-    categories: { foo: {
-    status: 'OPTED_IN',
-    channel_preferences: [{ channel: 'direct_message' }],
-    rules: [{ until: 'until', start: 'start' }],
-  } },
-    notifications: { foo: {
-    status: 'OPTED_IN',
-    channel_preferences: [{ channel: 'direct_message' }],
-    rules: [{ until: 'until', start: 'start' }],
-  } },
-  },
-  }] });
+    const response = await client.lists.subscriptions.add('list_id', {
+      recipients: [
+        {
+          recipientId: 'recipientId',
+          preferences: {
+            categories: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+              },
+            },
+            notifications: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+              },
+            },
+          },
+        },
+      ],
+    });
   });
 
   // Mock server tests are disabled
   test.skip('subscribe: only required params', async () => {
-    const responsePromise = client.lists.subscriptions.subscribe('list_id', { recipients: [{ recipientId: 'recipientId' }] });
+    const responsePromise = client.lists.subscriptions.subscribe('list_id', {
+      recipients: [{ recipientId: 'recipientId' }],
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -70,21 +85,29 @@ describe('resource subscriptions', () => {
 
   // Mock server tests are disabled
   test.skip('subscribe: required and optional params', async () => {
-    const response = await client.lists.subscriptions.subscribe('list_id', { recipients: [{
-    recipientId: 'recipientId',
-    preferences: {
-    categories: { foo: {
-    status: 'OPTED_IN',
-    channel_preferences: [{ channel: 'direct_message' }],
-    rules: [{ until: 'until', start: 'start' }],
-  } },
-    notifications: { foo: {
-    status: 'OPTED_IN',
-    channel_preferences: [{ channel: 'direct_message' }],
-    rules: [{ until: 'until', start: 'start' }],
-  } },
-  },
-  }] });
+    const response = await client.lists.subscriptions.subscribe('list_id', {
+      recipients: [
+        {
+          recipientId: 'recipientId',
+          preferences: {
+            categories: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+              },
+            },
+            notifications: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+              },
+            },
+          },
+        },
+      ],
+    });
   });
 
   // Mock server tests are disabled
@@ -102,20 +125,24 @@ describe('resource subscriptions', () => {
   // Mock server tests are disabled
   test.skip('subscribeUser: required and optional params', async () => {
     const response = await client.lists.subscriptions.subscribeUser('user_id', {
-    list_id: 'list_id',
-    preferences: {
-    categories: { foo: {
-    status: 'OPTED_IN',
-    channel_preferences: [{ channel: 'direct_message' }],
-    rules: [{ until: 'until', start: 'start' }],
-  } },
-    notifications: { foo: {
-    status: 'OPTED_IN',
-    channel_preferences: [{ channel: 'direct_message' }],
-    rules: [{ until: 'until', start: 'start' }],
-  } },
-  },
-  });
+      list_id: 'list_id',
+      preferences: {
+        categories: {
+          foo: {
+            status: 'OPTED_IN',
+            channel_preferences: [{ channel: 'direct_message' }],
+            rules: [{ until: 'until', start: 'start' }],
+          },
+        },
+        notifications: {
+          foo: {
+            status: 'OPTED_IN',
+            channel_preferences: [{ channel: 'direct_message' }],
+            rules: [{ until: 'until', start: 'start' }],
+          },
+        },
+      },
+    });
   });
 
   // Mock server tests are disabled

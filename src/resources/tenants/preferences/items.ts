@@ -22,8 +22,12 @@ export class Items extends APIResource {
    * ```
    */
   update(topicID: string, params: ItemUpdateParams, options?: RequestOptions): APIPromise<void> {
-    const { tenant_id, ...body } = params
-    return this._client.put(path`/tenants/${tenant_id}/default_preferences/items/${topicID}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    const { tenant_id, ...body } = params;
+    return this._client.put(path`/tenants/${tenant_id}/default_preferences/items/${topicID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -37,8 +41,11 @@ export class Items extends APIResource {
    * ```
    */
   delete(topicID: string, params: ItemDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { tenant_id } = params
-    return this._client.delete(path`/tenants/${tenant_id}/default_preferences/items/${topicID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    const { tenant_id } = params;
+    return this._client.delete(path`/tenants/${tenant_id}/default_preferences/items/${topicID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -75,8 +82,5 @@ export interface ItemDeleteParams {
 }
 
 export declare namespace Items {
-  export {
-    type ItemUpdateParams as ItemUpdateParams,
-    type ItemDeleteParams as ItemDeleteParams
-  };
+  export { type ItemUpdateParams as ItemUpdateParams, type ItemDeleteParams as ItemDeleteParams };
 }

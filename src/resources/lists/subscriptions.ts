@@ -12,7 +12,11 @@ export class Subscriptions extends APIResource {
   /**
    * Get the list's subscriptions.
    */
-  list(listID: string, query: SubscriptionListParams | null | undefined = {}, options?: RequestOptions): APIPromise<SubscriptionListResponse> {
+  list(
+    listID: string,
+    query: SubscriptionListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<SubscriptionListResponse> {
     return this._client.get(path`/lists/${listID}/subscriptions`, { query, ...options });
   }
 
@@ -21,7 +25,11 @@ export class Subscriptions extends APIResource {
    * subscriptions. If the list does not exist, it will be automatically created.
    */
   add(listID: string, body: SubscriptionAddParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/lists/${listID}/subscriptions`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.post(path`/lists/${listID}/subscriptions`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -29,24 +37,43 @@ export class Subscriptions extends APIResource {
    * list does not exist, it will be automatically created.
    */
   subscribe(listID: string, body: SubscriptionSubscribeParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.put(path`/lists/${listID}/subscriptions`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.put(path`/lists/${listID}/subscriptions`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
    * Subscribe a user to an existing list (note: if the List does not exist, it will
    * be automatically created).
    */
-  subscribeUser(userID: string, params: SubscriptionSubscribeUserParams, options?: RequestOptions): APIPromise<void> {
-    const { list_id, ...body } = params
-    return this._client.put(path`/lists/${list_id}/subscriptions/${userID}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+  subscribeUser(
+    userID: string,
+    params: SubscriptionSubscribeUserParams,
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { list_id, ...body } = params;
+    return this._client.put(path`/lists/${list_id}/subscriptions/${userID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
    * Delete a subscription to a list by list ID and user ID.
    */
-  unsubscribeUser(userID: string, params: SubscriptionUnsubscribeUserParams, options?: RequestOptions): APIPromise<void> {
-    const { list_id } = params
-    return this._client.delete(path`/lists/${list_id}/subscriptions/${userID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+  unsubscribeUser(
+    userID: string,
+    params: SubscriptionUnsubscribeUserParams,
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { list_id } = params;
+    return this._client.delete(path`/lists/${list_id}/subscriptions/${userID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -107,6 +134,6 @@ export declare namespace Subscriptions {
     type SubscriptionAddParams as SubscriptionAddParams,
     type SubscriptionSubscribeParams as SubscriptionSubscribeParams,
     type SubscriptionSubscribeUserParams as SubscriptionSubscribeUserParams,
-    type SubscriptionUnsubscribeUserParams as SubscriptionUnsubscribeUserParams
+    type SubscriptionUnsubscribeUserParams as SubscriptionUnsubscribeUserParams,
   };
 }

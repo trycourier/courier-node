@@ -17,30 +17,194 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Audience, AudienceListMembersParams, AudienceListMembersResponse, AudienceListParams, AudienceListResponse, AudienceUpdateParams, AudienceUpdateResponse, Audiences } from './resources/audiences';
-import { AuditEvent, AuditEventListParams, AuditEventListResponse, AuditEvents } from './resources/audit-events';
+import {
+  Audience,
+  AudienceListMembersParams,
+  AudienceListMembersResponse,
+  AudienceListParams,
+  AudienceListResponse,
+  AudienceUpdateParams,
+  AudienceUpdateResponse,
+  Audiences,
+} from './resources/audiences';
+import {
+  AuditEvent,
+  AuditEventListParams,
+  AuditEventListResponse,
+  AuditEvents,
+} from './resources/audit-events';
 import { Auth, AuthIssueTokenParams, AuthIssueTokenResponse } from './resources/auth';
-import { Brand, BrandColors, BrandCreateParams, BrandListParams, BrandListResponse, BrandSettings, BrandSettingsEmail, BrandSettingsInApp, BrandSnippet, BrandSnippets, BrandTemplate, BrandUpdateParams, Brands, EmailFooter, EmailHead, EmailHeader, Icons, Logo, WidgetBackground } from './resources/brands';
-import { Bulk, BulkAddUsersParams, BulkCreateJobParams, BulkCreateJobResponse, BulkListUsersParams, BulkListUsersResponse, BulkRetrieveJobResponse, InboundBulkMessage, InboundBulkMessageUser } from './resources/bulk';
+import {
+  Brand,
+  BrandColors,
+  BrandCreateParams,
+  BrandListParams,
+  BrandListResponse,
+  BrandSettings,
+  BrandSettingsEmail,
+  BrandSettingsInApp,
+  BrandSnippet,
+  BrandSnippets,
+  BrandTemplate,
+  BrandUpdateParams,
+  Brands,
+  EmailFooter,
+  EmailHead,
+  EmailHeader,
+  Icons,
+  Logo,
+  WidgetBackground,
+} from './resources/brands';
+import {
+  Bulk,
+  BulkAddUsersParams,
+  BulkCreateJobParams,
+  BulkCreateJobResponse,
+  BulkListUsersParams,
+  BulkListUsersResponse,
+  BulkRetrieveJobResponse,
+  InboundBulkMessage,
+  InboundBulkMessageUser,
+} from './resources/bulk';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
-import { Journey, JourneyInvokeParams, JourneyListParams, Journeys, JourneysInvokeRequest, JourneysInvokeResponse, JourneysListResponse } from './resources/journeys';
-import { MessageContentResponse, MessageDetails, MessageHistoryParams, MessageHistoryResponse, MessageListParams, MessageListResponse, MessageRetrieveResponse, Messages } from './resources/messages';
+import {
+  Journey,
+  JourneyInvokeParams,
+  JourneyListParams,
+  Journeys,
+  JourneysInvokeRequest,
+  JourneysInvokeResponse,
+  JourneysListResponse,
+} from './resources/journeys';
+import {
+  MessageContentResponse,
+  MessageDetails,
+  MessageHistoryParams,
+  MessageHistoryResponse,
+  MessageListParams,
+  MessageListResponse,
+  MessageRetrieveResponse,
+  Messages,
+} from './resources/messages';
 import { Requests } from './resources/requests';
-import { AssociatedNotificationListResponse, RoutingStrategies, RoutingStrategyCreateParams, RoutingStrategyCreateRequest, RoutingStrategyGetResponse, RoutingStrategyListNotificationsParams, RoutingStrategyListParams, RoutingStrategyListResponse, RoutingStrategyReplaceParams, RoutingStrategyReplaceRequest, RoutingStrategySummary } from './resources/routing-strategies';
+import {
+  AssociatedNotificationListResponse,
+  RoutingStrategies,
+  RoutingStrategyCreateParams,
+  RoutingStrategyCreateRequest,
+  RoutingStrategyGetResponse,
+  RoutingStrategyListNotificationsParams,
+  RoutingStrategyListParams,
+  RoutingStrategyListResponse,
+  RoutingStrategyReplaceParams,
+  RoutingStrategyReplaceRequest,
+  RoutingStrategySummary,
+} from './resources/routing-strategies';
 import { Send, SendMessageParams, SendMessageResponse } from './resources/send';
-import { TranslationRetrieveParams, TranslationRetrieveResponse, TranslationUpdateParams, Translations } from './resources/translations';
-import { AutomationInvokeResponse, AutomationListParams, AutomationTemplate, AutomationTemplateListResponse, Automations } from './resources/automations/automations';
-import { ListListParams, ListListResponse, ListRestoreParams, ListUpdateParams, Lists, PutSubscriptionsRecipient, SubscriptionList } from './resources/lists/lists';
-import { BaseCheck, Check, ElementWithChecksums, NotificationContentGetResponse, NotificationContentMutationResponse, NotificationContentPutRequest, NotificationCreateParams, NotificationElementPutRequest, NotificationGetContent, NotificationListParams, NotificationListResponse, NotificationListVersionsParams, NotificationLocalePutRequest, NotificationPublishParams, NotificationPutContentParams, NotificationPutElementParams, NotificationPutLocaleParams, NotificationReplaceParams, NotificationRetrieveContentParams, NotificationRetrieveContentResponse, NotificationRetrieveParams, NotificationTemplateCreateRequest, NotificationTemplatePayload, NotificationTemplatePublishRequest, NotificationTemplateResponse, NotificationTemplateState, NotificationTemplateSummary, NotificationTemplateUpdateRequest, NotificationTemplateVersionListResponse, Notifications, VersionNode } from './resources/notifications/notifications';
-import { ProfileCreateParams, ProfileCreateResponse, ProfileReplaceParams, ProfileReplaceResponse, ProfileRetrieveResponse, ProfileUpdateParams, Profiles, SubscribeToListsRequestItem } from './resources/profiles/profiles';
-import { Provider, ProviderCreateParams, ProviderListParams, ProviderListResponse, ProviderUpdateParams, Providers, ProvidersCatalogEntry } from './resources/providers/providers';
-import { BaseTemplateTenantAssociation, DefaultPreferences, PostTenantTemplatePublishRequest, PostTenantTemplatePublishResponse, PutTenantTemplateRequest, PutTenantTemplateResponse, SubscriptionTopicNew, Tenant, TenantAssociation, TenantListParams, TenantListResponse, TenantListUsersParams, TenantListUsersResponse, TenantTemplateInput, TenantUpdateParams, Tenants } from './resources/tenants/tenants';
+import {
+  TranslationRetrieveParams,
+  TranslationRetrieveResponse,
+  TranslationUpdateParams,
+  Translations,
+} from './resources/translations';
+import {
+  AutomationInvokeResponse,
+  AutomationListParams,
+  AutomationTemplate,
+  AutomationTemplateListResponse,
+  Automations,
+} from './resources/automations/automations';
+import {
+  ListListParams,
+  ListListResponse,
+  ListRestoreParams,
+  ListUpdateParams,
+  Lists,
+  PutSubscriptionsRecipient,
+  SubscriptionList,
+} from './resources/lists/lists';
+import {
+  BaseCheck,
+  Check,
+  ElementWithChecksums,
+  NotificationContentGetResponse,
+  NotificationContentMutationResponse,
+  NotificationContentPutRequest,
+  NotificationCreateParams,
+  NotificationElementPutRequest,
+  NotificationGetContent,
+  NotificationListParams,
+  NotificationListResponse,
+  NotificationListVersionsParams,
+  NotificationLocalePutRequest,
+  NotificationPublishParams,
+  NotificationPutContentParams,
+  NotificationPutElementParams,
+  NotificationPutLocaleParams,
+  NotificationReplaceParams,
+  NotificationRetrieveContentParams,
+  NotificationRetrieveContentResponse,
+  NotificationRetrieveParams,
+  NotificationTemplateCreateRequest,
+  NotificationTemplatePayload,
+  NotificationTemplatePublishRequest,
+  NotificationTemplateResponse,
+  NotificationTemplateState,
+  NotificationTemplateSummary,
+  NotificationTemplateUpdateRequest,
+  NotificationTemplateVersionListResponse,
+  Notifications,
+  VersionNode,
+} from './resources/notifications/notifications';
+import {
+  ProfileCreateParams,
+  ProfileCreateResponse,
+  ProfileReplaceParams,
+  ProfileReplaceResponse,
+  ProfileRetrieveResponse,
+  ProfileUpdateParams,
+  Profiles,
+  SubscribeToListsRequestItem,
+} from './resources/profiles/profiles';
+import {
+  Provider,
+  ProviderCreateParams,
+  ProviderListParams,
+  ProviderListResponse,
+  ProviderUpdateParams,
+  Providers,
+  ProvidersCatalogEntry,
+} from './resources/providers/providers';
+import {
+  BaseTemplateTenantAssociation,
+  DefaultPreferences,
+  PostTenantTemplatePublishRequest,
+  PostTenantTemplatePublishResponse,
+  PutTenantTemplateRequest,
+  PutTenantTemplateResponse,
+  SubscriptionTopicNew,
+  Tenant,
+  TenantAssociation,
+  TenantListParams,
+  TenantListResponse,
+  TenantListUsersParams,
+  TenantListUsersResponse,
+  TenantTemplateInput,
+  TenantUpdateParams,
+  Tenants,
+} from './resources/tenants/tenants';
 import { Users } from './resources/users/users';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import { readEnv } from './internal/utils/env';
-import { type LogLevel, type Logger, formatRequestDetails, loggerFor, parseLogLevel } from './internal/utils/log';
+import {
+  type LogLevel,
+  type Logger,
+  formatRequestDetails,
+  loggerFor,
+  parseLogLevel,
+} from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
@@ -119,7 +283,7 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Courier API. 
+ * API Client for interfacing with the Courier API.
  */
 export class Courier {
   apiKey: string;
@@ -155,7 +319,7 @@ export class Courier {
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.CourierError(
-        'The COURIER_API_KEY environment variable is missing or empty; either provide it, or instantiate the Courier client with an apiKey option, like new Courier({ apiKey: \'My API Key\' }).'
+        "The COURIER_API_KEY environment variable is missing or empty; either provide it, or instantiate the Courier client with an apiKey option, like new Courier({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -171,7 +335,10 @@ export class Courier {
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
-    this.logLevel = parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ?? parseLogLevel(readEnv('COURIER_LOG'), 'process.env[\'COURIER_LOG\']', this) ?? defaultLogLevel;
+    this.logLevel =
+      parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
+      parseLogLevel(readEnv('COURIER_LOG'), "process.env['COURIER_LOG']", this) ??
+      defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
@@ -196,7 +363,7 @@ export class Courier {
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
       apiKey: this.apiKey,
-      ...options
+      ...options,
     });
     return client;
   }
@@ -209,7 +376,7 @@ export class Courier {
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
-    return this._options.defaultQuery
+    return this._options.defaultQuery;
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
@@ -241,7 +408,11 @@ export class Courier {
     return Errors.APIError.generate(status, error, message, headers);
   }
 
-  buildURL(path: string, query: Record<string, unknown> | null | undefined, defaultBaseURL?: string | undefined): string {
+  buildURL(
+    path: string,
+    query: Record<string, unknown> | null | undefined,
+    defaultBaseURL?: string | undefined,
+  ): string {
     const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
     const url =
       isAbsoluteURL(path) ?
@@ -329,7 +500,9 @@ export class Courier {
 
     await this.prepareOptions(options);
 
-    const { req, url, timeout } = await this.buildRequest(options, { retryCount: maxRetries - retriesRemaining });
+    const { req, url, timeout } = await this.buildRequest(options, {
+      retryCount: maxRetries - retriesRemaining,
+    });
 
     await this.prepareRequest(req, { url, options });
 
@@ -338,7 +511,16 @@ export class Courier {
     const retryLogStr = retryOfRequestLogID === undefined ? '' : `, retryOf: ${retryOfRequestLogID}`;
     const startTime = Date.now();
 
-    loggerFor(this).debug(`[${requestLogID}] sending request`, formatRequestDetails({ retryOfRequestLogID, method: options.method, url, options, headers: req.headers }));
+    loggerFor(this).debug(
+      `[${requestLogID}] sending request`,
+      formatRequestDetails({
+        retryOfRequestLogID,
+        method: options.method,
+        url,
+        options,
+        headers: req.headers,
+      }),
+    );
 
     if (options.signal?.aborted) {
       throw new Errors.APIUserAbortError();
@@ -357,21 +539,45 @@ export class Courier {
       // deno throws "TypeError: error sending request for url (https://example/): client error (Connect): tcp connect error: Operation timed out (os error 60): Operation timed out (os error 60)"
       // undici throws "TypeError: fetch failed" with cause "ConnectTimeoutError: Connect Timeout Error (attempted address: example:443, timeout: 1ms)"
       // others do not provide enough information to distinguish timeouts from other connection errors
-      const isTimeout = isAbortError(response) || /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''))
+      const isTimeout =
+        isAbortError(response) ||
+        /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''));
       if (retriesRemaining) {
-        loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`)
-        loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
+        loggerFor(this).info(
+          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`,
+        );
+        loggerFor(this).debug(
+          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`,
+          formatRequestDetails({
+            retryOfRequestLogID,
+            url,
+            durationMs: headersTime - startTime,
+            message: response.message,
+          }),
+        );
         return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
       }
-      loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`)
-      loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
+      loggerFor(this).info(
+        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`,
+      );
+      loggerFor(this).debug(
+        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`,
+        formatRequestDetails({
+          retryOfRequestLogID,
+          url,
+          durationMs: headersTime - startTime,
+          message: response.message,
+        }),
+      );
       if (isTimeout) {
         throw new Errors.APIConnectionTimeoutError();
       }
       throw new Errors.APIConnectionError({ cause: response });
     }
 
-    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${response.ok ? 'succeeded' : 'failed'} with status ${response.status} in ${headersTime - startTime}ms`;
+    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${
+      response.ok ? 'succeeded' : 'failed'
+    } with status ${response.status} in ${headersTime - startTime}ms`;
 
     if (!response.ok) {
       const shouldRetry = await this.shouldRetry(response);
@@ -380,27 +586,60 @@ export class Courier {
 
         // We don't need the body of this response.
         await Shims.CancelReadableStream(response.body);
-        loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
-        loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
-        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID, response.headers);
+        loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
+        loggerFor(this).debug(
+          `[${requestLogID}] response error (${retryMessage})`,
+          formatRequestDetails({
+            retryOfRequestLogID,
+            url: response.url,
+            status: response.status,
+            headers: response.headers,
+            durationMs: headersTime - startTime,
+          }),
+        );
+        return this.retryRequest(
+          options,
+          retriesRemaining,
+          retryOfRequestLogID ?? requestLogID,
+          response.headers,
+        );
       }
 
       const retryMessage = shouldRetry ? `error; no more retries left` : `error; not retryable`;
 
-      loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
+      loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
       const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
-      loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, message: errMessage, durationMs: Date.now() - startTime }));
+      loggerFor(this).debug(
+        `[${requestLogID}] response error (${retryMessage})`,
+        formatRequestDetails({
+          retryOfRequestLogID,
+          url: response.url,
+          status: response.status,
+          headers: response.headers,
+          message: errMessage,
+          durationMs: Date.now() - startTime,
+        }),
+      );
 
       const err = this.makeStatusError(response.status, errJSON, errMessage, response.headers);
       throw err;
     }
 
-    loggerFor(this).info(responseInfo)
-    loggerFor(this).debug(`[${requestLogID}] response start`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
+    loggerFor(this).info(responseInfo);
+    loggerFor(this).debug(
+      `[${requestLogID}] response start`,
+      formatRequestDetails({
+        retryOfRequestLogID,
+        url: response.url,
+        status: response.status,
+        headers: response.headers,
+        durationMs: headersTime - startTime,
+      }),
+    );
 
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
@@ -417,7 +656,9 @@ export class Courier {
 
     const timeout = setTimeout(abort, ms);
 
-    const isReadableBody = ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) || (typeof options.body === "object" && options.body !== null && Symbol.asyncIterator in options.body);
+    const isReadableBody =
+      ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
+      (typeof options.body === 'object' && options.body !== null && Symbol.asyncIterator in options.body);
 
     const fetchOptions: RequestInit = {
       signal: controller.signal as any,
@@ -432,7 +673,6 @@ export class Courier {
     }
 
     try {
-
       // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
       return await this.fetch.call(undefined, url, fetchOptions);
     } finally {
@@ -533,11 +773,12 @@ export class Courier {
     const req: FinalizedRequestInit = {
       method,
       headers: reqHeaders,
-      ...(options.signal && { signal: options.signal}),
-      ...((globalThis as any).ReadableStream && body instanceof (globalThis as any).ReadableStream && { duplex: "half" }),
+      ...(options.signal && { signal: options.signal }),
+      ...((globalThis as any).ReadableStream &&
+        body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
       ...(body && { body }),
-      ...(this.fetchOptions as any ?? {}),
-      ...(options.fetchOptions as any ?? {}),
+      ...((this.fetchOptions as any) ?? {}),
+      ...((options.fetchOptions as any) ?? {}),
     };
 
     return { req, url, timeout: options.timeout };
@@ -562,15 +803,17 @@ export class Courier {
 
     const headers = buildHeaders([
       idempotencyHeaders,
-      {Accept: 'application/json',
-      'User-Agent': this.getUserAgent(),
-      'X-Stainless-Retry-Count': String(retryCount),
-      ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
-      ...getPlatformHeaders()},
+      {
+        Accept: 'application/json',
+        'User-Agent': this.getUserAgent(),
+        'X-Stainless-Retry-Count': String(retryCount),
+        ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
+        ...getPlatformHeaders(),
+      },
       await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
-      options.headers
+      options.headers,
     ]);
 
     this.validateHeaders(headers);
@@ -597,11 +840,9 @@ export class Courier {
       ArrayBuffer.isView(body) ||
       body instanceof ArrayBuffer ||
       body instanceof DataView ||
-      (
-        typeof body === 'string' &&
+      (typeof body === 'string' &&
         // Preserve legacy string encoding behavior for now
-        headers.values.has('content-type')
-      ) ||
+        headers.values.has('content-type')) ||
       // `Blob` is superset of `File`
       ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
@@ -632,7 +873,7 @@ export class Courier {
   }
 
   static Courier = this;
-  static DEFAULT_TIMEOUT = 60000 // 1 minute
+  static DEFAULT_TIMEOUT = 60000; // 1 minute
 
   static CourierError = Errors.CourierError;
   static APIError = Errors.APIError;
@@ -692,295 +933,291 @@ Courier.Translations = Translations;
 Courier.Users = Users;
 
 export declare namespace Courier {
-      export type RequestOptions = Opts.RequestOptions;
+  export type RequestOptions = Opts.RequestOptions;
 
-      export {
-  Send as Send,
-  type SendMessageResponse as SendMessageResponse,
-  type SendMessageParams as SendMessageParams
-};
+  export {
+    Send as Send,
+    type SendMessageResponse as SendMessageResponse,
+    type SendMessageParams as SendMessageParams,
+  };
 
-export {
-  Audiences as Audiences,
-  type Audience as Audience,
-  type AudienceUpdateResponse as AudienceUpdateResponse,
-  type AudienceListResponse as AudienceListResponse,
-  type AudienceListMembersResponse as AudienceListMembersResponse,
-  type AudienceUpdateParams as AudienceUpdateParams,
-  type AudienceListParams as AudienceListParams,
-  type AudienceListMembersParams as AudienceListMembersParams
-};
+  export {
+    Audiences as Audiences,
+    type Audience as Audience,
+    type AudienceUpdateResponse as AudienceUpdateResponse,
+    type AudienceListResponse as AudienceListResponse,
+    type AudienceListMembersResponse as AudienceListMembersResponse,
+    type AudienceUpdateParams as AudienceUpdateParams,
+    type AudienceListParams as AudienceListParams,
+    type AudienceListMembersParams as AudienceListMembersParams,
+  };
 
-export {
-  Providers as Providers,
-  type Provider as Provider,
-  type ProvidersCatalogEntry as ProvidersCatalogEntry,
-  type ProviderListResponse as ProviderListResponse,
-  type ProviderCreateParams as ProviderCreateParams,
-  type ProviderUpdateParams as ProviderUpdateParams,
-  type ProviderListParams as ProviderListParams
-};
+  export {
+    Providers as Providers,
+    type Provider as Provider,
+    type ProvidersCatalogEntry as ProvidersCatalogEntry,
+    type ProviderListResponse as ProviderListResponse,
+    type ProviderCreateParams as ProviderCreateParams,
+    type ProviderUpdateParams as ProviderUpdateParams,
+    type ProviderListParams as ProviderListParams,
+  };
 
-export {
-  AuditEvents as AuditEvents,
-  type AuditEvent as AuditEvent,
-  type AuditEventListResponse as AuditEventListResponse,
-  type AuditEventListParams as AuditEventListParams
-};
+  export {
+    AuditEvents as AuditEvents,
+    type AuditEvent as AuditEvent,
+    type AuditEventListResponse as AuditEventListResponse,
+    type AuditEventListParams as AuditEventListParams,
+  };
 
-export {
-  Auth as Auth,
-  type AuthIssueTokenResponse as AuthIssueTokenResponse,
-  type AuthIssueTokenParams as AuthIssueTokenParams
-};
+  export {
+    Auth as Auth,
+    type AuthIssueTokenResponse as AuthIssueTokenResponse,
+    type AuthIssueTokenParams as AuthIssueTokenParams,
+  };
 
-export {
-  Automations as Automations,
-  type AutomationInvokeResponse as AutomationInvokeResponse,
-  type AutomationTemplate as AutomationTemplate,
-  type AutomationTemplateListResponse as AutomationTemplateListResponse,
-  type AutomationListParams as AutomationListParams
-};
+  export {
+    Automations as Automations,
+    type AutomationInvokeResponse as AutomationInvokeResponse,
+    type AutomationTemplate as AutomationTemplate,
+    type AutomationTemplateListResponse as AutomationTemplateListResponse,
+    type AutomationListParams as AutomationListParams,
+  };
 
-export {
-  Journeys as Journeys,
-  type Journey as Journey,
-  type JourneysInvokeRequest as JourneysInvokeRequest,
-  type JourneysInvokeResponse as JourneysInvokeResponse,
-  type JourneysListResponse as JourneysListResponse,
-  type JourneyListParams as JourneyListParams,
-  type JourneyInvokeParams as JourneyInvokeParams
-};
+  export {
+    Journeys as Journeys,
+    type Journey as Journey,
+    type JourneysInvokeRequest as JourneysInvokeRequest,
+    type JourneysInvokeResponse as JourneysInvokeResponse,
+    type JourneysListResponse as JourneysListResponse,
+    type JourneyListParams as JourneyListParams,
+    type JourneyInvokeParams as JourneyInvokeParams,
+  };
 
-export {
-  Brands as Brands,
-  type Brand as Brand,
-  type BrandColors as BrandColors,
-  type BrandSettings as BrandSettings,
-  type BrandSettingsEmail as BrandSettingsEmail,
-  type BrandSettingsInApp as BrandSettingsInApp,
-  type BrandSnippet as BrandSnippet,
-  type BrandSnippets as BrandSnippets,
-  type BrandTemplate as BrandTemplate,
-  type EmailFooter as EmailFooter,
-  type EmailHead as EmailHead,
-  type EmailHeader as EmailHeader,
-  type Icons as Icons,
-  type Logo as Logo,
-  type WidgetBackground as WidgetBackground,
-  type BrandListResponse as BrandListResponse,
-  type BrandCreateParams as BrandCreateParams,
-  type BrandUpdateParams as BrandUpdateParams,
-  type BrandListParams as BrandListParams
-};
+  export {
+    Brands as Brands,
+    type Brand as Brand,
+    type BrandColors as BrandColors,
+    type BrandSettings as BrandSettings,
+    type BrandSettingsEmail as BrandSettingsEmail,
+    type BrandSettingsInApp as BrandSettingsInApp,
+    type BrandSnippet as BrandSnippet,
+    type BrandSnippets as BrandSnippets,
+    type BrandTemplate as BrandTemplate,
+    type EmailFooter as EmailFooter,
+    type EmailHead as EmailHead,
+    type EmailHeader as EmailHeader,
+    type Icons as Icons,
+    type Logo as Logo,
+    type WidgetBackground as WidgetBackground,
+    type BrandListResponse as BrandListResponse,
+    type BrandCreateParams as BrandCreateParams,
+    type BrandUpdateParams as BrandUpdateParams,
+    type BrandListParams as BrandListParams,
+  };
 
-export {
-  Bulk as Bulk,
-  type InboundBulkMessage as InboundBulkMessage,
-  type InboundBulkMessageUser as InboundBulkMessageUser,
-  type BulkCreateJobResponse as BulkCreateJobResponse,
-  type BulkListUsersResponse as BulkListUsersResponse,
-  type BulkRetrieveJobResponse as BulkRetrieveJobResponse,
-  type BulkAddUsersParams as BulkAddUsersParams,
-  type BulkCreateJobParams as BulkCreateJobParams,
-  type BulkListUsersParams as BulkListUsersParams
-};
+  export {
+    Bulk as Bulk,
+    type InboundBulkMessage as InboundBulkMessage,
+    type InboundBulkMessageUser as InboundBulkMessageUser,
+    type BulkCreateJobResponse as BulkCreateJobResponse,
+    type BulkListUsersResponse as BulkListUsersResponse,
+    type BulkRetrieveJobResponse as BulkRetrieveJobResponse,
+    type BulkAddUsersParams as BulkAddUsersParams,
+    type BulkCreateJobParams as BulkCreateJobParams,
+    type BulkListUsersParams as BulkListUsersParams,
+  };
 
-export {
-  Inbound as Inbound,
-  type InboundTrackEventResponse as InboundTrackEventResponse,
-  type InboundTrackEventParams as InboundTrackEventParams
-};
+  export {
+    Inbound as Inbound,
+    type InboundTrackEventResponse as InboundTrackEventResponse,
+    type InboundTrackEventParams as InboundTrackEventParams,
+  };
 
-export {
-  Lists as Lists,
-  type PutSubscriptionsRecipient as PutSubscriptionsRecipient,
-  type SubscriptionList as SubscriptionList,
-  type ListListResponse as ListListResponse,
-  type ListUpdateParams as ListUpdateParams,
-  type ListListParams as ListListParams,
-  type ListRestoreParams as ListRestoreParams
-};
+  export {
+    Lists as Lists,
+    type PutSubscriptionsRecipient as PutSubscriptionsRecipient,
+    type SubscriptionList as SubscriptionList,
+    type ListListResponse as ListListResponse,
+    type ListUpdateParams as ListUpdateParams,
+    type ListListParams as ListListParams,
+    type ListRestoreParams as ListRestoreParams,
+  };
 
-export {
-  Messages as Messages,
-  type MessageDetails as MessageDetails,
-  type MessageRetrieveResponse as MessageRetrieveResponse,
-  type MessageListResponse as MessageListResponse,
-  type MessageContentResponse as MessageContentResponse,
-  type MessageHistoryResponse as MessageHistoryResponse,
-  type MessageListParams as MessageListParams,
-  type MessageHistoryParams as MessageHistoryParams
-};
+  export {
+    Messages as Messages,
+    type MessageDetails as MessageDetails,
+    type MessageRetrieveResponse as MessageRetrieveResponse,
+    type MessageListResponse as MessageListResponse,
+    type MessageContentResponse as MessageContentResponse,
+    type MessageHistoryResponse as MessageHistoryResponse,
+    type MessageListParams as MessageListParams,
+    type MessageHistoryParams as MessageHistoryParams,
+  };
 
-export {
-  Requests as Requests
-};
+  export { Requests as Requests };
 
-export {
-  Notifications as Notifications,
-  type BaseCheck as BaseCheck,
-  type Check as Check,
-  type ElementWithChecksums as ElementWithChecksums,
-  type NotificationContentGetResponse as NotificationContentGetResponse,
-  type NotificationContentMutationResponse as NotificationContentMutationResponse,
-  type NotificationContentPutRequest as NotificationContentPutRequest,
-  type NotificationElementPutRequest as NotificationElementPutRequest,
-  type NotificationGetContent as NotificationGetContent,
-  type NotificationLocalePutRequest as NotificationLocalePutRequest,
-  type NotificationTemplateCreateRequest as NotificationTemplateCreateRequest,
-  type NotificationTemplatePayload as NotificationTemplatePayload,
-  type NotificationTemplatePublishRequest as NotificationTemplatePublishRequest,
-  type NotificationTemplateResponse as NotificationTemplateResponse,
-  type NotificationTemplateState as NotificationTemplateState,
-  type NotificationTemplateSummary as NotificationTemplateSummary,
-  type NotificationTemplateUpdateRequest as NotificationTemplateUpdateRequest,
-  type NotificationTemplateVersionListResponse as NotificationTemplateVersionListResponse,
-  type VersionNode as VersionNode,
-  type NotificationListResponse as NotificationListResponse,
-  type NotificationRetrieveContentResponse as NotificationRetrieveContentResponse,
-  type NotificationCreateParams as NotificationCreateParams,
-  type NotificationRetrieveParams as NotificationRetrieveParams,
-  type NotificationListParams as NotificationListParams,
-  type NotificationListVersionsParams as NotificationListVersionsParams,
-  type NotificationPublishParams as NotificationPublishParams,
-  type NotificationPutContentParams as NotificationPutContentParams,
-  type NotificationPutElementParams as NotificationPutElementParams,
-  type NotificationPutLocaleParams as NotificationPutLocaleParams,
-  type NotificationReplaceParams as NotificationReplaceParams,
-  type NotificationRetrieveContentParams as NotificationRetrieveContentParams
-};
+  export {
+    Notifications as Notifications,
+    type BaseCheck as BaseCheck,
+    type Check as Check,
+    type ElementWithChecksums as ElementWithChecksums,
+    type NotificationContentGetResponse as NotificationContentGetResponse,
+    type NotificationContentMutationResponse as NotificationContentMutationResponse,
+    type NotificationContentPutRequest as NotificationContentPutRequest,
+    type NotificationElementPutRequest as NotificationElementPutRequest,
+    type NotificationGetContent as NotificationGetContent,
+    type NotificationLocalePutRequest as NotificationLocalePutRequest,
+    type NotificationTemplateCreateRequest as NotificationTemplateCreateRequest,
+    type NotificationTemplatePayload as NotificationTemplatePayload,
+    type NotificationTemplatePublishRequest as NotificationTemplatePublishRequest,
+    type NotificationTemplateResponse as NotificationTemplateResponse,
+    type NotificationTemplateState as NotificationTemplateState,
+    type NotificationTemplateSummary as NotificationTemplateSummary,
+    type NotificationTemplateUpdateRequest as NotificationTemplateUpdateRequest,
+    type NotificationTemplateVersionListResponse as NotificationTemplateVersionListResponse,
+    type VersionNode as VersionNode,
+    type NotificationListResponse as NotificationListResponse,
+    type NotificationRetrieveContentResponse as NotificationRetrieveContentResponse,
+    type NotificationCreateParams as NotificationCreateParams,
+    type NotificationRetrieveParams as NotificationRetrieveParams,
+    type NotificationListParams as NotificationListParams,
+    type NotificationListVersionsParams as NotificationListVersionsParams,
+    type NotificationPublishParams as NotificationPublishParams,
+    type NotificationPutContentParams as NotificationPutContentParams,
+    type NotificationPutElementParams as NotificationPutElementParams,
+    type NotificationPutLocaleParams as NotificationPutLocaleParams,
+    type NotificationReplaceParams as NotificationReplaceParams,
+    type NotificationRetrieveContentParams as NotificationRetrieveContentParams,
+  };
 
-export {
-  RoutingStrategies as RoutingStrategies,
-  type AssociatedNotificationListResponse as AssociatedNotificationListResponse,
-  type RoutingStrategyCreateRequest as RoutingStrategyCreateRequest,
-  type RoutingStrategyGetResponse as RoutingStrategyGetResponse,
-  type RoutingStrategyListResponse as RoutingStrategyListResponse,
-  type RoutingStrategyReplaceRequest as RoutingStrategyReplaceRequest,
-  type RoutingStrategySummary as RoutingStrategySummary,
-  type RoutingStrategyCreateParams as RoutingStrategyCreateParams,
-  type RoutingStrategyListParams as RoutingStrategyListParams,
-  type RoutingStrategyListNotificationsParams as RoutingStrategyListNotificationsParams,
-  type RoutingStrategyReplaceParams as RoutingStrategyReplaceParams
-};
+  export {
+    RoutingStrategies as RoutingStrategies,
+    type AssociatedNotificationListResponse as AssociatedNotificationListResponse,
+    type RoutingStrategyCreateRequest as RoutingStrategyCreateRequest,
+    type RoutingStrategyGetResponse as RoutingStrategyGetResponse,
+    type RoutingStrategyListResponse as RoutingStrategyListResponse,
+    type RoutingStrategyReplaceRequest as RoutingStrategyReplaceRequest,
+    type RoutingStrategySummary as RoutingStrategySummary,
+    type RoutingStrategyCreateParams as RoutingStrategyCreateParams,
+    type RoutingStrategyListParams as RoutingStrategyListParams,
+    type RoutingStrategyListNotificationsParams as RoutingStrategyListNotificationsParams,
+    type RoutingStrategyReplaceParams as RoutingStrategyReplaceParams,
+  };
 
-export {
-  Profiles as Profiles,
-  type SubscribeToListsRequestItem as SubscribeToListsRequestItem,
-  type ProfileCreateResponse as ProfileCreateResponse,
-  type ProfileRetrieveResponse as ProfileRetrieveResponse,
-  type ProfileReplaceResponse as ProfileReplaceResponse,
-  type ProfileCreateParams as ProfileCreateParams,
-  type ProfileUpdateParams as ProfileUpdateParams,
-  type ProfileReplaceParams as ProfileReplaceParams
-};
+  export {
+    Profiles as Profiles,
+    type SubscribeToListsRequestItem as SubscribeToListsRequestItem,
+    type ProfileCreateResponse as ProfileCreateResponse,
+    type ProfileRetrieveResponse as ProfileRetrieveResponse,
+    type ProfileReplaceResponse as ProfileReplaceResponse,
+    type ProfileCreateParams as ProfileCreateParams,
+    type ProfileUpdateParams as ProfileUpdateParams,
+    type ProfileReplaceParams as ProfileReplaceParams,
+  };
 
-export {
-  Tenants as Tenants,
-  type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
-  type DefaultPreferences as DefaultPreferences,
-  type PostTenantTemplatePublishRequest as PostTenantTemplatePublishRequest,
-  type PostTenantTemplatePublishResponse as PostTenantTemplatePublishResponse,
-  type PutTenantTemplateRequest as PutTenantTemplateRequest,
-  type PutTenantTemplateResponse as PutTenantTemplateResponse,
-  type SubscriptionTopicNew as SubscriptionTopicNew,
-  type Tenant as Tenant,
-  type TenantAssociation as TenantAssociation,
-  type TenantTemplateInput as TenantTemplateInput,
-  type TenantListResponse as TenantListResponse,
-  type TenantListUsersResponse as TenantListUsersResponse,
-  type TenantUpdateParams as TenantUpdateParams,
-  type TenantListParams as TenantListParams,
-  type TenantListUsersParams as TenantListUsersParams
-};
+  export {
+    Tenants as Tenants,
+    type BaseTemplateTenantAssociation as BaseTemplateTenantAssociation,
+    type DefaultPreferences as DefaultPreferences,
+    type PostTenantTemplatePublishRequest as PostTenantTemplatePublishRequest,
+    type PostTenantTemplatePublishResponse as PostTenantTemplatePublishResponse,
+    type PutTenantTemplateRequest as PutTenantTemplateRequest,
+    type PutTenantTemplateResponse as PutTenantTemplateResponse,
+    type SubscriptionTopicNew as SubscriptionTopicNew,
+    type Tenant as Tenant,
+    type TenantAssociation as TenantAssociation,
+    type TenantTemplateInput as TenantTemplateInput,
+    type TenantListResponse as TenantListResponse,
+    type TenantListUsersResponse as TenantListUsersResponse,
+    type TenantUpdateParams as TenantUpdateParams,
+    type TenantListParams as TenantListParams,
+    type TenantListUsersParams as TenantListUsersParams,
+  };
 
-export {
-  Translations as Translations,
-  type TranslationRetrieveResponse as TranslationRetrieveResponse,
-  type TranslationRetrieveParams as TranslationRetrieveParams,
-  type TranslationUpdateParams as TranslationUpdateParams
-};
+  export {
+    Translations as Translations,
+    type TranslationRetrieveResponse as TranslationRetrieveResponse,
+    type TranslationRetrieveParams as TranslationRetrieveParams,
+    type TranslationUpdateParams as TranslationUpdateParams,
+  };
 
-export {
-  Users as Users
-};
+  export { Users as Users };
 
-export type AirshipProfile = API.AirshipProfile;
-export type AirshipProfileAudience = API.AirshipProfileAudience;
-export type Alignment = API.Alignment;
-export type AudienceFilter = API.AudienceFilter;
-export type AudienceFilterConfig = API.AudienceFilterConfig;
-export type AudienceRecipient = API.AudienceRecipient;
-export type Channel = API.Channel;
-export type ChannelClassification = API.ChannelClassification;
-export type ChannelMetadata = API.ChannelMetadata;
-export type ChannelPreference = API.ChannelPreference;
-export type DeviceType = API.DeviceType;
-export type Discord = API.Discord;
-export type ElementalActionNodeWithType = API.ElementalActionNodeWithType;
-export type ElementalBaseNode = API.ElementalBaseNode;
-export type ElementalChannelNode = API.ElementalChannelNode;
-export type ElementalChannelNodeWithType = API.ElementalChannelNodeWithType;
-export type ElementalContent = API.ElementalContent;
-export type ElementalContentSugar = API.ElementalContentSugar;
-export type ElementalDividerNodeWithType = API.ElementalDividerNodeWithType;
-export type ElementalHTMLNodeWithType = API.ElementalHTMLNodeWithType;
-export type ElementalImageNodeWithType = API.ElementalImageNodeWithType;
-export type ElementalMetaNodeWithType = API.ElementalMetaNodeWithType;
-export type ElementalNode = API.ElementalNode;
-export type ElementalQuoteNodeWithType = API.ElementalQuoteNodeWithType;
-export type ElementalTextNodeWithType = API.ElementalTextNodeWithType;
-export type Expo = API.Expo;
-export type FilterConfig = API.FilterConfig;
-export type Intercom = API.Intercom;
-export type IntercomRecipient = API.IntercomRecipient;
-export type ListFilter = API.ListFilter;
-export type ListPatternRecipient = API.ListPatternRecipient;
-export type ListRecipient = API.ListRecipient;
-export type MessageChannels = API.MessageChannels;
-export type MessageContext = API.MessageContext;
-export type MessageProviders = API.MessageProviders;
-export type MessageProvidersType = API.MessageProvidersType;
-export type MessageRouting = API.MessageRouting;
-export type MessageRoutingChannel = API.MessageRoutingChannel;
-export type Metadata = API.Metadata;
-export type MsTeams = API.MsTeams;
-export type MsTeamsBaseProperties = API.MsTeamsBaseProperties;
-export type MsTeamsRecipient = API.MsTeamsRecipient;
-export type MultipleTokens = API.MultipleTokens;
-export type NotificationPreferenceDetails = API.NotificationPreferenceDetails;
-export type Pagerduty = API.Pagerduty;
-export type PagerdutyRecipient = API.PagerdutyRecipient;
-export type Paging = API.Paging;
-export type Preference = API.Preference;
-export type PreferenceStatus = API.PreferenceStatus;
-export type RecipientPreferences = API.RecipientPreferences;
-export type Rule = API.Rule;
-export type SendDirectMessage = API.SendDirectMessage;
-export type SendToChannel = API.SendToChannel;
-export type SendToMsTeamsChannelID = API.SendToMsTeamsChannelID;
-export type SendToMsTeamsChannelName = API.SendToMsTeamsChannelName;
-export type SendToMsTeamsConversationID = API.SendToMsTeamsConversationID;
-export type SendToMsTeamsEmail = API.SendToMsTeamsEmail;
-export type SendToMsTeamsUserID = API.SendToMsTeamsUserID;
-export type SendToSlackChannel = API.SendToSlackChannel;
-export type SendToSlackEmail = API.SendToSlackEmail;
-export type SendToSlackUserID = API.SendToSlackUserID;
-export type Slack = API.Slack;
-export type SlackBaseProperties = API.SlackBaseProperties;
-export type SlackRecipient = API.SlackRecipient;
-export type TextStyle = API.TextStyle;
-export type Timeouts = API.Timeouts;
-export type Token = API.Token;
-export type UserProfile = API.UserProfile;
-export type UserProfileFirebaseToken = API.UserProfileFirebaseToken;
-export type UserRecipient = API.UserRecipient;
-export type Utm = API.Utm;
-export type WebhookAuthMode = API.WebhookAuthMode;
-export type WebhookAuthentication = API.WebhookAuthentication;
-export type WebhookMethod = API.WebhookMethod;
-export type WebhookProfile = API.WebhookProfile;
-export type WebhookProfileType = API.WebhookProfileType;
-export type WebhookRecipient = API.WebhookRecipient;
-    }
+  export type AirshipProfile = API.AirshipProfile;
+  export type AirshipProfileAudience = API.AirshipProfileAudience;
+  export type Alignment = API.Alignment;
+  export type AudienceFilter = API.AudienceFilter;
+  export type AudienceFilterConfig = API.AudienceFilterConfig;
+  export type AudienceRecipient = API.AudienceRecipient;
+  export type Channel = API.Channel;
+  export type ChannelClassification = API.ChannelClassification;
+  export type ChannelMetadata = API.ChannelMetadata;
+  export type ChannelPreference = API.ChannelPreference;
+  export type DeviceType = API.DeviceType;
+  export type Discord = API.Discord;
+  export type ElementalActionNodeWithType = API.ElementalActionNodeWithType;
+  export type ElementalBaseNode = API.ElementalBaseNode;
+  export type ElementalChannelNode = API.ElementalChannelNode;
+  export type ElementalChannelNodeWithType = API.ElementalChannelNodeWithType;
+  export type ElementalContent = API.ElementalContent;
+  export type ElementalContentSugar = API.ElementalContentSugar;
+  export type ElementalDividerNodeWithType = API.ElementalDividerNodeWithType;
+  export type ElementalHTMLNodeWithType = API.ElementalHTMLNodeWithType;
+  export type ElementalImageNodeWithType = API.ElementalImageNodeWithType;
+  export type ElementalMetaNodeWithType = API.ElementalMetaNodeWithType;
+  export type ElementalNode = API.ElementalNode;
+  export type ElementalQuoteNodeWithType = API.ElementalQuoteNodeWithType;
+  export type ElementalTextNodeWithType = API.ElementalTextNodeWithType;
+  export type Expo = API.Expo;
+  export type FilterConfig = API.FilterConfig;
+  export type Intercom = API.Intercom;
+  export type IntercomRecipient = API.IntercomRecipient;
+  export type ListFilter = API.ListFilter;
+  export type ListPatternRecipient = API.ListPatternRecipient;
+  export type ListRecipient = API.ListRecipient;
+  export type MessageChannels = API.MessageChannels;
+  export type MessageContext = API.MessageContext;
+  export type MessageProviders = API.MessageProviders;
+  export type MessageProvidersType = API.MessageProvidersType;
+  export type MessageRouting = API.MessageRouting;
+  export type MessageRoutingChannel = API.MessageRoutingChannel;
+  export type Metadata = API.Metadata;
+  export type MsTeams = API.MsTeams;
+  export type MsTeamsBaseProperties = API.MsTeamsBaseProperties;
+  export type MsTeamsRecipient = API.MsTeamsRecipient;
+  export type MultipleTokens = API.MultipleTokens;
+  export type NotificationPreferenceDetails = API.NotificationPreferenceDetails;
+  export type Pagerduty = API.Pagerduty;
+  export type PagerdutyRecipient = API.PagerdutyRecipient;
+  export type Paging = API.Paging;
+  export type Preference = API.Preference;
+  export type PreferenceStatus = API.PreferenceStatus;
+  export type RecipientPreferences = API.RecipientPreferences;
+  export type Rule = API.Rule;
+  export type SendDirectMessage = API.SendDirectMessage;
+  export type SendToChannel = API.SendToChannel;
+  export type SendToMsTeamsChannelID = API.SendToMsTeamsChannelID;
+  export type SendToMsTeamsChannelName = API.SendToMsTeamsChannelName;
+  export type SendToMsTeamsConversationID = API.SendToMsTeamsConversationID;
+  export type SendToMsTeamsEmail = API.SendToMsTeamsEmail;
+  export type SendToMsTeamsUserID = API.SendToMsTeamsUserID;
+  export type SendToSlackChannel = API.SendToSlackChannel;
+  export type SendToSlackEmail = API.SendToSlackEmail;
+  export type SendToSlackUserID = API.SendToSlackUserID;
+  export type Slack = API.Slack;
+  export type SlackBaseProperties = API.SlackBaseProperties;
+  export type SlackRecipient = API.SlackRecipient;
+  export type TextStyle = API.TextStyle;
+  export type Timeouts = API.Timeouts;
+  export type Token = API.Token;
+  export type UserProfile = API.UserProfile;
+  export type UserProfileFirebaseToken = API.UserProfileFirebaseToken;
+  export type UserRecipient = API.UserRecipient;
+  export type Utm = API.Utm;
+  export type WebhookAuthMode = API.WebhookAuthMode;
+  export type WebhookAuthentication = API.WebhookAuthentication;
+  export type WebhookMethod = API.WebhookMethod;
+  export type WebhookProfile = API.WebhookProfile;
+  export type WebhookProfileType = API.WebhookProfileType;
+  export type WebhookRecipient = API.WebhookRecipient;
+}

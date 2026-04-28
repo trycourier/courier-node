@@ -17,7 +17,10 @@ export class Messages extends APIResource {
   /**
    * Fetch the statuses of messages you've previously sent.
    */
-  list(query: MessageListParams | null | undefined = {}, options?: RequestOptions): APIPromise<MessageListResponse> {
+  list(
+    query: MessageListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<MessageListResponse> {
     return this._client.get('/messages', { query, ...options });
   }
 
@@ -42,7 +45,11 @@ export class Messages extends APIResource {
   /**
    * Fetch the array of events of a message you've previously sent.
    */
-  history(messageID: string, query: MessageHistoryParams | null | undefined = {}, options?: RequestOptions): APIPromise<MessageHistoryResponse> {
+  history(
+    messageID: string,
+    query: MessageHistoryParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<MessageHistoryResponse> {
     return this._client.get(path`/messages/${messageID}/history`, { query, ...options });
   }
 }
@@ -78,7 +85,22 @@ export interface MessageDetails {
   /**
    * The current status of the message.
    */
-  status: 'CANCELED' | 'CLICKED' | 'DELAYED' | 'DELIVERED' | 'DIGESTED' | 'ENQUEUED' | 'FILTERED' | 'OPENED' | 'ROUTED' | 'SENT' | 'SIMULATED' | 'THROTTLED' | 'UNDELIVERABLE' | 'UNMAPPED' | 'UNROUTABLE';
+  status:
+    | 'CANCELED'
+    | 'CLICKED'
+    | 'DELAYED'
+    | 'DELIVERED'
+    | 'DIGESTED'
+    | 'ENQUEUED'
+    | 'FILTERED'
+    | 'OPENED'
+    | 'ROUTED'
+    | 'SENT'
+    | 'SIMULATED'
+    | 'THROTTLED'
+    | 'UNDELIVERABLE'
+    | 'UNMAPPED'
+    | 'UNROUTABLE';
 
   /**
    * A UTC timestamp at which the recipient clicked on a tracked link for the first
@@ -106,7 +128,17 @@ export interface MessageDetails {
   /**
    * The reason for the current status of the message.
    */
-  reason?: 'BOUNCED' | 'FAILED' | 'FILTERED' | 'NO_CHANNELS' | 'NO_PROVIDERS' | 'OPT_IN_REQUIRED' | 'PROVIDER_ERROR' | 'UNPUBLISHED' | 'UNSUBSCRIBED' | null;
+  reason?:
+    | 'BOUNCED'
+    | 'FAILED'
+    | 'FILTERED'
+    | 'NO_CHANNELS'
+    | 'NO_PROVIDERS'
+    | 'OPT_IN_REQUIRED'
+    | 'PROVIDER_ERROR'
+    | 'UNPUBLISHED'
+    | 'UNSUBSCRIBED'
+    | null;
 
   /**
    * A UTC timestamp at which Courier passed the message to the Integration provider.
@@ -308,6 +340,6 @@ export declare namespace Messages {
     type MessageContentResponse as MessageContentResponse,
     type MessageHistoryResponse as MessageHistoryResponse,
     type MessageListParams as MessageListParams,
-    type MessageHistoryParams as MessageHistoryParams
+    type MessageHistoryParams as MessageHistoryParams,
   };
 }

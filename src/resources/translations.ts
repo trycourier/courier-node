@@ -11,7 +11,7 @@ export class Translations extends APIResource {
    * Get translations by locale
    */
   retrieve(locale: string, params: TranslationRetrieveParams, options?: RequestOptions): APIPromise<string> {
-    const { domain } = params
+    const { domain } = params;
     return this._client.get(path`/translations/${domain}/${locale}`, options);
   }
 
@@ -19,12 +19,16 @@ export class Translations extends APIResource {
    * Update a translation
    */
   update(locale: string, params: TranslationUpdateParams, options?: RequestOptions): APIPromise<void> {
-    const { domain, body } = params
-    return this._client.put(path`/translations/${domain}/${locale}`, { body: body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    const { domain, body } = params;
+    return this._client.put(path`/translations/${domain}/${locale}`, {
+      body: body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
-export type TranslationRetrieveResponse = string
+export type TranslationRetrieveResponse = string;
 
 export interface TranslationRetrieveParams {
   /**
@@ -51,6 +55,6 @@ export declare namespace Translations {
   export {
     type TranslationRetrieveResponse as TranslationRetrieveResponse,
     type TranslationRetrieveParams as TranslationRetrieveParams,
-    type TranslationUpdateParams as TranslationUpdateParams
+    type TranslationUpdateParams as TranslationUpdateParams,
   };
 }

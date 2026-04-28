@@ -11,6 +11,9 @@ export class Requests extends APIResource {
    * Archive message
    */
   archive(requestID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.put(path`/requests/${requestID}/archive`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.put(path`/requests/${requestID}/archive`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
