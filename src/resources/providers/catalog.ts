@@ -13,7 +13,10 @@ export class Catalog extends APIResource {
    * `required`). Providers with no configurable schema return only `provider`,
    * `name`, and `description`.
    */
-  list(query: CatalogListParams | null | undefined = {}, options?: RequestOptions): APIPromise<CatalogListResponse> {
+  list(
+    query: CatalogListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CatalogListResponse> {
     return this._client.get('/providers/catalog', { query, ...options });
   }
 }
@@ -46,8 +49,5 @@ export interface CatalogListParams {
 }
 
 export declare namespace Catalog {
-  export {
-    type CatalogListResponse as CatalogListResponse,
-    type CatalogListParams as CatalogListParams
-  };
+  export { type CatalogListResponse as CatalogListResponse, type CatalogListParams as CatalogListParams };
 }

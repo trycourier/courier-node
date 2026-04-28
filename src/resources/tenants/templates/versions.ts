@@ -25,9 +25,16 @@ export class Versions extends APIResource {
    *   );
    * ```
    */
-  retrieve(version: string, params: VersionRetrieveParams, options?: RequestOptions): APIPromise<TenantsAPI.BaseTemplateTenantAssociation> {
-    const { tenant_id, template_id } = params
-    return this._client.get(path`/tenants/${tenant_id}/templates/${template_id}/versions/${version}`, options);
+  retrieve(
+    version: string,
+    params: VersionRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<TenantsAPI.BaseTemplateTenantAssociation> {
+    const { tenant_id, template_id } = params;
+    return this._client.get(
+      path`/tenants/${tenant_id}/templates/${template_id}/versions/${version}`,
+      options,
+    );
   }
 }
 
@@ -44,7 +51,5 @@ export interface VersionRetrieveParams {
 }
 
 export declare namespace Versions {
-  export {
-    type VersionRetrieveParams as VersionRetrieveParams
-  };
+  export { type VersionRetrieveParams as VersionRetrieveParams };
 }

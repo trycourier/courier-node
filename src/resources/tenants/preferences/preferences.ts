@@ -14,6 +14,6 @@ export declare namespace Preferences {
   export {
     Items as Items,
     type ItemUpdateParams as ItemUpdateParams,
-    type ItemDeleteParams as ItemDeleteParams
+    type ItemDeleteParams as ItemDeleteParams,
   };
 }

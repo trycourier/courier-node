@@ -17,7 +17,11 @@ export class Preferences extends APIResource {
    * );
    * ```
    */
-  retrieve(userID: string, query: PreferenceRetrieveParams | null | undefined = {}, options?: RequestOptions): APIPromise<PreferenceRetrieveResponse> {
+  retrieve(
+    userID: string,
+    query: PreferenceRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PreferenceRetrieveResponse> {
     return this._client.get(path`/users/${userID}/preferences`, { query, ...options });
   }
 
@@ -32,8 +36,12 @@ export class Preferences extends APIResource {
    *   });
    * ```
    */
-  retrieveTopic(topicID: string, params: PreferenceRetrieveTopicParams, options?: RequestOptions): APIPromise<PreferenceRetrieveTopicResponse> {
-    const { user_id, ...query } = params
+  retrieveTopic(
+    topicID: string,
+    params: PreferenceRetrieveTopicParams,
+    options?: RequestOptions,
+  ): APIPromise<PreferenceRetrieveTopicResponse> {
+    const { user_id, ...query } = params;
     return this._client.get(path`/users/${user_id}/preferences/${topicID}`, { query, ...options });
   }
 
@@ -56,9 +64,17 @@ export class Preferences extends APIResource {
    *   );
    * ```
    */
-  updateOrCreateTopic(topicID: string, params: PreferenceUpdateOrCreateTopicParams, options?: RequestOptions): APIPromise<PreferenceUpdateOrCreateTopicResponse> {
-    const { user_id, tenant_id, ...body } = params
-    return this._client.put(path`/users/${user_id}/preferences/${topicID}`, { query: { tenant_id }, body, ...options });
+  updateOrCreateTopic(
+    topicID: string,
+    params: PreferenceUpdateOrCreateTopicParams,
+    options?: RequestOptions,
+  ): APIPromise<PreferenceUpdateOrCreateTopicResponse> {
+    const { user_id, tenant_id, ...body } = params;
+    return this._client.put(path`/users/${user_id}/preferences/${topicID}`, {
+      query: { tenant_id },
+      body,
+      ...options,
+    });
   }
 }
 
@@ -158,6 +174,6 @@ export declare namespace Preferences {
     type PreferenceUpdateOrCreateTopicResponse as PreferenceUpdateOrCreateTopicResponse,
     type PreferenceRetrieveParams as PreferenceRetrieveParams,
     type PreferenceRetrieveTopicParams as PreferenceRetrieveTopicParams,
-    type PreferenceUpdateOrCreateTopicParams as PreferenceUpdateOrCreateTopicParams
+    type PreferenceUpdateOrCreateTopicParams as PreferenceUpdateOrCreateTopicParams,
   };
 }

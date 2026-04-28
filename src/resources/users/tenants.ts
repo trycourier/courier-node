@@ -16,7 +16,11 @@ export class Tenants extends APIResource {
    * const tenants = await client.users.tenants.list('user_id');
    * ```
    */
-  list(userID: string, query: TenantListParams | null | undefined = {}, options?: RequestOptions): APIPromise<TenantListResponse> {
+  list(
+    userID: string,
+    query: TenantListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<TenantListResponse> {
     return this._client.get(path`/users/${userID}/tenants`, { query, ...options });
   }
 
@@ -33,7 +37,11 @@ export class Tenants extends APIResource {
    * ```
    */
   addMultiple(userID: string, body: TenantAddMultipleParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.put(path`/users/${userID}/tenants`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.put(path`/users/${userID}/tenants`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -50,8 +58,12 @@ export class Tenants extends APIResource {
    * ```
    */
   addSingle(tenantID: string, params: TenantAddSingleParams, options?: RequestOptions): APIPromise<void> {
-    const { user_id, ...body } = params
-    return this._client.put(path`/users/${user_id}/tenants/${tenantID}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    const { user_id, ...body } = params;
+    return this._client.put(path`/users/${user_id}/tenants/${tenantID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -63,7 +75,10 @@ export class Tenants extends APIResource {
    * ```
    */
   removeAll(userID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/users/${userID}/tenants`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/users/${userID}/tenants`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -76,9 +91,16 @@ export class Tenants extends APIResource {
    * });
    * ```
    */
-  removeSingle(tenantID: string, params: TenantRemoveSingleParams, options?: RequestOptions): APIPromise<void> {
-    const { user_id } = params
-    return this._client.delete(path`/users/${user_id}/tenants/${tenantID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+  removeSingle(
+    tenantID: string,
+    params: TenantRemoveSingleParams,
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { user_id } = params;
+    return this._client.delete(path`/users/${user_id}/tenants/${tenantID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -154,6 +176,6 @@ export declare namespace Tenants {
     type TenantListParams as TenantListParams,
     type TenantAddMultipleParams as TenantAddMultipleParams,
     type TenantAddSingleParams as TenantAddSingleParams,
-    type TenantRemoveSingleParams as TenantRemoveSingleParams
+    type TenantRemoveSingleParams as TenantRemoveSingleParams,
   };
 }

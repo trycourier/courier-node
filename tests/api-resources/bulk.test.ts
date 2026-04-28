@@ -2,7 +2,10 @@
 
 import Courier from '@trycourier/courier';
 
-const client = new Courier({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new Courier({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource bulk', () => {
   // Mock server tests are disabled
@@ -19,49 +22,61 @@ describe('resource bulk', () => {
 
   // Mock server tests are disabled
   test.skip('addUsers: required and optional params', async () => {
-    const response = await client.bulk.addUsers('job_id', { users: [{
-    data: {},
-    preferences: {
-    categories: { foo: {
-    status: 'OPTED_IN',
-    channel_preferences: [{ channel: 'direct_message' }],
-    rules: [{ until: 'until', start: 'start' }],
-  } },
-    notifications: { foo: {
-    status: 'OPTED_IN',
-    channel_preferences: [{ channel: 'direct_message' }],
-    rules: [{ until: 'until', start: 'start' }],
-  } },
-  },
-    profile: { foo: 'bar' },
-    recipient: 'recipient',
-    to: {
-    account_id: 'account_id',
-    context: { tenant_id: 'tenant_id' },
-    data: { foo: 'bar' },
-    email: 'email',
-    list_id: 'list_id',
-    locale: 'locale',
-    phone_number: 'phone_number',
-    preferences: {
-    notifications: { foo: {
-    status: 'OPTED_IN',
-    channel_preferences: [{ channel: 'direct_message' }],
-    rules: [{ until: 'until', start: 'start' }],
-    source: 'subscription',
-  } },
-    categories: { foo: {
-    status: 'OPTED_IN',
-    channel_preferences: [{ channel: 'direct_message' }],
-    rules: [{ until: 'until', start: 'start' }],
-    source: 'subscription',
-  } },
-    templateId: 'templateId',
-  },
-    tenant_id: 'tenant_id',
-    user_id: 'user_id',
-  },
-  }] });
+    const response = await client.bulk.addUsers('job_id', {
+      users: [
+        {
+          data: {},
+          preferences: {
+            categories: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+              },
+            },
+            notifications: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+              },
+            },
+          },
+          profile: { foo: 'bar' },
+          recipient: 'recipient',
+          to: {
+            account_id: 'account_id',
+            context: { tenant_id: 'tenant_id' },
+            data: { foo: 'bar' },
+            email: 'email',
+            list_id: 'list_id',
+            locale: 'locale',
+            phone_number: 'phone_number',
+            preferences: {
+              notifications: {
+                foo: {
+                  status: 'OPTED_IN',
+                  channel_preferences: [{ channel: 'direct_message' }],
+                  rules: [{ until: 'until', start: 'start' }],
+                  source: 'subscription',
+                },
+              },
+              categories: {
+                foo: {
+                  status: 'OPTED_IN',
+                  channel_preferences: [{ channel: 'direct_message' }],
+                  rules: [{ until: 'until', start: 'start' }],
+                  source: 'subscription',
+                },
+              },
+              templateId: 'templateId',
+            },
+            tenant_id: 'tenant_id',
+            user_id: 'user_id',
+          },
+        },
+      ],
+    });
   });
 
   // Mock server tests are disabled
@@ -78,15 +93,17 @@ describe('resource bulk', () => {
 
   // Mock server tests are disabled
   test.skip('createJob: required and optional params', async () => {
-    const response = await client.bulk.createJob({ message: {
-    event: 'event',
-    brand: 'brand',
-    content: { body: 'body', title: 'title' },
-    data: { foo: 'bar' },
-    locale: { foo: { foo: 'bar' } },
-    override: { foo: 'bar' },
-    template: 'template',
-  } });
+    const response = await client.bulk.createJob({
+      message: {
+        event: 'event',
+        brand: 'brand',
+        content: { body: 'body', title: 'title' },
+        data: { foo: 'bar' },
+        locale: { foo: { foo: 'bar' } },
+        override: { foo: 'bar' },
+        template: 'template',
+      },
+    });
   });
 
   // Mock server tests are disabled
@@ -104,9 +121,9 @@ describe('resource bulk', () => {
   // Mock server tests are disabled
   test.skip('listUsers: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.bulk.listUsers('job_id', { cursor: 'cursor' }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(Courier.NotFoundError);
+    await expect(
+      client.bulk.listUsers('job_id', { cursor: 'cursor' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Courier.NotFoundError);
   });
 
   // Mock server tests are disabled

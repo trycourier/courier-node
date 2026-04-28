@@ -23,8 +23,12 @@ export class Templates extends APIResource {
    *   });
    * ```
    */
-  retrieve(templateID: string, params: TemplateRetrieveParams, options?: RequestOptions): APIPromise<TenantsAPI.BaseTemplateTenantAssociation> {
-    const { tenant_id } = params
+  retrieve(
+    templateID: string,
+    params: TemplateRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<TenantsAPI.BaseTemplateTenantAssociation> {
+    const { tenant_id } = params;
     return this._client.get(path`/tenants/${tenant_id}/templates/${templateID}`, options);
   }
 
@@ -38,7 +42,11 @@ export class Templates extends APIResource {
    * );
    * ```
    */
-  list(tenantID: string, query: TemplateListParams | null | undefined = {}, options?: RequestOptions): APIPromise<TemplateListResponse> {
+  list(
+    tenantID: string,
+    query: TemplateListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<TemplateListResponse> {
     return this._client.get(path`/tenants/${tenantID}/templates`, { query, ...options });
   }
 
@@ -56,9 +64,16 @@ export class Templates extends APIResource {
    *   });
    * ```
    */
-  publish(templateID: string, params: TemplatePublishParams, options?: RequestOptions): APIPromise<TenantsAPI.PostTenantTemplatePublishResponse> {
-    const { tenant_id, ...body } = params
-    return this._client.post(path`/tenants/${tenant_id}/templates/${templateID}/publish`, { body, ...options });
+  publish(
+    templateID: string,
+    params: TemplatePublishParams,
+    options?: RequestOptions,
+  ): APIPromise<TenantsAPI.PostTenantTemplatePublishResponse> {
+    const { tenant_id, ...body } = params;
+    return this._client.post(path`/tenants/${tenant_id}/templates/${templateID}/publish`, {
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -81,8 +96,12 @@ export class Templates extends APIResource {
    *   });
    * ```
    */
-  replace(templateID: string, params: TemplateReplaceParams, options?: RequestOptions): APIPromise<TenantsAPI.PutTenantTemplateResponse> {
-    const { tenant_id, ...body } = params
+  replace(
+    templateID: string,
+    params: TemplateReplaceParams,
+    options?: RequestOptions,
+  ): APIPromise<TenantsAPI.PutTenantTemplateResponse> {
+    const { tenant_id, ...body } = params;
     return this._client.put(path`/tenants/${tenant_id}/templates/${templateID}`, { body, ...options });
   }
 }
@@ -196,11 +215,8 @@ export declare namespace Templates {
     type TemplateRetrieveParams as TemplateRetrieveParams,
     type TemplateListParams as TemplateListParams,
     type TemplatePublishParams as TemplatePublishParams,
-    type TemplateReplaceParams as TemplateReplaceParams
+    type TemplateReplaceParams as TemplateReplaceParams,
   };
 
-  export {
-    Versions as Versions,
-    type VersionRetrieveParams as VersionRetrieveParams
-  };
+  export { Versions as Versions, type VersionRetrieveParams as VersionRetrieveParams };
 }

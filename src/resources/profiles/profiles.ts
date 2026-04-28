@@ -3,7 +3,14 @@
 import { APIResource } from '../../core/resource';
 import * as Shared from '../shared';
 import * as ListsAPI from './lists';
-import { ListDeleteResponse, ListRetrieveParams, ListRetrieveResponse, ListSubscribeParams, ListSubscribeResponse, Lists } from './lists';
+import {
+  ListDeleteResponse,
+  ListRetrieveParams,
+  ListRetrieveResponse,
+  ListSubscribeParams,
+  ListSubscribeResponse,
+  Lists,
+} from './lists';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -16,7 +23,11 @@ export class Profiles extends APIResource {
    * Merge the supplied values with an existing profile or create a new profile if
    * one doesn't already exist.
    */
-  create(userID: string, body: ProfileCreateParams, options?: RequestOptions): APIPromise<ProfileCreateResponse> {
+  create(
+    userID: string,
+    body: ProfileCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<ProfileCreateResponse> {
     return this._client.post(path`/profiles/${userID}`, { body, ...options });
   }
 
@@ -31,14 +42,21 @@ export class Profiles extends APIResource {
    * Update a profile
    */
   update(userID: string, body: ProfileUpdateParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.patch(path`/profiles/${userID}`, { body, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.patch(path`/profiles/${userID}`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
    * Deletes the specified user profile.
    */
   delete(userID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/profiles/${userID}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/profiles/${userID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -48,7 +66,11 @@ export class Profiles extends APIResource {
    * `PUT` update is a full replacement of the data. For partial updates, use the
    * [Patch](https://www.courier.com/docs/reference/profiles/patch/) request.
    */
-  replace(userID: string, body: ProfileReplaceParams, options?: RequestOptions): APIPromise<ProfileReplaceResponse> {
+  replace(
+    userID: string,
+    body: ProfileReplaceParams,
+    options?: RequestOptions,
+  ): APIPromise<ProfileReplaceResponse> {
     return this._client.put(path`/profiles/${userID}`, { body, ...options });
   }
 }
@@ -117,7 +139,7 @@ export declare namespace Profiles {
     type ProfileReplaceResponse as ProfileReplaceResponse,
     type ProfileCreateParams as ProfileCreateParams,
     type ProfileUpdateParams as ProfileUpdateParams,
-    type ProfileReplaceParams as ProfileReplaceParams
+    type ProfileReplaceParams as ProfileReplaceParams,
   };
 
   export {
@@ -126,6 +148,6 @@ export declare namespace Profiles {
     type ListDeleteResponse as ListDeleteResponse,
     type ListSubscribeResponse as ListSubscribeResponse,
     type ListRetrieveParams as ListRetrieveParams,
-    type ListSubscribeParams as ListSubscribeParams
+    type ListSubscribeParams as ListSubscribeParams,
   };
 }

@@ -65,6 +65,6 @@ export interface AuthIssueTokenParams {
 export declare namespace Auth {
   export {
     type AuthIssueTokenResponse as AuthIssueTokenResponse,
-    type AuthIssueTokenParams as AuthIssueTokenParams
+    type AuthIssueTokenParams as AuthIssueTokenParams,
   };
 }
