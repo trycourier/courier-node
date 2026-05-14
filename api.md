@@ -178,15 +178,62 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/journeys.ts">Journey</a></code>
-- <code><a href="./src/resources/journeys.ts">JourneysInvokeRequest</a></code>
-- <code><a href="./src/resources/journeys.ts">JourneysInvokeResponse</a></code>
-- <code><a href="./src/resources/journeys.ts">JourneysListResponse</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">CreateJourneyRequest</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">Journey</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyAINode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyAPIInvokeTriggerNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyConditionAtom</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyConditionGroup</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyConditionNestedGroup</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyConditionsField</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyDelayDurationNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyDelayUntilNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyExitNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyFetchGetDeleteNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyFetchPostPutNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyMergeStrategy</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyPublishRequest</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyResponse</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneySegmentTriggerNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneySendNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyState</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyTemplateCreateRequest</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyTemplateGetResponse</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyTemplateListResponse</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyTemplatePublishRequest</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyTemplateReplaceRequest</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyTemplateSummary</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyThrottleDynamicNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyThrottleStaticNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyVersionItem</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyVersionsListResponse</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneysInvokeRequest</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneysInvokeResponse</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneysListResponse</a></code>
 
 Methods:
 
-- <code title="get /journeys">client.journeys.<a href="./src/resources/journeys.ts">list</a>({ ...params }) -> JourneysListResponse</code>
-- <code title="post /journeys/{templateId}/invoke">client.journeys.<a href="./src/resources/journeys.ts">invoke</a>(templateID, { ...params }) -> JourneysInvokeResponse</code>
+- <code title="post /journeys">client.journeys.<a href="./src/resources/journeys/journeys.ts">create</a>({ ...params }) -> JourneyResponse</code>
+- <code title="get /journeys/{templateId}">client.journeys.<a href="./src/resources/journeys/journeys.ts">retrieve</a>(templateID, { ...params }) -> JourneyResponse</code>
+- <code title="get /journeys">client.journeys.<a href="./src/resources/journeys/journeys.ts">list</a>({ ...params }) -> JourneysListResponse</code>
+- <code title="delete /journeys/{templateId}">client.journeys.<a href="./src/resources/journeys/journeys.ts">archive</a>(templateID) -> void</code>
+- <code title="post /journeys/{templateId}/invoke">client.journeys.<a href="./src/resources/journeys/journeys.ts">invoke</a>(templateID, { ...params }) -> JourneysInvokeResponse</code>
+- <code title="get /journeys/{templateId}/versions">client.journeys.<a href="./src/resources/journeys/journeys.ts">listVersions</a>(templateID) -> JourneyVersionsListResponse</code>
+- <code title="post /journeys/{templateId}/publish">client.journeys.<a href="./src/resources/journeys/journeys.ts">publish</a>(templateID, { ...params }) -> JourneyResponse</code>
+- <code title="put /journeys/{templateId}">client.journeys.<a href="./src/resources/journeys/journeys.ts">replace</a>(templateID, { ...params }) -> JourneyResponse</code>
+
+## Templates
+
+Methods:
+
+- <code title="post /journeys/{templateId}/templates">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">create</a>(templateID, { ...params }) -> JourneyTemplateGetResponse</code>
+- <code title="get /journeys/{templateId}/templates/{notificationId}">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">retrieve</a>(notificationID, { ...params }) -> JourneyTemplateGetResponse</code>
+- <code title="get /journeys/{templateId}/templates">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">list</a>(templateID, { ...params }) -> JourneyTemplateListResponse</code>
+- <code title="delete /journeys/{templateId}/templates/{notificationId}">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">archive</a>(notificationID, { ...params }) -> void</code>
+- <code title="get /journeys/{templateId}/templates/{notificationId}/versions">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">listVersions</a>(notificationID, { ...params }) -> NotificationTemplateVersionListResponse</code>
+- <code title="post /journeys/{templateId}/templates/{notificationId}/publish">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">publish</a>(notificationID, { ...params }) -> void</code>
+- <code title="put /journeys/{templateId}/templates/{notificationId}">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">replace</a>(notificationID, { ...params }) -> JourneyTemplateGetResponse</code>
 
 # Brands
 
