@@ -6,6 +6,7 @@ import * as TenantsAPI from '../tenants';
 import * as VersionsAPI from './versions';
 import { VersionRetrieveParams, Versions } from './versions';
 import { APIPromise } from '../../../core/api-promise';
+import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
@@ -48,6 +49,29 @@ export class Templates extends APIResource {
     options?: RequestOptions,
   ): APIPromise<TemplateListResponse> {
     return this._client.get(path`/tenants/${tenantID}/templates`, { query, ...options });
+  }
+
+  /**
+   * Deletes the tenant's notification template with the given `template_id`.
+   *
+   * Returns **204 No Content** with an empty body on success.
+   *
+   * Returns **404** if there is no template with this ID for the tenant, including a
+   * second `DELETE` after a successful removal.
+   *
+   * @example
+   * ```ts
+   * await client.tenants.templates.delete('template_id', {
+   *   tenant_id: 'tenant_id',
+   * });
+   * ```
+   */
+  delete(templateID: string, params: TemplateDeleteParams, options?: RequestOptions): APIPromise<void> {
+    const { tenant_id } = params;
+    return this._client.delete(path`/tenants/${tenant_id}/templates/${templateID}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -174,6 +198,13 @@ export interface TemplateListParams {
   limit?: number | null;
 }
 
+export interface TemplateDeleteParams {
+  /**
+   * Id of the tenant that owns the template.
+   */
+  tenant_id: string;
+}
+
 export interface TemplatePublishParams {
   /**
    * Path param: Id of the tenant that owns the template.
@@ -214,6 +245,7 @@ export declare namespace Templates {
     type TemplateListResponse as TemplateListResponse,
     type TemplateRetrieveParams as TemplateRetrieveParams,
     type TemplateListParams as TemplateListParams,
+    type TemplateDeleteParams as TemplateDeleteParams,
     type TemplatePublishParams as TemplatePublishParams,
     type TemplateReplaceParams as TemplateReplaceParams,
   };

@@ -7,6 +7,7 @@ import * as PreferencesAPI from './preferences/preferences';
 import { Preferences } from './preferences/preferences';
 import * as TemplatesAPI from './templates/templates';
 import {
+  TemplateDeleteParams,
   TemplateListParams,
   TemplateListResponse,
   TemplatePublishParams,
@@ -463,6 +464,7 @@ export declare namespace Tenants {
     type TemplateListResponse as TemplateListResponse,
     type TemplateRetrieveParams as TemplateRetrieveParams,
     type TemplateListParams as TemplateListParams,
+    type TemplateDeleteParams as TemplateDeleteParams,
     type TemplatePublishParams as TemplatePublishParams,
     type TemplateReplaceParams as TemplateReplaceParams,
   };

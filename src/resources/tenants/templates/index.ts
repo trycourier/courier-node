@@ -5,6 +5,7 @@ export {
   type TemplateListResponse,
   type TemplateRetrieveParams,
   type TemplateListParams,
+  type TemplateDeleteParams,
   type TemplatePublishParams,
   type TemplateReplaceParams,
 } from './templates';
