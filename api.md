@@ -492,6 +492,7 @@ Methods:
 
 - <code title="get /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates/templates.ts">retrieve</a>(templateID, { ...params }) -> BaseTemplateTenantAssociation</code>
 - <code title="get /tenants/{tenant_id}/templates">client.tenants.templates.<a href="./src/resources/tenants/templates/templates.ts">list</a>(tenantID, { ...params }) -> TemplateListResponse</code>
+- <code title="delete /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates/templates.ts">delete</a>(templateID, { ...params }) -> void</code>
 - <code title="post /tenants/{tenant_id}/templates/{template_id}/publish">client.tenants.templates.<a href="./src/resources/tenants/templates/templates.ts">publish</a>(templateID, { ...params }) -> PostTenantTemplatePublishResponse</code>
 - <code title="put /tenants/{tenant_id}/templates/{template_id}">client.tenants.templates.<a href="./src/resources/tenants/templates/templates.ts">replace</a>(templateID, { ...params }) -> PutTenantTemplateResponse</code>
 
