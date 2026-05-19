@@ -1,7 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from '@trycourier/courier/internal/to-file';
 import { toFile } from '@trycourier/courier/core/uploads';
-import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';

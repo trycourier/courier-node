@@ -68,15 +68,6 @@ import {
 } from './resources/bulk';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
-  Journey,
-  JourneyInvokeParams,
-  JourneyListParams,
-  Journeys,
-  JourneysInvokeRequest,
-  JourneysInvokeResponse,
-  JourneysListResponse,
-} from './resources/journeys';
-import {
   MessageContentResponse,
   MessageDetails,
   MessageHistoryParams,
@@ -114,6 +105,48 @@ import {
   AutomationTemplateListResponse,
   Automations,
 } from './resources/automations/automations';
+import {
+  CreateJourneyRequest,
+  Journey,
+  JourneyAINode,
+  JourneyAPIInvokeTriggerNode,
+  JourneyConditionAtom,
+  JourneyConditionGroup,
+  JourneyConditionNestedGroup,
+  JourneyConditionsField,
+  JourneyCreateParams,
+  JourneyDelayDurationNode,
+  JourneyDelayUntilNode,
+  JourneyExitNode,
+  JourneyFetchGetDeleteNode,
+  JourneyFetchPostPutNode,
+  JourneyInvokeParams,
+  JourneyListParams,
+  JourneyMergeStrategy,
+  JourneyNode,
+  JourneyPublishParams,
+  JourneyPublishRequest,
+  JourneyReplaceParams,
+  JourneyResponse,
+  JourneyRetrieveParams,
+  JourneySegmentTriggerNode,
+  JourneySendNode,
+  JourneyState,
+  JourneyTemplateCreateRequest,
+  JourneyTemplateGetResponse,
+  JourneyTemplateListResponse,
+  JourneyTemplatePublishRequest,
+  JourneyTemplateReplaceRequest,
+  JourneyTemplateSummary,
+  JourneyThrottleDynamicNode,
+  JourneyThrottleStaticNode,
+  JourneyVersionItem,
+  JourneyVersionsListResponse,
+  Journeys,
+  JourneysInvokeRequest,
+  JourneysInvokeResponse,
+  JourneysListResponse,
+} from './resources/journeys/journeys';
 import {
   ListListParams,
   ListListResponse,
@@ -343,6 +376,18 @@ export class Courier {
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
+
+    const customHeadersEnv = readEnv('COURIER_CUSTOM_HEADERS');
+    if (customHeadersEnv) {
+      const parsed: Record<string, string> = {};
+      for (const line of customHeadersEnv.split('\n')) {
+        const colon = line.indexOf(':');
+        if (colon >= 0) {
+          parsed[line.substring(0, colon).trim()] = line.substring(colon + 1).trim();
+        }
+      }
+      options.defaultHeaders = { ...parsed, ...options.defaultHeaders };
+    }
 
     this._options = options;
 
@@ -985,12 +1030,45 @@ export declare namespace Courier {
 
   export {
     Journeys as Journeys,
+    type CreateJourneyRequest as CreateJourneyRequest,
     type Journey as Journey,
+    type JourneyAINode as JourneyAINode,
+    type JourneyAPIInvokeTriggerNode as JourneyAPIInvokeTriggerNode,
+    type JourneyConditionAtom as JourneyConditionAtom,
+    type JourneyConditionGroup as JourneyConditionGroup,
+    type JourneyConditionNestedGroup as JourneyConditionNestedGroup,
+    type JourneyConditionsField as JourneyConditionsField,
+    type JourneyDelayDurationNode as JourneyDelayDurationNode,
+    type JourneyDelayUntilNode as JourneyDelayUntilNode,
+    type JourneyExitNode as JourneyExitNode,
+    type JourneyFetchGetDeleteNode as JourneyFetchGetDeleteNode,
+    type JourneyFetchPostPutNode as JourneyFetchPostPutNode,
+    type JourneyMergeStrategy as JourneyMergeStrategy,
+    type JourneyNode as JourneyNode,
+    type JourneyPublishRequest as JourneyPublishRequest,
+    type JourneyResponse as JourneyResponse,
+    type JourneySegmentTriggerNode as JourneySegmentTriggerNode,
+    type JourneySendNode as JourneySendNode,
+    type JourneyState as JourneyState,
+    type JourneyTemplateCreateRequest as JourneyTemplateCreateRequest,
+    type JourneyTemplateGetResponse as JourneyTemplateGetResponse,
+    type JourneyTemplateListResponse as JourneyTemplateListResponse,
+    type JourneyTemplatePublishRequest as JourneyTemplatePublishRequest,
+    type JourneyTemplateReplaceRequest as JourneyTemplateReplaceRequest,
+    type JourneyTemplateSummary as JourneyTemplateSummary,
+    type JourneyThrottleDynamicNode as JourneyThrottleDynamicNode,
+    type JourneyThrottleStaticNode as JourneyThrottleStaticNode,
+    type JourneyVersionItem as JourneyVersionItem,
+    type JourneyVersionsListResponse as JourneyVersionsListResponse,
     type JourneysInvokeRequest as JourneysInvokeRequest,
     type JourneysInvokeResponse as JourneysInvokeResponse,
     type JourneysListResponse as JourneysListResponse,
+    type JourneyCreateParams as JourneyCreateParams,
+    type JourneyRetrieveParams as JourneyRetrieveParams,
     type JourneyListParams as JourneyListParams,
     type JourneyInvokeParams as JourneyInvokeParams,
+    type JourneyPublishParams as JourneyPublishParams,
+    type JourneyReplaceParams as JourneyReplaceParams,
   };
 
   export {
