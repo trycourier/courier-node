@@ -23,8 +23,12 @@ export class Journeys extends APIResource {
   templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
 
   /**
-   * Create a new journey. The journey is created in DRAFT state. Use POST
-   * /journeys/{templateId}/publish to make it live.
+   * Create a journey. Defaults to `DRAFT` state; pass `state: "PUBLISHED"` to
+   * publish on create. Send nodes are not allowed on `POST`. The standard flow is:
+   * create the journey shell here, add notification templates with
+   * `POST /journeys/{templateId}/templates`, then wire them into the journey with
+   * `PUT /journeys/{templateId}`. Call `POST /journeys/{templateId}/publish` to
+   * publish a draft after the fact.
    *
    * @example
    * ```ts
@@ -96,7 +100,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Invoke a journey run from a journey template.
+   * Invoke a journey by id or alias to start a new run. The response includes a
+   * `runId` identifying the run.
    *
    * @example
    * ```ts
@@ -131,8 +136,9 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Publish the current draft as a new version. Optionally rollback to a prior
-   * version by passing `{ version: 'vN' }`.
+   * Publish the current draft as a new version. Body is optional; pass
+   * `{ "version": "vN" }` to roll back to a prior version instead. Returns 404 if
+   * the journey has no draft to publish.
    *
    * @example
    * ```ts
@@ -148,8 +154,11 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Replace the journey draft. Updates the working draft only; call POST
-   * /journeys/{templateId}/publish to make it live.
+   * Replace the journey draft. Updates the working draft only; call
+   * `POST /journeys/{templateId}/publish` to make it live, or pass
+   * `state: "PUBLISHED"` in this request to publish immediately. Send-node
+   * `template` ids must already exist and be scoped to this journey, and node ids
+   * must not be claimed by another journey.
    *
    * @example
    * ```ts
@@ -170,6 +179,9 @@ export class Journeys extends APIResource {
   }
 }
 
+/**
+ * Request body for creating a journey.
+ */
 export interface CreateJourneyRequest {
   name: string;
 
@@ -177,6 +189,9 @@ export interface CreateJourneyRequest {
 
   enabled?: boolean;
 
+  /**
+   * Lifecycle state of a journey.
+   */
   state?: JourneyState;
 }
 
@@ -210,6 +225,10 @@ export interface Journey {
   updatedAt?: string;
 }
 
+/**
+ * Invoke an AI step with `user_prompt` and optional `web_search`. Returns a
+ * structured response conforming to `output_schema`.
+ */
 export interface JourneyAINode {
   /**
    * A JSONSchema object (Draft-07-compatible). Validated at runtime by Ajv.
@@ -234,6 +253,10 @@ export interface JourneyAINode {
   web_search?: boolean;
 }
 
+/**
+ * Trigger fired when the journey is invoked via the API. The optional `schema`
+ * field is a JSON Schema that validates the invocation payload.
+ */
 export interface JourneyAPIInvokeTriggerNode {
   trigger_type: 'api-invoke';
 
@@ -307,6 +330,9 @@ export type JourneyConditionsField =
   | JourneyConditionGroup
   | JourneyConditionNestedGroup;
 
+/**
+ * Pause the journey run for a fixed `duration`.
+ */
 export interface JourneyDelayDurationNode {
   duration: string;
 
@@ -324,6 +350,9 @@ export interface JourneyDelayDurationNode {
   conditions?: JourneyConditionsField;
 }
 
+/**
+ * Pause the journey run `until` a specific time.
+ */
 export interface JourneyDelayUntilNode {
   mode: 'until';
 
@@ -341,13 +370,23 @@ export interface JourneyDelayUntilNode {
   conditions?: JourneyConditionsField;
 }
 
+/**
+ * Terminate the journey run.
+ */
 export interface JourneyExitNode {
   type: 'exit';
 
   id?: string;
 }
 
+/**
+ * Issue an HTTP GET or DELETE request and merge the response into the journey
+ * state per `merge_strategy`.
+ */
 export interface JourneyFetchGetDeleteNode {
+  /**
+   * Strategy for merging a fetch response into the journey run state.
+   */
   merge_strategy: JourneyMergeStrategy;
 
   method: 'get' | 'delete';
@@ -375,7 +414,14 @@ export interface JourneyFetchGetDeleteNode {
   response_schema?: { [key: string]: unknown };
 }
 
+/**
+ * Issue an HTTP POST or PUT request with a `body` and merge the response into the
+ * journey state per `merge_strategy`.
+ */
 export interface JourneyFetchPostPutNode {
+  /**
+   * Strategy for merging a fetch response into the journey run state.
+   */
   merge_strategy: JourneyMergeStrategy;
 
   method: 'post' | 'put';
@@ -405,13 +451,15 @@ export interface JourneyFetchPostPutNode {
   response_schema?: { [key: string]: unknown };
 }
 
+/**
+ * Strategy for merging a fetch response into the journey run state.
+ */
 export type JourneyMergeStrategy = 'overwrite' | 'soft-merge' | 'replace' | 'none';
 
 /**
- * A single node in a journey DAG. Discriminated by `type` plus a secondary
+ * A single node in a journey DAG. Discriminated by `type`, with a secondary
  * discriminator on some variants (`trigger_type` for trigger, `mode` for delay,
- * `method` for fetch, `scope` for throttle). Each variant is exported as a
- * separate schema for SDK type quality.
+ * `method` for fetch, `scope` for throttle).
  */
 export type JourneyNode =
   | JourneyAPIInvokeTriggerNode
@@ -429,11 +477,8 @@ export type JourneyNode =
 
 export namespace JourneyNode {
   /**
-   * Branch node. Routes to one of `paths[]` whose `conditions` match, else falls
-   * through to `default.nodes`. Inlined rather than referenced so the recursive
-   * `nodes: JourneyNode[]` cycle stays within a single generated module (Stainless
-   * Python forward-ref resolution does not span modules well for this recursion
-   * shape).
+   * Branch node. Routes to the first entry in `paths[]` whose `conditions` match,
+   * else falls through to `default.nodes`.
    */
   export interface JourneyBranchNode {
     default: JourneyBranchNode.Default;
@@ -467,10 +512,17 @@ export namespace JourneyNode {
   }
 }
 
+/**
+ * Request body for publishing a journey. Pass `version` to roll back to a prior
+ * version; omit to publish the current draft.
+ */
 export interface JourneyPublishRequest {
   version?: string;
 }
 
+/**
+ * A journey, with its current draft or published nodes and metadata.
+ */
 export interface JourneyResponse {
   id: string;
 
@@ -486,6 +538,9 @@ export interface JourneyResponse {
 
   published: number | null;
 
+  /**
+   * Lifecycle state of a journey.
+   */
   state: JourneyState;
 
   updated: number | null;
@@ -493,6 +548,9 @@ export interface JourneyResponse {
   updater: string | null;
 }
 
+/**
+ * Trigger fired by a segment event (`identify`, `group`, or `track`).
+ */
 export interface JourneySegmentTriggerNode {
   request_type: 'identify' | 'group' | 'track';
 
@@ -512,6 +570,10 @@ export interface JourneySegmentTriggerNode {
   event_id?: string;
 }
 
+/**
+ * Send a notification template to the recipient. Optionally override the recipient
+ * address, delay the send, or attach `data`.
+ */
 export interface JourneySendNode {
   message: JourneySendNode.Message;
 
@@ -555,8 +617,14 @@ export namespace JourneySendNode {
   }
 }
 
+/**
+ * Lifecycle state of a journey.
+ */
 export type JourneyState = 'DRAFT' | 'PUBLISHED';
 
+/**
+ * Request body for creating a notification template scoped to a journey.
+ */
 export interface JourneyTemplateCreateRequest {
   channel: string;
 
@@ -599,6 +667,9 @@ export namespace JourneyTemplateCreateRequest {
   }
 }
 
+/**
+ * A journey-scoped notification template.
+ */
 export interface JourneyTemplateGetResponse {
   id: string;
 
@@ -641,16 +712,26 @@ export namespace JourneyTemplateGetResponse {
   }
 }
 
+/**
+ * Paged list of journey-scoped notification templates.
+ */
 export interface JourneyTemplateListResponse {
   paging: Shared.Paging;
 
   results: Array<JourneyTemplateSummary>;
 }
 
+/**
+ * Request body for publishing a journey-scoped notification template. Pass
+ * `version` to roll back to a prior version; omit to publish the current draft.
+ */
 export interface JourneyTemplatePublishRequest {
   version?: string;
 }
 
+/**
+ * Request body for replacing a journey-scoped notification template draft.
+ */
 export interface JourneyTemplateReplaceRequest {
   notification: JourneyTemplateReplaceRequest.Notification;
 
@@ -689,6 +770,10 @@ export namespace JourneyTemplateReplaceRequest {
   }
 }
 
+/**
+ * Summary fields of a journey-scoped notification template returned in list
+ * responses.
+ */
 export interface JourneyTemplateSummary {
   id: string;
 
@@ -707,6 +792,10 @@ export interface JourneyTemplateSummary {
   updater?: string;
 }
 
+/**
+ * Throttle the journey by a dynamic `throttle_key`, allowing at most `max_allowed`
+ * invocations per `period`.
+ */
 export interface JourneyThrottleDynamicNode {
   max_allowed: number;
 
@@ -728,6 +817,10 @@ export interface JourneyThrottleDynamicNode {
   conditions?: JourneyConditionsField;
 }
 
+/**
+ * Throttle the journey by a static `scope` (`user` or `global`), allowing at most
+ * `max_allowed` invocations per `period`.
+ */
 export interface JourneyThrottleStaticNode {
   max_allowed: number;
 
@@ -747,6 +840,9 @@ export interface JourneyThrottleStaticNode {
   conditions?: JourneyConditionsField;
 }
 
+/**
+ * A published version of a journey.
+ */
 export interface JourneyVersionItem {
   created: number | null;
 
@@ -759,6 +855,9 @@ export interface JourneyVersionItem {
   version: string;
 }
 
+/**
+ * Paged list of published journey versions, most recent first.
+ */
 export interface JourneyVersionsListResponse {
   paging: Shared.Paging;
 
@@ -820,10 +919,16 @@ export interface JourneyCreateParams {
 
   enabled?: boolean;
 
+  /**
+   * Lifecycle state of a journey.
+   */
   state?: JourneyState;
 }
 
 export interface JourneyRetrieveParams {
+  /**
+   * Version selector: `draft`, `published` (default), or `vN`.
+   */
   version?: string;
 }
 
@@ -878,6 +983,9 @@ export interface JourneyReplaceParams {
 
   enabled?: boolean;
 
+  /**
+   * Lifecycle state of a journey.
+   */
   state?: JourneyState;
 }
 

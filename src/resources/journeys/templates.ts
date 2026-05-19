@@ -11,8 +11,8 @@ import { path } from '../../internal/utils/path';
 
 export class Templates extends APIResource {
   /**
-   * Create a notification template scoped to this journey. The template is created
-   * in DRAFT state.
+   * Create a notification template scoped to this journey. Defaults to `DRAFT`
+   * state; pass `state: "PUBLISHED"` to publish on create.
    *
    * @example
    * ```ts
@@ -63,8 +63,8 @@ export class Templates extends APIResource {
   }
 
   /**
-   * List notification templates scoped to this journey. Templates scoped to a
-   * journey can only be referenced from `send` nodes of the same journey.
+   * List notification templates scoped to this journey. Journey-scoped notification
+   * templates can only be referenced from `send` nodes within the same journey.
    *
    * @example
    * ```ts
@@ -81,7 +81,7 @@ export class Templates extends APIResource {
   }
 
   /**
-   * Archive a journey-scoped notification template. Archived templates cannot be
+   * Archive the journey-scoped notification template. Archived templates cannot be
    * sent.
    *
    * @example
@@ -100,8 +100,8 @@ export class Templates extends APIResource {
   }
 
   /**
-   * List published versions of a journey-scoped notification template, ordered most
-   * recent first.
+   * List published versions of the journey-scoped notification template, ordered
+   * most recent first.
    *
    * @example
    * ```ts
@@ -121,7 +121,9 @@ export class Templates extends APIResource {
   }
 
   /**
-   * Publish the current draft of a journey-scoped notification template.
+   * Publish the current draft of the journey-scoped notification template as a new
+   * version. Optionally roll back to a prior version by passing
+   * `{ "version": "vN" }`.
    *
    * @example
    * ```ts
@@ -140,7 +142,7 @@ export class Templates extends APIResource {
   }
 
   /**
-   * Replace a journey-scoped notification template draft.
+   * Replace the journey-scoped notification template draft.
    *
    * @example
    * ```ts
@@ -217,8 +219,14 @@ export interface TemplateRetrieveParams {
 }
 
 export interface TemplateListParams {
+  /**
+   * Pagination cursor from a prior response.
+   */
   cursor?: string;
 
+  /**
+   * Page size. Minimum 1, maximum 100.
+   */
   limit?: number;
 }
 
