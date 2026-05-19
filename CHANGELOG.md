@@ -1,5 +1,31 @@
 # Changelog
 
+## 7.11.0 (2026-05-19)
+
+Full Changelog: [v7.10.2...v7.11.0](https://github.com/trycourier/courier-node/compare/v7.10.2...v7.11.0)
+
+### Features
+
+* [C-18380] Journeys API reference: copy + naming cleanup ([c9a62bf](https://github.com/trycourier/courier-node/commit/c9a62bfc0acd7ca403b5dac30872d8fbb1bd36e5))
+* [SUP-607] Add DELETE endpoint for Courier Create tenant templates ([c5769b4](https://github.com/trycourier/courier-node/commit/c5769b4bfd047d0b3914f35403a2a6bac9a207c4))
+* **api:** add journeys CRUD/publish/versioning, templates sub-resource, types ([297d6eb](https://github.com/trycourier/courier-node/commit/297d6eb106b494cb56f3722a124a096736f1f83a))
+* support setting headers via env ([e7a078f](https://github.com/trycourier/courier-node/commit/e7a078f8e44790bf9332c5c06891d3fa9b148ee7))
+
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([9bedc1a](https://github.com/trycourier/courier-node/commit/9bedc1a1c47359a0751e52f5f3c52592d7c896ed))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([94cc158](https://github.com/trycourier/courier-node/commit/94cc1583b4dcfe832929c142efaf5bf8b371b42f))
+* **formatter:** run prettier and eslint separately ([ee1ac34](https://github.com/trycourier/courier-node/commit/ee1ac34270e0607eb8f6f6ea884b37a7c9167e3d))
+* **internal:** codegen related update ([6197029](https://github.com/trycourier/courier-node/commit/619702960b9076a75bc7138a5218d06f4b3c5dc3))
+* **internal:** more robust bootstrap script ([1625ecf](https://github.com/trycourier/courier-node/commit/1625ecf85ab5a9550217acb1b6655c9ea5611fa3))
+* redact api-key headers in debug logs ([ce91d48](https://github.com/trycourier/courier-node/commit/ce91d48d8a4be2500a03433a03bafd8142d78e08))
+* **tests:** remove redundant File import ([2140f59](https://github.com/trycourier/courier-node/commit/2140f596a0a5436be9dceeac7d1ae40143ce12c7))
+
 ## 7.10.2 (2026-04-14)
 
 Full Changelog: [v7.10.1...v7.10.2](https://github.com/trycourier/courier-node/compare/v7.10.1...v7.10.2)
