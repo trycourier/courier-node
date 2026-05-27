@@ -10,7 +10,18 @@ import { path } from '../internal/utils/path';
 
 export class Brands extends APIResource {
   /**
-   * Create a new brand
+   * Create a new brand. Requires `name` and `settings` (with at least
+   * `colors.primary` and `colors.secondary`).
+   *
+   * @example
+   * ```ts
+   * const brand = await client.brands.create({
+   *   name: 'My Brand',
+   *   settings: {
+   *     colors: { primary: '#9D3789', secondary: '#FFFFFF' },
+   *   },
+   * });
+   * ```
    */
   create(body: BrandCreateParams, options?: RequestOptions): APIPromise<Brand> {
     return this._client.post('/brands', { body, ...options });
@@ -18,6 +29,11 @@ export class Brands extends APIResource {
 
   /**
    * Fetch a specific brand by brand ID.
+   *
+   * @example
+   * ```ts
+   * const brand = await client.brands.retrieve('brand_id');
+   * ```
    */
   retrieve(brandID: string, options?: RequestOptions): APIPromise<Brand> {
     return this._client.get(path`/brands/${brandID}`, options);
@@ -25,6 +41,13 @@ export class Brands extends APIResource {
 
   /**
    * Replace an existing brand with the supplied values.
+   *
+   * @example
+   * ```ts
+   * const brand = await client.brands.update('brand_id', {
+   *   name: 'name',
+   * });
+   * ```
    */
   update(brandID: string, body: BrandUpdateParams, options?: RequestOptions): APIPromise<Brand> {
     return this._client.put(path`/brands/${brandID}`, { body, ...options });
@@ -32,6 +55,11 @@ export class Brands extends APIResource {
 
   /**
    * Get the list of brands.
+   *
+   * @example
+   * ```ts
+   * const brands = await client.brands.list();
+   * ```
    */
   list(
     query: BrandListParams | null | undefined = {},
@@ -42,6 +70,11 @@ export class Brands extends APIResource {
 
   /**
    * Delete a brand by brand ID.
+   *
+   * @example
+   * ```ts
+   * await client.brands.delete('brand_id');
+   * ```
    */
   delete(brandID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/brands/${brandID}`, {
@@ -194,9 +227,9 @@ export interface BrandListResponse {
 export interface BrandCreateParams {
   name: string;
 
-  id?: string | null;
+  settings: BrandSettings;
 
-  settings?: BrandSettings | null;
+  id?: string | null;
 
   snippets?: BrandSnippets | null;
 }

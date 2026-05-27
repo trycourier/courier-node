@@ -10,7 +10,10 @@ const client = new Courier({
 describe('resource brands', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.brands.create({ name: 'name' });
+    const responsePromise = client.brands.create({
+      name: 'My Brand',
+      settings: {},
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,10 +26,9 @@ describe('resource brands', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.brands.create({
-      name: 'name',
-      id: 'id',
+      name: 'My Brand',
       settings: {
-        colors: { primary: 'primary', secondary: 'secondary' },
+        colors: { primary: '#9D3789', secondary: '#FFFFFF' },
         email: {
           footer: { content: 'content', inheritDefault: true },
           head: { inheritDefault: true, content: 'content' },
@@ -66,6 +68,7 @@ describe('resource brands', () => {
           placement: 'top',
         },
       },
+      id: 'id',
       snippets: { items: [{ name: 'name', value: 'value' }] },
     });
   });
