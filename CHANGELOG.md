@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.12.0 (2026-05-28)
+
+Full Changelog: [v7.11.0...v7.12.0](https://github.com/trycourier/courier-node/compare/v7.11.0...v7.12.0)
+
+### Features
+
+* C-18612 Add Journeys `batch` node variant to OpenAPI spec ([65fb0be](https://github.com/trycourier/courier-node/commit/65fb0be53d35e01a4060f741b2b9db56f4adea72))
+* Mark `settings` as required on POST /brands ([2aed30c](https://github.com/trycourier/courier-node/commit/2aed30c8f9c4f085ca777f6ee6dbc6dfbbd0dfd4))
+
 ## 7.11.0 (2026-05-19)
 
 Full Changelog: [v7.10.2...v7.11.0](https://github.com/trycourier/courier-node/compare/v7.10.2...v7.11.0)
