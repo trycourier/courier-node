@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.13.0 (2026-06-12)
+
+Full Changelog: [v7.12.0...v7.13.0](https://github.com/trycourier/courier-node/compare/v7.12.0...v7.13.0)
+
+### Features
+
+* **digests:** document digest REST endpoints in OpenAPI spec ([97d733f](https://github.com/trycourier/courier-node/commit/97d733f3b6560055e08798f1a15aff74d7e1af94))
+
 ## 7.12.0 (2026-05-28)
 
 Full Changelog: [v7.11.0...v7.12.0](https://github.com/trycourier/courier-node/compare/v7.11.0...v7.12.0)
