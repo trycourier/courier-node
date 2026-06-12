@@ -57,6 +57,12 @@ export {
   type BulkCreateJobParams,
   type BulkListUsersParams,
 } from './bulk';
+export {
+  Digests,
+  type DigestCategory,
+  type DigestInstance,
+  type DigestInstanceListResponse,
+} from './digests/digests';
 export { Inbound, type InboundTrackEventResponse, type InboundTrackEventParams } from './inbound';
 export {
   Journeys,

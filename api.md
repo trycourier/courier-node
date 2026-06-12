@@ -281,6 +281,21 @@ Methods:
 - <code title="get /bulk/{job_id}">client.bulk.<a href="./src/resources/bulk.ts">retrieveJob</a>(jobID) -> BulkRetrieveJobResponse</code>
 - <code title="post /bulk/{job_id}/run">client.bulk.<a href="./src/resources/bulk.ts">runJob</a>(jobID) -> void</code>
 
+# Digests
+
+Types:
+
+- <code><a href="./src/resources/digests/digests.ts">DigestCategory</a></code>
+- <code><a href="./src/resources/digests/digests.ts">DigestInstance</a></code>
+- <code><a href="./src/resources/digests/digests.ts">DigestInstanceListResponse</a></code>
+
+## Schedules
+
+Methods:
+
+- <code title="get /digests/schedules/{schedule_id}/instances">client.digests.schedules.<a href="./src/resources/digests/schedules.ts">listInstances</a>(scheduleID, { ...params }) -> DigestInstanceListResponse</code>
+- <code title="post /digests/schedules/{schedule_id}/trigger">client.digests.schedules.<a href="./src/resources/digests/schedules.ts">release</a>(scheduleID) -> void</code>
+
 # Inbound
 
 Types:
