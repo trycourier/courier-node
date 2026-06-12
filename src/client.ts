@@ -106,6 +106,12 @@ import {
   Automations,
 } from './resources/automations/automations';
 import {
+  DigestCategory,
+  DigestInstance,
+  DigestInstanceListResponse,
+  Digests,
+} from './resources/digests/digests';
+import {
   CreateJourneyRequest,
   Journey,
   JourneyAINode,
@@ -945,6 +951,7 @@ export class Courier {
   journeys: API.Journeys = new API.Journeys(this);
   brands: API.Brands = new API.Brands(this);
   bulk: API.Bulk = new API.Bulk(this);
+  digests: API.Digests = new API.Digests(this);
   inbound: API.Inbound = new API.Inbound(this);
   lists: API.Lists = new API.Lists(this);
   messages: API.Messages = new API.Messages(this);
@@ -966,6 +973,7 @@ Courier.Automations = Automations;
 Courier.Journeys = Journeys;
 Courier.Brands = Brands;
 Courier.Bulk = Bulk;
+Courier.Digests = Digests;
 Courier.Inbound = Inbound;
 Courier.Lists = Lists;
 Courier.Messages = Messages;
@@ -1103,6 +1111,13 @@ export declare namespace Courier {
     type BulkAddUsersParams as BulkAddUsersParams,
     type BulkCreateJobParams as BulkCreateJobParams,
     type BulkListUsersParams as BulkListUsersParams,
+  };
+
+  export {
+    Digests as Digests,
+    type DigestCategory as DigestCategory,
+    type DigestInstance as DigestInstance,
+    type DigestInstanceListResponse as DigestInstanceListResponse,
   };
 
   export {
