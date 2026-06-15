@@ -1,4 +1,5 @@
 <!-- AUTO-GENERATED-OVERVIEW:START — Do not edit this section. It is synced from mintlify-docs. -->
+
 # Courier Node.js SDK
 
 The Courier Node.js SDK provides typed access to the Courier REST API from server-side TypeScript or JavaScript. Use it to send notifications, manage user profiles, check message status, issue JWT tokens for client-side SDKs, and more.
