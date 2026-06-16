@@ -7,6 +7,7 @@ export {
   type PreferenceRetrieveTopicResponse,
   type PreferenceUpdateOrCreateTopicResponse,
   type PreferenceRetrieveParams,
+  type PreferenceDeleteTopicParams,
   type PreferenceRetrieveTopicParams,
   type PreferenceUpdateOrCreateTopicParams,
 } from './preferences';

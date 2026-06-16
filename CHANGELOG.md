@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.14.0 (2026-06-16)
+
+Full Changelog: [v7.13.0...v7.14.0](https://github.com/trycourier/courier-node/compare/v7.13.0...v7.14.0)
+
+### Features
+
+* **openapi:** add DELETE /users/{id}/preferences/{topicId} ([e865950](https://github.com/trycourier/courier-node/commit/e865950d84085a7c46705d10b47d2d3c93f6edd6))
+
 ## 7.13.0 (2026-06-12)
 
 Full Changelog: [v7.12.0...v7.13.0](https://github.com/trycourier/courier-node/compare/v7.12.0...v7.13.0)
