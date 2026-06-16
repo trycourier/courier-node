@@ -542,6 +542,7 @@ Types:
 Methods:
 
 - <code title="get /users/{user_id}/preferences">client.users.preferences.<a href="./src/resources/users/preferences.ts">retrieve</a>(userID, { ...params }) -> PreferenceRetrieveResponse</code>
+- <code title="delete /users/{user_id}/preferences/{topic_id}">client.users.preferences.<a href="./src/resources/users/preferences.ts">deleteTopic</a>(topicID, { ...params }) -> void</code>
 - <code title="get /users/{user_id}/preferences/{topic_id}">client.users.preferences.<a href="./src/resources/users/preferences.ts">retrieveTopic</a>(topicID, { ...params }) -> PreferenceRetrieveTopicResponse</code>
 - <code title="put /users/{user_id}/preferences/{topic_id}">client.users.preferences.<a href="./src/resources/users/preferences.ts">updateOrCreateTopic</a>(topicID, { ...params }) -> PreferenceUpdateOrCreateTopicResponse</code>
 

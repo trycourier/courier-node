@@ -33,6 +33,26 @@ describe('resource preferences', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('deleteTopic: only required params', async () => {
+    const responsePromise = client.users.preferences.deleteTopic('topic_id', { user_id: 'user_id' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('deleteTopic: required and optional params', async () => {
+    const response = await client.users.preferences.deleteTopic('topic_id', {
+      user_id: 'user_id',
+      tenant_id: 'tenant_id',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieveTopic: only required params', async () => {
     const responsePromise = client.users.preferences.retrieveTopic('topic_id', { user_id: 'user_id' });
     const rawResponse = await responsePromise.asResponse();
