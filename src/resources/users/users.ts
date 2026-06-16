@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as PreferencesAPI from './preferences';
 import {
+  PreferenceDeleteTopicParams,
   PreferenceRetrieveParams,
   PreferenceRetrieveResponse,
   PreferenceRetrieveTopicParams,
@@ -51,6 +52,7 @@ export declare namespace Users {
     type PreferenceRetrieveTopicResponse as PreferenceRetrieveTopicResponse,
     type PreferenceUpdateOrCreateTopicResponse as PreferenceUpdateOrCreateTopicResponse,
     type PreferenceRetrieveParams as PreferenceRetrieveParams,
+    type PreferenceDeleteTopicParams as PreferenceDeleteTopicParams,
     type PreferenceRetrieveTopicParams as PreferenceRetrieveTopicParams,
     type PreferenceUpdateOrCreateTopicParams as PreferenceUpdateOrCreateTopicParams,
   };

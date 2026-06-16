@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -23,6 +24,31 @@ export class Preferences extends APIResource {
     options?: RequestOptions,
   ): APIPromise<PreferenceRetrieveResponse> {
     return this._client.get(path`/users/${userID}/preferences`, { query, ...options });
+  }
+
+  /**
+   * Remove a user's preferences for a specific subscription topic, resetting the
+   * topic to its effective default. This operation is idempotent: deleting a
+   * preference that does not exist succeeds with no error.
+   *
+   * @example
+   * ```ts
+   * await client.users.preferences.deleteTopic('topic_id', {
+   *   user_id: 'user_id',
+   * });
+   * ```
+   */
+  deleteTopic(
+    topicID: string,
+    params: PreferenceDeleteTopicParams,
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { user_id, tenant_id } = params;
+    return this._client.delete(path`/users/${user_id}/preferences/${topicID}`, {
+      query: { tenant_id },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -122,6 +148,19 @@ export interface PreferenceRetrieveParams {
   tenant_id?: string | null;
 }
 
+export interface PreferenceDeleteTopicParams {
+  /**
+   * Path param: A unique identifier associated with the user whose preferences you
+   * wish to delete.
+   */
+  user_id: string;
+
+  /**
+   * Query param: Delete the preferences of a user for this specific tenant context.
+   */
+  tenant_id?: string | null;
+}
+
 export interface PreferenceRetrieveTopicParams {
   /**
    * Path param: A unique identifier associated with the user whose preferences you
@@ -173,6 +212,7 @@ export declare namespace Preferences {
     type PreferenceRetrieveTopicResponse as PreferenceRetrieveTopicResponse,
     type PreferenceUpdateOrCreateTopicResponse as PreferenceUpdateOrCreateTopicResponse,
     type PreferenceRetrieveParams as PreferenceRetrieveParams,
+    type PreferenceDeleteTopicParams as PreferenceDeleteTopicParams,
     type PreferenceRetrieveTopicParams as PreferenceRetrieveTopicParams,
     type PreferenceUpdateOrCreateTopicParams as PreferenceUpdateOrCreateTopicParams,
   };
