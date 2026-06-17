@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.15.0 (2026-06-17)
+
+Full Changelog: [v7.14.0...v7.15.0](https://github.com/trycourier/courier-node/compare/v7.14.0...v7.15.0)
+
+### Features
+
+* **openapi:** add add-to-digest JourneyNode variant ([2ac5e99](https://github.com/trycourier/courier-node/commit/2ac5e991eec25a3bc775b7b51a1132af3c1140b3))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([1e9f14d](https://github.com/trycourier/courier-node/commit/1e9f14d398baeadc67ed54c1ea51fe3c0de7ff3b))
+
 ## 7.14.0 (2026-06-16)
 
 Full Changelog: [v7.13.0...v7.14.0](https://github.com/trycourier/courier-node/compare/v7.13.0...v7.14.0)
