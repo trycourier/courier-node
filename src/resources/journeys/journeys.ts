@@ -473,6 +473,7 @@ export type JourneyNode =
   | JourneyThrottleStaticNode
   | JourneyThrottleDynamicNode
   | JourneyNode.JourneyBatchNode
+  | JourneyNode.JourneyAddToDigestNode
   | JourneyExitNode
   | JourneyNode.JourneyBranchNode;
 
@@ -544,6 +545,29 @@ export namespace JourneyNode {
        */
       sort_key?: string;
     }
+  }
+
+  /**
+   * Add the current event to a digest keyed by the given subscription topic. The
+   * digest accumulates events and releases them on the schedule configured for the
+   * topic.
+   */
+  export interface JourneyAddToDigestNode {
+    /**
+     * The subscription topic that owns the digest the event is added to.
+     */
+    subscription_topic_id: string;
+
+    type: 'add-to-digest';
+
+    id?: string;
+
+    /**
+     * Condition spec for a journey node. Accepts a single condition atom, an AND/OR
+     * group, or an AND/OR nested group. Omit the `conditions` property entirely to
+     * express "no conditions".
+     */
+    conditions?: JourneysAPI.JourneyConditionsField;
   }
 
   /**
