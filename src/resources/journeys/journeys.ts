@@ -10,7 +10,10 @@ import {
   TemplateListParams,
   TemplateListVersionsParams,
   TemplatePublishParams,
+  TemplatePutContentParams,
+  TemplatePutLocaleParams,
   TemplateReplaceParams,
+  TemplateRetrieveContentParams,
   TemplateRetrieveParams,
   Templates,
 } from './templates';
@@ -1136,6 +1139,9 @@ export declare namespace Journeys {
     type TemplateArchiveParams as TemplateArchiveParams,
     type TemplateListVersionsParams as TemplateListVersionsParams,
     type TemplatePublishParams as TemplatePublishParams,
+    type TemplatePutContentParams as TemplatePutContentParams,
+    type TemplatePutLocaleParams as TemplatePutLocaleParams,
     type TemplateReplaceParams as TemplateReplaceParams,
+    type TemplateRetrieveContentParams as TemplateRetrieveContentParams,
   };
 }

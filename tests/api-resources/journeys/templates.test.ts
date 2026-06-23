@@ -153,6 +153,56 @@ describe('resource templates', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('putContent: only required params', async () => {
+    const responsePromise = client.journeys.templates.putContent('x', {
+      templateId: 'x',
+      content: { elements: [{}] },
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('putContent: required and optional params', async () => {
+    const response = await client.journeys.templates.putContent('x', {
+      templateId: 'x',
+      content: { elements: [{ type: 'channel' }], version: '2022-01-01' },
+      state: 'DRAFT',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('putLocale: only required params', async () => {
+    const responsePromise = client.journeys.templates.putLocale('x', {
+      templateId: 'x',
+      notificationId: 'x',
+      elements: [{ id: 'elem_1' }, { id: 'elem_2' }],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('putLocale: required and optional params', async () => {
+    const response = await client.journeys.templates.putLocale('x', {
+      templateId: 'x',
+      notificationId: 'x',
+      elements: [{ id: 'elem_1' }, { id: 'elem_2' }],
+      state: 'DRAFT',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('replace: only required params', async () => {
     const responsePromise = client.journeys.templates.replace('x', {
       templateId: 'x',
@@ -197,6 +247,26 @@ describe('resource templates', () => {
         tags: ['string'],
       },
       state: 'state',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('retrieveContent: only required params', async () => {
+    const responsePromise = client.journeys.templates.retrieveContent('x', { templateId: 'x' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('retrieveContent: required and optional params', async () => {
+    const response = await client.journeys.templates.retrieveContent('x', {
+      templateId: 'x',
+      version: 'version',
     });
   });
 });
