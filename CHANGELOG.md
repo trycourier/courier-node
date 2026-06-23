@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.16.0 (2026-06-23)
+
+Full Changelog: [v7.15.0...v7.16.0](https://github.com/trycourier/courier-node/compare/v7.15.0...v7.16.0)
+
+### Features
+
+* **journeys:** add content + locale endpoints to journey-scoped templates ([c62a165](https://github.com/trycourier/courier-node/commit/c62a1651bc0c0cd9d230fcb5ea42a7630fd6148b))
+
+
+### Documentation
+
+* **journeys:** clarify checksum usage + re-trigger docs sync for journey content endpoints ([15da97d](https://github.com/trycourier/courier-node/commit/15da97de3b5a936117716452c6d396dbf7421f98))
+
 ## 7.15.0 (2026-06-17)
 
 Full Changelog: [v7.14.0...v7.15.0](https://github.com/trycourier/courier-node/compare/v7.14.0...v7.15.0)
