@@ -233,7 +233,10 @@ Methods:
 - <code title="delete /journeys/{templateId}/templates/{notificationId}">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">archive</a>(notificationID, { ...params }) -> void</code>
 - <code title="get /journeys/{templateId}/templates/{notificationId}/versions">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">listVersions</a>(notificationID, { ...params }) -> NotificationTemplateVersionListResponse</code>
 - <code title="post /journeys/{templateId}/templates/{notificationId}/publish">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">publish</a>(notificationID, { ...params }) -> void</code>
+- <code title="put /journeys/{templateId}/templates/{notificationId}/content">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">putContent</a>(notificationID, { ...params }) -> NotificationContentMutationResponse</code>
+- <code title="put /journeys/{templateId}/templates/{notificationId}/locales/{localeId}">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">putLocale</a>(localeID, { ...params }) -> NotificationContentMutationResponse</code>
 - <code title="put /journeys/{templateId}/templates/{notificationId}">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">replace</a>(notificationID, { ...params }) -> JourneyTemplateGetResponse</code>
+- <code title="get /journeys/{templateId}/templates/{notificationId}/content">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">retrieveContent</a>(notificationID, { ...params }) -> NotificationContentGetResponse</code>
 
 # Brands
 

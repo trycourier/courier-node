@@ -50,5 +50,8 @@ export {
   type TemplateArchiveParams,
   type TemplateListVersionsParams,
   type TemplatePublishParams,
+  type TemplatePutContentParams,
+  type TemplatePutLocaleParams,
   type TemplateReplaceParams,
+  type TemplateRetrieveContentParams,
 } from './templates';

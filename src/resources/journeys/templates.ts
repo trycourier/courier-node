@@ -142,6 +142,65 @@ export class Templates extends APIResource {
   }
 
   /**
+   * Replace the elemental content of a journey-scoped notification template.
+   * Overwrites all elements in the template draft with the provided content.
+   *
+   * @example
+   * ```ts
+   * const notificationContentMutationResponse =
+   *   await client.journeys.templates.putContent('x', {
+   *     templateId: 'x',
+   *     content: {
+   *       version: '2022-01-01',
+   *       elements: [{ type: 'channel' }],
+   *     },
+   *     state: 'DRAFT',
+   *   });
+   * ```
+   */
+  putContent(
+    notificationID: string,
+    params: TemplatePutContentParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationsAPI.NotificationContentMutationResponse> {
+    const { templateId, ...body } = params;
+    return this._client.put(path`/journeys/${templateId}/templates/${notificationID}/content`, {
+      body,
+      ...options,
+    });
+  }
+
+  /**
+   * Set locale-specific content overrides for a journey-scoped notification
+   * template. Each element override must reference an existing element by ID.
+   *
+   * @example
+   * ```ts
+   * const notificationContentMutationResponse =
+   *   await client.journeys.templates.putLocale('x', {
+   *     templateId: 'x',
+   *     notificationId: 'x',
+   *     elements: [
+   *       { id: 'elem_1', content: 'Hola {{data.name}}.' },
+   *       { id: 'elem_2', title: 'Bienvenido!' },
+   *     ],
+   *     state: 'DRAFT',
+   *   });
+   * ```
+   */
+  putLocale(
+    localeID: string,
+    params: TemplatePutLocaleParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationsAPI.NotificationContentMutationResponse> {
+    const { templateId, notificationId, ...body } = params;
+    return this._client.put(path`/journeys/${templateId}/templates/${notificationId}/locales/${localeID}`, {
+      body,
+      ...options,
+    });
+  }
+
+  /**
    * Replace the journey-scoped notification template draft.
    *
    * @example
@@ -166,6 +225,33 @@ export class Templates extends APIResource {
   ): APIPromise<JourneysAPI.JourneyTemplateGetResponse> {
     const { templateId, ...body } = params;
     return this._client.put(path`/journeys/${templateId}/templates/${notificationID}`, { body, ...options });
+  }
+
+  /**
+   * Retrieve the elemental content of a journey-scoped notification template. The
+   * response contains the versioned elements along with their content checksums,
+   * which can be used to detect changes between versions. Pass `?version=draft`
+   * (default `published`) to retrieve the working draft, or `?version=vN` for a
+   * historical version.
+   *
+   * @example
+   * ```ts
+   * const notificationContentGetResponse =
+   *   await client.journeys.templates.retrieveContent('x', {
+   *     templateId: 'x',
+   *   });
+   * ```
+   */
+  retrieveContent(
+    notificationID: string,
+    params: TemplateRetrieveContentParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationsAPI.NotificationContentGetResponse> {
+    const { templateId, ...query } = params;
+    return this._client.get(path`/journeys/${templateId}/templates/${notificationID}/content`, {
+      query,
+      ...options,
+    });
   }
 }
 
@@ -256,6 +342,72 @@ export interface TemplatePublishParams {
   version?: string;
 }
 
+export interface TemplatePutContentParams {
+  /**
+   * Path param: Journey id
+   */
+  templateId: string;
+
+  /**
+   * Body param: Elemental content payload. The server defaults `version` when
+   * omitted.
+   */
+  content: TemplatePutContentParams.Content;
+
+  /**
+   * Body param: Template state. Defaults to `DRAFT`.
+   */
+  state?: NotificationsAPI.NotificationTemplateState;
+}
+
+export namespace TemplatePutContentParams {
+  /**
+   * Elemental content payload. The server defaults `version` when omitted.
+   */
+  export interface Content {
+    elements: Array<Shared.ElementalNode>;
+
+    /**
+     * Content version identifier (e.g., `2022-01-01`). Optional; server defaults when
+     * omitted.
+     */
+    version?: string;
+  }
+}
+
+export interface TemplatePutLocaleParams {
+  /**
+   * Path param: Journey id
+   */
+  templateId: string;
+
+  /**
+   * Path param: Notification template id
+   */
+  notificationId: string;
+
+  /**
+   * Body param: Elements with locale-specific content overrides.
+   */
+  elements: Array<TemplatePutLocaleParams.Element>;
+
+  /**
+   * Body param: Template state. Defaults to `DRAFT`.
+   */
+  state?: NotificationsAPI.NotificationTemplateState;
+}
+
+export namespace TemplatePutLocaleParams {
+  export interface Element {
+    /**
+     * Target element ID.
+     */
+    id: string;
+
+    [k: string]: unknown;
+  }
+}
+
 export interface TemplateReplaceParams {
   /**
    * Path param: Journey id
@@ -305,6 +457,19 @@ export namespace TemplateReplaceParams {
   }
 }
 
+export interface TemplateRetrieveContentParams {
+  /**
+   * Path param: Journey id
+   */
+  templateId: string;
+
+  /**
+   * Query param: Accepts `draft`, `published`, or a version string (e.g., `v001`).
+   * Defaults to `published`.
+   */
+  version?: string;
+}
+
 export declare namespace Templates {
   export {
     type TemplateCreateParams as TemplateCreateParams,
@@ -313,6 +478,9 @@ export declare namespace Templates {
     type TemplateArchiveParams as TemplateArchiveParams,
     type TemplateListVersionsParams as TemplateListVersionsParams,
     type TemplatePublishParams as TemplatePublishParams,
+    type TemplatePutContentParams as TemplatePutContentParams,
+    type TemplatePutLocaleParams as TemplatePutLocaleParams,
     type TemplateReplaceParams as TemplateReplaceParams,
+    type TemplateRetrieveContentParams as TemplateRetrieveContentParams,
   };
 }
