@@ -196,6 +196,20 @@ import {
   VersionNode,
 } from './resources/notifications/notifications';
 import {
+  PreferenceSectionCreateParams,
+  PreferenceSectionCreateRequest,
+  PreferenceSectionGetResponse,
+  PreferenceSectionListResponse,
+  PreferenceSectionReplaceParams,
+  PreferenceSectionReplaceRequest,
+  PreferenceSections,
+  PreferenceTopicCreateRequest,
+  PreferenceTopicGetResponse,
+  PreferenceTopicListResponse,
+  PreferenceTopicReplaceRequest,
+  PublishPreferencesResponse,
+} from './resources/preference-sections/preference-sections';
+import {
   ProfileCreateParams,
   ProfileCreateResponse,
   ProfileReplaceParams,
@@ -966,6 +980,7 @@ export class Courier {
   requests: API.Requests = new API.Requests(this);
   notifications: API.Notifications = new API.Notifications(this);
   routingStrategies: API.RoutingStrategies = new API.RoutingStrategies(this);
+  preferenceSections: API.PreferenceSections = new API.PreferenceSections(this);
   profiles: API.Profiles = new API.Profiles(this);
   tenants: API.Tenants = new API.Tenants(this);
   translations: API.Translations = new API.Translations(this);
@@ -988,6 +1003,7 @@ Courier.Messages = Messages;
 Courier.Requests = Requests;
 Courier.Notifications = Notifications;
 Courier.RoutingStrategies = RoutingStrategies;
+Courier.PreferenceSections = PreferenceSections;
 Courier.Profiles = Profiles;
 Courier.Tenants = Tenants;
 Courier.Translations = Translations;
@@ -1203,6 +1219,21 @@ export declare namespace Courier {
     type RoutingStrategyListParams as RoutingStrategyListParams,
     type RoutingStrategyListNotificationsParams as RoutingStrategyListNotificationsParams,
     type RoutingStrategyReplaceParams as RoutingStrategyReplaceParams,
+  };
+
+  export {
+    PreferenceSections as PreferenceSections,
+    type PreferenceSectionCreateRequest as PreferenceSectionCreateRequest,
+    type PreferenceSectionGetResponse as PreferenceSectionGetResponse,
+    type PreferenceSectionListResponse as PreferenceSectionListResponse,
+    type PreferenceSectionReplaceRequest as PreferenceSectionReplaceRequest,
+    type PreferenceTopicCreateRequest as PreferenceTopicCreateRequest,
+    type PreferenceTopicGetResponse as PreferenceTopicGetResponse,
+    type PreferenceTopicListResponse as PreferenceTopicListResponse,
+    type PreferenceTopicReplaceRequest as PreferenceTopicReplaceRequest,
+    type PublishPreferencesResponse as PublishPreferencesResponse,
+    type PreferenceSectionCreateParams as PreferenceSectionCreateParams,
+    type PreferenceSectionReplaceParams as PreferenceSectionReplaceParams,
   };
 
   export {
