@@ -435,6 +435,39 @@ Methods:
 - <code title="get /routing-strategies/{id}/notifications">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">listNotifications</a>(id, { ...params }) -> AssociatedNotificationListResponse</code>
 - <code title="put /routing-strategies/{id}">client.routingStrategies.<a href="./src/resources/routing-strategies.ts">replace</a>(id, { ...params }) -> RoutingStrategyGetResponse</code>
 
+# PreferenceSections
+
+Types:
+
+- <code><a href="./src/resources/preference-sections/preference-sections.ts">PreferenceSectionCreateRequest</a></code>
+- <code><a href="./src/resources/preference-sections/preference-sections.ts">PreferenceSectionGetResponse</a></code>
+- <code><a href="./src/resources/preference-sections/preference-sections.ts">PreferenceSectionListResponse</a></code>
+- <code><a href="./src/resources/preference-sections/preference-sections.ts">PreferenceSectionReplaceRequest</a></code>
+- <code><a href="./src/resources/preference-sections/preference-sections.ts">PreferenceTopicCreateRequest</a></code>
+- <code><a href="./src/resources/preference-sections/preference-sections.ts">PreferenceTopicGetResponse</a></code>
+- <code><a href="./src/resources/preference-sections/preference-sections.ts">PreferenceTopicListResponse</a></code>
+- <code><a href="./src/resources/preference-sections/preference-sections.ts">PreferenceTopicReplaceRequest</a></code>
+- <code><a href="./src/resources/preference-sections/preference-sections.ts">PublishPreferencesResponse</a></code>
+
+Methods:
+
+- <code title="post /preferences/sections">client.preferenceSections.<a href="./src/resources/preference-sections/preference-sections.ts">create</a>({ ...params }) -> PreferenceSectionGetResponse</code>
+- <code title="get /preferences/sections/{section_id}">client.preferenceSections.<a href="./src/resources/preference-sections/preference-sections.ts">retrieve</a>(sectionID) -> PreferenceSectionGetResponse</code>
+- <code title="get /preferences/sections">client.preferenceSections.<a href="./src/resources/preference-sections/preference-sections.ts">list</a>() -> PreferenceSectionListResponse</code>
+- <code title="delete /preferences/sections/{section_id}">client.preferenceSections.<a href="./src/resources/preference-sections/preference-sections.ts">archive</a>(sectionID) -> void</code>
+- <code title="post /preferences/publish">client.preferenceSections.<a href="./src/resources/preference-sections/preference-sections.ts">publish</a>() -> PublishPreferencesResponse</code>
+- <code title="put /preferences/sections/{section_id}">client.preferenceSections.<a href="./src/resources/preference-sections/preference-sections.ts">replace</a>(sectionID, { ...params }) -> PreferenceSectionGetResponse</code>
+
+## Topics
+
+Methods:
+
+- <code title="post /preferences/sections/{section_id}/topics">client.preferenceSections.topics.<a href="./src/resources/preference-sections/topics.ts">create</a>(sectionID, { ...params }) -> PreferenceTopicGetResponse</code>
+- <code title="get /preferences/sections/{section_id}/topics/{topic_id}">client.preferenceSections.topics.<a href="./src/resources/preference-sections/topics.ts">retrieve</a>(topicID, { ...params }) -> PreferenceTopicGetResponse</code>
+- <code title="get /preferences/sections/{section_id}/topics">client.preferenceSections.topics.<a href="./src/resources/preference-sections/topics.ts">list</a>(sectionID) -> PreferenceTopicListResponse</code>
+- <code title="delete /preferences/sections/{section_id}/topics/{topic_id}">client.preferenceSections.topics.<a href="./src/resources/preference-sections/topics.ts">archive</a>(topicID, { ...params }) -> void</code>
+- <code title="put /preferences/sections/{section_id}/topics/{topic_id}">client.preferenceSections.topics.<a href="./src/resources/preference-sections/topics.ts">replace</a>(topicID, { ...params }) -> PreferenceTopicGetResponse</code>
+
 # Profiles
 
 Types:
