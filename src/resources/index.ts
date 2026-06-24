@@ -159,6 +159,20 @@ export {
   type NotificationRetrieveContentParams,
 } from './notifications/notifications';
 export {
+  PreferenceSections,
+  type PreferenceSectionCreateRequest,
+  type PreferenceSectionGetResponse,
+  type PreferenceSectionListResponse,
+  type PreferenceSectionReplaceRequest,
+  type PreferenceTopicCreateRequest,
+  type PreferenceTopicGetResponse,
+  type PreferenceTopicListResponse,
+  type PreferenceTopicReplaceRequest,
+  type PublishPreferencesResponse,
+  type PreferenceSectionCreateParams,
+  type PreferenceSectionReplaceParams,
+} from './preference-sections/preference-sections';
+export {
   Profiles,
   type SubscribeToListsRequestItem,
   type ProfileCreateResponse,
