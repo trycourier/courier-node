@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.17.0 (2026-06-24)
+
+Full Changelog: [v7.16.0...v7.17.0](https://github.com/trycourier/courier-node/compare/v7.16.0...v7.17.0)
+
+### Features
+
+* **preferences:** workspace preference sections & nested topics endpoints ([9aa73c0](https://github.com/trycourier/courier-node/commit/9aa73c05af758bd71183ea108c0928a5d5ccc171))
+
 ## 7.16.0 (2026-06-23)
 
 Full Changelog: [v7.15.0...v7.16.0](https://github.com/trycourier/courier-node/compare/v7.15.0...v7.16.0)
