@@ -38,7 +38,7 @@ export class Checks extends APIResource {
   }
 
   /**
-   * Retrieve the checks for a notification template submission.
+   * Retrieve the submission checks for a notification template.
    *
    * @example
    * ```ts
