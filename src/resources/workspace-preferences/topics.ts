@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as Shared from '../shared';
-import * as PreferenceSectionsAPI from './preference-sections';
+import * as WorkspacePreferencesAPI from './workspace-preferences';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -10,13 +10,14 @@ import { path } from '../../internal/utils/path';
 
 export class Topics extends APIResource {
   /**
-   * Create a subscription preference topic inside a section. Fails with 404 if the
-   * section does not exist. The topic id is generated and returned.
+   * Create a subscription preference topic inside a workspace preference. Fails with
+   * 404 if the workspace preference does not exist. The topic id is generated and
+   * returned.
    *
    * @example
    * ```ts
-   * const preferenceTopicGetResponse =
-   *   await client.preferenceSections.topics.create(
+   * const workspacePreferenceTopicGetResponse =
+   *   await client.workspacePreferences.topics.create(
    *     'section_id',
    *     { default_status: 'OPTED_OUT', name: 'Marketing' },
    *   );
@@ -26,18 +27,19 @@ export class Topics extends APIResource {
     sectionID: string,
     body: TopicCreateParams,
     options?: RequestOptions,
-  ): APIPromise<PreferenceSectionsAPI.PreferenceTopicGetResponse> {
+  ): APIPromise<WorkspacePreferencesAPI.WorkspacePreferenceTopicGetResponse> {
     return this._client.post(path`/preferences/sections/${sectionID}/topics`, { body, ...options });
   }
 
   /**
-   * Retrieve a topic within a section. Returns 404 if the section does not exist,
-   * the topic does not exist, or the topic belongs to a different section.
+   * Retrieve a topic within a workspace preference. Returns 404 if the workspace
+   * preference does not exist, the topic does not exist, or the topic belongs to a
+   * different workspace preference.
    *
    * @example
    * ```ts
-   * const preferenceTopicGetResponse =
-   *   await client.preferenceSections.topics.retrieve(
+   * const workspacePreferenceTopicGetResponse =
+   *   await client.workspacePreferences.topics.retrieve(
    *     'topic_id',
    *     { section_id: 'section_id' },
    *   );
@@ -47,35 +49,39 @@ export class Topics extends APIResource {
     topicID: string,
     params: TopicRetrieveParams,
     options?: RequestOptions,
-  ): APIPromise<PreferenceSectionsAPI.PreferenceTopicGetResponse> {
+  ): APIPromise<WorkspacePreferencesAPI.WorkspacePreferenceTopicGetResponse> {
     const { section_id } = params;
     return this._client.get(path`/preferences/sections/${section_id}/topics/${topicID}`, options);
   }
 
   /**
-   * List the topics in a preference section.
+   * List the topics in a workspace preference.
    *
    * @example
    * ```ts
-   * const preferenceTopicListResponse =
-   *   await client.preferenceSections.topics.list('section_id');
+   * const workspacePreferenceTopicListResponse =
+   *   await client.workspacePreferences.topics.list(
+   *     'section_id',
+   *   );
    * ```
    */
   list(
     sectionID: string,
     options?: RequestOptions,
-  ): APIPromise<PreferenceSectionsAPI.PreferenceTopicListResponse> {
+  ): APIPromise<WorkspacePreferencesAPI.WorkspacePreferenceTopicListResponse> {
     return this._client.get(path`/preferences/sections/${sectionID}/topics`, options);
   }
 
   /**
-   * Archive a topic and remove it from its section. Same 404 rules as GET.
+   * Archive a topic and remove it from its workspace preference. Same 404 rules as
+   * GET.
    *
    * @example
    * ```ts
-   * await client.preferenceSections.topics.archive('topic_id', {
-   *   section_id: 'section_id',
-   * });
+   * await client.workspacePreferences.topics.archive(
+   *   'topic_id',
+   *   { section_id: 'section_id' },
+   * );
    * ```
    */
   archive(topicID: string, params: TopicArchiveParams, options?: RequestOptions): APIPromise<void> {
@@ -87,13 +93,13 @@ export class Topics extends APIResource {
   }
 
   /**
-   * Replace a topic within a section. Full document replacement; missing optional
-   * fields are cleared. Same 404 rules as GET.
+   * Replace a topic within a workspace preference. Full document replacement;
+   * missing optional fields are cleared. Same 404 rules as GET.
    *
    * @example
    * ```ts
-   * const preferenceTopicGetResponse =
-   *   await client.preferenceSections.topics.replace(
+   * const workspacePreferenceTopicGetResponse =
+   *   await client.workspacePreferences.topics.replace(
    *     'topic_id',
    *     {
    *       section_id: 'section_id',
@@ -107,7 +113,7 @@ export class Topics extends APIResource {
     topicID: string,
     params: TopicReplaceParams,
     options?: RequestOptions,
-  ): APIPromise<PreferenceSectionsAPI.PreferenceTopicGetResponse> {
+  ): APIPromise<WorkspacePreferencesAPI.WorkspacePreferenceTopicGetResponse> {
     const { section_id, ...body } = params;
     return this._client.put(path`/preferences/sections/${section_id}/topics/${topicID}`, {
       body,
@@ -151,21 +157,21 @@ export interface TopicCreateParams {
 
 export interface TopicRetrieveParams {
   /**
-   * Id of the preference section.
+   * Id of the workspace preference.
    */
   section_id: string;
 }
 
 export interface TopicArchiveParams {
   /**
-   * Id of the preference section.
+   * Id of the workspace preference.
    */
   section_id: string;
 }
 
 export interface TopicReplaceParams {
   /**
-   * Path param: Id of the preference section.
+   * Path param: Id of the workspace preference.
    */
   section_id: string;
 

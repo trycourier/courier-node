@@ -15,63 +15,63 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class PreferenceSections extends APIResource {
+export class WorkspacePreferences extends APIResource {
   topics: TopicsAPI.Topics = new TopicsAPI.Topics(this._client);
 
   /**
-   * Create a preference section in your workspace. The section id is generated and
-   * returned. Topics are created inside a section via POST
+   * Create a workspace preference. The workspace preference id is generated and
+   * returned. Topics are created inside a workspace preference via POST
    * /preferences/sections/{section_id}/topics.
    *
    * @example
    * ```ts
-   * const preferenceSectionGetResponse =
-   *   await client.preferenceSections.create({
+   * const workspacePreferenceGetResponse =
+   *   await client.workspacePreferences.create({
    *     name: 'Account Notifications',
    *   });
    * ```
    */
   create(
-    body: PreferenceSectionCreateParams,
+    body: WorkspacePreferenceCreateParams,
     options?: RequestOptions,
-  ): APIPromise<PreferenceSectionGetResponse> {
+  ): APIPromise<WorkspacePreferenceGetResponse> {
     return this._client.post('/preferences/sections', { body, ...options });
   }
 
   /**
-   * Retrieve a preference section by id, including its topics.
+   * Retrieve a workspace preference by id, including its topics.
    *
    * @example
    * ```ts
-   * const preferenceSectionGetResponse =
-   *   await client.preferenceSections.retrieve('section_id');
+   * const workspacePreferenceGetResponse =
+   *   await client.workspacePreferences.retrieve('section_id');
    * ```
    */
-  retrieve(sectionID: string, options?: RequestOptions): APIPromise<PreferenceSectionGetResponse> {
+  retrieve(sectionID: string, options?: RequestOptions): APIPromise<WorkspacePreferenceGetResponse> {
     return this._client.get(path`/preferences/sections/${sectionID}`, options);
   }
 
   /**
-   * List the workspace's preference sections. Each section embeds its topics. Scoped
-   * to the workspace of the API key.
+   * List the workspace's preferences. Each workspace preference embeds its topics.
+   * Scoped to the workspace of the API key.
    *
    * @example
    * ```ts
-   * const preferenceSectionListResponse =
-   *   await client.preferenceSections.list();
+   * const workspacePreferenceListResponse =
+   *   await client.workspacePreferences.list();
    * ```
    */
-  list(options?: RequestOptions): APIPromise<PreferenceSectionListResponse> {
+  list(options?: RequestOptions): APIPromise<WorkspacePreferenceListResponse> {
     return this._client.get('/preferences/sections', options);
   }
 
   /**
-   * Archive a preference section. The section must be empty: delete its topics
-   * first, otherwise the request fails with 409.
+   * Archive a workspace preference. The workspace preference must be empty: delete
+   * its topics first, otherwise the request fails with 409.
    *
    * @example
    * ```ts
-   * await client.preferenceSections.archive('section_id');
+   * await client.workspacePreferences.archive('section_id');
    * ```
    */
   archive(sectionID: string, options?: RequestOptions): APIPromise<void> {
@@ -82,14 +82,14 @@ export class PreferenceSections extends APIResource {
   }
 
   /**
-   * Publish the workspace's preferences page. Takes a snapshot of every section with
-   * its topics under a new published version, making the current state visible on
-   * the hosted preferences page (non-draft).
+   * Publish the workspace's preferences page. Takes a snapshot of every workspace
+   * preference with its topics under a new published version, making the current
+   * state visible on the hosted preferences page (non-draft).
    *
    * @example
    * ```ts
    * const publishPreferencesResponse =
-   *   await client.preferenceSections.publish();
+   *   await client.workspacePreferences.publish();
    * ```
    */
   publish(options?: RequestOptions): APIPromise<PublishPreferencesResponse> {
@@ -97,62 +97,92 @@ export class PreferenceSections extends APIResource {
   }
 
   /**
-   * Replace a preference section. Full document replacement; missing optional fields
-   * are cleared. Topics attached to the section are unaffected.
+   * Replace a workspace preference. Full document replacement; missing optional
+   * fields are cleared. Topics attached to the workspace preference are unaffected.
    *
    * @example
    * ```ts
-   * const preferenceSectionGetResponse =
-   *   await client.preferenceSections.replace('section_id', {
+   * const workspacePreferenceGetResponse =
+   *   await client.workspacePreferences.replace('section_id', {
    *     name: 'name',
    *   });
    * ```
    */
   replace(
     sectionID: string,
-    body: PreferenceSectionReplaceParams,
+    body: WorkspacePreferenceReplaceParams,
     options?: RequestOptions,
-  ): APIPromise<PreferenceSectionGetResponse> {
+  ): APIPromise<WorkspacePreferenceGetResponse> {
     return this._client.put(path`/preferences/sections/${sectionID}`, { body, ...options });
   }
 }
 
 /**
- * Request body for creating a preference section.
+ * Result of publishing the workspace's preferences page.
  */
-export interface PreferenceSectionCreateRequest {
+export interface PublishPreferencesResponse {
   /**
-   * Human-readable name for the section.
+   * Id of the published page snapshot.
+   */
+  page_id: string;
+
+  /**
+   * ISO-8601 timestamp of the publish.
+   */
+  published_at: string;
+
+  /**
+   * Monotonic published version (epoch milliseconds).
+   */
+  published_version: number;
+
+  /**
+   * Draft-mode hosted preferences page URL for previewing.
+   */
+  preview_url?: string | null;
+
+  /**
+   * Id of the publisher.
+   */
+  published_by?: string | null;
+}
+
+/**
+ * Request body for creating a workspace preference.
+ */
+export interface WorkspacePreferenceCreateRequest {
+  /**
+   * Human-readable name for the workspace preference.
    */
   name: string;
 
   /**
-   * Whether the section defines custom routing for its topics.
+   * Whether the workspace preference defines custom routing for its topics.
    */
   has_custom_routing?: boolean | null;
 
   /**
-   * Default channels for the section. Defaults to empty if omitted.
+   * Default channels for the workspace preference. Defaults to empty if omitted.
    */
   routing_options?: Array<Shared.ChannelClassification> | null;
 }
 
 /**
- * A preference section in your workspace, including its topics.
+ * A workspace preference in your workspace, including its topics.
  */
-export interface PreferenceSectionGetResponse {
+export interface WorkspacePreferenceGetResponse {
   /**
-   * The preference section id.
+   * The workspace preference id.
    */
   id: string;
 
   /**
-   * ISO-8601 timestamp of when the section was created.
+   * ISO-8601 timestamp of when the workspace preference was created.
    */
   created: string;
 
   /**
-   * Whether the section defines custom routing for its topics.
+   * Whether the workspace preference defines custom routing for its topics.
    */
   has_custom_routing: boolean;
 
@@ -162,14 +192,14 @@ export interface PreferenceSectionGetResponse {
   name: string;
 
   /**
-   * Default channels for the section. May be empty.
+   * Default channels for the workspace preference. May be empty.
    */
   routing_options: Array<Shared.ChannelClassification>;
 
   /**
-   * The topics contained in this section.
+   * The topics contained in this workspace preference.
    */
-  topics: Array<PreferenceTopicGetResponse>;
+  topics: Array<WorkspacePreferenceTopicGetResponse>;
 
   /**
    * Id of the creator.
@@ -188,29 +218,29 @@ export interface PreferenceSectionGetResponse {
 }
 
 /**
- * The workspace's preference sections, each with its topics.
+ * The workspace's preferences, each with its topics.
  */
-export interface PreferenceSectionListResponse {
-  results: Array<PreferenceSectionGetResponse>;
+export interface WorkspacePreferenceListResponse {
+  results: Array<WorkspacePreferenceGetResponse>;
 }
 
 /**
- * Request body for replacing a preference section. Full document replacement;
+ * Request body for replacing a workspace preference. Full document replacement;
  * missing optional fields are cleared.
  */
-export interface PreferenceSectionReplaceRequest {
+export interface WorkspacePreferenceReplaceRequest {
   /**
-   * Human-readable name for the section.
+   * Human-readable name for the workspace preference.
    */
   name: string;
 
   /**
-   * Whether the section defines custom routing for its topics.
+   * Whether the workspace preference defines custom routing for its topics.
    */
   has_custom_routing?: boolean | null;
 
   /**
-   * Default channels for the section. Omit to clear.
+   * Default channels for the workspace preference. Omit to clear.
    */
   routing_options?: Array<Shared.ChannelClassification> | null;
 }
@@ -218,7 +248,7 @@ export interface PreferenceSectionReplaceRequest {
 /**
  * Request body for creating a preference topic.
  */
-export interface PreferenceTopicCreateRequest {
+export interface WorkspacePreferenceTopicCreateRequest {
   /**
    * The default subscription status applied when a recipient has not set their own.
    */
@@ -254,7 +284,7 @@ export interface PreferenceTopicCreateRequest {
 /**
  * A subscription preference topic in your workspace.
  */
-export interface PreferenceTopicGetResponse {
+export interface WorkspacePreferenceTopicGetResponse {
   /**
    * The preference topic id.
    */
@@ -312,17 +342,17 @@ export interface PreferenceTopicGetResponse {
 }
 
 /**
- * Topics contained in a preference section.
+ * Topics contained in a workspace preference.
  */
-export interface PreferenceTopicListResponse {
-  results: Array<PreferenceTopicGetResponse>;
+export interface WorkspacePreferenceTopicListResponse {
+  results: Array<WorkspacePreferenceTopicGetResponse>;
 }
 
 /**
  * Request body for replacing a preference topic. Full document replacement;
  * missing optional fields are cleared.
  */
-export interface PreferenceTopicReplaceRequest {
+export interface WorkspacePreferenceTopicReplaceRequest {
   /**
    * The default subscription status applied when a recipient has not set their own.
    */
@@ -354,85 +384,55 @@ export interface PreferenceTopicReplaceRequest {
   topic_data?: { [key: string]: unknown } | null;
 }
 
-/**
- * Result of publishing the workspace's preferences page.
- */
-export interface PublishPreferencesResponse {
+export interface WorkspacePreferenceCreateParams {
   /**
-   * Id of the published page snapshot.
-   */
-  page_id: string;
-
-  /**
-   * ISO-8601 timestamp of the publish.
-   */
-  published_at: string;
-
-  /**
-   * Monotonic published version (epoch milliseconds).
-   */
-  published_version: number;
-
-  /**
-   * Draft-mode hosted preferences page URL for previewing.
-   */
-  preview_url?: string | null;
-
-  /**
-   * Id of the publisher.
-   */
-  published_by?: string | null;
-}
-
-export interface PreferenceSectionCreateParams {
-  /**
-   * Human-readable name for the section.
+   * Human-readable name for the workspace preference.
    */
   name: string;
 
   /**
-   * Whether the section defines custom routing for its topics.
+   * Whether the workspace preference defines custom routing for its topics.
    */
   has_custom_routing?: boolean | null;
 
   /**
-   * Default channels for the section. Defaults to empty if omitted.
+   * Default channels for the workspace preference. Defaults to empty if omitted.
    */
   routing_options?: Array<Shared.ChannelClassification> | null;
 }
 
-export interface PreferenceSectionReplaceParams {
+export interface WorkspacePreferenceReplaceParams {
   /**
-   * Human-readable name for the section.
+   * Human-readable name for the workspace preference.
    */
   name: string;
 
   /**
-   * Whether the section defines custom routing for its topics.
+   * Whether the workspace preference defines custom routing for its topics.
    */
   has_custom_routing?: boolean | null;
 
   /**
-   * Default channels for the section. Omit to clear.
+   * Default channels for the workspace preference. Omit to clear.
    */
   routing_options?: Array<Shared.ChannelClassification> | null;
 }
 
-PreferenceSections.Topics = Topics;
+WorkspacePreferences.Topics = Topics;
 
-export declare namespace PreferenceSections {
+export declare namespace WorkspacePreferences {
   export {
-    type PreferenceSectionCreateRequest as PreferenceSectionCreateRequest,
-    type PreferenceSectionGetResponse as PreferenceSectionGetResponse,
-    type PreferenceSectionListResponse as PreferenceSectionListResponse,
-    type PreferenceSectionReplaceRequest as PreferenceSectionReplaceRequest,
-    type PreferenceTopicCreateRequest as PreferenceTopicCreateRequest,
-    type PreferenceTopicGetResponse as PreferenceTopicGetResponse,
-    type PreferenceTopicListResponse as PreferenceTopicListResponse,
-    type PreferenceTopicReplaceRequest as PreferenceTopicReplaceRequest,
     type PublishPreferencesResponse as PublishPreferencesResponse,
-    type PreferenceSectionCreateParams as PreferenceSectionCreateParams,
-    type PreferenceSectionReplaceParams as PreferenceSectionReplaceParams,
+    type WorkspacePreferenceCreateRequest as WorkspacePreferenceCreateRequest,
+    type WorkspacePreferenceGetResponse as WorkspacePreferenceGetResponse,
+    type WorkspacePreferenceListResponse as WorkspacePreferenceListResponse,
+    type WorkspacePreferenceReplaceRequest as WorkspacePreferenceReplaceRequest,
+    type WorkspacePreferenceTopicCreateRequest as WorkspacePreferenceTopicCreateRequest,
+    type WorkspacePreferenceTopicGetResponse as WorkspacePreferenceTopicGetResponse,
+    type WorkspacePreferenceTopicListResponse as WorkspacePreferenceTopicListResponse,
+    type WorkspacePreferenceTopicReplaceRequest as WorkspacePreferenceTopicReplaceRequest,
+    type WorkspacePreferenceCreateParams as WorkspacePreferenceCreateParams,
+    type WorkspacePreferenceReplaceParams as WorkspacePreferenceReplaceParams,
   };
 
   export {
