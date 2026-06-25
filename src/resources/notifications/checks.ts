@@ -58,7 +58,7 @@ export class Checks extends APIResource {
   }
 
   /**
-   * Cancel a notification template submission.
+   * Cancel a submission for a notification template.
    *
    * @example
    * ```ts
