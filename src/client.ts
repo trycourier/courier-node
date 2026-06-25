@@ -196,20 +196,6 @@ import {
   VersionNode,
 } from './resources/notifications/notifications';
 import {
-  PreferenceSectionCreateParams,
-  PreferenceSectionCreateRequest,
-  PreferenceSectionGetResponse,
-  PreferenceSectionListResponse,
-  PreferenceSectionReplaceParams,
-  PreferenceSectionReplaceRequest,
-  PreferenceSections,
-  PreferenceTopicCreateRequest,
-  PreferenceTopicGetResponse,
-  PreferenceTopicListResponse,
-  PreferenceTopicReplaceRequest,
-  PublishPreferencesResponse,
-} from './resources/preference-sections/preference-sections';
-import {
   ProfileCreateParams,
   ProfileCreateResponse,
   ProfileReplaceParams,
@@ -247,6 +233,20 @@ import {
   Tenants,
 } from './resources/tenants/tenants';
 import { Users } from './resources/users/users';
+import {
+  PublishPreferencesResponse,
+  WorkspacePreferenceCreateParams,
+  WorkspacePreferenceCreateRequest,
+  WorkspacePreferenceGetResponse,
+  WorkspacePreferenceListResponse,
+  WorkspacePreferenceReplaceParams,
+  WorkspacePreferenceReplaceRequest,
+  WorkspacePreferenceTopicCreateRequest,
+  WorkspacePreferenceTopicGetResponse,
+  WorkspacePreferenceTopicListResponse,
+  WorkspacePreferenceTopicReplaceRequest,
+  WorkspacePreferences,
+} from './resources/workspace-preferences/workspace-preferences';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -980,7 +980,7 @@ export class Courier {
   requests: API.Requests = new API.Requests(this);
   notifications: API.Notifications = new API.Notifications(this);
   routingStrategies: API.RoutingStrategies = new API.RoutingStrategies(this);
-  preferenceSections: API.PreferenceSections = new API.PreferenceSections(this);
+  workspacePreferences: API.WorkspacePreferences = new API.WorkspacePreferences(this);
   profiles: API.Profiles = new API.Profiles(this);
   tenants: API.Tenants = new API.Tenants(this);
   translations: API.Translations = new API.Translations(this);
@@ -1003,7 +1003,7 @@ Courier.Messages = Messages;
 Courier.Requests = Requests;
 Courier.Notifications = Notifications;
 Courier.RoutingStrategies = RoutingStrategies;
-Courier.PreferenceSections = PreferenceSections;
+Courier.WorkspacePreferences = WorkspacePreferences;
 Courier.Profiles = Profiles;
 Courier.Tenants = Tenants;
 Courier.Translations = Translations;
@@ -1222,18 +1222,18 @@ export declare namespace Courier {
   };
 
   export {
-    PreferenceSections as PreferenceSections,
-    type PreferenceSectionCreateRequest as PreferenceSectionCreateRequest,
-    type PreferenceSectionGetResponse as PreferenceSectionGetResponse,
-    type PreferenceSectionListResponse as PreferenceSectionListResponse,
-    type PreferenceSectionReplaceRequest as PreferenceSectionReplaceRequest,
-    type PreferenceTopicCreateRequest as PreferenceTopicCreateRequest,
-    type PreferenceTopicGetResponse as PreferenceTopicGetResponse,
-    type PreferenceTopicListResponse as PreferenceTopicListResponse,
-    type PreferenceTopicReplaceRequest as PreferenceTopicReplaceRequest,
+    WorkspacePreferences as WorkspacePreferences,
     type PublishPreferencesResponse as PublishPreferencesResponse,
-    type PreferenceSectionCreateParams as PreferenceSectionCreateParams,
-    type PreferenceSectionReplaceParams as PreferenceSectionReplaceParams,
+    type WorkspacePreferenceCreateRequest as WorkspacePreferenceCreateRequest,
+    type WorkspacePreferenceGetResponse as WorkspacePreferenceGetResponse,
+    type WorkspacePreferenceListResponse as WorkspacePreferenceListResponse,
+    type WorkspacePreferenceReplaceRequest as WorkspacePreferenceReplaceRequest,
+    type WorkspacePreferenceTopicCreateRequest as WorkspacePreferenceTopicCreateRequest,
+    type WorkspacePreferenceTopicGetResponse as WorkspacePreferenceTopicGetResponse,
+    type WorkspacePreferenceTopicListResponse as WorkspacePreferenceTopicListResponse,
+    type WorkspacePreferenceTopicReplaceRequest as WorkspacePreferenceTopicReplaceRequest,
+    type WorkspacePreferenceCreateParams as WorkspacePreferenceCreateParams,
+    type WorkspacePreferenceReplaceParams as WorkspacePreferenceReplaceParams,
   };
 
   export {

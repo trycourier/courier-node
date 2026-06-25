@@ -1,4 +1,4 @@
 configured_endpoints: 134
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/courier/courier-43eec5d4d385a6c770298238ca0e4f708c8ff9fffe5e219ff5d78c6cdfe41fce.yml
-openapi_spec_hash: a3e0abc4d8caed45f43ee83d50e5cb95
-config_hash: 83c79a6ad0a0b5dcce3b85208026343b
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/courier/courier-ce444e85aa0c52b8598fa416a43acc05e079904f2ed523fc61b2c86d133f2a94.yml
+openapi_spec_hash: 554fe5462296f1734b2a0a9545c0a16e
+config_hash: 74aad10d1512ec69541ece3ca51cf7fa
