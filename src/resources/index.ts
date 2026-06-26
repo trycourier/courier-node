@@ -159,20 +159,6 @@ export {
   type NotificationRetrieveContentParams,
 } from './notifications/notifications';
 export {
-  PreferenceSections,
-  type PreferenceSectionCreateRequest,
-  type PreferenceSectionGetResponse,
-  type PreferenceSectionListResponse,
-  type PreferenceSectionReplaceRequest,
-  type PreferenceTopicCreateRequest,
-  type PreferenceTopicGetResponse,
-  type PreferenceTopicListResponse,
-  type PreferenceTopicReplaceRequest,
-  type PublishPreferencesResponse,
-  type PreferenceSectionCreateParams,
-  type PreferenceSectionReplaceParams,
-} from './preference-sections/preference-sections';
-export {
   Profiles,
   type SubscribeToListsRequestItem,
   type ProfileCreateResponse,
@@ -231,3 +217,17 @@ export {
   type TranslationUpdateParams,
 } from './translations';
 export { Users } from './users/users';
+export {
+  WorkspacePreferences,
+  type PublishPreferencesResponse,
+  type WorkspacePreferenceCreateRequest,
+  type WorkspacePreferenceGetResponse,
+  type WorkspacePreferenceListResponse,
+  type WorkspacePreferenceReplaceRequest,
+  type WorkspacePreferenceTopicCreateRequest,
+  type WorkspacePreferenceTopicGetResponse,
+  type WorkspacePreferenceTopicListResponse,
+  type WorkspacePreferenceTopicReplaceRequest,
+  type WorkspacePreferenceCreateParams,
+  type WorkspacePreferenceReplaceParams,
+} from './workspace-preferences/workspace-preferences';

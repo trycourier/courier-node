@@ -1,5 +1,16 @@
 # Changelog
 
+## 7.17.1 (2026-06-25)
+
+Full Changelog: [v7.17.0...v7.17.1](https://github.com/trycourier/courier-node/compare/v7.17.0...v7.17.1)
+
+### Documentation
+
+* **openapi:** add full response examples to every endpoint ([d8e02f0](https://github.com/trycourier/courier-node/commit/d8e02f0a78f297ee47c86f5f2d9c547d03f434b9))
+* **openapi:** reword Cancel Submission description ([c8bad2f](https://github.com/trycourier/courier-node/commit/c8bad2f7d14b6dd136e3a0b3a3afa66a4e06f61a))
+* **openapi:** reword Get Submission Checks description ([d9447c3](https://github.com/trycourier/courier-node/commit/d9447c3e56a8e7a0d3dc1618e46b21857238bc6d))
+* **openapi:** reword Replace Submission Checks description ([dbe5be2](https://github.com/trycourier/courier-node/commit/dbe5be25aae296b5c957f3c25a307e1dac549e72))
+
 ## 7.17.0 (2026-06-24)
 
 Full Changelog: [v7.16.0...v7.17.0](https://github.com/trycourier/courier-node/compare/v7.16.0...v7.17.0)

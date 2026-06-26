@@ -9,7 +9,7 @@ import { path } from '../../internal/utils/path';
 
 export class Checks extends APIResource {
   /**
-   * Replace the checks for a notification template submission.
+   * Replace the submission checks for a notification template.
    *
    * @example
    * ```ts
@@ -38,7 +38,7 @@ export class Checks extends APIResource {
   }
 
   /**
-   * Retrieve the checks for a notification template submission.
+   * Retrieve the submission checks for a notification template.
    *
    * @example
    * ```ts
@@ -58,7 +58,7 @@ export class Checks extends APIResource {
   }
 
   /**
-   * Cancel a notification template submission.
+   * Cancel a submission for a notification template.
    *
    * @example
    * ```ts
