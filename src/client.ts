@@ -112,10 +112,13 @@ import {
   Digests,
 } from './resources/digests/digests';
 import {
+  CancelJourneyRequest,
+  CancelJourneyResponse,
   CreateJourneyRequest,
   Journey,
   JourneyAINode,
   JourneyAPIInvokeTriggerNode,
+  JourneyCancelParams,
   JourneyConditionAtom,
   JourneyConditionGroup,
   JourneyConditionNestedGroup,
@@ -124,6 +127,8 @@ import {
   JourneyDelayDurationNode,
   JourneyDelayUntilNode,
   JourneyExitNode,
+  JourneyExperiment,
+  JourneyExperimentVariant,
   JourneyFetchGetDeleteNode,
   JourneyFetchPostPutNode,
   JourneyInvokeParams,
@@ -1062,6 +1067,8 @@ export declare namespace Courier {
 
   export {
     Journeys as Journeys,
+    type CancelJourneyRequest as CancelJourneyRequest,
+    type CancelJourneyResponse as CancelJourneyResponse,
     type CreateJourneyRequest as CreateJourneyRequest,
     type Journey as Journey,
     type JourneyAINode as JourneyAINode,
@@ -1073,6 +1080,8 @@ export declare namespace Courier {
     type JourneyDelayDurationNode as JourneyDelayDurationNode,
     type JourneyDelayUntilNode as JourneyDelayUntilNode,
     type JourneyExitNode as JourneyExitNode,
+    type JourneyExperiment as JourneyExperiment,
+    type JourneyExperimentVariant as JourneyExperimentVariant,
     type JourneyFetchGetDeleteNode as JourneyFetchGetDeleteNode,
     type JourneyFetchPostPutNode as JourneyFetchPostPutNode,
     type JourneyMergeStrategy as JourneyMergeStrategy,
@@ -1098,6 +1107,7 @@ export declare namespace Courier {
     type JourneyCreateParams as JourneyCreateParams,
     type JourneyRetrieveParams as JourneyRetrieveParams,
     type JourneyListParams as JourneyListParams,
+    type JourneyCancelParams as JourneyCancelParams,
     type JourneyInvokeParams as JourneyInvokeParams,
     type JourneyPublishParams as JourneyPublishParams,
     type JourneyReplaceParams as JourneyReplaceParams,

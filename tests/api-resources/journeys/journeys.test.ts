@@ -104,6 +104,23 @@ describe('resource journeys', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('cancel: only required params', async () => {
+    const responsePromise = client.journeys.cancel({ cancelation_token: 'x' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancel: required and optional params', async () => {
+    const response = await client.journeys.cancel({ cancelation_token: 'x' });
+  });
+
+  // Mock server tests are disabled
   test.skip('invoke', async () => {
     const responsePromise = client.journeys.invoke('templateId', {});
     const rawResponse = await responsePromise.asResponse();
