@@ -2,6 +2,8 @@
 
 export {
   Journeys,
+  type CancelJourneyRequest,
+  type CancelJourneyResponse,
   type CreateJourneyRequest,
   type Journey,
   type JourneyAINode,
@@ -13,6 +15,8 @@ export {
   type JourneyDelayDurationNode,
   type JourneyDelayUntilNode,
   type JourneyExitNode,
+  type JourneyExperiment,
+  type JourneyExperimentVariant,
   type JourneyFetchGetDeleteNode,
   type JourneyFetchPostPutNode,
   type JourneyMergeStrategy,
@@ -38,6 +42,7 @@ export {
   type JourneyCreateParams,
   type JourneyRetrieveParams,
   type JourneyListParams,
+  type JourneyCancelParams,
   type JourneyInvokeParams,
   type JourneyPublishParams,
   type JourneyReplaceParams,
