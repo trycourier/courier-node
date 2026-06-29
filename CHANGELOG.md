@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.18.0 (2026-06-29)
+
+Full Changelog: [v7.17.1...v7.18.0](https://github.com/trycourier/courier-node/compare/v7.17.1...v7.18.0)
+
+### Features
+
+* **openapi:** Journeys cancel-by-token endpoint + send-node experiments (C-18986) ([01a28d4](https://github.com/trycourier/courier-node/commit/01a28d480692b8a16f3df3ce06dee140d53ea41d))
+
 ## 7.17.1 (2026-06-25)
 
 Full Changelog: [v7.17.0...v7.17.1](https://github.com/trycourier/courier-node/compare/v7.17.0...v7.17.1)
