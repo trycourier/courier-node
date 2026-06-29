@@ -178,6 +178,8 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/journeys/journeys.ts">CancelJourneyRequest</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">CancelJourneyResponse</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">CreateJourneyRequest</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">Journey</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyAINode</a></code>
@@ -189,6 +191,8 @@ Types:
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyDelayDurationNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyDelayUntilNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyExitNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyExperiment</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyExperimentVariant</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyFetchGetDeleteNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyFetchPostPutNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyMergeStrategy</a></code>
@@ -218,6 +222,7 @@ Methods:
 - <code title="get /journeys/{templateId}">client.journeys.<a href="./src/resources/journeys/journeys.ts">retrieve</a>(templateID, { ...params }) -> JourneyResponse</code>
 - <code title="get /journeys">client.journeys.<a href="./src/resources/journeys/journeys.ts">list</a>({ ...params }) -> JourneysListResponse</code>
 - <code title="delete /journeys/{templateId}">client.journeys.<a href="./src/resources/journeys/journeys.ts">archive</a>(templateID) -> void</code>
+- <code title="post /journeys/cancel">client.journeys.<a href="./src/resources/journeys/journeys.ts">cancel</a>({ ...params }) -> CancelJourneyResponse</code>
 - <code title="post /journeys/{templateId}/invoke">client.journeys.<a href="./src/resources/journeys/journeys.ts">invoke</a>(templateID, { ...params }) -> JourneysInvokeResponse</code>
 - <code title="get /journeys/{templateId}/versions">client.journeys.<a href="./src/resources/journeys/journeys.ts">listVersions</a>(templateID) -> JourneyVersionsListResponse</code>
 - <code title="post /journeys/{templateId}/publish">client.journeys.<a href="./src/resources/journeys/journeys.ts">publish</a>(templateID, { ...params }) -> JourneyResponse</code>

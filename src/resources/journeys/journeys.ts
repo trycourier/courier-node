@@ -103,6 +103,26 @@ export class Journeys extends APIResource {
   }
 
   /**
+   * Cancel journey runs. The request body must contain EXACTLY ONE of
+   * `cancelation_token` (cancels every run associated with the token) or `run_id`
+   * (cancels a single tenant-scoped run). Supplying both or neither is a `400`. A
+   * `run_id` that does not exist for the caller's tenant returns `404`. Cancelation
+   * is idempotent and non-clobbering: a run that has already finished
+   * (`PROCESSED`/`ERROR`) or was already `CANCELED` is left untouched and its
+   * current status is echoed back.
+   *
+   * @example
+   * ```ts
+   * const cancelJourneyResponse = await client.journeys.cancel({
+   *   cancelation_token: 'order-1234',
+   * });
+   * ```
+   */
+  cancel(body: JourneyCancelParams, options?: RequestOptions): APIPromise<CancelJourneyResponse> {
+    return this._client.post('/journeys/cancel', { body, ...options });
+  }
+
+  /**
    * Invoke a journey by id or alias to start a new run. The response includes a
    * `runId` identifying the run.
    *
@@ -179,6 +199,47 @@ export class Journeys extends APIResource {
     options?: RequestOptions,
   ): APIPromise<JourneyResponse> {
     return this._client.put(path`/journeys/${templateID}`, { body, ...options });
+  }
+}
+
+/**
+ * Request body for `POST /journeys/cancel`. Provide EXACTLY ONE of
+ * `cancelation_token` (cancels every run associated with the token) or `run_id`
+ * (cancels a single tenant-scoped run).
+ */
+export type CancelJourneyRequest = CancelJourneyRequest.ByCancelationToken | CancelJourneyRequest.ByRunID;
+
+export namespace CancelJourneyRequest {
+  export interface ByCancelationToken {
+    cancelation_token: string;
+  }
+
+  export interface ByRunID {
+    run_id: string;
+  }
+}
+
+/**
+ * `202 Accepted` body for `POST /journeys/cancel`, echoing the submitted
+ * identifier. The token branch returns `{ cancelation_token }`; the run_id branch
+ * returns `{ run_id, status }`.
+ */
+export type CancelJourneyResponse = CancelJourneyResponse.TokenBranch | CancelJourneyResponse.RunIDBranch;
+
+export namespace CancelJourneyResponse {
+  export interface TokenBranch {
+    cancelation_token: string;
+  }
+
+  export interface RunIDBranch {
+    run_id: string;
+
+    /**
+     * The run's resulting status. `CANCELED` when the run was active and we canceled
+     * it; `PROCESSED` or `ERROR` when the run had already finished and was left
+     * untouched; `CANCELED` for an already-canceled run.
+     */
+    status: string;
   }
 }
 
@@ -380,6 +441,60 @@ export interface JourneyExitNode {
   type: 'exit';
 
   id?: string;
+}
+
+/**
+ * A/B experiment config for a send node. The recipient is deterministically
+ * bucketed by `bucketingKey` and routed to one of the `variants` in proportion to
+ * its `weight`. Present on a send node INSTEAD OF `message.template`.
+ */
+export interface JourneyExperiment {
+  /**
+   * The value used to deterministically assign a recipient to a variant. Must be
+   * non-empty with no leading or trailing whitespace.
+   */
+  bucketingKey: string;
+
+  /**
+   * Between 2 and 10 weighted template variants.
+   */
+  variants: Array<JourneyExperimentVariant>;
+
+  /**
+   * Server-authoritative experiment id (prefixed `exp_`). Omit to have the server
+   * mint one; when supplied it must be a valid `exp_` id.
+   */
+  id?: string;
+
+  /**
+   * Optional, cosmetic display name for the experiment.
+   */
+  name?: string;
+}
+
+/**
+ * A single weighted arm of an experiment. Variant ids must be unique within the
+ * experiment and the sum of all variant weights must be greater than 0. Weights
+ * are relative (no sum-to-100 requirement) — routing normalizes them
+ * proportionally.
+ */
+export interface JourneyExperimentVariant {
+  id: string;
+
+  /**
+   * The notification template sent for this variant.
+   */
+  templateId: string;
+
+  /**
+   * Relative routing weight. Must be non-negative.
+   */
+  weight: number;
+
+  /**
+   * Optional, cosmetic display name for the variant.
+   */
+  name?: string;
 }
 
 /**
@@ -668,8 +783,11 @@ export interface JourneySegmentTriggerNode {
 }
 
 /**
- * Send a notification template to the recipient. Optionally override the recipient
- * address, delay the send, or attach `data`.
+ * Send to the recipient. A send node sources its content from EXACTLY ONE of
+ * `message.template` (a single notification template) or `experiment` (an A/B
+ * split across weighted template variants) — supplying both, or neither, is
+ * rejected. Optionally override the recipient address, delay the send, or attach
+ * `data`.
  */
 export interface JourneySendNode {
   message: JourneySendNode.Message;
@@ -684,15 +802,22 @@ export interface JourneySendNode {
    * express "no conditions".
    */
   conditions?: JourneyConditionsField;
+
+  /**
+   * A/B experiment config for a send node. The recipient is deterministically
+   * bucketed by `bucketingKey` and routed to one of the `variants` in proportion to
+   * its `weight`. Present on a send node INSTEAD OF `message.template`.
+   */
+  experiment?: JourneyExperiment;
 }
 
 export namespace JourneySendNode {
   export interface Message {
-    template: string;
-
     data?: { [key: string]: unknown };
 
     delay?: Message.Delay;
+
+    template?: string;
 
     to?: Message.To;
   }
@@ -1043,6 +1168,18 @@ export interface JourneyListParams {
   version?: 'published' | 'draft';
 }
 
+export type JourneyCancelParams = JourneyCancelParams.ByCancelationToken | JourneyCancelParams.ByRunID;
+
+export declare namespace JourneyCancelParams {
+  export interface ByCancelationToken {
+    cancelation_token: string;
+  }
+
+  export interface ByRunID {
+    run_id: string;
+  }
+}
+
 export interface JourneyInvokeParams {
   /**
    * Data payload passed to the journey. The expected shape can be predefined using
@@ -1090,6 +1227,8 @@ Journeys.Templates = Templates;
 
 export declare namespace Journeys {
   export {
+    type CancelJourneyRequest as CancelJourneyRequest,
+    type CancelJourneyResponse as CancelJourneyResponse,
     type CreateJourneyRequest as CreateJourneyRequest,
     type Journey as Journey,
     type JourneyAINode as JourneyAINode,
@@ -1101,6 +1240,8 @@ export declare namespace Journeys {
     type JourneyDelayDurationNode as JourneyDelayDurationNode,
     type JourneyDelayUntilNode as JourneyDelayUntilNode,
     type JourneyExitNode as JourneyExitNode,
+    type JourneyExperiment as JourneyExperiment,
+    type JourneyExperimentVariant as JourneyExperimentVariant,
     type JourneyFetchGetDeleteNode as JourneyFetchGetDeleteNode,
     type JourneyFetchPostPutNode as JourneyFetchPostPutNode,
     type JourneyMergeStrategy as JourneyMergeStrategy,
@@ -1126,6 +1267,7 @@ export declare namespace Journeys {
     type JourneyCreateParams as JourneyCreateParams,
     type JourneyRetrieveParams as JourneyRetrieveParams,
     type JourneyListParams as JourneyListParams,
+    type JourneyCancelParams as JourneyCancelParams,
     type JourneyInvokeParams as JourneyInvokeParams,
     type JourneyPublishParams as JourneyPublishParams,
     type JourneyReplaceParams as JourneyReplaceParams,
