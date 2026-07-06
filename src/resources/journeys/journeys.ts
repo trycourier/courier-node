@@ -106,10 +106,9 @@ export class Journeys extends APIResource {
    * Cancel journey runs. The request body must contain EXACTLY ONE of
    * `cancelation_token` (cancels every run associated with the token) or `run_id`
    * (cancels a single tenant-scoped run). Supplying both or neither is a `400`. A
-   * `run_id` that does not exist for the caller's tenant returns `404`. Cancelation
-   * is idempotent and non-clobbering: a run that has already finished
-   * (`PROCESSED`/`ERROR`) or was already `CANCELED` is left untouched and its
-   * current status is echoed back.
+   * `run_id` that does not match a run for the tenant returns `404`. Cancelation is
+   * idempotent: a run that has already finished (`PROCESSED`/`ERROR`) or was already
+   * `CANCELED` is left unchanged and its current status is returned.
    *
    * @example
    * ```ts
@@ -220,9 +219,10 @@ export namespace CancelJourneyRequest {
 }
 
 /**
- * `202 Accepted` body for `POST /journeys/cancel`, echoing the submitted
- * identifier. The token branch returns `{ cancelation_token }`; the run_id branch
- * returns `{ run_id, status }`.
+ * `202 Accepted` body for `POST /journeys/cancel`, returning the submitted
+ * identifier. When called with `cancelation_token`, returns
+ * `{ cancelation_token }`; when called with `run_id`, returns
+ * `{ run_id, status }`.
  */
 export type CancelJourneyResponse = CancelJourneyResponse.TokenBranch | CancelJourneyResponse.RunIDBranch;
 
@@ -235,9 +235,9 @@ export namespace CancelJourneyResponse {
     run_id: string;
 
     /**
-     * The run's resulting status. `CANCELED` when the run was active and we canceled
-     * it; `PROCESSED` or `ERROR` when the run had already finished and was left
-     * untouched; `CANCELED` for an already-canceled run.
+     * The run's resulting status. `CANCELED` when the run was active and has been
+     * canceled; `PROCESSED` or `ERROR` when the run had already finished and was left
+     * unchanged; `CANCELED` for an already-canceled run.
      */
     status: string;
   }
@@ -461,21 +461,21 @@ export interface JourneyExperiment {
   variants: Array<JourneyExperimentVariant>;
 
   /**
-   * Server-authoritative experiment id (prefixed `exp_`). Omit to have the server
-   * mint one; when supplied it must be a valid `exp_` id.
+   * Unique experiment id (prefixed `exp_`). Omit to have one generated
+   * automatically; when supplied it must be a valid `exp_` id.
    */
   id?: string;
 
   /**
-   * Optional, cosmetic display name for the experiment.
+   * Optional display name for the experiment.
    */
   name?: string;
 }
 
 /**
- * A single weighted arm of an experiment. Variant ids must be unique within the
- * experiment and the sum of all variant weights must be greater than 0. Weights
- * are relative (no sum-to-100 requirement) — routing normalizes them
+ * A single weighted variant of an experiment. Variant ids must be unique within
+ * the experiment and the sum of all variant weights must be greater than 0.
+ * Weights are relative (no sum-to-100 requirement) — routing normalizes them
  * proportionally.
  */
 export interface JourneyExperimentVariant {
@@ -492,7 +492,7 @@ export interface JourneyExperimentVariant {
   weight: number;
 
   /**
-   * Optional, cosmetic display name for the variant.
+   * Optional display name for the variant.
    */
   name?: string;
 }
