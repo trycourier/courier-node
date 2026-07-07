@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.18.1 (2026-07-07)
+
+Full Changelog: [v7.18.0...v7.18.1](https://github.com/trycourier/courier-node/compare/v7.18.0...v7.18.1)
+
+### Documentation
+
+* **openapi:** document audiences filter combinator (SUP-686) ([d91894e](https://github.com/trycourier/courier-node/commit/d91894eff7728f9392cae4e774fd89f5e369d637))
+
 ## 7.18.0 (2026-07-06)
 
 Full Changelog: [v7.17.1...v7.18.0](https://github.com/trycourier/courier-node/compare/v7.17.1...v7.18.0)
