@@ -446,6 +446,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">PublishPreferencesRequest</a></code>
 - <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">PublishPreferencesResponse</a></code>
 - <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">WorkspacePreferenceCreateRequest</a></code>
 - <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">WorkspacePreferenceGetResponse</a></code>
@@ -462,7 +463,7 @@ Methods:
 - <code title="get /preferences/sections/{section_id}">client.workspacePreferences.<a href="./src/resources/workspace-preferences/workspace-preferences.ts">retrieve</a>(sectionID) -> WorkspacePreferenceGetResponse</code>
 - <code title="get /preferences/sections">client.workspacePreferences.<a href="./src/resources/workspace-preferences/workspace-preferences.ts">list</a>() -> WorkspacePreferenceListResponse</code>
 - <code title="delete /preferences/sections/{section_id}">client.workspacePreferences.<a href="./src/resources/workspace-preferences/workspace-preferences.ts">archive</a>(sectionID) -> void</code>
-- <code title="post /preferences/publish">client.workspacePreferences.<a href="./src/resources/workspace-preferences/workspace-preferences.ts">publish</a>() -> PublishPreferencesResponse</code>
+- <code title="post /preferences/publish">client.workspacePreferences.<a href="./src/resources/workspace-preferences/workspace-preferences.ts">publish</a>({ ...params }) -> PublishPreferencesResponse</code>
 - <code title="put /preferences/sections/{section_id}">client.workspacePreferences.<a href="./src/resources/workspace-preferences/workspace-preferences.ts">replace</a>(sectionID, { ...params }) -> WorkspacePreferenceGetResponse</code>
 
 ## Topics

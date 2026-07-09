@@ -24,6 +24,7 @@ describe('resource workspacePreferences', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.workspacePreferences.create({
       name: 'Account Notifications',
+      description: 'description',
       has_custom_routing: true,
       routing_options: ['direct_message'],
     });
@@ -78,6 +79,21 @@ describe('resource workspacePreferences', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('publish: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.workspacePreferences.publish(
+        {
+          brand_id: 'brand_id',
+          description: 'description',
+          heading: 'heading',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Courier.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('replace: only required params', async () => {
     const responsePromise = client.workspacePreferences.replace('section_id', { name: 'name' });
     const rawResponse = await responsePromise.asResponse();
@@ -93,6 +109,7 @@ describe('resource workspacePreferences', () => {
   test.skip('replace: required and optional params', async () => {
     const response = await client.workspacePreferences.replace('section_id', {
       name: 'name',
+      description: 'description',
       has_custom_routing: true,
       routing_options: ['direct_message'],
     });

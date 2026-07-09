@@ -225,6 +225,7 @@ export {
 export { Users } from './users/users';
 export {
   WorkspacePreferences,
+  type PublishPreferencesRequest,
   type PublishPreferencesResponse,
   type WorkspacePreferenceCreateRequest,
   type WorkspacePreferenceGetResponse,
@@ -235,5 +236,6 @@ export {
   type WorkspacePreferenceTopicListResponse,
   type WorkspacePreferenceTopicReplaceRequest,
   type WorkspacePreferenceCreateParams,
+  type WorkspacePreferencePublishParams,
   type WorkspacePreferenceReplaceParams,
 } from './workspace-preferences/workspace-preferences';
