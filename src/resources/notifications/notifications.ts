@@ -31,7 +31,9 @@ export class Notifications extends APIResource {
    *       name: 'Welcome Email',
    *       tags: ['onboarding', 'welcome'],
    *       brand: { id: 'brand_abc' },
-   *       subscription: { topic_id: 'marketing' },
+   *       subscription: {
+   *         topic_id: 'pt_01kx4h2jdafq8bk9a26x0kvd1t',
+   *       },
    *       routing: { strategy_id: 'rs_123' },
    *       content: {
    *         version: '2022-01-01',

@@ -16,7 +16,7 @@ describe('resource notifications', () => {
         content: { elements: [{}], version: '2022-01-01' },
         name: 'Welcome Email',
         routing: { strategy_id: 'rs_123' },
-        subscription: { topic_id: 'marketing' },
+        subscription: { topic_id: 'pt_01kx4h2jdafq8bk9a26x0kvd1t' },
         tags: ['onboarding', 'welcome'],
       },
     });
@@ -37,7 +37,7 @@ describe('resource notifications', () => {
         content: { elements: [{ type: 'channel' }], version: '2022-01-01' },
         name: 'Welcome Email',
         routing: { strategy_id: 'rs_123' },
-        subscription: { topic_id: 'marketing' },
+        subscription: { topic_id: 'pt_01kx4h2jdafq8bk9a26x0kvd1t' },
         tags: ['onboarding', 'welcome'],
       },
       state: 'DRAFT',
