@@ -74,6 +74,7 @@ import {
   MessageHistoryResponse,
   MessageListParams,
   MessageListResponse,
+  MessageResendResponse,
   MessageRetrieveResponse,
   Messages,
 } from './resources/messages';
@@ -1177,6 +1178,7 @@ export declare namespace Courier {
     type MessageListResponse as MessageListResponse,
     type MessageContentResponse as MessageContentResponse,
     type MessageHistoryResponse as MessageHistoryResponse,
+    type MessageResendResponse as MessageResendResponse,
     type MessageListParams as MessageListParams,
     type MessageHistoryParams as MessageHistoryParams,
   };
