@@ -3,6 +3,11 @@
 import { APIResource } from '../../core/resource';
 import * as PreferencesAPI from './preferences';
 import {
+  BulkPreferenceTopic,
+  PreferenceBulkReplaceParams,
+  PreferenceBulkReplaceResponse,
+  PreferenceBulkUpdateParams,
+  PreferenceBulkUpdateResponse,
   PreferenceDeleteTopicParams,
   PreferenceRetrieveParams,
   PreferenceRetrieveResponse,
@@ -47,11 +52,16 @@ Users.Tokens = Tokens;
 export declare namespace Users {
   export {
     Preferences as Preferences,
+    type BulkPreferenceTopic as BulkPreferenceTopic,
     type TopicPreference as TopicPreference,
     type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
+    type PreferenceBulkReplaceResponse as PreferenceBulkReplaceResponse,
+    type PreferenceBulkUpdateResponse as PreferenceBulkUpdateResponse,
     type PreferenceRetrieveTopicResponse as PreferenceRetrieveTopicResponse,
     type PreferenceUpdateOrCreateTopicResponse as PreferenceUpdateOrCreateTopicResponse,
     type PreferenceRetrieveParams as PreferenceRetrieveParams,
+    type PreferenceBulkReplaceParams as PreferenceBulkReplaceParams,
+    type PreferenceBulkUpdateParams as PreferenceBulkUpdateParams,
     type PreferenceDeleteTopicParams as PreferenceDeleteTopicParams,
     type PreferenceRetrieveTopicParams as PreferenceRetrieveTopicParams,
     type PreferenceUpdateOrCreateTopicParams as PreferenceUpdateOrCreateTopicParams,

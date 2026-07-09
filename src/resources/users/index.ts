@@ -2,11 +2,16 @@
 
 export {
   Preferences,
+  type BulkPreferenceTopic,
   type TopicPreference,
   type PreferenceRetrieveResponse,
+  type PreferenceBulkReplaceResponse,
+  type PreferenceBulkUpdateResponse,
   type PreferenceRetrieveTopicResponse,
   type PreferenceUpdateOrCreateTopicResponse,
   type PreferenceRetrieveParams,
+  type PreferenceBulkReplaceParams,
+  type PreferenceBulkUpdateParams,
   type PreferenceDeleteTopicParams,
   type PreferenceRetrieveTopicParams,
   type PreferenceUpdateOrCreateTopicParams,
