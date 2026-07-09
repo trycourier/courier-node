@@ -101,4 +101,16 @@ describe('resource messages', () => {
       client.messages.history('message_id', { type: 'type' }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Courier.NotFoundError);
   });
+
+  // Mock server tests are disabled
+  test.skip('resend', async () => {
+    const responsePromise = client.messages.resend('message_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
 });
