@@ -127,6 +127,7 @@ export {
   type MessageListResponse,
   type MessageContentResponse,
   type MessageHistoryResponse,
+  type MessageResendResponse,
   type MessageListParams,
   type MessageHistoryParams,
 } from './messages';

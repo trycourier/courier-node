@@ -353,6 +353,7 @@ Types:
 - <code><a href="./src/resources/messages.ts">MessageListResponse</a></code>
 - <code><a href="./src/resources/messages.ts">MessageContentResponse</a></code>
 - <code><a href="./src/resources/messages.ts">MessageHistoryResponse</a></code>
+- <code><a href="./src/resources/messages.ts">MessageResendResponse</a></code>
 
 Methods:
 
@@ -361,6 +362,7 @@ Methods:
 - <code title="post /messages/{message_id}/cancel">client.messages.<a href="./src/resources/messages.ts">cancel</a>(messageID) -> MessageDetails</code>
 - <code title="get /messages/{message_id}/output">client.messages.<a href="./src/resources/messages.ts">content</a>(messageID) -> MessageContentResponse</code>
 - <code title="get /messages/{message_id}/history">client.messages.<a href="./src/resources/messages.ts">history</a>(messageID, { ...params }) -> MessageHistoryResponse</code>
+- <code title="post /messages/{message_id}/resend">client.messages.<a href="./src/resources/messages.ts">resend</a>(messageID) -> MessageResendResponse</code>
 
 # Requests
 

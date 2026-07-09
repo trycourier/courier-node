@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.18.2 (2026-07-09)
+
+Full Changelog: [v7.18.1...v7.18.2](https://github.com/trycourier/courier-node/compare/v7.18.1...v7.18.2)
+
+### Chores
+
+* update api-spec with new message resend endpoint ([dfb30cb](https://github.com/trycourier/courier-node/commit/dfb30cbbaee3748c1c93fe2545124b1a79672332))
+
 ## 7.18.1 (2026-07-07)
 
 Full Changelog: [v7.18.0...v7.18.1](https://github.com/trycourier/courier-node/compare/v7.18.0...v7.18.1)

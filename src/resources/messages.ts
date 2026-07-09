@@ -52,6 +52,17 @@ export class Messages extends APIResource {
   ): APIPromise<MessageHistoryResponse> {
     return this._client.get(path`/messages/${messageID}/history`, { query, ...options });
   }
+
+  /**
+   * Resend a previously sent message. The original send request is loaded from
+   * storage and a brand-new send is enqueued for the same recipient and content,
+   * producing a **new** `messageId` — the original message is not modified.
+   * Throttled by a per-message rate limit; a repeat inside the limit window returns
+   * `429 Too Many Requests`.
+   */
+  resend(messageID: string, options?: RequestOptions): APIPromise<MessageResendResponse> {
+    return this._client.post(path`/messages/${messageID}/resend`, options);
+  }
 }
 
 export interface MessageDetails {
@@ -244,6 +255,14 @@ export interface MessageHistoryResponse {
   results: Array<{ [key: string]: unknown }>;
 }
 
+export interface MessageResendResponse {
+  /**
+   * The new message id for the resent message. It is distinct from the id of the
+   * original message that was resent.
+   */
+  messageId: string;
+}
+
 export interface MessageListParams {
   /**
    * A boolean value that indicates whether archived messages should be included in
@@ -339,6 +358,7 @@ export declare namespace Messages {
     type MessageListResponse as MessageListResponse,
     type MessageContentResponse as MessageContentResponse,
     type MessageHistoryResponse as MessageHistoryResponse,
+    type MessageResendResponse as MessageResendResponse,
     type MessageListParams as MessageListParams,
     type MessageHistoryParams as MessageHistoryParams,
   };
