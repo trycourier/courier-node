@@ -306,7 +306,7 @@ export interface PreferenceBulkReplaceParams {
   topics: Array<PreferenceBulkReplaceParams.Topic>;
 
   /**
-   * Query param: Update the preferences of a user for this specific tenant context.
+   * Query param: Replace the preferences of a user for this specific tenant context.
    */
   tenant_id?: string | null;
 }

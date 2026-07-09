@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.19.1 (2026-07-09)
+
+Full Changelog: [v7.19.0...v7.19.1](https://github.com/trycourier/courier-node/compare/v7.19.0...v7.19.1)
+
 ## 7.19.0 (2026-07-09)
 
 Full Changelog: [v7.18.2...v7.19.0](https://github.com/trycourier/courier-node/compare/v7.18.2...v7.19.0)
