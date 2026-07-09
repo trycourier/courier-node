@@ -52,7 +52,7 @@ export class Preferences extends APIResource {
    *   {
    *     topics: [
    *       {
-   *         topic_id: '74Q4QGFBEX481DP6JRPMV751H4XT',
+   *         topic_id: 'pt_01kx4h2jdafq8bk996nn92357r',
    *         status: 'OPTED_IN',
    *         has_custom_routing: true,
    *         custom_routing: ['inbox', 'email'],
@@ -97,13 +97,13 @@ export class Preferences extends APIResource {
    *   {
    *     topics: [
    *       {
-   *         topic_id: '74Q4QGFBEX481DP6JRPMV751H4XT',
+   *         topic_id: 'pt_01kx4h2jdafq8bk996nn92357r',
    *         status: 'OPTED_IN',
    *         has_custom_routing: true,
    *         custom_routing: ['inbox', 'email'],
    *       },
    *       {
-   *         topic_id: '5Q4QGFBEX481DP6JRPMV751H4YU',
+   *         topic_id: 'pt_01kx4h2jdafq8bk99eyt3dx43x',
    *         status: 'OPTED_OUT',
    *       },
    *     ],

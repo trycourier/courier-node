@@ -35,7 +35,7 @@ describe('resource preferences', () => {
   // Mock server tests are disabled
   test.skip('bulkReplace: only required params', async () => {
     const responsePromise = client.users.preferences.bulkReplace('user_id', {
-      topics: [{ status: 'OPTED_IN', topic_id: '74Q4QGFBEX481DP6JRPMV751H4XT' }],
+      topics: [{ status: 'OPTED_IN', topic_id: 'pt_01kx4h2jdafq8bk996nn92357r' }],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -52,7 +52,7 @@ describe('resource preferences', () => {
       topics: [
         {
           status: 'OPTED_IN',
-          topic_id: '74Q4QGFBEX481DP6JRPMV751H4XT',
+          topic_id: 'pt_01kx4h2jdafq8bk996nn92357r',
           custom_routing: ['inbox', 'email'],
           has_custom_routing: true,
         },
@@ -65,8 +65,8 @@ describe('resource preferences', () => {
   test.skip('bulkUpdate: only required params', async () => {
     const responsePromise = client.users.preferences.bulkUpdate('user_id', {
       topics: [
-        { status: 'OPTED_IN', topic_id: '74Q4QGFBEX481DP6JRPMV751H4XT' },
-        { status: 'OPTED_OUT', topic_id: '5Q4QGFBEX481DP6JRPMV751H4YU' },
+        { status: 'OPTED_IN', topic_id: 'pt_01kx4h2jdafq8bk996nn92357r' },
+        { status: 'OPTED_OUT', topic_id: 'pt_01kx4h2jdafq8bk99eyt3dx43x' },
       ],
     });
     const rawResponse = await responsePromise.asResponse();
@@ -84,13 +84,13 @@ describe('resource preferences', () => {
       topics: [
         {
           status: 'OPTED_IN',
-          topic_id: '74Q4QGFBEX481DP6JRPMV751H4XT',
+          topic_id: 'pt_01kx4h2jdafq8bk996nn92357r',
           custom_routing: ['inbox', 'email'],
           has_custom_routing: true,
         },
         {
           status: 'OPTED_OUT',
-          topic_id: '5Q4QGFBEX481DP6JRPMV751H4YU',
+          topic_id: 'pt_01kx4h2jdafq8bk99eyt3dx43x',
           custom_routing: ['direct_message'],
           has_custom_routing: true,
         },
