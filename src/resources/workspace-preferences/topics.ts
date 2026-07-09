@@ -140,6 +140,11 @@ export interface TopicCreateParams {
   allowed_preferences?: Array<'snooze' | 'channel_preferences'> | null;
 
   /**
+   * Optional description shown under the topic on the hosted preferences page.
+   */
+  description?: string | null;
+
+  /**
    * Whether to include a list-unsubscribe header on emails for this topic.
    */
   include_unsubscribe_header?: boolean | null;
@@ -190,6 +195,12 @@ export interface TopicReplaceParams {
    * Body param: Preference controls a recipient may customize. Omit to clear.
    */
   allowed_preferences?: Array<'snooze' | 'channel_preferences'> | null;
+
+  /**
+   * Body param: Optional description shown under the topic on the hosted preferences
+   * page. Omit to clear.
+   */
+  description?: string | null;
 
   /**
    * Body param: Whether to include a list-unsubscribe header on emails for this

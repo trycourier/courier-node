@@ -92,8 +92,11 @@ export class WorkspacePreferences extends APIResource {
    *   await client.workspacePreferences.publish();
    * ```
    */
-  publish(options?: RequestOptions): APIPromise<PublishPreferencesResponse> {
-    return this._client.post('/preferences/publish', options);
+  publish(
+    body: WorkspacePreferencePublishParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PublishPreferencesResponse> {
+    return this._client.post('/preferences/publish', { body, ...options });
   }
 
   /**
@@ -115,6 +118,29 @@ export class WorkspacePreferences extends APIResource {
   ): APIPromise<WorkspacePreferenceGetResponse> {
     return this._client.put(path`/preferences/sections/${sectionID}`, { body, ...options });
   }
+}
+
+/**
+ * Optional page metadata to apply when publishing the workspace's preferences
+ * page. All fields are optional; omitted fields fall back to the page defaults
+ * (and the workspace default brand).
+ */
+export interface PublishPreferencesRequest {
+  /**
+   * Brand for the hosted page - "default" (workspace default brand), "none" (no
+   * brand), or a specific brand id. Defaults to "default".
+   */
+  brand_id?: string | null;
+
+  /**
+   * Description shown under the heading on the hosted preferences page.
+   */
+  description?: string | null;
+
+  /**
+   * Heading shown at the top of the hosted preferences page.
+   */
+  heading?: string | null;
 }
 
 /**
@@ -155,6 +181,11 @@ export interface WorkspacePreferenceCreateRequest {
    * Human-readable name for the workspace preference.
    */
   name: string;
+
+  /**
+   * Optional description shown under the section on the hosted preferences page.
+   */
+  description?: string | null;
 
   /**
    * Whether the workspace preference defines custom routing for its topics.
@@ -207,6 +238,11 @@ export interface WorkspacePreferenceGetResponse {
   creator?: string | null;
 
   /**
+   * Optional description shown under the section on the hosted preferences page.
+   */
+  description?: string | null;
+
+  /**
    * ISO-8601 timestamp of the last update.
    */
   updated?: string | null;
@@ -233,6 +269,12 @@ export interface WorkspacePreferenceReplaceRequest {
    * Human-readable name for the workspace preference.
    */
   name: string;
+
+  /**
+   * Optional description shown under the section on the hosted preferences page.
+   * Omit to clear.
+   */
+  description?: string | null;
 
   /**
    * Whether the workspace preference defines custom routing for its topics.
@@ -264,6 +306,11 @@ export interface WorkspacePreferenceTopicCreateRequest {
    * if omitted.
    */
   allowed_preferences?: Array<'snooze' | 'channel_preferences'> | null;
+
+  /**
+   * Optional description shown under the topic on the hosted preferences page.
+   */
+  description?: string | null;
 
   /**
    * Whether to include a list-unsubscribe header on emails for this topic.
@@ -336,6 +383,11 @@ export interface WorkspacePreferenceTopicGetResponse {
   creator?: string | null;
 
   /**
+   * Optional description shown under the topic on the hosted preferences page.
+   */
+  description?: string | null;
+
+  /**
    * Id of the last updater.
    */
   updater?: string | null;
@@ -369,6 +421,12 @@ export interface WorkspacePreferenceTopicReplaceRequest {
   allowed_preferences?: Array<'snooze' | 'channel_preferences'> | null;
 
   /**
+   * Optional description shown under the topic on the hosted preferences page. Omit
+   * to clear.
+   */
+  description?: string | null;
+
+  /**
    * Whether to include a list-unsubscribe header on emails for this topic.
    */
   include_unsubscribe_header?: boolean | null;
@@ -391,6 +449,11 @@ export interface WorkspacePreferenceCreateParams {
   name: string;
 
   /**
+   * Optional description shown under the section on the hosted preferences page.
+   */
+  description?: string | null;
+
+  /**
    * Whether the workspace preference defines custom routing for its topics.
    */
   has_custom_routing?: boolean | null;
@@ -401,11 +464,35 @@ export interface WorkspacePreferenceCreateParams {
   routing_options?: Array<Shared.ChannelClassification> | null;
 }
 
+export interface WorkspacePreferencePublishParams {
+  /**
+   * Brand for the hosted page - "default" (workspace default brand), "none" (no
+   * brand), or a specific brand id. Defaults to "default".
+   */
+  brand_id?: string | null;
+
+  /**
+   * Description shown under the heading on the hosted preferences page.
+   */
+  description?: string | null;
+
+  /**
+   * Heading shown at the top of the hosted preferences page.
+   */
+  heading?: string | null;
+}
+
 export interface WorkspacePreferenceReplaceParams {
   /**
    * Human-readable name for the workspace preference.
    */
   name: string;
+
+  /**
+   * Optional description shown under the section on the hosted preferences page.
+   * Omit to clear.
+   */
+  description?: string | null;
 
   /**
    * Whether the workspace preference defines custom routing for its topics.
@@ -422,6 +509,7 @@ WorkspacePreferences.Topics = Topics;
 
 export declare namespace WorkspacePreferences {
   export {
+    type PublishPreferencesRequest as PublishPreferencesRequest,
     type PublishPreferencesResponse as PublishPreferencesResponse,
     type WorkspacePreferenceCreateRequest as WorkspacePreferenceCreateRequest,
     type WorkspacePreferenceGetResponse as WorkspacePreferenceGetResponse,
@@ -432,6 +520,7 @@ export declare namespace WorkspacePreferences {
     type WorkspacePreferenceTopicListResponse as WorkspacePreferenceTopicListResponse,
     type WorkspacePreferenceTopicReplaceRequest as WorkspacePreferenceTopicReplaceRequest,
     type WorkspacePreferenceCreateParams as WorkspacePreferenceCreateParams,
+    type WorkspacePreferencePublishParams as WorkspacePreferencePublishParams,
     type WorkspacePreferenceReplaceParams as WorkspacePreferenceReplaceParams,
   };
 
