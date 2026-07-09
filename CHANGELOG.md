@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.19.0 (2026-07-09)
+
+Full Changelog: [v7.18.2...v7.19.0](https://github.com/trycourier/courier-node/compare/v7.18.2...v7.19.0)
+
+### Features
+
+* Add bulk user preference upsert and replace endpoints ([248b6a5](https://github.com/trycourier/courier-node/commit/248b6a5c477c4ca956fda150bb75d1acd6bd394f))
+* Preferences v3 REST fields: section/topic description + publish body ([1fbb959](https://github.com/trycourier/courier-node/commit/1fbb959e19b9001c661faebf39bcc2bfbb811d28))
+
 ## 7.18.2 (2026-07-09)
 
 Full Changelog: [v7.18.1...v7.18.2](https://github.com/trycourier/courier-node/compare/v7.18.1...v7.18.2)
