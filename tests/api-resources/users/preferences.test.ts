@@ -33,6 +33,73 @@ describe('resource preferences', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('bulkReplace: only required params', async () => {
+    const responsePromise = client.users.preferences.bulkReplace('user_id', {
+      topics: [{ status: 'OPTED_IN', topic_id: '74Q4QGFBEX481DP6JRPMV751H4XT' }],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('bulkReplace: required and optional params', async () => {
+    const response = await client.users.preferences.bulkReplace('user_id', {
+      topics: [
+        {
+          status: 'OPTED_IN',
+          topic_id: '74Q4QGFBEX481DP6JRPMV751H4XT',
+          custom_routing: ['inbox', 'email'],
+          has_custom_routing: true,
+        },
+      ],
+      tenant_id: 'tenant_id',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('bulkUpdate: only required params', async () => {
+    const responsePromise = client.users.preferences.bulkUpdate('user_id', {
+      topics: [
+        { status: 'OPTED_IN', topic_id: '74Q4QGFBEX481DP6JRPMV751H4XT' },
+        { status: 'OPTED_OUT', topic_id: '5Q4QGFBEX481DP6JRPMV751H4YU' },
+      ],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('bulkUpdate: required and optional params', async () => {
+    const response = await client.users.preferences.bulkUpdate('user_id', {
+      topics: [
+        {
+          status: 'OPTED_IN',
+          topic_id: '74Q4QGFBEX481DP6JRPMV751H4XT',
+          custom_routing: ['inbox', 'email'],
+          has_custom_routing: true,
+        },
+        {
+          status: 'OPTED_OUT',
+          topic_id: '5Q4QGFBEX481DP6JRPMV751H4YU',
+          custom_routing: ['direct_message'],
+          has_custom_routing: true,
+        },
+      ],
+      tenant_id: 'tenant_id',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('deleteTopic: only required params', async () => {
     const responsePromise = client.users.preferences.deleteTopic('topic_id', { user_id: 'user_id' });
     const rawResponse = await responsePromise.asResponse();
