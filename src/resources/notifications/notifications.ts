@@ -30,11 +30,13 @@ export class Notifications extends APIResource {
    *     notification: {
    *       name: 'Welcome Email',
    *       tags: ['onboarding', 'welcome'],
-   *       brand: { id: 'brand_abc' },
+   *       brand: { id: 'bnd_01kx4mrd0pfzw8wt7pn7p2fzag' },
    *       subscription: {
    *         topic_id: 'pt_01kx4h2jdafq8bk9a26x0kvd1t',
    *       },
-   *       routing: { strategy_id: 'rs_123' },
+   *       routing: {
+   *         strategy_id: 'rs_01kx4h2jdafq8bk9amzvy6hbv0',
+   *       },
    *       content: {
    *         version: '2022-01-01',
    *         elements: [{ type: 'channel' }],
