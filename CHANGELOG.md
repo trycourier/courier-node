@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.19.2 (2026-07-10)
+
+Full Changelog: [v7.19.1...v7.19.2](https://github.com/trycourier/courier-node/compare/v7.19.1...v7.19.2)
+
+### Documentation
+
+* **openapi:** canonical type-id prefixes across all examples ([#162](https://github.com/trycourier/courier-node/issues/162)) ([8e493e2](https://github.com/trycourier/courier-node/commit/8e493e2b8dc6d2d0eeccc3ca658dd5503c0028e1))
+* **openapi:** use canonical type-id prefixes in id examples ([#160](https://github.com/trycourier/courier-node/issues/160)) ([5f3c839](https://github.com/trycourier/courier-node/commit/5f3c839c9aea887232c6ddc68db58654a01d7f1a))
+
 ## 7.19.1 (2026-07-09)
 
 Full Changelog: [v7.19.0...v7.19.1](https://github.com/trycourier/courier-node/compare/v7.19.0...v7.19.1)
