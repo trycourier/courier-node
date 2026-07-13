@@ -659,6 +659,12 @@ export interface NotificationTemplateSummary {
   tags: Array<string>;
 
   /**
+   * The linked subscription (preference) topic of the published version. Omitted
+   * when no topic is linked or the template has never been published.
+   */
+  subscription_topic_id?: string;
+
+  /**
    * Epoch milliseconds of last update.
    */
   updated?: number;
