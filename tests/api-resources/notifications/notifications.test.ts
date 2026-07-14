@@ -104,6 +104,18 @@ describe('resource notifications', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('duplicate', async () => {
+    const responsePromise = client.notifications.duplicate('id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('listVersions', async () => {
     const responsePromise = client.notifications.listVersions('id');
     const rawResponse = await responsePromise.asResponse();

@@ -99,6 +99,24 @@ export class Notifications extends APIResource {
   }
 
   /**
+   * Duplicate a notification template. Creates a standalone copy within the same
+   * workspace and environment, with " COPY" appended to the title. The copy clones
+   * the source draft's tags, brand, subscription topic, routing strategy, channels,
+   * and content, and is always created as a standalone template (it is not linked to
+   * any journey or broadcast, even if the source was). Templates that are scoped to
+   * a journey or a broadcast cannot be duplicated through this endpoint.
+   *
+   * @example
+   * ```ts
+   * const notificationTemplateResponse =
+   *   await client.notifications.duplicate('id');
+   * ```
+   */
+  duplicate(id: string, options?: RequestOptions): APIPromise<NotificationTemplateResponse> {
+    return this._client.post(path`/notifications/${id}/duplicate`, options);
+  }
+
+  /**
    * List versions of a notification template.
    *
    * @example

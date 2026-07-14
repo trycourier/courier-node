@@ -401,6 +401,7 @@ Methods:
 - <code title="get /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">retrieve</a>(id, { ...params }) -> NotificationTemplateResponse</code>
 - <code title="get /notifications">client.notifications.<a href="./src/resources/notifications/notifications.ts">list</a>({ ...params }) -> NotificationListResponse</code>
 - <code title="delete /notifications/{id}">client.notifications.<a href="./src/resources/notifications/notifications.ts">archive</a>(id) -> void</code>
+- <code title="post /notifications/{id}/duplicate">client.notifications.<a href="./src/resources/notifications/notifications.ts">duplicate</a>(id) -> NotificationTemplateResponse</code>
 - <code title="get /notifications/{id}/versions">client.notifications.<a href="./src/resources/notifications/notifications.ts">listVersions</a>(id, { ...params }) -> NotificationTemplateVersionListResponse</code>
 - <code title="post /notifications/{id}/publish">client.notifications.<a href="./src/resources/notifications/notifications.ts">publish</a>(id, { ...params }) -> void</code>
 - <code title="put /notifications/{id}/content">client.notifications.<a href="./src/resources/notifications/notifications.ts">putContent</a>(id, { ...params }) -> NotificationContentMutationResponse</code>
