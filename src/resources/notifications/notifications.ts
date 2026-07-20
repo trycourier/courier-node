@@ -683,6 +683,12 @@ export interface NotificationTemplateSummary {
   subscription_topic_id?: string;
 
   /**
+   * Alias of subscription_topic_id, provided under the same name V1 list items use
+   * for the linked topic. Always carries the same value as subscription_topic_id.
+   */
+  topic_id?: string;
+
+  /**
    * Epoch milliseconds of last update.
    */
   updated?: number;
