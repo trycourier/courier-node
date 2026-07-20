@@ -99,6 +99,24 @@ export class Notifications extends APIResource {
   }
 
   /**
+   * Duplicate a notification template. Creates a standalone copy within the same
+   * workspace and environment, with " COPY" appended to the title. The copy clones
+   * the source draft's tags, brand, subscription topic, routing strategy, channels,
+   * and content, and is always created as a standalone template (it is not linked to
+   * any journey or broadcast, even if the source was). Templates that are scoped to
+   * a journey or a broadcast cannot be duplicated through this endpoint.
+   *
+   * @example
+   * ```ts
+   * const notificationTemplateResponse =
+   *   await client.notifications.duplicate('id');
+   * ```
+   */
+  duplicate(id: string, options?: RequestOptions): APIPromise<NotificationTemplateResponse> {
+    return this._client.post(path`/notifications/${id}/duplicate`, options);
+  }
+
+  /**
    * List versions of a notification template.
    *
    * @example
@@ -657,6 +675,18 @@ export interface NotificationTemplateSummary {
   state: 'DRAFT' | 'PUBLISHED';
 
   tags: Array<string>;
+
+  /**
+   * The linked subscription (preference) topic of the published version. Omitted
+   * when no topic is linked or the template has never been published.
+   */
+  subscription_topic_id?: string;
+
+  /**
+   * Alias of subscription_topic_id, provided under the same name V1 list items use
+   * for the linked topic. Always carries the same value as subscription_topic_id.
+   */
+  topic_id?: string;
 
   /**
    * Epoch milliseconds of last update.
