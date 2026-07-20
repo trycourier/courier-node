@@ -1,5 +1,21 @@
 # Changelog
 
+## 7.20.0 (2026-07-20)
+
+Full Changelog: [v7.19.2...v7.20.0](https://github.com/trycourier/courier-node/compare/v7.19.2...v7.20.0)
+
+### Features
+
+* Document POST /notifications/{id}/duplicate [C-18607] ([#165](https://github.com/trycourier/courier-node/issues/165)) ([95d4344](https://github.com/trycourier/courier-node/commit/95d43441e10fa2537b4be6667dd1e0534c811182))
+* Merge pull request [#149](https://github.com/trycourier/courier-node/issues/149) from trycourier/geraldosilva/c-19201-notification-template-subscription-topic-id ([7eae439](https://github.com/trycourier/courier-node/commit/7eae439cbfe287a079795e3e1954434ebf2baf82))
+* Merge pull request [#168](https://github.com/trycourier/courier-node/issues/168) from trycourier/geraldosilva/c-19419-topic-id-notification-template-summary ([e3fd860](https://github.com/trycourier/courier-node/commit/e3fd860eddf428eca13868c8066d61ed6906b7cd))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([5bd81d3](https://github.com/trycourier/courier-node/commit/5bd81d353baecc24df27bdcfb7951657427a1230))
+
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([d86d583](https://github.com/trycourier/courier-node/commit/d86d58376e67607a789c4961dba9cd011b093dfa))
+
 ## 7.19.2 (2026-07-10)
 
 Full Changelog: [v7.19.1...v7.19.2](https://github.com/trycourier/courier-node/compare/v7.19.1...v7.19.2)
