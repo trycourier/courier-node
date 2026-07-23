@@ -55,17 +55,6 @@ import {
   Logo,
   WidgetBackground,
 } from './resources/brands';
-import {
-  Bulk,
-  BulkAddUsersParams,
-  BulkCreateJobParams,
-  BulkCreateJobResponse,
-  BulkListUsersParams,
-  BulkListUsersResponse,
-  BulkRetrieveJobResponse,
-  InboundBulkMessage,
-  InboundBulkMessageUser,
-} from './resources/bulk';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
   MessageContentResponse,
@@ -980,7 +969,6 @@ export class Courier {
   automations: API.Automations = new API.Automations(this);
   journeys: API.Journeys = new API.Journeys(this);
   brands: API.Brands = new API.Brands(this);
-  bulk: API.Bulk = new API.Bulk(this);
   digests: API.Digests = new API.Digests(this);
   inbound: API.Inbound = new API.Inbound(this);
   lists: API.Lists = new API.Lists(this);
@@ -1003,7 +991,6 @@ Courier.Auth = Auth;
 Courier.Automations = Automations;
 Courier.Journeys = Journeys;
 Courier.Brands = Brands;
-Courier.Bulk = Bulk;
 Courier.Digests = Digests;
 Courier.Inbound = Inbound;
 Courier.Lists = Lists;
@@ -1136,18 +1123,6 @@ export declare namespace Courier {
     type BrandCreateParams as BrandCreateParams,
     type BrandUpdateParams as BrandUpdateParams,
     type BrandListParams as BrandListParams,
-  };
-
-  export {
-    Bulk as Bulk,
-    type InboundBulkMessage as InboundBulkMessage,
-    type InboundBulkMessageUser as InboundBulkMessageUser,
-    type BulkCreateJobResponse as BulkCreateJobResponse,
-    type BulkListUsersResponse as BulkListUsersResponse,
-    type BulkRetrieveJobResponse as BulkRetrieveJobResponse,
-    type BulkAddUsersParams as BulkAddUsersParams,
-    type BulkCreateJobParams as BulkCreateJobParams,
-    type BulkListUsersParams as BulkListUsersParams,
   };
 
   export {

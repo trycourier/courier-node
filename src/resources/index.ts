@@ -47,17 +47,6 @@ export {
   type BrandListParams,
 } from './brands';
 export {
-  Bulk,
-  type InboundBulkMessage,
-  type InboundBulkMessageUser,
-  type BulkCreateJobResponse,
-  type BulkListUsersResponse,
-  type BulkRetrieveJobResponse,
-  type BulkAddUsersParams,
-  type BulkCreateJobParams,
-  type BulkListUsersParams,
-} from './bulk';
-export {
   Digests,
   type DigestCategory,
   type DigestInstance,
