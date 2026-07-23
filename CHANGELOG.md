@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.21.1 (2026-07-23)
+
+Full Changelog: [v7.21.0...v7.21.1](https://github.com/trycourier/courier-node/compare/v7.21.0...v7.21.1)
+
+### Documentation
+
+* **openapi:** describe user topic-preference fields explicitly ([#172](https://github.com/trycourier/courier-node/issues/172)) ([dba1cfc](https://github.com/trycourier/courier-node/commit/dba1cfc46d8dd557223158758a77ca3fd5a8a03d))
+
 ## 7.21.0 (2026-07-23)
 
 Full Changelog: [v7.20.0...v7.21.0](https://github.com/trycourier/courier-node/compare/v7.20.0...v7.21.0)
