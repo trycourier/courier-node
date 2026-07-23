@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.21.0 (2026-07-23)
+
+Full Changelog: [v7.20.0...v7.21.0](https://github.com/trycourier/courier-node/compare/v7.20.0...v7.21.0)
+
+### Features
+
+* Remove /bulk endpoints from api-spec (C-19507) ([#171](https://github.com/trycourier/courier-node/issues/171)) ([aa3b3b2](https://github.com/trycourier/courier-node/commit/aa3b3b20653b8a12bdf2c7dc9727c8157201a7f0))
+
 ## 7.20.0 (2026-07-20)
 
 Full Changelog: [v7.19.2...v7.20.0](https://github.com/trycourier/courier-node/compare/v7.19.2...v7.20.0)
