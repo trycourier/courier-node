@@ -10,9 +10,8 @@ import { path } from '../../internal/utils/path';
 
 export class Topics extends APIResource {
   /**
-   * Create a subscription preference topic inside a workspace preference. Fails with
-   * 404 if the workspace preference does not exist. The topic id is generated and
-   * returned.
+   * Creates a subscription topic inside a workspace preference. The default status
+   * sets whether users start opted in, opted out, or required.
    *
    * @example
    * ```ts
@@ -32,9 +31,8 @@ export class Topics extends APIResource {
   }
 
   /**
-   * Retrieve a topic within a workspace preference. Returns 404 if the workspace
-   * preference does not exist, the topic does not exist, or the topic belongs to a
-   * different workspace preference.
+   * Returns one subscription topic with its default status, routing options, allowed
+   * preferences, and unsubscribe header setting.
    *
    * @example
    * ```ts
@@ -55,7 +53,8 @@ export class Topics extends APIResource {
   }
 
   /**
-   * List the topics in a workspace preference.
+   * Returns the subscription topics inside a workspace preference, each with its
+   * default status and routing options.
    *
    * @example
    * ```ts
@@ -73,8 +72,8 @@ export class Topics extends APIResource {
   }
 
   /**
-   * Archive a topic and remove it from its workspace preference. Same 404 rules as
-   * GET.
+   * Archives a subscription topic and removes it from its workspace preference,
+   * addressed by section id and topic id.
    *
    * @example
    * ```ts

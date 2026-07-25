@@ -8,14 +8,16 @@ import { path } from '../internal/utils/path';
 
 export class Messages extends APIResource {
   /**
-   * Fetch the status of a message you've previously sent.
+   * Returns a sent message's status, recipient, event, and per-provider delivery
+   * detail, with timestamps for enqueued, sent, delivered, opened, and clicked.
    */
   retrieve(messageID: string, options?: RequestOptions): APIPromise<MessageRetrieveResponse> {
     return this._client.get(path`/messages/${messageID}`, options);
   }
 
   /**
-   * Fetch the statuses of messages you've previously sent.
+   * Returns previously sent messages, most recent first, each carrying its status,
+   * recipient, channel, and provider. Paged by cursor.
    */
   list(
     query: MessageListParams | null | undefined = {},
@@ -25,25 +27,24 @@ export class Messages extends APIResource {
   }
 
   /**
-   * Cancel a message that is currently in the process of being delivered. A
-   * well-formatted API call to the cancel message API will return either `200`
-   * status code for a successful cancellation or `409` status code for an
-   * unsuccessful cancellation. Both cases will include the actual message record in
-   * the response body (see details below).
+   * Cancels a message that is still in the delivery pipeline and returns the message
+   * record with its resulting canceled or failed status.
    */
   cancel(messageID: string, options?: RequestOptions): APIPromise<MessageDetails> {
     return this._client.post(path`/messages/${messageID}/cancel`, options);
   }
 
   /**
-   * Get message content
+   * Returns the rendered content Courier delivered for a message, broken out per
+   * channel, to confirm what the recipient received.
    */
   content(messageID: string, options?: RequestOptions): APIPromise<MessageContentResponse> {
     return this._client.get(path`/messages/${messageID}/output`, options);
   }
 
   /**
-   * Fetch the array of events of a message you've previously sent.
+   * Returns the ordered event history for a sent message, one entry per status
+   * transition with its timestamp.
    */
   history(
     messageID: string,
@@ -54,11 +55,8 @@ export class Messages extends APIResource {
   }
 
   /**
-   * Resend a previously sent message. The original send request is loaded from
-   * storage and a brand-new send is enqueued for the same recipient and content,
-   * producing a **new** `messageId` — the original message is not modified.
-   * Throttled by a per-message rate limit; a repeat inside the limit window returns
-   * `429 Too Many Requests`.
+   * Resends a previously sent message to the same recipient and content, returning a
+   * new messageId. The original send request is not modified.
    */
   resend(messageID: string, options?: RequestOptions): APIPromise<MessageResendResponse> {
     return this._client.post(path`/messages/${messageID}/resend`, options);

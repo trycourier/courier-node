@@ -8,7 +8,8 @@ import { path } from '../internal/utils/path';
 
 export class Requests extends APIResource {
   /**
-   * Archive message
+   * Archives a send request by its request id. Use it to remove test sends or
+   * superseded requests from the message list without deleting them.
    */
   archive(requestID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.put(path`/requests/${requestID}/archive`, {

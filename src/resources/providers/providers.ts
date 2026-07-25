@@ -13,34 +13,32 @@ export class Providers extends APIResource {
   catalog: CatalogAPI.Catalog = new CatalogAPI.Catalog(this._client);
 
   /**
-   * Create a new provider configuration. The `provider` field must be a known
-   * Courier provider key (see catalog).
+   * Configures a provider integration from a Courier provider key and its settings.
+   * Check the catalog endpoint for the schema each provider expects.
    */
   create(body: ProviderCreateParams, options?: RequestOptions): APIPromise<Provider> {
     return this._client.post('/providers', { body, ...options });
   }
 
   /**
-   * Fetch a single provider configuration by ID.
+   * Returns one configured provider by id, including its channel, provider key,
+   * alias, title, and current settings.
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<Provider> {
     return this._client.get(path`/providers/${id}`, options);
   }
 
   /**
-   * Replace an existing provider configuration. The `provider` key is required and
-   * determines which provider-specific settings schema is applied. All other fields
-   * are optional — omitted fields are cleared from the stored configuration (this is
-   * a full replacement, not a partial merge). Changing the provider type for an
-   * existing configuration is not supported.
+   * Replaces a provider's configuration in full, clearing any field you omit rather
+   * than merging it. Send the complete settings object.
    */
   update(id: string, body: ProviderUpdateParams, options?: RequestOptions): APIPromise<Provider> {
     return this._client.put(path`/providers/${id}`, { body, ...options });
   }
 
   /**
-   * List configured provider integrations for the current workspace. Supports
-   * cursor-based pagination.
+   * Lists the provider integrations configured in the workspace, one entry per
+   * channel and provider key with its alias and settings.
    */
   list(
     query: ProviderListParams | null | undefined = {},
@@ -50,8 +48,8 @@ export class Providers extends APIResource {
   }
 
   /**
-   * Delete a provider configuration. Returns 409 if the provider is still referenced
-   * by routing or notifications.
+   * Deletes a provider configuration, which fails while routing strategies or
+   * templates still reference it. Update those references first.
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/providers/${id}`, {

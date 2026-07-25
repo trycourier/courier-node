@@ -6,7 +6,8 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Inbound extends APIResource {
   /**
-   * Courier Track Event
+   * Records an inbound event that can trigger a journey. Requires an event name, a
+   * messageId you generate, a type, and a properties object.
    *
    * @example
    * ```ts

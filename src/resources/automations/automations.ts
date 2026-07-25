@@ -10,7 +10,8 @@ export class Automations extends APIResource {
   invoke: InvokeAPI.Invoke = new InvokeAPI.Invoke(this._client);
 
   /**
-   * Get the list of automations.
+   * Lists the workspace's saved automation templates, each with its id and a cursor
+   * for paging to the next page of results.
    *
    * @example
    * ```ts

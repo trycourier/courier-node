@@ -8,7 +8,8 @@ import { path } from '../internal/utils/path';
 
 export class Translations extends APIResource {
   /**
-   * Get translations by locale
+   * Returns the translation strings stored for one domain and locale, for use in
+   * localized notification content.
    */
   retrieve(locale: string, params: TranslationRetrieveParams, options?: RequestOptions): APIPromise<string> {
     const { domain } = params;
@@ -16,7 +17,8 @@ export class Translations extends APIResource {
   }
 
   /**
-   * Update a translation
+   * Uploads the translation strings for one domain and locale. Courier uses them to
+   * render localized content for recipients in that locale.
    */
   update(locale: string, params: TranslationUpdateParams, options?: RequestOptions): APIPromise<void> {
     const { domain, body } = params;
