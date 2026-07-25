@@ -7,7 +7,8 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Send extends APIResource {
   /**
-   * Send a message to one or more recipients.
+   * Sends a message to one or more recipients and returns a requestId. Courier
+   * routes it to email, SMS, push, chat, or in-app based on your rules.
    *
    * @example
    * ```ts

@@ -10,8 +10,8 @@ import { path } from '../internal/utils/path';
 
 export class Brands extends APIResource {
   /**
-   * Create a new brand. Requires `name` and `settings` (with at least
-   * `colors.primary` and `colors.secondary`).
+   * Creates a brand from a name and settings, including primary and secondary
+   * colors. Brands supply the logo, colors, and styling that templates render with.
    *
    * @example
    * ```ts
@@ -28,7 +28,8 @@ export class Brands extends APIResource {
   }
 
   /**
-   * Fetch a specific brand by brand ID.
+   * Returns one brand by id, including its colors, logo and styling settings,
+   * Handlebars snippets, and published version.
    *
    * @example
    * ```ts
@@ -40,7 +41,8 @@ export class Brands extends APIResource {
   }
 
   /**
-   * Replace an existing brand with the supplied values.
+   * Replaces a brand with the values you supply, so send the complete settings and
+   * snippets rather than only the fields you want changed.
    *
    * @example
    * ```ts
@@ -54,7 +56,8 @@ export class Brands extends APIResource {
   }
 
   /**
-   * Get the list of brands.
+   * Lists the workspace's brands. Every entry carries its name, styling settings,
+   * snippets, and published version.
    *
    * @example
    * ```ts
@@ -69,7 +72,8 @@ export class Brands extends APIResource {
   }
 
   /**
-   * Delete a brand by brand ID.
+   * Deletes a brand by id. Reassign any template or tenant that references it before
+   * deleting to keep their styling intact.
    *
    * @example
    * ```ts

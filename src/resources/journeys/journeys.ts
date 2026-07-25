@@ -26,12 +26,8 @@ export class Journeys extends APIResource {
   templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
 
   /**
-   * Create a journey. Defaults to `DRAFT` state; pass `state: "PUBLISHED"` to
-   * publish on create. Send nodes are not allowed on `POST`. The standard flow is:
-   * create the journey shell here, add notification templates with
-   * `POST /journeys/{templateId}/templates`, then wire them into the journey with
-   * `PUT /journeys/{templateId}`. Call `POST /journeys/{templateId}/publish` to
-   * publish a draft after the fact.
+   * Creates a journey from a set of nodes, in draft state unless you pass a
+   * published state. Send nodes cannot be included until their templates exist.
    *
    * @example
    * ```ts
@@ -72,7 +68,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Get the list of journeys.
+   * Lists the workspace's journeys, each carrying a name, state, and enabled flag.
+   * Paged by cursor.
    *
    * @example
    * ```ts
@@ -87,8 +84,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Archive a journey. Archived journeys cannot be invoked. Existing journey runs
-   * continue to completion.
+   * Archives a journey so it can no longer be invoked. Runs already in flight
+   * continue to completion, so archiving never strands a user mid-sequence.
    *
    * @example
    * ```ts
@@ -103,12 +100,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Cancel journey runs. The request body must include EXACTLY ONE of
-   * `cancelation_token` (cancels every run associated with the token) or `run_id`
-   * (cancels a single tenant-scoped run). Supplying both or neither returns a `400`.
-   * A `run_id` that does not match a run for the tenant returns `404`. Cancelation
-   * is idempotent: a run that has already finished (`PROCESSED`/`ERROR`) or was
-   * already `CANCELED` is left unchanged and its current status is returned.
+   * Cancels in-flight journey runs, either every run sharing a cancelation token or
+   * one run by id. Use it to stop a sequence when the event resolves.
    *
    * @example
    * ```ts
@@ -122,8 +115,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Invoke a journey by id or alias to start a new run. The response includes a
-   * `runId` identifying the run.
+   * Starts a journey run for one user and returns a runId. Runs execute
+   * asynchronously, so the response arrives before any message is sent.
    *
    * @example
    * ```ts
@@ -145,7 +138,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * List published versions of a journey, ordered most recent first.
+   * Lists a journey's published versions, most recent first, so you have a version
+   * id to roll back to. Paged by cursor.
    *
    * @example
    * ```ts
@@ -158,9 +152,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Publish the current draft as a new version. Body is optional; pass
-   * `{ "version": "vN" }` to roll back to a prior version instead. Returns 404 if
-   * the journey has no draft to publish.
+   * Publishes a journey's current draft as a new version, making it live for new
+   * runs. Pass a version instead to roll back to an earlier one.
    *
    * @example
    * ```ts
@@ -176,11 +169,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Replace the journey draft. Updates the working draft only; call
-   * `POST /journeys/{templateId}/publish` to make it live, or pass
-   * `state: "PUBLISHED"` in this request to publish immediately. Send-node
-   * `template` ids must already exist and be scoped to this journey, and node ids
-   * must not be claimed by another journey.
+   * Replaces a journey's working draft, leaving the published version live until you
+   * publish. Reach for this when editing a journey already running.
    *
    * @example
    * ```ts

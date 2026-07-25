@@ -6,7 +6,8 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Auth extends APIResource {
   /**
-   * Returns a new access token.
+   * Returns a JWT for authenticating client-side SDKs such as the Inbox. You supply
+   * the scope and an expires_in duration, both required.
    *
    * @example
    * ```ts

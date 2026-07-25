@@ -19,9 +19,8 @@ export class WorkspacePreferences extends APIResource {
   topics: TopicsAPI.Topics = new TopicsAPI.Topics(this._client);
 
   /**
-   * Create a workspace preference. The workspace preference id is generated and
-   * returned. Topics are created inside a workspace preference via POST
-   * /preferences/sections/{section_id}/topics.
+   * Creates a workspace preference and returns its generated id. Add subscription
+   * topics to it afterwards with the topics endpoint.
    *
    * @example
    * ```ts
@@ -39,7 +38,8 @@ export class WorkspacePreferences extends APIResource {
   }
 
   /**
-   * Retrieve a workspace preference by id, including its topics.
+   * Returns one workspace preference by id, including its subscription topics,
+   * routing options, and custom routing flag.
    *
    * @example
    * ```ts
@@ -52,8 +52,8 @@ export class WorkspacePreferences extends APIResource {
   }
 
   /**
-   * List the workspace's preferences. Each workspace preference embeds its topics.
-   * Scoped to the workspace of the API key.
+   * Returns the workspace's preferences, each embedding its subscription topics,
+   * routing options, and whether custom routing is allowed.
    *
    * @example
    * ```ts
@@ -82,9 +82,8 @@ export class WorkspacePreferences extends APIResource {
   }
 
   /**
-   * Publish the workspace's preferences page. Takes a snapshot of every workspace
-   * preference with its topics under a new published version, making the current
-   * state visible on the hosted preferences page (non-draft).
+   * Publishes the workspace preference page, snapshotting every preference and
+   * topic, and returns the page id and a preview URL.
    *
    * @example
    * ```ts
