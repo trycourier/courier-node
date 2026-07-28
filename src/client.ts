@@ -101,6 +101,7 @@ import {
   DigestInstanceListResponse,
   Digests,
 } from './resources/digests/digests';
+import { Inbox } from './resources/inbox/inbox';
 import {
   CancelJourneyRequest,
   CancelJourneyResponse,
@@ -972,6 +973,7 @@ export class Courier {
   digests: API.Digests = new API.Digests(this);
   inbound: API.Inbound = new API.Inbound(this);
   lists: API.Lists = new API.Lists(this);
+  inbox: API.Inbox = new API.Inbox(this);
   messages: API.Messages = new API.Messages(this);
   requests: API.Requests = new API.Requests(this);
   notifications: API.Notifications = new API.Notifications(this);
@@ -994,6 +996,7 @@ Courier.Brands = Brands;
 Courier.Digests = Digests;
 Courier.Inbound = Inbound;
 Courier.Lists = Lists;
+Courier.Inbox = Inbox;
 Courier.Messages = Messages;
 Courier.Requests = Requests;
 Courier.Notifications = Notifications;
@@ -1147,6 +1150,8 @@ export declare namespace Courier {
     type ListListParams as ListListParams,
     type ListRestoreParams as ListRestoreParams,
   };
+
+  export { Inbox as Inbox };
 
   export {
     Messages as Messages,
