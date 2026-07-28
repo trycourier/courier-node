@@ -48,6 +48,8 @@ describe('resource invoke', () => {
       profile: { tenant_id: 'bar' },
       recipient: 'user-yes',
       template: 'template',
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 
@@ -73,6 +75,8 @@ describe('resource invoke', () => {
       data: { foo: 'bar' },
       profile: { foo: 'bar' },
       template: 'template',
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 });

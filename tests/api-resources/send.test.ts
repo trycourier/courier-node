@@ -122,6 +122,8 @@ describe('resource send', () => {
           user_id: 'user_id',
         },
       },
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 });

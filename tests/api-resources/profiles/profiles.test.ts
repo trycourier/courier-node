@@ -22,7 +22,11 @@ describe('resource profiles', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.profiles.create('user_id', { profile: { foo: 'bar' } });
+    const response = await client.profiles.create('user_id', {
+      profile: { foo: 'bar' },
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
+    });
   });
 
   // Mock server tests are disabled

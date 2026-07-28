@@ -33,6 +33,8 @@ describe('resource topics', () => {
       include_unsubscribe_header: true,
       routing_options: ['direct_message'],
       topic_data: { foo: 'bar' },
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 

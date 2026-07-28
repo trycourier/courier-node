@@ -28,10 +28,27 @@ export class RoutingStrategies extends APIResource {
    * ```
    */
   create(
-    body: RoutingStrategyCreateParams,
+    params: RoutingStrategyCreateParams,
     options?: RequestOptions,
   ): APIPromise<RoutingStrategyGetResponse> {
-    return this._client.post('/routing-strategies', { body, ...options });
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post('/routing-strategies', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -323,34 +340,52 @@ export interface RoutingStrategySummary {
 
 export interface RoutingStrategyCreateParams {
   /**
-   * Human-readable name for the routing strategy.
+   * Body param: Human-readable name for the routing strategy.
    */
   name: string;
 
   /**
-   * Routing tree defining channel selection method and order.
+   * Body param: Routing tree defining channel selection method and order.
    */
   routing: Shared.MessageRouting;
 
   /**
-   * Per-channel delivery configuration. Defaults to empty if omitted.
+   * Body param: Per-channel delivery configuration. Defaults to empty if omitted.
    */
   channels?: Shared.MessageChannels | null;
 
   /**
-   * Optional description of the routing strategy.
+   * Body param: Optional description of the routing strategy.
    */
   description?: string | null;
 
   /**
-   * Per-provider delivery configuration. Defaults to empty if omitted.
+   * Body param: Per-provider delivery configuration. Defaults to empty if omitted.
    */
   providers?: Shared.MessageProviders | null;
 
   /**
-   * Optional tags for categorization.
+   * Body param: Optional tags for categorization.
    */
   tags?: Array<string> | null;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface RoutingStrategyListParams {

@@ -23,8 +23,25 @@ export class Brands extends APIResource {
    * });
    * ```
    */
-  create(body: BrandCreateParams, options?: RequestOptions): APIPromise<Brand> {
-    return this._client.post('/brands', { body, ...options });
+  create(params: BrandCreateParams, options?: RequestOptions): APIPromise<Brand> {
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post('/brands', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -229,13 +246,43 @@ export interface BrandListResponse {
 }
 
 export interface BrandCreateParams {
+  /**
+   * Body param
+   */
   name: string;
 
+  /**
+   * Body param
+   */
   settings: BrandSettings;
 
+  /**
+   * Body param
+   */
   id?: string | null;
 
+  /**
+   * Body param
+   */
   snippets?: BrandSnippets | null;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface BrandUpdateParams {
