@@ -27,6 +27,8 @@ describe('resource providers', () => {
       alias: 'alias',
       settings: { foo: 'bar' },
       title: 'title',
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 

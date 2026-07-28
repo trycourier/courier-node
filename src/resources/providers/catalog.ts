@@ -10,6 +10,11 @@ export class Catalog extends APIResource {
   /**
    * Returns the provider types Courier supports, each with a display name,
    * description, and the configuration fields it requires.
+   *
+   * @example
+   * ```ts
+   * const catalogs = await client.providers.catalog.list();
+   * ```
    */
   list(
     query: CatalogListParams | null | undefined = {},

@@ -96,6 +96,8 @@ describe('resource preferences', () => {
         },
       ],
       tenant_id: 'tenant_id',
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 

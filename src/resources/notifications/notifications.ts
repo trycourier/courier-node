@@ -46,8 +46,28 @@ export class Notifications extends APIResource {
    *   });
    * ```
    */
-  create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<NotificationTemplateResponse> {
-    return this._client.post('/notifications', { body, ...options });
+  create(
+    params: NotificationCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationTemplateResponse> {
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post('/notifications', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -144,13 +164,27 @@ export class Notifications extends APIResource {
    */
   publish(
     id: string,
-    body: NotificationPublishParams | null | undefined = {},
+    params: NotificationPublishParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<void> {
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params ?? {};
     return this._client.post(path`/notifications/${id}/publish`, {
       body,
       ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      headers: buildHeaders([
+        {
+          Accept: '*/*',
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
     });
   }
 
@@ -802,16 +836,34 @@ export type NotificationRetrieveContentResponse = NotificationContentGetResponse
 
 export interface NotificationCreateParams {
   /**
-   * Core template fields used in POST and PUT request bodies (nested under a
-   * `notification` key) and returned at the top level in responses.
+   * Body param: Core template fields used in POST and PUT request bodies (nested
+   * under a `notification` key) and returned at the top level in responses.
    */
   notification: NotificationTemplatePayload;
 
   /**
-   * Template state after creation. Case-insensitive input, normalized to uppercase
-   * in the response. Defaults to "DRAFT".
+   * Body param: Template state after creation. Case-insensitive input, normalized to
+   * uppercase in the response. Defaults to "DRAFT".
    */
   state?: 'DRAFT' | 'PUBLISHED';
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface NotificationRetrieveParams {
@@ -853,9 +905,28 @@ export interface NotificationListVersionsParams {
 
 export interface NotificationPublishParams {
   /**
-   * Historical version to publish (e.g. "v001"). Omit to publish the current draft.
+   * Body param: Historical version to publish (e.g. "v001"). Omit to publish the
+   * current draft.
    */
   version?: string;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface NotificationPutContentParams {

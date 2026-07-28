@@ -31,10 +31,27 @@ export class WorkspacePreferences extends APIResource {
    * ```
    */
   create(
-    body: WorkspacePreferenceCreateParams,
+    params: WorkspacePreferenceCreateParams,
     options?: RequestOptions,
   ): APIPromise<WorkspacePreferenceGetResponse> {
-    return this._client.post('/preferences/sections', { body, ...options });
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post('/preferences/sections', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -92,10 +109,27 @@ export class WorkspacePreferences extends APIResource {
    * ```
    */
   publish(
-    body: WorkspacePreferencePublishParams | null | undefined = {},
+    params: WorkspacePreferencePublishParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<PublishPreferencesResponse> {
-    return this._client.post('/preferences/publish', { body, ...options });
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params ?? {};
+    return this._client.post('/preferences/publish', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -443,42 +477,81 @@ export interface WorkspacePreferenceTopicReplaceRequest {
 
 export interface WorkspacePreferenceCreateParams {
   /**
-   * Human-readable name for the workspace preference.
+   * Body param: Human-readable name for the workspace preference.
    */
   name: string;
 
   /**
-   * Optional description shown under the section on the hosted preferences page.
+   * Body param: Optional description shown under the section on the hosted
+   * preferences page.
    */
   description?: string | null;
 
   /**
-   * Whether the workspace preference defines custom routing for its topics.
+   * Body param: Whether the workspace preference defines custom routing for its
+   * topics.
    */
   has_custom_routing?: boolean | null;
 
   /**
-   * Default channels for the workspace preference. Defaults to empty if omitted.
+   * Body param: Default channels for the workspace preference. Defaults to empty if
+   * omitted.
    */
   routing_options?: Array<Shared.ChannelClassification> | null;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface WorkspacePreferencePublishParams {
   /**
-   * Brand for the hosted page - "default" (workspace default brand), "none" (no
-   * brand), or a specific brand id. Defaults to "default".
+   * Body param: Brand for the hosted page - "default" (workspace default brand),
+   * "none" (no brand), or a specific brand id. Defaults to "default".
    */
   brand_id?: string | null;
 
   /**
-   * Description shown under the heading on the hosted preferences page.
+   * Body param: Description shown under the heading on the hosted preferences page.
    */
   description?: string | null;
 
   /**
-   * Heading shown at the top of the hosted preferences page.
+   * Body param: Heading shown at the top of the hosted preferences page.
    */
   heading?: string | null;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface WorkspacePreferenceReplaceParams {
