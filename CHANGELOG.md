@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.23.0 (2026-07-29)
+
+Full Changelog: [v7.22.0...v7.23.0](https://github.com/trycourier/courier-node/compare/v7.22.0...v7.23.0)
+
+### Features
+
+* **broadcasts:** document Broadcasts CRUD REST API ([#170](https://github.com/trycourier/courier-node/issues/170)) ([381cf0d](https://github.com/trycourier/courier-node/commit/381cf0de43d27d651a6d5ea90ff7ed320733244e))
+
 ## 7.22.0 (2026-07-29)
 
 Full Changelog: [v7.21.0...v7.22.0](https://github.com/trycourier/courier-node/compare/v7.21.0...v7.22.0)
