@@ -7,6 +7,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Create a one-off send to a list or audience, author its content, then send it immediately or schedule it for later.
+ */
 export class Broadcasts extends APIResource {
   /**
    * Create a broadcast. Provisions a private notification template for the broadcast
