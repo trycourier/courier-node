@@ -7,9 +7,13 @@ import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
+/**
+ * Manage tenants — the organizations, teams, or accounts your users belong to — along with their users and default preferences.
+ */
 export class Items extends APIResource {
   /**
-   * Create or Replace Default Preferences For Topic
+   * Sets a tenant's default opt-in status for one subscription topic, which applies
+   * to every member unless a user sets their own override.
    *
    * @example
    * ```ts
@@ -31,7 +35,8 @@ export class Items extends APIResource {
   }
 
   /**
-   * Remove Default Preferences For Topic
+   * Removes a tenant's default preference for one subscription topic, addressed by
+   * tenant id and topic id.
    *
    * @example
    * ```ts

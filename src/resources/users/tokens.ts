@@ -6,9 +6,13 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Register and manage the APNS and FCM device tokens Courier delivers push notifications to.
+ */
 export class Tokens extends APIResource {
   /**
-   * Get single token available for a `:token`
+   * Returns one device token with its provider key, status and status reason, expiry
+   * date, and any properties stored alongside it.
    *
    * @example
    * ```ts
@@ -27,7 +31,8 @@ export class Tokens extends APIResource {
   }
 
   /**
-   * Apply a JSON Patch (RFC 6902) to the specified token.
+   * Applies a JSON Patch to a device token, changing its status, expiry, or
+   * properties without re-registering it.
    *
    * @example
    * ```ts
@@ -47,7 +52,8 @@ export class Tokens extends APIResource {
   }
 
   /**
-   * Gets all tokens available for a :user_id
+   * Returns every device token registered for a user, each with its provider key,
+   * status, and expiry date.
    *
    * @example
    * ```ts
@@ -59,7 +65,8 @@ export class Tokens extends APIResource {
   }
 
   /**
-   * Delete User Token
+   * Deletes one device token for a user, addressed by the token value, so push sends
+   * no longer target that device.
    *
    * @example
    * ```ts
@@ -77,7 +84,8 @@ export class Tokens extends APIResource {
   }
 
   /**
-   * Adds multiple tokens to a user and overwrites matching existing tokens.
+   * Registers several device tokens for a user in one call, overwriting any stored
+   * token with a matching value.
    *
    * @example
    * ```ts
@@ -92,7 +100,8 @@ export class Tokens extends APIResource {
   }
 
   /**
-   * Adds a single token to a user and overwrites a matching existing token.
+   * Registers one device token for a user against a provider key, overwriting the
+   * token if it already exists. Push sends resolve tokens per user.
    *
    * @example
    * ```ts

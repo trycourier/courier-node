@@ -9,6 +9,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Build, version, publish, invoke, and cancel multi-step notification workflows, along with the templates scoped to them.
+ */
 export class Templates extends APIResource {
   /**
    * Create a notification template scoped to this journey. Defaults to `DRAFT`
@@ -34,16 +37,32 @@ export class Templates extends APIResource {
    */
   create(
     templateID: string,
-    body: TemplateCreateParams,
+    params: TemplateCreateParams,
     options?: RequestOptions,
   ): APIPromise<JourneysAPI.JourneyTemplateGetResponse> {
-    return this._client.post(path`/journeys/${templateID}/templates`, { body, ...options });
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post(path`/journeys/${templateID}/templates`, {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
-   * Fetch a journey-scoped notification template by id. Pass `?version=draft`
-   * (default `published`) to retrieve the working draft, or `?version=vN` for a
-   * historical version.
+   * Returns a journey's own notification template with its name, brand, subscription
+   * topic, and content. Defaults to the published version.
    *
    * @example
    * ```ts
@@ -81,8 +100,8 @@ export class Templates extends APIResource {
   }
 
   /**
-   * Archive the journey-scoped notification template. Archived templates cannot be
-   * sent.
+   * Archives one journey's notification template, preventing further sends. Detach
+   * any send node referencing it beforehand.
    *
    * @example
    * ```ts
@@ -100,8 +119,8 @@ export class Templates extends APIResource {
   }
 
   /**
-   * List published versions of the journey-scoped notification template, ordered
-   * most recent first.
+   * Lists the published versions of a template that belongs to a journey, most
+   * recent first. Paged by cursor.
    *
    * @example
    * ```ts
@@ -121,9 +140,8 @@ export class Templates extends APIResource {
   }
 
   /**
-   * Publish the current draft of the journey-scoped notification template as a new
-   * version. Optionally roll back to a prior version by passing
-   * `{ "version": "vN" }`.
+   * Publishes a journey-scoped template's draft as a new version. Pass a version
+   * instead to roll back the template to an earlier publish.
    *
    * @example
    * ```ts
@@ -133,11 +151,25 @@ export class Templates extends APIResource {
    * ```
    */
   publish(notificationID: string, params: TemplatePublishParams, options?: RequestOptions): APIPromise<void> {
-    const { templateId, ...body } = params;
+    const {
+      templateId,
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
     return this._client.post(path`/journeys/${templateId}/templates/${notificationID}/publish`, {
       body,
       ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      headers: buildHeaders([
+        {
+          Accept: '*/*',
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
     });
   }
 
@@ -201,7 +233,8 @@ export class Templates extends APIResource {
   }
 
   /**
-   * Replace the journey-scoped notification template draft.
+   * Replaces the draft content of one journey's notification template. Publish it
+   * before send nodes referencing it render the change.
    *
    * @example
    * ```ts
@@ -228,11 +261,8 @@ export class Templates extends APIResource {
   }
 
   /**
-   * Retrieve the elemental content of a journey-scoped notification template. The
-   * response contains the versioned elements along with their content checksums,
-   * which can be used to detect changes between versions. Pass `?version=draft`
-   * (default `published`) to retrieve the working draft, or `?version=vN` for a
-   * historical version.
+   * Returns the Elemental elements and version of a journey-scoped template's
+   * content. Compare versions to see what changed between publishes.
    *
    * @example
    * ```ts
@@ -256,13 +286,43 @@ export class Templates extends APIResource {
 }
 
 export interface TemplateCreateParams {
+  /**
+   * Body param
+   */
   channel: string;
 
+  /**
+   * Body param
+   */
   notification: TemplateCreateParams.Notification;
 
+  /**
+   * Body param
+   */
   providerKey?: string;
 
+  /**
+   * Body param
+   */
   state?: string;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export namespace TemplateCreateParams {
@@ -340,6 +400,24 @@ export interface TemplatePublishParams {
    * Body param
    */
   version?: string;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface TemplatePutContentParams {

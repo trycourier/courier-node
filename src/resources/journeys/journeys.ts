@@ -22,16 +22,15 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Build, version, publish, invoke, and cancel multi-step notification workflows, along with the templates scoped to them.
+ */
 export class Journeys extends APIResource {
   templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
 
   /**
-   * Create a journey. Defaults to `DRAFT` state; pass `state: "PUBLISHED"` to
-   * publish on create. Send nodes are not allowed on `POST`. The standard flow is:
-   * create the journey shell here, add notification templates with
-   * `POST /journeys/{templateId}/templates`, then wire them into the journey with
-   * `PUT /journeys/{templateId}`. Call `POST /journeys/{templateId}/publish` to
-   * publish a draft after the fact.
+   * Creates a journey from a set of nodes, in draft state unless you pass a
+   * published state. Send nodes cannot be included until their templates exist.
    *
    * @example
    * ```ts
@@ -50,8 +49,25 @@ export class Journeys extends APIResource {
    * });
    * ```
    */
-  create(body: JourneyCreateParams, options?: RequestOptions): APIPromise<JourneyResponse> {
-    return this._client.post('/journeys', { body, ...options });
+  create(params: JourneyCreateParams, options?: RequestOptions): APIPromise<JourneyResponse> {
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post('/journeys', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -72,7 +88,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Get the list of journeys.
+   * Lists the workspace's journeys, each carrying a name, state, and enabled flag.
+   * Paged by cursor.
    *
    * @example
    * ```ts
@@ -87,8 +104,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Archive a journey. Archived journeys cannot be invoked. Existing journey runs
-   * continue to completion.
+   * Archives a journey so it can no longer be invoked. Runs already in flight
+   * continue to completion, so archiving never strands a user mid-sequence.
    *
    * @example
    * ```ts
@@ -103,12 +120,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Cancel journey runs. The request body must include EXACTLY ONE of
-   * `cancelation_token` (cancels every run associated with the token) or `run_id`
-   * (cancels a single tenant-scoped run). Supplying both or neither returns a `400`.
-   * A `run_id` that does not match a run for the tenant returns `404`. Cancelation
-   * is idempotent: a run that has already finished (`PROCESSED`/`ERROR`) or was
-   * already `CANCELED` is left unchanged and its current status is returned.
+   * Cancels in-flight journey runs, either every run sharing a cancelation token or
+   * one run by id. Use it to stop a sequence when the event resolves.
    *
    * @example
    * ```ts
@@ -117,13 +130,30 @@ export class Journeys extends APIResource {
    * });
    * ```
    */
-  cancel(body: JourneyCancelParams, options?: RequestOptions): APIPromise<CancelJourneyResponse> {
-    return this._client.post('/journeys/cancel', { body, ...options });
+  cancel(params: JourneyCancelParams, options?: RequestOptions): APIPromise<CancelJourneyResponse> {
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post('/journeys/cancel', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
-   * Invoke a journey by id or alias to start a new run. The response includes a
-   * `runId` identifying the run.
+   * Starts a journey run for one user and returns a runId. Runs execute
+   * asynchronously, so the response arrives before any message is sent.
    *
    * @example
    * ```ts
@@ -138,14 +168,32 @@ export class Journeys extends APIResource {
    */
   invoke(
     templateID: string,
-    body: JourneyInvokeParams,
+    params: JourneyInvokeParams,
     options?: RequestOptions,
   ): APIPromise<JourneysInvokeResponse> {
-    return this._client.post(path`/journeys/${templateID}/invoke`, { body, ...options });
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post(path`/journeys/${templateID}/invoke`, {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
-   * List published versions of a journey, ordered most recent first.
+   * Lists a journey's published versions, most recent first, so you have a version
+   * id to roll back to. Paged by cursor.
    *
    * @example
    * ```ts
@@ -158,9 +206,8 @@ export class Journeys extends APIResource {
   }
 
   /**
-   * Publish the current draft as a new version. Body is optional; pass
-   * `{ "version": "vN" }` to roll back to a prior version instead. Returns 404 if
-   * the journey has no draft to publish.
+   * Publishes a journey's current draft as a new version, making it live for new
+   * runs. Pass a version instead to roll back to an earlier one.
    *
    * @example
    * ```ts
@@ -169,18 +216,32 @@ export class Journeys extends APIResource {
    */
   publish(
     templateID: string,
-    body: JourneyPublishParams | null | undefined = {},
+    params: JourneyPublishParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<JourneyResponse> {
-    return this._client.post(path`/journeys/${templateID}/publish`, { body, ...options });
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params ?? {};
+    return this._client.post(path`/journeys/${templateID}/publish`, {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
-   * Replace the journey draft. Updates the working draft only; call
-   * `POST /journeys/{templateId}/publish` to make it live, or pass
-   * `state: "PUBLISHED"` in this request to publish immediately. Send-node
-   * `template` ids must already exist and be scoped to this journey, and node ids
-   * must not be claimed by another journey.
+   * Replaces a journey's working draft, leaving the published version live until you
+   * publish. Reach for this when editing a journey already running.
    *
    * @example
    * ```ts
@@ -1135,16 +1196,43 @@ export interface JourneysListResponse {
 }
 
 export interface JourneyCreateParams {
+  /**
+   * Body param
+   */
   name: string;
 
+  /**
+   * Body param
+   */
   nodes: Array<JourneyNode>;
 
+  /**
+   * Body param
+   */
   enabled?: boolean;
 
   /**
-   * Lifecycle state of a journey.
+   * Body param: Lifecycle state of a journey.
    */
   state?: JourneyState;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface JourneyRetrieveParams {
@@ -1172,26 +1260,68 @@ export type JourneyCancelParams = JourneyCancelParams.ByCancelationToken | Journ
 
 export declare namespace JourneyCancelParams {
   export interface ByCancelationToken {
+    /**
+     * Body param
+     */
     cancelation_token: string;
+
+    /**
+     * Header param: A unique key that makes this request idempotent. If Courier
+     * receives another request with the same `Idempotency-Key`, it returns the stored
+     * response from the first request without performing the operation again
+     * (including the original status code and any error). Use it to safely retry
+     * `POST` requests after network failures without risking duplicate sends. The key
+     * is scoped to this endpoint.
+     */
+    'Idempotency-Key'?: string;
+
+    /**
+     * Header param: How long the idempotency key remains valid, as a Unix epoch
+     * timestamp in seconds or an ISO 8601 date string. Only applies when
+     * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+     * maximum is 1 year.
+     */
+    'x-idempotency-expiration'?: string;
   }
 
   export interface ByRunID {
+    /**
+     * Body param
+     */
     run_id: string;
+
+    /**
+     * Header param: A unique key that makes this request idempotent. If Courier
+     * receives another request with the same `Idempotency-Key`, it returns the stored
+     * response from the first request without performing the operation again
+     * (including the original status code and any error). Use it to safely retry
+     * `POST` requests after network failures without risking duplicate sends. The key
+     * is scoped to this endpoint.
+     */
+    'Idempotency-Key'?: string;
+
+    /**
+     * Header param: How long the idempotency key remains valid, as a Unix epoch
+     * timestamp in seconds or an ISO 8601 date string. Only applies when
+     * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+     * maximum is 1 year.
+     */
+    'x-idempotency-expiration'?: string;
   }
 }
 
 export interface JourneyInvokeParams {
   /**
-   * Data payload passed to the journey. The expected shape can be predefined using
-   * the schema builder in the journey editor. This data is available in journey
-   * steps for condition evaluation and template variable interpolation. Can also
-   * contain user identifiers (user_id, userId, anonymousId) if not provided
-   * elsewhere.
+   * Body param: Data payload passed to the journey. The expected shape can be
+   * predefined using the schema builder in the journey editor. This data is
+   * available in journey steps for condition evaluation and template variable
+   * interpolation. Can also contain user identifiers (user_id, userId, anonymousId)
+   * if not provided elsewhere.
    */
   data?: { [key: string]: unknown };
 
   /**
-   * Profile data for the user. Can contain contact information (email,
+   * Body param: Profile data for the user. Can contain contact information (email,
    * phone_number), user identifiers (user_id, userId, anonymousId), or any custom
    * profile fields. Profile fields are merged with any existing stored profile for
    * the user. Include context.tenant_id to load a tenant-scoped profile for
@@ -1200,14 +1330,53 @@ export interface JourneyInvokeParams {
   profile?: { [key: string]: unknown };
 
   /**
-   * A unique identifier for the user. If not provided, the system will attempt to
-   * resolve the user identifier from profile or data objects.
+   * Body param: A unique identifier for the user. If not provided, the system will
+   * attempt to resolve the user identifier from profile or data objects.
    */
   user_id?: string;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface JourneyPublishParams {
+  /**
+   * Body param
+   */
   version?: string;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface JourneyReplaceParams {

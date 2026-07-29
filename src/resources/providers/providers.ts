@@ -9,38 +9,80 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Configure the channel providers Courier delivers through, and browse the provider types it supports.
+ */
 export class Providers extends APIResource {
   catalog: CatalogAPI.Catalog = new CatalogAPI.Catalog(this._client);
 
   /**
-   * Create a new provider configuration. The `provider` field must be a known
-   * Courier provider key (see catalog).
+   * Configures a provider integration from a Courier provider key and its settings.
+   * Check the catalog endpoint for the schema each provider expects.
+   *
+   * @example
+   * ```ts
+   * const provider = await client.providers.create({
+   *   provider: 'provider',
+   * });
+   * ```
    */
-  create(body: ProviderCreateParams, options?: RequestOptions): APIPromise<Provider> {
-    return this._client.post('/providers', { body, ...options });
+  create(params: ProviderCreateParams, options?: RequestOptions): APIPromise<Provider> {
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post('/providers', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
-   * Fetch a single provider configuration by ID.
+   * Returns one configured provider by id, including its channel, provider key,
+   * alias, title, and current settings.
+   *
+   * @example
+   * ```ts
+   * const provider = await client.providers.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<Provider> {
     return this._client.get(path`/providers/${id}`, options);
   }
 
   /**
-   * Replace an existing provider configuration. The `provider` key is required and
-   * determines which provider-specific settings schema is applied. All other fields
-   * are optional — omitted fields are cleared from the stored configuration (this is
-   * a full replacement, not a partial merge). Changing the provider type for an
-   * existing configuration is not supported.
+   * Replaces a provider's configuration in full, clearing any field you omit rather
+   * than merging it. Send the complete settings object.
+   *
+   * @example
+   * ```ts
+   * const provider = await client.providers.update('id', {
+   *   provider: 'provider',
+   * });
+   * ```
    */
   update(id: string, body: ProviderUpdateParams, options?: RequestOptions): APIPromise<Provider> {
     return this._client.put(path`/providers/${id}`, { body, ...options });
   }
 
   /**
-   * List configured provider integrations for the current workspace. Supports
-   * cursor-based pagination.
+   * Lists the provider integrations configured in the workspace, one entry per
+   * channel and provider key with its alias and settings.
+   *
+   * @example
+   * ```ts
+   * const providers = await client.providers.list();
+   * ```
    */
   list(
     query: ProviderListParams | null | undefined = {},
@@ -50,8 +92,13 @@ export class Providers extends APIResource {
   }
 
   /**
-   * Delete a provider configuration. Returns 409 if the provider is still referenced
-   * by routing or notifications.
+   * Deletes a provider configuration, which fails while routing strategies or
+   * templates still reference it. Update those references first.
+   *
+   * @example
+   * ```ts
+   * await client.providers.delete('id');
+   * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/providers/${id}`, {
@@ -168,27 +215,45 @@ export interface ProviderListResponse {
 
 export interface ProviderCreateParams {
   /**
-   * The provider key identifying the type (e.g. "sendgrid", "twilio"). Must be a
-   * known Courier provider — see the catalog endpoint for valid keys.
+   * Body param: The provider key identifying the type (e.g. "sendgrid", "twilio").
+   * Must be a known Courier provider — see the catalog endpoint for valid keys.
    */
   provider: string;
 
   /**
-   * Optional alias for this configuration.
+   * Body param: Optional alias for this configuration.
    */
   alias?: string;
 
   /**
-   * Provider-specific settings (snake_case keys). Defaults to an empty object when
-   * omitted. Use the catalog endpoint to discover required fields for a given
-   * provider — omitting a required field returns a 400 validation error.
+   * Body param: Provider-specific settings (snake_case keys). Defaults to an empty
+   * object when omitted. Use the catalog endpoint to discover required fields for a
+   * given provider — omitting a required field returns a 400 validation error.
    */
   settings?: { [key: string]: unknown };
 
   /**
-   * Optional display title. Omit to use "Default Configuration".
+   * Body param: Optional display title. Omit to use "Default Configuration".
    */
   title?: string;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface ProviderUpdateParams {

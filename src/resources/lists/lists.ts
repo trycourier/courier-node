@@ -17,18 +17,35 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Manage static groups of users that you subscribe explicitly, and send to them by list id or list pattern.
+ */
 export class Lists extends APIResource {
   subscriptions: SubscriptionsAPI.Subscriptions = new SubscriptionsAPI.Subscriptions(this._client);
 
   /**
-   * Returns a list based on the list ID provided.
+   * Returns one list by id with its name and created and updated timestamps. Fetch
+   * its subscribers separately with the subscriptions endpoint.
+   *
+   * @example
+   * ```ts
+   * const subscriptionList = await client.lists.retrieve(
+   *   'list_id',
+   * );
+   * ```
    */
   retrieve(listID: string, options?: RequestOptions): APIPromise<SubscriptionList> {
     return this._client.get(path`/lists/${listID}`, options);
   }
 
   /**
-   * Create or replace an existing list with the supplied values.
+   * Creates or replaces a list from a name and preferences. Subscribers are managed
+   * through the separate subscriptions endpoints.
+   *
+   * @example
+   * ```ts
+   * await client.lists.update('list_id', { name: 'name' });
+   * ```
    */
   update(listID: string, body: ListUpdateParams, options?: RequestOptions): APIPromise<void> {
     return this._client.put(path`/lists/${listID}`, {
@@ -39,7 +56,13 @@ export class Lists extends APIResource {
   }
 
   /**
-   * Returns all of the lists, with the ability to filter based on a pattern.
+   * Returns the workspace's lists, filterable by a pattern to fetch a subset such as
+   * every regional list. Paged by cursor.
+   *
+   * @example
+   * ```ts
+   * const lists = await client.lists.list();
+   * ```
    */
   list(
     query: ListListParams | null | undefined = {},
@@ -49,7 +72,13 @@ export class Lists extends APIResource {
   }
 
   /**
-   * Delete a list by list ID.
+   * Deletes a list, halting sends that target it. A previously deleted list can be
+   * brought back with the companion restore endpoint.
+   *
+   * @example
+   * ```ts
+   * await client.lists.delete('list_id');
+   * ```
    */
   delete(listID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/lists/${listID}`, {
@@ -59,7 +88,13 @@ export class Lists extends APIResource {
   }
 
   /**
-   * Restore a previously deleted list.
+   * Restores a previously deleted list along with its subscribers, so a list removed
+   * by mistake can be brought back rather than rebuilt.
+   *
+   * @example
+   * ```ts
+   * await client.lists.restore('list_id');
+   * ```
    */
   restore(listID: string, body: ListRestoreParams, options?: RequestOptions): APIPromise<void> {
     return this._client.put(path`/lists/${listID}/restore`, {

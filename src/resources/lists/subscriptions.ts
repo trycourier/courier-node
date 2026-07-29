@@ -8,9 +8,20 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Manage static groups of users that you subscribe explicitly, and send to them by list id or list pattern.
+ */
 export class Subscriptions extends APIResource {
   /**
-   * Get the list's subscriptions.
+   * Returns the users subscribed to a list with paging, each with the preferences
+   * recorded for that subscription.
+   *
+   * @example
+   * ```ts
+   * const subscriptions = await client.lists.subscriptions.list(
+   *   'list_id',
+   * );
+   * ```
    */
   list(
     listID: string,
@@ -23,18 +34,46 @@ export class Subscriptions extends APIResource {
   /**
    * Subscribes additional users to the list, without modifying existing
    * subscriptions. If the list does not exist, it will be automatically created.
+   *
+   * @example
+   * ```ts
+   * await client.lists.subscriptions.add('list_id', {
+   *   recipients: [{ recipientId: 'recipientId' }],
+   * });
+   * ```
    */
-  add(listID: string, body: SubscriptionAddParams, options?: RequestOptions): APIPromise<void> {
+  add(listID: string, params: SubscriptionAddParams, options?: RequestOptions): APIPromise<void> {
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
     return this._client.post(path`/lists/${listID}/subscriptions`, {
       body,
       ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      headers: buildHeaders([
+        {
+          Accept: '*/*',
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
     });
   }
 
   /**
    * Subscribes the users to the list, overwriting existing subscriptions. If the
    * list does not exist, it will be automatically created.
+   *
+   * @example
+   * ```ts
+   * await client.lists.subscriptions.subscribe('list_id', {
+   *   recipients: [{ recipientId: 'recipientId' }],
+   * });
+   * ```
    */
   subscribe(listID: string, body: SubscriptionSubscribeParams, options?: RequestOptions): APIPromise<void> {
     return this._client.put(path`/lists/${listID}/subscriptions`, {
@@ -45,8 +84,15 @@ export class Subscriptions extends APIResource {
   }
 
   /**
-   * Subscribe a user to an existing list (note: if the List does not exist, it will
-   * be automatically created).
+   * Subscribes one user to a list, creating the list if it does not yet exist.
+   * Optional preferences apply to this subscription only.
+   *
+   * @example
+   * ```ts
+   * await client.lists.subscriptions.subscribeUser('user_id', {
+   *   list_id: 'list_id',
+   * });
+   * ```
    */
   subscribeUser(
     userID: string,
@@ -62,7 +108,16 @@ export class Subscriptions extends APIResource {
   }
 
   /**
-   * Delete a subscription to a list by list ID and user ID.
+   * Removes one user's subscription to a list, addressed by list id and user id. The
+   * user's profile and other subscriptions are separate resources.
+   *
+   * @example
+   * ```ts
+   * await client.lists.subscriptions.unsubscribeUser(
+   *   'user_id',
+   *   { list_id: 'list_id' },
+   * );
+   * ```
    */
   unsubscribeUser(
     userID: string,
@@ -101,7 +156,28 @@ export interface SubscriptionListParams {
 }
 
 export interface SubscriptionAddParams {
+  /**
+   * Body param
+   */
   recipients: Array<ListsAPI.PutSubscriptionsRecipient>;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface SubscriptionSubscribeParams {

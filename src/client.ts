@@ -101,6 +101,7 @@ import {
   DigestInstanceListResponse,
   Digests,
 } from './resources/digests/digests';
+import { Inbox } from './resources/inbox/inbox';
 import {
   CancelJourneyRequest,
   CancelJourneyResponse,
@@ -961,24 +962,79 @@ export class Courier {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Send a message to one or more recipients — users, lists, audiences, or tenants — across every channel you have configured.
+   */
   send: API.Send = new API.Send(this);
+  /**
+   * Define filter-based groups whose membership Courier recalculates as user profiles change.
+   */
   audiences: API.Audiences = new API.Audiences(this);
+  /**
+   * Configure the channel providers Courier delivers through, and browse the provider types it supports.
+   */
   providers: API.Providers = new API.Providers(this);
+  /**
+   * Read the audit trail of configuration and access changes in your workspace.
+   */
   auditEvents: API.AuditEvents = new API.AuditEvents(this);
+  /**
+   * Issue scoped, short-lived JWTs so client-side SDKs — Inbox, Preferences, and the embedded designer — can call Courier as a single user. Server-side requests authenticate with your workspace API key instead.
+   */
   auth: API.Auth = new API.Auth(this);
+  /**
+   * Invoke a stored automation template or an ad hoc automation defined in the request.
+   */
   automations: API.Automations = new API.Automations(this);
+  /**
+   * Build, version, publish, invoke, and cancel multi-step notification workflows, along with the templates scoped to them.
+   */
   journeys: API.Journeys = new API.Journeys(this);
+  /**
+   * Manage the logos, colors, and layout that give the templates you send a consistent look.
+   */
   brands: API.Brands = new API.Brands(this);
   digests: API.Digests = new API.Digests(this);
+  /**
+   * Record an inbound event that triggers the journeys and automations mapped to it.
+   */
   inbound: API.Inbound = new API.Inbound(this);
+  /**
+   * Manage static groups of users that you subscribe explicitly, and send to them by list id or list pattern.
+   */
   lists: API.Lists = new API.Lists(this);
+  inbox: API.Inbox = new API.Inbox(this);
+  /**
+   * Look up the messages Courier has accepted, inspect their delivery history and rendered output, and cancel, resend, or archive them.
+   */
   messages: API.Messages = new API.Messages(this);
+  /**
+   * Look up the messages Courier has accepted, inspect their delivery history and rendered output, and cancel, resend, or archive them.
+   */
   requests: API.Requests = new API.Requests(this);
+  /**
+   * Create, update, version, publish, and localize notification templates and their content.
+   */
   notifications: API.Notifications = new API.Notifications(this);
+  /**
+   * Define reusable channel routing and failover strategies, and see which templates use them.
+   */
   routingStrategies: API.RoutingStrategies = new API.RoutingStrategies(this);
+  /**
+   * Manage the workspace catalog of subscription topics, the sections that group them, and publishing the preference page.
+   */
   workspacePreferences: API.WorkspacePreferences = new API.WorkspacePreferences(this);
+  /**
+   * Store the contact information Courier delivers to for each user — email, phone number, push tokens, and any custom data you send to.
+   */
   profiles: API.Profiles = new API.Profiles(this);
+  /**
+   * Manage tenants — the organizations, teams, or accounts your users belong to — along with their users and default preferences.
+   */
   tenants: API.Tenants = new API.Tenants(this);
+  /**
+   * Store and retrieve the translation strings Courier uses to render localized template content.
+   */
   translations: API.Translations = new API.Translations(this);
   users: API.Users = new API.Users(this);
 }
@@ -994,6 +1050,7 @@ Courier.Brands = Brands;
 Courier.Digests = Digests;
 Courier.Inbound = Inbound;
 Courier.Lists = Lists;
+Courier.Inbox = Inbox;
 Courier.Messages = Messages;
 Courier.Requests = Requests;
 Courier.Notifications = Notifications;
@@ -1147,6 +1204,8 @@ export declare namespace Courier {
     type ListListParams as ListListParams,
     type ListRestoreParams as ListRestoreParams,
   };
+
+  export { Inbox as Inbox };
 
   export {
     Messages as Messages,

@@ -54,6 +54,8 @@ describe('resource templates', () => {
       },
       providerKey: 'x',
       state: 'state',
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 
@@ -149,6 +151,8 @@ describe('resource templates', () => {
     const response = await client.journeys.templates.publish('x', {
       templateId: 'x',
       version: 'v321669910225',
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 

@@ -65,6 +65,8 @@ describe('resource routingStrategies', () => {
         },
       },
       tags: ['production', 'email'],
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 

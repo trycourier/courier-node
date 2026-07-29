@@ -6,12 +6,18 @@ import * as ProvidersAPI from './providers';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
+/**
+ * Configure the channel providers Courier delivers through, and browse the provider types it supports.
+ */
 export class Catalog extends APIResource {
   /**
-   * Returns the catalog of available provider types with their display names,
-   * descriptions, and configuration schema fields (snake_case, with `type` and
-   * `required`). Providers with no configurable schema return only `provider`,
-   * `name`, and `description`.
+   * Returns the provider types Courier supports, each with a display name,
+   * description, and the configuration fields it requires.
+   *
+   * @example
+   * ```ts
+   * const catalogs = await client.providers.catalog.list();
+   * ```
    */
   list(
     query: CatalogListParams | null | undefined = {},

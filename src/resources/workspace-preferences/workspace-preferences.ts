@@ -15,13 +15,15 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Manage the workspace catalog of subscription topics, the sections that group them, and publishing the preference page.
+ */
 export class WorkspacePreferences extends APIResource {
   topics: TopicsAPI.Topics = new TopicsAPI.Topics(this._client);
 
   /**
-   * Create a workspace preference. The workspace preference id is generated and
-   * returned. Topics are created inside a workspace preference via POST
-   * /preferences/sections/{section_id}/topics.
+   * Creates a workspace preference and returns its generated id. Add subscription
+   * topics to it afterwards with the topics endpoint.
    *
    * @example
    * ```ts
@@ -32,14 +34,32 @@ export class WorkspacePreferences extends APIResource {
    * ```
    */
   create(
-    body: WorkspacePreferenceCreateParams,
+    params: WorkspacePreferenceCreateParams,
     options?: RequestOptions,
   ): APIPromise<WorkspacePreferenceGetResponse> {
-    return this._client.post('/preferences/sections', { body, ...options });
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post('/preferences/sections', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
-   * Retrieve a workspace preference by id, including its topics.
+   * Returns one workspace preference by id, including its subscription topics,
+   * routing options, and custom routing flag.
    *
    * @example
    * ```ts
@@ -52,8 +72,8 @@ export class WorkspacePreferences extends APIResource {
   }
 
   /**
-   * List the workspace's preferences. Each workspace preference embeds its topics.
-   * Scoped to the workspace of the API key.
+   * Returns the workspace's preferences, each embedding its subscription topics,
+   * routing options, and whether custom routing is allowed.
    *
    * @example
    * ```ts
@@ -82,9 +102,8 @@ export class WorkspacePreferences extends APIResource {
   }
 
   /**
-   * Publish the workspace's preferences page. Takes a snapshot of every workspace
-   * preference with its topics under a new published version, making the current
-   * state visible on the hosted preferences page (non-draft).
+   * Publishes the workspace preference page, snapshotting every preference and
+   * topic, and returns the page id and a preview URL.
    *
    * @example
    * ```ts
@@ -93,10 +112,27 @@ export class WorkspacePreferences extends APIResource {
    * ```
    */
   publish(
-    body: WorkspacePreferencePublishParams | null | undefined = {},
+    params: WorkspacePreferencePublishParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<PublishPreferencesResponse> {
-    return this._client.post('/preferences/publish', { body, ...options });
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params ?? {};
+    return this._client.post('/preferences/publish', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -444,42 +480,81 @@ export interface WorkspacePreferenceTopicReplaceRequest {
 
 export interface WorkspacePreferenceCreateParams {
   /**
-   * Human-readable name for the workspace preference.
+   * Body param: Human-readable name for the workspace preference.
    */
   name: string;
 
   /**
-   * Optional description shown under the section on the hosted preferences page.
+   * Body param: Optional description shown under the section on the hosted
+   * preferences page.
    */
   description?: string | null;
 
   /**
-   * Whether the workspace preference defines custom routing for its topics.
+   * Body param: Whether the workspace preference defines custom routing for its
+   * topics.
    */
   has_custom_routing?: boolean | null;
 
   /**
-   * Default channels for the workspace preference. Defaults to empty if omitted.
+   * Body param: Default channels for the workspace preference. Defaults to empty if
+   * omitted.
    */
   routing_options?: Array<Shared.ChannelClassification> | null;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface WorkspacePreferencePublishParams {
   /**
-   * Brand for the hosted page - "default" (workspace default brand), "none" (no
-   * brand), or a specific brand id. Defaults to "default".
+   * Body param: Brand for the hosted page - "default" (workspace default brand),
+   * "none" (no brand), or a specific brand id. Defaults to "default".
    */
   brand_id?: string | null;
 
   /**
-   * Description shown under the heading on the hosted preferences page.
+   * Body param: Description shown under the heading on the hosted preferences page.
    */
   description?: string | null;
 
   /**
-   * Heading shown at the top of the hosted preferences page.
+   * Body param: Heading shown at the top of the hosted preferences page.
    */
   heading?: string | null;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface WorkspacePreferenceReplaceParams {

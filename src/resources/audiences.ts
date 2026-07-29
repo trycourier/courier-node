@@ -7,16 +7,21 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Define filter-based groups whose membership Courier recalculates as user profiles change.
+ */
 export class Audiences extends APIResource {
   /**
-   * Returns the specified audience by id.
+   * Returns one audience with its name, description, and the filter and AND or OR
+   * operator that decide which users belong to it.
    */
   retrieve(audienceID: string, options?: RequestOptions): APIPromise<Audience> {
     return this._client.get(path`/audiences/${audienceID}`, options);
   }
 
   /**
-   * Creates or updates audience.
+   * Creates or replaces an audience from a filter and an AND or OR operator.
+   * Membership recalculates automatically as profiles change.
    */
   update(
     audienceID: string,
@@ -27,7 +32,8 @@ export class Audiences extends APIResource {
   }
 
   /**
-   * Get the audiences associated with the authorization token.
+   * Returns the audiences in the workspace with paging. Audiences are filter-based
+   * groups that recalculate as user profiles change.
    */
   list(
     query: AudienceListParams | null | undefined = {},
@@ -37,7 +43,8 @@ export class Audiences extends APIResource {
   }
 
   /**
-   * Deletes the specified audience.
+   * Deletes an audience permanently, so update any caller sending to it by audience
+   * id first. Those sends fail once the audience is gone.
    */
   delete(audienceID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/audiences/${audienceID}`, {
@@ -47,7 +54,8 @@ export class Audiences extends APIResource {
   }
 
   /**
-   * Get list of members of an audience.
+   * Returns the users currently matching an audience filter, with paging. Membership
+   * is recalculated, so results shift as profiles change.
    */
   listMembers(
     audienceID: string,

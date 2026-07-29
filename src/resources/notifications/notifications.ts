@@ -16,6 +16,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Create, update, version, publish, and localize notification templates and their content.
+ */
 export class Notifications extends APIResource {
   checks: ChecksAPI.Checks = new ChecksAPI.Checks(this._client);
 
@@ -46,8 +49,28 @@ export class Notifications extends APIResource {
    *   });
    * ```
    */
-  create(body: NotificationCreateParams, options?: RequestOptions): APIPromise<NotificationTemplateResponse> {
-    return this._client.post('/notifications', { body, ...options });
+  create(
+    params: NotificationCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<NotificationTemplateResponse> {
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post('/notifications', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -69,7 +92,8 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * List notification templates in your workspace.
+   * Lists the workspace's notification templates. Each carries a name, tags, brand,
+   * routing, and its draft or published state.
    *
    * @example
    * ```ts
@@ -84,7 +108,8 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Archive a notification template.
+   * Archives a notification template, preventing new sends from referencing it. The
+   * template stays retrievable for its version history.
    *
    * @example
    * ```ts
@@ -99,12 +124,9 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Duplicate a notification template. Creates a standalone copy within the same
-   * workspace and environment, with " COPY" appended to the title. The copy clones
-   * the source draft's tags, brand, subscription topic, routing strategy, channels,
-   * and content, and is always created as a standalone template (it is not linked to
-   * any journey or broadcast, even if the source was). Templates that are scoped to
-   * a journey or a broadcast cannot be duplicated through this endpoint.
+   * Copies a notification template within the same workspace and environment,
+   * appending " COPY" to the title. The copy is standalone and independently
+   * editable.
    *
    * @example
    * ```ts
@@ -117,7 +139,8 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * List versions of a notification template.
+   * Returns a notification template's published versions, most recent first, for
+   * comparison or rollback. Paged.
    *
    * @example
    * ```ts
@@ -144,20 +167,33 @@ export class Notifications extends APIResource {
    */
   publish(
     id: string,
-    body: NotificationPublishParams | null | undefined = {},
+    params: NotificationPublishParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<void> {
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params ?? {};
     return this._client.post(path`/notifications/${id}/publish`, {
       body,
       ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+      headers: buildHeaders([
+        {
+          Accept: '*/*',
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
     });
   }
 
   /**
-   * Replace the elemental content of a notification template. Overwrites all
-   * elements in the template with the provided content. Only supported for V2
-   * (elemental) templates.
+   * Replaces all Elemental content in a template, overwriting every existing
+   * element. Supported for V2 templates only, not V1 blocks and channels.
    *
    * @example
    * ```ts
@@ -180,8 +216,8 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Update a single element within a notification template. Only supported for V2
-   * (elemental) templates.
+   * Replaces one Elemental element in a template, addressed by its element id.
+   * Supported for V2 templates only, not V1 blocks and channels.
    *
    * @example
    * ```ts
@@ -204,9 +240,8 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Set locale-specific content overrides for a notification template. Each element
-   * override must reference an existing element by ID. Only supported for V2
-   * (elemental) templates.
+   * Sets locale-specific content overrides for a template. Each override must
+   * reference an element that already exists in the default content.
    *
    * @example
    * ```ts
@@ -231,7 +266,8 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Replace a notification template. All fields are required.
+   * Replaces a notification template in full, so send every field rather than only
+   * the ones you want changed. Publish separately to make it live.
    *
    * @example
    * ```ts
@@ -261,10 +297,8 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Retrieve the content of a notification template. The response shape depends on
-   * whether the template uses V1 (blocks/channels) or V2 (elemental) content. Use
-   * the `version` query parameter to select draft, published, or a specific
-   * historical version.
+   * Returns a template's content and checksum. V2 templates return Elemental
+   * elements, while V1 templates return blocks and channels instead.
    *
    * @example
    * ```ts
@@ -805,16 +839,34 @@ export type NotificationRetrieveContentResponse = NotificationContentGetResponse
 
 export interface NotificationCreateParams {
   /**
-   * Core template fields used in POST and PUT request bodies (nested under a
-   * `notification` key) and returned at the top level in responses.
+   * Body param: Core template fields used in POST and PUT request bodies (nested
+   * under a `notification` key) and returned at the top level in responses.
    */
   notification: NotificationTemplatePayload;
 
   /**
-   * Template state after creation. Case-insensitive input, normalized to uppercase
-   * in the response. Defaults to "DRAFT".
+   * Body param: Template state after creation. Case-insensitive input, normalized to
+   * uppercase in the response. Defaults to "DRAFT".
    */
   state?: 'DRAFT' | 'PUBLISHED';
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface NotificationRetrieveParams {
@@ -856,9 +908,28 @@ export interface NotificationListVersionsParams {
 
 export interface NotificationPublishParams {
   /**
-   * Historical version to publish (e.g. "v001"). Omit to publish the current draft.
+   * Body param: Historical version to publish (e.g. "v001"). Omit to publish the
+   * current draft.
    */
   version?: string;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface NotificationPutContentParams {

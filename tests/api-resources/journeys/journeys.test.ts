@@ -48,6 +48,8 @@ describe('resource journeys', () => {
       ],
       enabled: true,
       state: 'DRAFT',
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 
@@ -117,7 +119,11 @@ describe('resource journeys', () => {
 
   // Mock server tests are disabled
   test.skip('cancel: required and optional params', async () => {
-    const response = await client.journeys.cancel({ cancelation_token: 'x' });
+    const response = await client.journeys.cancel({
+      cancelation_token: 'x',
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
+    });
   });
 
   // Mock server tests are disabled
@@ -160,7 +166,15 @@ describe('resource journeys', () => {
   test.skip('publish: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.journeys.publish('x', { version: 'v321669910225' }, { path: '/_stainless_unknown_path' }),
+      client.journeys.publish(
+        'x',
+        {
+          version: 'v321669910225',
+          'Idempotency-Key': 'order-ORD-456-user-123',
+          'x-idempotency-expiration': '1785312000',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(Courier.NotFoundError);
   });
 

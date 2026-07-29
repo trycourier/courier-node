@@ -27,6 +27,8 @@ describe('resource workspacePreferences', () => {
       description: 'description',
       has_custom_routing: true,
       routing_options: ['direct_message'],
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 
@@ -87,6 +89,8 @@ describe('resource workspacePreferences', () => {
           brand_id: 'brand_id',
           description: 'description',
           heading: 'heading',
+          'Idempotency-Key': 'order-ORD-456-user-123',
+          'x-idempotency-expiration': '1785312000',
         },
         { path: '/_stainless_unknown_path' },
       ),

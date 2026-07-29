@@ -8,11 +8,13 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Manage the workspace catalog of subscription topics, the sections that group them, and publishing the preference page.
+ */
 export class Topics extends APIResource {
   /**
-   * Create a subscription preference topic inside a workspace preference. Fails with
-   * 404 if the workspace preference does not exist. The topic id is generated and
-   * returned.
+   * Creates a subscription topic inside a workspace preference. The default status
+   * sets whether users start opted in, opted out, or required.
    *
    * @example
    * ```ts
@@ -25,16 +27,32 @@ export class Topics extends APIResource {
    */
   create(
     sectionID: string,
-    body: TopicCreateParams,
+    params: TopicCreateParams,
     options?: RequestOptions,
   ): APIPromise<WorkspacePreferencesAPI.WorkspacePreferenceTopicGetResponse> {
-    return this._client.post(path`/preferences/sections/${sectionID}/topics`, { body, ...options });
+    const {
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post(path`/preferences/sections/${sectionID}/topics`, {
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
-   * Retrieve a topic within a workspace preference. Returns 404 if the workspace
-   * preference does not exist, the topic does not exist, or the topic belongs to a
-   * different workspace preference.
+   * Returns one subscription topic with its default status, routing options, allowed
+   * preferences, and unsubscribe header setting.
    *
    * @example
    * ```ts
@@ -55,7 +73,8 @@ export class Topics extends APIResource {
   }
 
   /**
-   * List the topics in a workspace preference.
+   * Returns the subscription topics inside a workspace preference, each with its
+   * default status and routing options.
    *
    * @example
    * ```ts
@@ -73,8 +92,8 @@ export class Topics extends APIResource {
   }
 
   /**
-   * Archive a topic and remove it from its workspace preference. Same 404 rules as
-   * GET.
+   * Archives a subscription topic and removes it from its workspace preference,
+   * addressed by section id and topic id.
    *
    * @example
    * ```ts
@@ -124,40 +143,62 @@ export class Topics extends APIResource {
 
 export interface TopicCreateParams {
   /**
-   * The default subscription status applied when a recipient has not set their own.
+   * Body param: The default subscription status applied when a recipient has not set
+   * their own.
    */
   default_status: 'OPTED_OUT' | 'OPTED_IN' | 'REQUIRED';
 
   /**
-   * Human-readable name for the preference topic.
+   * Body param: Human-readable name for the preference topic.
    */
   name: string;
 
   /**
-   * Preference controls a recipient may customize for this topic. Defaults to empty
-   * if omitted.
+   * Body param: Preference controls a recipient may customize for this topic.
+   * Defaults to empty if omitted.
    */
   allowed_preferences?: Array<'snooze' | 'channel_preferences'> | null;
 
   /**
-   * Optional description shown under the topic on the hosted preferences page.
+   * Body param: Optional description shown under the topic on the hosted preferences
+   * page.
    */
   description?: string | null;
 
   /**
-   * Whether to include a list-unsubscribe header on emails for this topic.
+   * Body param: Whether to include a list-unsubscribe header on emails for this
+   * topic.
    */
   include_unsubscribe_header?: boolean | null;
 
   /**
-   * Default channels delivered for this topic. Defaults to empty if omitted.
+   * Body param: Default channels delivered for this topic. Defaults to empty if
+   * omitted.
    */
   routing_options?: Array<Shared.ChannelClassification> | null;
 
   /**
-   * Arbitrary metadata associated with the topic.
+   * Body param: Arbitrary metadata associated with the topic.
    */
   topic_data?: { [key: string]: unknown } | null;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export interface TopicRetrieveParams {

@@ -7,9 +7,13 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Read and write a single user's notification preferences, per topic and per channel.
+ */
 export class Preferences extends APIResource {
   /**
-   * Fetch all user preferences.
+   * Returns a user's preference overrides with paging, one entry per subscription
+   * topic they have set a choice for.
    *
    * @example
    * ```ts
@@ -27,23 +31,8 @@ export class Preferences extends APIResource {
   }
 
   /**
-   * Replace a user's complete set of preference overrides in a single request. The
-   * topics in the request body become the recipient's entire set of overrides:
-   * listed topics are created or updated, and every existing override that is not
-   * included in the body is reset to its topic default. Submitting an empty `topics`
-   * array is a valid clear-all that resets every existing override.
-   *
-   * This operation is validation-atomic (all-or-nothing): structural validation
-   * fails fast with a single `400`, and if any topic is semantically invalid (an
-   * unknown topic, a `REQUIRED` topic that cannot be opted out, or a custom routing
-   * request that is not available on the workspace's plan) the request returns a
-   * single `400` aggregating every failure in `errors` and writes nothing. On
-   * success it returns `200` with `items` (the complete resulting override set) and
-   * `deleted` (the ids of the overrides that were reset to default).
-   *
-   * Every `topic_id` in the response — in `items`, `deleted`, and any `errors` — is
-   * returned in Courier's canonical topic id form, regardless of the form supplied
-   * in the request.
+   * Replaces a user's entire set of preference overrides. Any topic you leave out is
+   * reset to its default, so send the full set rather than a subset.
    *
    * @example
    * ```ts
@@ -72,23 +61,8 @@ export class Preferences extends APIResource {
   }
 
   /**
-   * Additively create or update a user's preferences for one or more subscription
-   * topics in a single request. Only the topics included in the request body are
-   * created or updated; any existing overrides for topics not listed are left
-   * untouched.
-   *
-   * Structural validation of the request body fails fast with a single `400`. Beyond
-   * that, each topic is processed independently (partial-success, not
-   * all-or-nothing): valid topics are written and returned in `items`, while topics
-   * that cannot be applied are collected in `errors` with a per-topic `reason` (for
-   * example an unknown topic, a `REQUIRED` topic that cannot be opted out, a custom
-   * routing request that is not available on the workspace's plan, or a write
-   * failure). The request therefore returns `200` with both lists whenever the body
-   * is structurally valid.
-   *
-   * Every `topic_id` in the response — in both `items` and `errors` — is returned in
-   * Courier's canonical topic id form, regardless of the form supplied in the
-   * request.
+   * Adds or updates a user's preferences for several subscription topics at once.
+   * Topics you leave out keep whatever they were set to before.
    *
    * @example
    * ```ts
@@ -116,14 +90,31 @@ export class Preferences extends APIResource {
     params: PreferenceBulkUpdateParams,
     options?: RequestOptions,
   ): APIPromise<PreferenceBulkUpdateResponse> {
-    const { tenant_id, ...body } = params;
-    return this._client.post(path`/users/${userID}/preferences`, { query: { tenant_id }, body, ...options });
+    const {
+      tenant_id,
+      'Idempotency-Key': idempotencyKey,
+      'x-idempotency-expiration': xIdempotencyExpiration,
+      ...body
+    } = params;
+    return this._client.post(path`/users/${userID}/preferences`, {
+      query: { tenant_id },
+      body,
+      ...options,
+      headers: buildHeaders([
+        {
+          ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined),
+          ...(xIdempotencyExpiration != null ?
+            { 'x-idempotency-expiration': xIdempotencyExpiration }
+          : undefined),
+        },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
-   * Remove a user's preferences for a specific subscription topic, resetting the
-   * topic to its effective default. This operation is idempotent: deleting a
-   * preference that does not exist succeeds with no error.
+   * Removes a user's override for one subscription topic, resetting it to the
+   * effective default from the tenant or workspace.
    *
    * @example
    * ```ts
@@ -146,7 +137,8 @@ export class Preferences extends APIResource {
   }
 
   /**
-   * Fetch user preferences for a specific subscription topic.
+   * Returns a user's opt-in status and channel choices for one subscription topic,
+   * or the effective default if they have set no override.
    *
    * @example
    * ```ts
@@ -166,7 +158,8 @@ export class Preferences extends APIResource {
   }
 
   /**
-   * Update or Create user preferences for a specific subscription topic.
+   * Sets a user's opt-in status and channel choices for one subscription topic,
+   * overriding the tenant default for that topic only.
    *
    * @example
    * ```ts
@@ -216,19 +209,40 @@ export interface BulkPreferenceTopic {
 }
 
 export interface TopicPreference {
+  /**
+   * The topic's default status, returned on reads. It applies whenever the user has
+   * no override of their own (status equals this value).
+   */
   default_status: Shared.PreferenceStatus;
 
+  /**
+   * The user's subscription status for this topic. OPTED_IN or OPTED_OUT reflect the
+   * user's own choice; REQUIRED is a topic-level default set in the preferences
+   * editor, not a user choice.
+   */
   status: Shared.PreferenceStatus;
 
+  /**
+   * The unique identifier of the subscription topic this preference applies to.
+   */
   topic_id: string;
 
+  /**
+   * The display name of the subscription topic, returned on reads.
+   */
   topic_name: string;
 
   /**
-   * The Channels a user has chosen to receive notifications through for this topic
+   * The channels the user has chosen to receive this topic on, present only when
+   * has_custom_routing is true. One or more of: direct_message, email, push, sms,
+   * webhook, inbox.
    */
   custom_routing?: Array<Shared.ChannelClassification> | null;
 
+  /**
+   * Whether the user has chosen specific delivery channels for this topic (listed in
+   * custom_routing) rather than the topic's default routing.
+   */
   has_custom_routing?: boolean | null;
 }
 
@@ -346,6 +360,24 @@ export interface PreferenceBulkUpdateParams {
    * Query param: Update the preferences of a user for this specific tenant context.
    */
   tenant_id?: string | null;
+
+  /**
+   * Header param: A unique key that makes this request idempotent. If Courier
+   * receives another request with the same `Idempotency-Key`, it returns the stored
+   * response from the first request without performing the operation again
+   * (including the original status code and any error). Use it to safely retry
+   * `POST` requests after network failures without risking duplicate sends. The key
+   * is scoped to this endpoint.
+   */
+  'Idempotency-Key'?: string;
+
+  /**
+   * Header param: How long the idempotency key remains valid, as a Unix epoch
+   * timestamp in seconds or an ISO 8601 date string. Only applies when
+   * `Idempotency-Key` is provided. If omitted, the key is retained for 25 hours; the
+   * maximum is 1 year.
+   */
+  'x-idempotency-expiration'?: string;
 }
 
 export namespace PreferenceBulkUpdateParams {
@@ -418,13 +450,23 @@ export interface PreferenceUpdateOrCreateTopicParams {
 
 export namespace PreferenceUpdateOrCreateTopicParams {
   export interface Topic {
+    /**
+     * The subscription status to set: OPTED_IN or OPTED_OUT. REQUIRED is a topic-level
+     * default, not a user choice; the API rejects opting a user out of a REQUIRED
+     * topic.
+     */
     status: Shared.PreferenceStatus;
 
     /**
-     * The Channels a user has chosen to receive notifications through for this topic
+     * The channels to deliver this topic on when has_custom_routing is true. One or
+     * more of: direct_message, email, push, sms, webhook, inbox.
      */
     custom_routing?: Array<Shared.ChannelClassification> | null;
 
+    /**
+     * Set to true to route this topic to the channels in custom_routing instead of the
+     * topic's default routing.
+     */
     has_custom_routing?: boolean | null;
   }
 }

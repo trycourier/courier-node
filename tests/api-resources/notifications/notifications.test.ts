@@ -41,6 +41,8 @@ describe('resource notifications', () => {
         tags: ['onboarding', 'welcome'],
       },
       state: 'DRAFT',
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 
@@ -155,7 +157,15 @@ describe('resource notifications', () => {
   test.skip('publish: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.notifications.publish('id', { version: 'v321669910225' }, { path: '/_stainless_unknown_path' }),
+      client.notifications.publish(
+        'id',
+        {
+          version: 'v321669910225',
+          'Idempotency-Key': 'order-ORD-456-user-123',
+          'x-idempotency-expiration': '1785312000',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(Courier.NotFoundError);
   });
 

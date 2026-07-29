@@ -70,6 +70,8 @@ describe('resource brands', () => {
       },
       id: 'id',
       snippets: { items: [{ name: 'name', value: 'value' }] },
+      'Idempotency-Key': 'order-ORD-456-user-123',
+      'x-idempotency-expiration': '1785312000',
     });
   });
 

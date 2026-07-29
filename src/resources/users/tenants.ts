@@ -7,9 +7,13 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Associate a user with one or more tenants, and read or remove those associations.
+ */
 export class Tenants extends APIResource {
   /**
-   * Returns a paginated list of user tenant associations.
+   * Returns the tenants a user belongs to, with cursor paging. A user can belong to
+   * many tenants, each with its own profile and preferences.
    *
    * @example
    * ```ts
@@ -25,9 +29,8 @@ export class Tenants extends APIResource {
   }
 
   /**
-   * This endpoint is used to add a user to multiple tenants in one call. A custom
-   * profile can also be supplied for each tenant. This profile will be merged with
-   * the user's main profile when sending to the user with that tenant.
+   * Adds a user to several tenants in one call, each optionally with a per-tenant
+   * profile that overrides their workspace profile.
    *
    * @example
    * ```ts
@@ -45,10 +48,8 @@ export class Tenants extends APIResource {
   }
 
   /**
-   * This endpoint is used to add a single tenant.
-   *
-   * A custom profile can also be supplied with the tenant. This profile will be
-   * merged with the user's main profile when sending to the user with that tenant.
+   * Adds a user to one tenant, optionally with a tenant-specific profile that
+   * overrides their workspace profile for sends in that tenant.
    *
    * @example
    * ```ts
@@ -67,7 +68,8 @@ export class Tenants extends APIResource {
   }
 
   /**
-   * Removes a user from any tenants they may have been associated with.
+   * Removes a user from every tenant they belong to in one call. Their
+   * workspace-level profile is a separate resource.
    *
    * @example
    * ```ts
@@ -82,7 +84,8 @@ export class Tenants extends APIResource {
   }
 
   /**
-   * Removes a user from the supplied tenant.
+   * Removes a user from one tenant. Their other tenant memberships and workspace
+   * profile are managed through separate endpoints.
    *
    * @example
    * ```ts

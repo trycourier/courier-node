@@ -6,15 +6,13 @@ import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
+/**
+ * Manage the templates and template versions scoped to a single tenant, including the ones authored in the embedded designer.
+ */
 export class Versions extends APIResource {
   /**
-   * Fetches a specific version of a tenant template.
-   *
-   * Supports the following version formats:
-   *
-   * - `latest` - The most recent version of the template
-   * - `published` - The currently published version
-   * - `v{version}` - A specific version (e.g., "v1", "v2", "v1.0.0")
+   * Returns one version of a tenant template, addressed by version number or by
+   * latest, with its content and publish timestamp.
    *
    * @example
    * ```ts
