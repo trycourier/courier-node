@@ -47,6 +47,23 @@ export {
   type BrandListParams,
 } from './brands';
 export {
+  Broadcasts,
+  type Broadcast,
+  type BroadcastListResponse,
+  type BroadcastSchedule,
+  type CreateBroadcastRequest,
+  type ScheduleBroadcastRequest,
+  type SendBroadcastRequest,
+  type UpdateBroadcastRequest,
+  type BroadcastCreateParams,
+  type BroadcastUpdateParams,
+  type BroadcastListParams,
+  type BroadcastPutContentParams,
+  type BroadcastRetrieveContentParams,
+  type BroadcastScheduleParams,
+  type BroadcastSendParams,
+} from './broadcasts';
+export {
   Digests,
   type DigestCategory,
   type DigestInstance,
