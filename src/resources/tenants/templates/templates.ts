@@ -10,6 +10,9 @@ import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
+/**
+ * Manage the templates and template versions scoped to a single tenant, including the ones authored in the embedded designer.
+ */
 export class Templates extends APIResource {
   versions: VersionsAPI.Versions = new VersionsAPI.Versions(this._client);
 

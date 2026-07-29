@@ -7,6 +7,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Associate a user with one or more tenants, and read or remove those associations.
+ */
 export class Tenants extends APIResource {
   /**
    * Returns the tenants a user belongs to, with cursor paging. A user can belong to

@@ -6,6 +6,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Read the audit trail of configuration and access changes in your workspace.
+ */
 export class AuditEvents extends APIResource {
   /**
    * Returns one audit event by id, including the actor who performed it, the target

@@ -7,6 +7,9 @@ import { buildHeaders } from '../../../internal/headers';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
+/**
+ * Manage tenants — the organizations, teams, or accounts your users belong to — along with their users and default preferences.
+ */
 export class Items extends APIResource {
   /**
    * Sets a tenant's default opt-in status for one subscription topic, which applies

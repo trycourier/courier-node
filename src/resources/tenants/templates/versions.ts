@@ -6,6 +6,9 @@ import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
+/**
+ * Manage the templates and template versions scoped to a single tenant, including the ones authored in the embedded designer.
+ */
 export class Versions extends APIResource {
   /**
    * Returns one version of a tenant template, addressed by version number or by

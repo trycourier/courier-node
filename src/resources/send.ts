@@ -6,6 +6,9 @@ import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Send a message to one or more recipients — users, lists, audiences, or tenants — across every channel you have configured.
+ */
 export class Send extends APIResource {
   /**
    * Sends a message to one or more recipients and returns a requestId. Courier

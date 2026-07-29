@@ -16,6 +16,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Create, update, version, publish, and localize notification templates and their content.
+ */
 export class Notifications extends APIResource {
   checks: ChecksAPI.Checks = new ChecksAPI.Checks(this._client);
 

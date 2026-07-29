@@ -8,6 +8,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Define reusable channel routing and failover strategies, and see which templates use them.
+ */
 export class RoutingStrategies extends APIResource {
   /**
    * Create a routing strategy. Requires a name and routing configuration at minimum.

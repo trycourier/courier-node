@@ -20,6 +20,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Manage tenants — the organizations, teams, or accounts your users belong to — along with their users and default preferences.
+ */
 export class Tenants extends APIResource {
   preferences: PreferencesAPI.Preferences = new PreferencesAPI.Preferences(this._client);
   templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);

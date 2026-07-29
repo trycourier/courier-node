@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Record an inbound event that triggers the journeys and automations mapped to it.
+ */
 export class Inbound extends APIResource {
   /**
    * Records an inbound event that can trigger a journey. Requires an event name, a

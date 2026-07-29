@@ -8,6 +8,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Manage the workspace catalog of subscription topics, the sections that group them, and publishing the preference page.
+ */
 export class Topics extends APIResource {
   /**
    * Creates a subscription topic inside a workspace preference. The default status

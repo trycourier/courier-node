@@ -6,6 +6,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Look up the messages Courier has accepted, inspect their delivery history and rendered output, and cancel, resend, or archive them.
+ */
 export class Messages extends APIResource {
   /**
    * Returns a sent message's status, recipient, event, and per-provider delivery

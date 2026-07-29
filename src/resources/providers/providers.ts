@@ -9,6 +9,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Configure the channel providers Courier delivers through, and browse the provider types it supports.
+ */
 export class Providers extends APIResource {
   catalog: CatalogAPI.Catalog = new CatalogAPI.Catalog(this._client);
 

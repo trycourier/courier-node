@@ -8,6 +8,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Manage the logos, colors, and layout that give the templates you send a consistent look.
+ */
 export class Brands extends APIResource {
   /**
    * Creates a brand from a name and settings, including primary and secondary
