@@ -243,6 +243,32 @@ Methods:
 - <code title="put /journeys/{templateId}/templates/{notificationId}">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">replace</a>(notificationID, { ...params }) -> JourneyTemplateGetResponse</code>
 - <code title="get /journeys/{templateId}/templates/{notificationId}/content">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">retrieveContent</a>(notificationID, { ...params }) -> NotificationContentGetResponse</code>
 
+# Broadcasts
+
+Types:
+
+- <code><a href="./src/resources/broadcasts.ts">Broadcast</a></code>
+- <code><a href="./src/resources/broadcasts.ts">BroadcastListResponse</a></code>
+- <code><a href="./src/resources/broadcasts.ts">BroadcastSchedule</a></code>
+- <code><a href="./src/resources/broadcasts.ts">CreateBroadcastRequest</a></code>
+- <code><a href="./src/resources/broadcasts.ts">ScheduleBroadcastRequest</a></code>
+- <code><a href="./src/resources/broadcasts.ts">SendBroadcastRequest</a></code>
+- <code><a href="./src/resources/broadcasts.ts">UpdateBroadcastRequest</a></code>
+
+Methods:
+
+- <code title="post /broadcasts">client.broadcasts.<a href="./src/resources/broadcasts.ts">create</a>({ ...params }) -> Broadcast</code>
+- <code title="get /broadcasts/{broadcastId}">client.broadcasts.<a href="./src/resources/broadcasts.ts">retrieve</a>(broadcastID) -> Broadcast</code>
+- <code title="put /broadcasts/{broadcastId}">client.broadcasts.<a href="./src/resources/broadcasts.ts">update</a>(broadcastID, { ...params }) -> Broadcast</code>
+- <code title="get /broadcasts">client.broadcasts.<a href="./src/resources/broadcasts.ts">list</a>({ ...params }) -> BroadcastListResponse</code>
+- <code title="delete /broadcasts/{broadcastId}">client.broadcasts.<a href="./src/resources/broadcasts.ts">archive</a>(broadcastID) -> Broadcast</code>
+- <code title="post /broadcasts/{broadcastId}/cancel">client.broadcasts.<a href="./src/resources/broadcasts.ts">cancel</a>(broadcastID) -> Broadcast</code>
+- <code title="post /broadcasts/{broadcastId}/duplicate">client.broadcasts.<a href="./src/resources/broadcasts.ts">duplicate</a>(broadcastID) -> Broadcast</code>
+- <code title="put /broadcasts/{broadcastId}/content">client.broadcasts.<a href="./src/resources/broadcasts.ts">putContent</a>(broadcastID, { ...params }) -> NotificationContentMutationResponse</code>
+- <code title="get /broadcasts/{broadcastId}/content">client.broadcasts.<a href="./src/resources/broadcasts.ts">retrieveContent</a>(broadcastID, { ...params }) -> NotificationContentGetResponse</code>
+- <code title="post /broadcasts/{broadcastId}/schedule">client.broadcasts.<a href="./src/resources/broadcasts.ts">schedule</a>(broadcastID, { ...params }) -> Broadcast</code>
+- <code title="post /broadcasts/{broadcastId}/send">client.broadcasts.<a href="./src/resources/broadcasts.ts">send</a>(broadcastID, { ...params }) -> Broadcast</code>
+
 # Brands
 
 Types:

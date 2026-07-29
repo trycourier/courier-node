@@ -55,6 +55,23 @@ import {
   Logo,
   WidgetBackground,
 } from './resources/brands';
+import {
+  Broadcast,
+  BroadcastCreateParams,
+  BroadcastListParams,
+  BroadcastListResponse,
+  BroadcastPutContentParams,
+  BroadcastRetrieveContentParams,
+  BroadcastSchedule,
+  BroadcastScheduleParams,
+  BroadcastSendParams,
+  BroadcastUpdateParams,
+  Broadcasts,
+  CreateBroadcastRequest,
+  ScheduleBroadcastRequest,
+  SendBroadcastRequest,
+  UpdateBroadcastRequest,
+} from './resources/broadcasts';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
   MessageContentResponse,
@@ -990,6 +1007,7 @@ export class Courier {
    * Build, version, publish, invoke, and cancel multi-step notification workflows, along with the templates scoped to them.
    */
   journeys: API.Journeys = new API.Journeys(this);
+  broadcasts: API.Broadcasts = new API.Broadcasts(this);
   /**
    * Manage the logos, colors, and layout that give the templates you send a consistent look.
    */
@@ -1046,6 +1064,7 @@ Courier.AuditEvents = AuditEvents;
 Courier.Auth = Auth;
 Courier.Automations = Automations;
 Courier.Journeys = Journeys;
+Courier.Broadcasts = Broadcasts;
 Courier.Brands = Brands;
 Courier.Digests = Digests;
 Courier.Inbound = Inbound;
@@ -1158,6 +1177,24 @@ export declare namespace Courier {
     type JourneyInvokeParams as JourneyInvokeParams,
     type JourneyPublishParams as JourneyPublishParams,
     type JourneyReplaceParams as JourneyReplaceParams,
+  };
+
+  export {
+    Broadcasts as Broadcasts,
+    type Broadcast as Broadcast,
+    type BroadcastListResponse as BroadcastListResponse,
+    type BroadcastSchedule as BroadcastSchedule,
+    type CreateBroadcastRequest as CreateBroadcastRequest,
+    type ScheduleBroadcastRequest as ScheduleBroadcastRequest,
+    type SendBroadcastRequest as SendBroadcastRequest,
+    type UpdateBroadcastRequest as UpdateBroadcastRequest,
+    type BroadcastCreateParams as BroadcastCreateParams,
+    type BroadcastUpdateParams as BroadcastUpdateParams,
+    type BroadcastListParams as BroadcastListParams,
+    type BroadcastPutContentParams as BroadcastPutContentParams,
+    type BroadcastRetrieveContentParams as BroadcastRetrieveContentParams,
+    type BroadcastScheduleParams as BroadcastScheduleParams,
+    type BroadcastSendParams as BroadcastSendParams,
   };
 
   export {
