@@ -7,6 +7,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Inspect what has accumulated in a digest schedule and release a digest ahead of its next scheduled delivery.
+ */
 export class Schedules extends APIResource {
   /**
    * Returns the digest instances for a schedule, one per user, with cursor paging.

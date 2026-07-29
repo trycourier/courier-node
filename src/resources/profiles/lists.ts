@@ -8,6 +8,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Store the contact information Courier delivers to for each user — email, phone number, push tokens, and any custom data you send to.
+ */
 export class Lists extends APIResource {
   /**
    * Returns the lists a user is subscribed to, with paging. Use it to check what a

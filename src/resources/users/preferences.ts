@@ -7,6 +7,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Read and write a single user's notification preferences, per topic and per channel.
+ */
 export class Preferences extends APIResource {
   /**
    * Returns a user's preference overrides with paging, one entry per subscription

@@ -16,6 +16,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Store the contact information Courier delivers to for each user — email, phone number, push tokens, and any custom data you send to.
+ */
 export class Profiles extends APIResource {
   lists: ListsAPI.Lists = new ListsAPI.Lists(this._client);
 

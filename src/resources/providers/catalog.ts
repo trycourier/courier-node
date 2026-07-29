@@ -6,6 +6,9 @@ import * as ProvidersAPI from './providers';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
+/**
+ * Configure the channel providers Courier delivers through, and browse the provider types it supports.
+ */
 export class Catalog extends APIResource {
   /**
    * Returns the provider types Courier supports, each with a display name,

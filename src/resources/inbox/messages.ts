@@ -6,6 +6,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Manage the messages in a user's in-app inbox.
+ */
 export class Messages extends APIResource {
   /**
    * Delete a user's inbox message. The message is removed from every inbox read (it

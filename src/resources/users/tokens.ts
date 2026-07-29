@@ -6,6 +6,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Register and manage the APNS and FCM device tokens Courier delivers push notifications to.
+ */
 export class Tokens extends APIResource {
   /**
    * Returns one device token with its provider key, status and status reason, expiry

@@ -7,6 +7,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Create, update, version, publish, and localize notification templates and their content.
+ */
 export class Checks extends APIResource {
   /**
    * Replaces the approval checks on a template submission with the complete set

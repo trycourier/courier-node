@@ -7,6 +7,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Invoke a stored automation template or an ad hoc automation defined in the request.
+ */
 export class Invoke extends APIResource {
   /**
    * Runs a series of automation steps supplied inline, without a saved template, and

@@ -7,6 +7,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Define filter-based groups whose membership Courier recalculates as user profiles change.
+ */
 export class Audiences extends APIResource {
   /**
    * Returns one audience with its name, description, and the filter and AND or OR

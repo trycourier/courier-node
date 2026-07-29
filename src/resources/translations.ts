@@ -6,6 +6,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Store and retrieve the translation strings Courier uses to render localized template content.
+ */
 export class Translations extends APIResource {
   /**
    * Returns the translation strings stored for one domain and locale, for use in
