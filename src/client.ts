@@ -1007,6 +1007,9 @@ export class Courier {
    * Build, version, publish, invoke, and cancel multi-step notification workflows, along with the templates scoped to them.
    */
   journeys: API.Journeys = new API.Journeys(this);
+  /**
+   * Create a one-off send to a list or audience, author its content, then send it immediately or schedule it for later.
+   */
   broadcasts: API.Broadcasts = new API.Broadcasts(this);
   /**
    * Manage the logos, colors, and layout that give the templates you send a consistent look.
