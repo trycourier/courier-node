@@ -352,15 +352,6 @@ Methods:
 - <code title="put /lists/{list_id}/subscriptions/{user_id}">client.lists.subscriptions.<a href="./src/resources/lists/subscriptions.ts">subscribeUser</a>(userID, { ...params }) -> void</code>
 - <code title="delete /lists/{list_id}/subscriptions/{user_id}">client.lists.subscriptions.<a href="./src/resources/lists/subscriptions.ts">unsubscribeUser</a>(userID, { ...params }) -> void</code>
 
-# Inbox
-
-## Messages
-
-Methods:
-
-- <code title="delete /inbox/messages/{message_id}">client.inbox.messages.<a href="./src/resources/inbox/messages.ts">delete</a>(messageID) -> void</code>
-- <code title="put /inbox/messages/{message_id}/restore">client.inbox.messages.<a href="./src/resources/inbox/messages.ts">restore</a>(messageID) -> void</code>
-
 # Messages
 
 Types:

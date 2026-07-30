@@ -118,7 +118,6 @@ import {
   DigestInstanceListResponse,
   Digests,
 } from './resources/digests/digests';
-import { Inbox } from './resources/inbox/inbox';
 import {
   CancelJourneyRequest,
   CancelJourneyResponse,
@@ -1024,7 +1023,6 @@ export class Courier {
    * Manage static groups of users that you subscribe explicitly, and send to them by list id or list pattern.
    */
   lists: API.Lists = new API.Lists(this);
-  inbox: API.Inbox = new API.Inbox(this);
   /**
    * Look up the messages Courier has accepted, inspect their delivery history and rendered output, and cancel, resend, or archive them.
    */
@@ -1072,7 +1070,6 @@ Courier.Brands = Brands;
 Courier.Digests = Digests;
 Courier.Inbound = Inbound;
 Courier.Lists = Lists;
-Courier.Inbox = Inbox;
 Courier.Messages = Messages;
 Courier.Requests = Requests;
 Courier.Notifications = Notifications;
@@ -1244,8 +1241,6 @@ export declare namespace Courier {
     type ListListParams as ListListParams,
     type ListRestoreParams as ListRestoreParams,
   };
-
-  export { Inbox as Inbox };
 
   export {
     Messages as Messages,
