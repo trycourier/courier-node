@@ -70,7 +70,6 @@ export {
   type DigestInstanceListResponse,
 } from './digests/digests';
 export { Inbound, type InboundTrackEventResponse, type InboundTrackEventParams } from './inbound';
-export { Inbox } from './inbox/inbox';
 export {
   Journeys,
   type CancelJourneyRequest,
