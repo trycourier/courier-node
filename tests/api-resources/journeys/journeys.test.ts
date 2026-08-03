@@ -14,7 +14,11 @@ describe('resource journeys', () => {
       name: 'Welcome Journey',
       nodes: [
         { trigger_type: 'api-invoke', type: 'trigger' },
-        { trigger_type: 'api-invoke', type: 'trigger' },
+        {
+          message: {},
+          type: 'send',
+        },
+        { type: 'exit' },
       ],
     });
     const rawResponse = await responsePromise.asResponse();
@@ -39,12 +43,41 @@ describe('resource journeys', () => {
           schema: { foo: 'bar' },
         },
         {
-          trigger_type: 'api-invoke',
-          type: 'trigger',
+          message: {
+            context: { tenant_id: 'x' },
+            data: { foo: 'bar' },
+            delay: { until: 'x', timezone: 'x' },
+            template: 'nt_01kx4h2jdafq8bk9aftxak4b40',
+            to: {
+              email_override: 'x',
+              phone_number_override: 'x',
+              user_id_override: 'x',
+            },
+          },
+          type: 'send',
           id: 'send-1',
           conditions: ['string', 'string'],
-          schema: { foo: 'bar' },
+          experiment: {
+            bucketingKey: 'x',
+            variants: [
+              {
+                id: 'x',
+                templateId: 'x',
+                weight: 0,
+                name: 'name',
+              },
+              {
+                id: 'x',
+                templateId: 'x',
+                weight: 0,
+                name: 'name',
+              },
+            ],
+            id: 'x',
+            name: 'name',
+          },
         },
+        { type: 'exit', id: 'exit-1' },
       ],
       enabled: true,
       state: 'DRAFT',
