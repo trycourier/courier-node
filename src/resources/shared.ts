@@ -136,6 +136,25 @@ export interface ElementalChannelNode extends ElementalBaseNode {
   channel?: string;
 
   /**
+   * Email only. Document-level base font size (CSS px, e.g. `16px`) for body content
+   * — text, quote, list and action button labels. Heading styles (`h1`/`h2`/`h3`)
+   * and `subtext` keep their preset sizes.
+   */
+  font_size?: string | null;
+
+  /**
+   * Email only. Document-level line height (CSS px or unitless multiplier, e.g.
+   * `24px` or `1.5`) applied to all body content unless overridden per block.
+   */
+  line_height?: string | null;
+
+  /**
+   * Email only. Document-level body padding applied once around the email body, as a
+   * CSS px shorthand (1–4 values), e.g. `48px 64px`.
+   */
+  padding?: string | null;
+
+  /**
    * Raw data to apply to the channel. If `elements` has not been specified, `raw` is
    * required.
    */
