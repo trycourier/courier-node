@@ -44,6 +44,7 @@ export class Notifications extends APIResource {
    *         version: '2022-01-01',
    *         elements: [{ type: 'channel' }],
    *       },
+   *       alias: 'welcome',
    *     },
    *     state: 'DRAFT',
    *   });
@@ -561,14 +562,23 @@ export namespace NotificationLocalePutRequest {
 }
 
 /**
+ * A template's send-time alias as returned by a read, omitted entirely when it has
+ * none. Usually a single string; an array for a template that resolves from
+ * several aliases, which writes through this API can no longer produce — only
+ * templates predating that restriction, or aliases attached outside this API, hold
+ * more than one.
+ */
+export type NotificationTemplateAlias = string | Array<string>;
+
+/**
  * Request body for creating a notification template.
  */
 export interface NotificationTemplateCreateRequest {
   /**
-   * Core template fields used in POST and PUT request bodies (nested under a
-   * `notification` key) and returned at the top level in responses.
+   * Template fields accepted in POST and PUT request bodies, nested under a
+   * `notification` key.
    */
-  notification: NotificationTemplatePayload;
+  notification: NotificationTemplateWritePayload;
 
   /**
    * Template state after creation. Case-insensitive input, normalized to uppercase
@@ -673,6 +683,15 @@ export interface NotificationTemplateResponse extends NotificationTemplatePayloa
   state: 'DRAFT' | 'PUBLISHED';
 
   /**
+   * A template's send-time alias as returned by a read, omitted entirely when it has
+   * none. Usually a single string; an array for a template that resolves from
+   * several aliases, which writes through this API can no longer produce — only
+   * templates predating that restriction, or aliases attached outside this API, hold
+   * more than one.
+   */
+  alias?: NotificationTemplateAlias;
+
+  /**
    * Epoch milliseconds of last update.
    */
   updated?: number;
@@ -735,14 +754,15 @@ export interface NotificationTemplateSummary {
 
 /**
  * Request body for replacing a notification template. Same shape as create. All
- * fields required (PUT = full replacement).
+ * fields required (PUT = full replacement), except `alias`, whose omission means
+ * "leave the existing aliases alone".
  */
 export interface NotificationTemplateUpdateRequest {
   /**
-   * Core template fields used in POST and PUT request bodies (nested under a
-   * `notification` key) and returned at the top level in responses.
+   * Template fields accepted in POST and PUT request bodies, nested under a
+   * `notification` key.
    */
-  notification: NotificationTemplatePayload;
+  notification: NotificationTemplateWritePayload;
 
   /**
    * Template state after update. Case-insensitive input, normalized to uppercase in
@@ -755,6 +775,23 @@ export interface NotificationTemplateVersionListResponse {
   paging: Shared.Paging;
 
   versions: Array<VersionNode>;
+}
+
+/**
+ * Template fields accepted in POST and PUT request bodies, nested under a
+ * `notification` key.
+ */
+export interface NotificationTemplateWritePayload extends NotificationTemplatePayload {
+  /**
+   * Send-time alias for this template — the value you pass as `event` to POST /send.
+   * Writes accept a single alias only. Optional, with three distinct meanings. Omit
+   * it to leave any existing aliases untouched. Send a string to make this the
+   * template's only alias — a template that already resolved from several aliases
+   * keeps just this one and the rest are detached. Send null to remove every alias
+   * from the template. An alias may not be claimed by another template — doing so
+   * returns 409 — and may not begin with "tenant/".
+   */
+  alias?: string | null;
 }
 
 /**
@@ -839,10 +876,10 @@ export type NotificationRetrieveContentResponse = NotificationContentGetResponse
 
 export interface NotificationCreateParams {
   /**
-   * Body param: Core template fields used in POST and PUT request bodies (nested
-   * under a `notification` key) and returned at the top level in responses.
+   * Body param: Template fields accepted in POST and PUT request bodies, nested
+   * under a `notification` key.
    */
-  notification: NotificationTemplatePayload;
+  notification: NotificationTemplateWritePayload;
 
   /**
    * Body param: Template state after creation. Case-insensitive input, normalized to
@@ -1033,10 +1070,10 @@ export namespace NotificationPutLocaleParams {
 
 export interface NotificationReplaceParams {
   /**
-   * Core template fields used in POST and PUT request bodies (nested under a
-   * `notification` key) and returned at the top level in responses.
+   * Template fields accepted in POST and PUT request bodies, nested under a
+   * `notification` key.
    */
-  notification: NotificationTemplatePayload;
+  notification: NotificationTemplateWritePayload;
 
   /**
    * Template state after update. Case-insensitive input, normalized to uppercase in
@@ -1066,6 +1103,7 @@ export declare namespace Notifications {
     type NotificationElementPutRequest as NotificationElementPutRequest,
     type NotificationGetContent as NotificationGetContent,
     type NotificationLocalePutRequest as NotificationLocalePutRequest,
+    type NotificationTemplateAlias as NotificationTemplateAlias,
     type NotificationTemplateCreateRequest as NotificationTemplateCreateRequest,
     type NotificationTemplatePayload as NotificationTemplatePayload,
     type NotificationTemplatePublishRequest as NotificationTemplatePublishRequest,
@@ -1074,6 +1112,7 @@ export declare namespace Notifications {
     type NotificationTemplateSummary as NotificationTemplateSummary,
     type NotificationTemplateUpdateRequest as NotificationTemplateUpdateRequest,
     type NotificationTemplateVersionListResponse as NotificationTemplateVersionListResponse,
+    type NotificationTemplateWritePayload as NotificationTemplateWritePayload,
     type VersionNode as VersionNode,
     type NotificationListResponse as NotificationListResponse,
     type NotificationRetrieveContentResponse as NotificationRetrieveContentResponse,
