@@ -391,6 +391,7 @@ Types:
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationElementPutRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationGetContent</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationLocalePutRequest</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateAlias</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateCreateRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplatePayload</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplatePublishRequest</a></code>
@@ -399,6 +400,7 @@ Types:
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateSummary</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateUpdateRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateVersionListResponse</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateWritePayload</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">VersionNode</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationListResponse</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationRetrieveContentResponse</a></code>
