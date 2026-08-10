@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.25.0 (2026-08-10)
+
+Full Changelog: [v7.24.0...v7.25.0](https://github.com/trycourier/courier-node/compare/v7.24.0...v7.25.0)
+
+### Features
+
+* Merge pull request [#178](https://github.com/trycourier/courier-node/issues/178) from trycourier/geraldosilva/c-19484-elemental-formatting-controls ([a272181](https://github.com/trycourier/courier-node/commit/a272181d7181751595ede45757b302462f25f50b))
+* Merge pull request [#185](https://github.com/trycourier/courier-node/issues/185) from trycourier/geraldosilva/c-19821-notifications-alias-v2 ([bcacb6b](https://github.com/trycourier/courier-node/commit/bcacb6b30a799c82522a62fdffee797eaac01f51))
+
 ## 7.24.0 (2026-08-03)
 
 Full Changelog: [v7.23.0...v7.24.0](https://github.com/trycourier/courier-node/compare/v7.23.0...v7.24.0)
