@@ -1,0 +1,30 @@
+name: Release Please
+
+# Opens (and keeps updated) a release PR whenever conventional commits land on
+# main, then tags a GitHub Release when that PR merges. The Release is what
+# triggers this repo's publish-* workflow.
+#
+# Added by hand rather than by `stlc build --rewrite-scaffold`: this repo was
+# scaffolded by the Stainless SaaS before stlc existed, so its scaffold has no
+# release workflow and stlc preserves that absence. stlc preserves hand-edits to
+# .github/workflows/, so this file survives future builds.
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    # Guard against forks running this.
+    if: github.repository == 'trycourier/courier-node'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
