@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.25.1](https://github.com/trycourier/courier-node/compare/v7.25.0...v7.25.1) (2026-08-13)
+
+
+### Documentation
+
+* sync README from api-spec ([#261](https://github.com/trycourier/courier-node/issues/261)) ([2df6540](https://github.com/trycourier/courier-node/commit/2df6540cf3b895ce525ceaa5741dd8204ccea92a))
+
 ## 7.25.0 (2026-08-10)
 
 Full Changelog: [v7.24.0...v7.25.0](https://github.com/trycourier/courier-node/compare/v7.24.0...v7.25.0)
