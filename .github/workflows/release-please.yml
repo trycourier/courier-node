@@ -12,6 +12,9 @@ on:
   push:
     branches:
       - main
+  # A completed run cannot be re-run once its release PR has been closed, so a
+  # manual trigger is the only way to rebuild one without pushing to main.
+  workflow_dispatch: {}
 
 permissions:
   contents: write
