@@ -269,6 +269,24 @@ Methods:
 - <code title="post /broadcasts/{broadcastId}/schedule">client.broadcasts.<a href="./src/resources/broadcasts.ts">schedule</a>(broadcastID, { ...params }) -> Broadcast</code>
 - <code title="post /broadcasts/{broadcastId}/send">client.broadcasts.<a href="./src/resources/broadcasts.ts">send</a>(broadcastID, { ...params }) -> Broadcast</code>
 
+# Bulk
+
+Types:
+
+- <code><a href="./src/resources/bulk.ts">InboundBulkMessage</a></code>
+- <code><a href="./src/resources/bulk.ts">InboundBulkMessageUser</a></code>
+- <code><a href="./src/resources/bulk.ts">BulkCreateJobResponse</a></code>
+- <code><a href="./src/resources/bulk.ts">BulkListUsersResponse</a></code>
+- <code><a href="./src/resources/bulk.ts">BulkRetrieveJobResponse</a></code>
+
+Methods:
+
+- <code title="post /bulk/{job_id}">client.bulk.<a href="./src/resources/bulk.ts">addUsers</a>(jobID, { ...params }) -> void</code>
+- <code title="post /bulk">client.bulk.<a href="./src/resources/bulk.ts">createJob</a>({ ...params }) -> BulkCreateJobResponse</code>
+- <code title="get /bulk/{job_id}/users">client.bulk.<a href="./src/resources/bulk.ts">listUsers</a>(jobID, { ...params }) -> BulkListUsersResponse</code>
+- <code title="get /bulk/{job_id}">client.bulk.<a href="./src/resources/bulk.ts">retrieveJob</a>(jobID) -> BulkRetrieveJobResponse</code>
+- <code title="post /bulk/{job_id}/run">client.bulk.<a href="./src/resources/bulk.ts">runJob</a>(jobID) -> void</code>
+
 # Brands
 
 Types:

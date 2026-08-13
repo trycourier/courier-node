@@ -64,6 +64,17 @@ export {
   type BroadcastSendParams,
 } from './broadcasts';
 export {
+  Bulk,
+  type InboundBulkMessage,
+  type InboundBulkMessageUser,
+  type BulkCreateJobResponse,
+  type BulkListUsersResponse,
+  type BulkRetrieveJobResponse,
+  type BulkAddUsersParams,
+  type BulkCreateJobParams,
+  type BulkListUsersParams,
+} from './bulk';
+export {
   Digests,
   type DigestCategory,
   type DigestInstance,
