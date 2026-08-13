@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.25.2](https://github.com/trycourier/courier-node/compare/v7.25.1...v7.25.2) (2026-08-13)
+
+
+### Documentation
+
+* **api:** say what the bulk job endpoints return ([#272](https://github.com/trycourier/courier-node/issues/272)) ([2fe1f1a](https://github.com/trycourier/courier-node/commit/2fe1f1aded29ca8f6d763d5afec3b45c4662aafe))
+
 ## [7.25.1](https://github.com/trycourier/courier-node/compare/v7.25.0...v7.25.1) (2026-08-13)
 
 
