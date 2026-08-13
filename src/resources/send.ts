@@ -12,7 +12,8 @@ import { RequestOptions } from '../internal/request-options';
 export class Send extends APIResource {
   /**
    * Sends a message to one or more recipients and returns a requestId. Courier
-   * routes it to email, SMS, push, chat, or in-app based on your rules.
+   * routes it to email, SMS, push, chat, or in-app based on your rules. Use the
+   * returned requestId to look up delivery status via the Messages API.
    *
    * @example
    * ```ts
