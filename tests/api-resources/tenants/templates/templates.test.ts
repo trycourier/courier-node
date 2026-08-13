@@ -82,7 +82,7 @@ describe('resource templates', () => {
   test.skip('publish: required and optional params', async () => {
     const response = await client.tenants.templates.publish('template_id', {
       tenant_id: 'tenant_id',
-      version: 'version',
+      version: 'latest',
     });
   });
 
@@ -90,7 +90,7 @@ describe('resource templates', () => {
   test.skip('replace: only required params', async () => {
     const responsePromise = client.tenants.templates.replace('template_id', {
       tenant_id: 'tenant_id',
-      template: { content: { elements: [{}], version: 'version' } },
+      template: { content: { elements: [{}], version: '2022-01-01' } },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -116,7 +116,7 @@ describe('resource templates', () => {
               type: 'text',
             },
           ],
-          version: 'version',
+          version: '2022-01-01',
         },
         channels: {
           foo: {
@@ -153,7 +153,7 @@ describe('resource templates', () => {
             timeouts: 0,
           },
         },
-        routing: { channels: ['string'], method: 'all' },
+        routing: { channels: ['email'], method: 'single' },
       },
       published: true,
     });

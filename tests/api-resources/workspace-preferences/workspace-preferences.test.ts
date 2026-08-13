@@ -86,9 +86,9 @@ describe('resource workspacePreferences', () => {
     await expect(
       client.workspacePreferences.publish(
         {
-          brand_id: 'brand_id',
-          description: 'description',
-          heading: 'heading',
+          brand_id: 'bnd_01kx4mrd0pfzw8wt7pn7p2fzag',
+          description: 'Choose what you hear from us about.',
+          heading: 'Notification Preferences',
           'Idempotency-Key': 'order-ORD-456-user-123',
           'x-idempotency-expiration': '1785312000',
         },
@@ -99,7 +99,9 @@ describe('resource workspacePreferences', () => {
 
   // Mock server tests are disabled
   test.skip('replace: only required params', async () => {
-    const responsePromise = client.workspacePreferences.replace('section_id', { name: 'name' });
+    const responsePromise = client.workspacePreferences.replace('section_id', {
+      name: 'Account Notifications',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -112,10 +114,10 @@ describe('resource workspacePreferences', () => {
   // Mock server tests are disabled
   test.skip('replace: required and optional params', async () => {
     const response = await client.workspacePreferences.replace('section_id', {
-      name: 'name',
+      name: 'Account Notifications',
       description: 'description',
       has_custom_routing: true,
-      routing_options: ['direct_message'],
+      routing_options: ['email', 'push'],
     });
   });
 });

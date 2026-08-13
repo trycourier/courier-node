@@ -38,7 +38,13 @@ export class Tokens extends APIResource {
    * ```ts
    * await client.users.tokens.update('token', {
    *   user_id: 'user_id',
-   *   patch: [{ op: 'op', path: 'path' }],
+   *   patch: [
+   *     {
+   *       op: 'replace',
+   *       path: '/expiry_date',
+   *       value: '2024-12-31T00:00:00.000Z',
+   *     },
+   *   ],
    * });
    * ```
    */
@@ -108,6 +114,7 @@ export class Tokens extends APIResource {
    * await client.users.tokens.addSingle('token', {
    *   user_id: 'user_id',
    *   provider_key: 'firebase-fcm',
+   *   device: { app_id: 'com.example.app' },
    * });
    * ```
    */

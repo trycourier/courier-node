@@ -29,7 +29,7 @@ describe('resource tokens', () => {
   test.skip('update: only required params', async () => {
     const responsePromise = client.users.tokens.update('token', {
       user_id: 'user_id',
-      patch: [{ op: 'op', path: 'path' }],
+      patch: [{ op: 'replace', path: '/expiry_date' }],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -46,9 +46,9 @@ describe('resource tokens', () => {
       user_id: 'user_id',
       patch: [
         {
-          op: 'op',
-          path: 'path',
-          value: 'value',
+          op: 'replace',
+          path: '/expiry_date',
+          value: '2024-12-31T00:00:00.000Z',
         },
       ],
     });
@@ -117,7 +117,7 @@ describe('resource tokens', () => {
       provider_key: 'firebase-fcm',
       device: {
         ad_id: 'ad_id',
-        app_id: 'app_id',
+        app_id: 'com.example.app',
         device_id: 'device_id',
         manufacturer: 'manufacturer',
         model: 'model',

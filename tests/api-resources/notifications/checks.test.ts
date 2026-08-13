@@ -14,7 +14,7 @@ describe('resource checks', () => {
       id: 'id',
       checks: [
         {
-          id: 'id',
+          id: 'abc-123',
           status: 'RESOLVED',
           type: 'custom',
         },
@@ -35,7 +35,7 @@ describe('resource checks', () => {
       id: 'id',
       checks: [
         {
-          id: 'id',
+          id: 'abc-123',
           status: 'RESOLVED',
           type: 'custom',
         },

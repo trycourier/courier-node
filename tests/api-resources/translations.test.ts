@@ -27,7 +27,10 @@ describe('resource translations', () => {
 
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.translations.update('locale', { domain: 'domain', body: 'body' });
+    const responsePromise = client.translations.update('locale', {
+      domain: 'domain',
+      body: 'msgid "Hello"\nmsgstr "Hola"',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -39,6 +42,9 @@ describe('resource translations', () => {
 
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
-    const response = await client.translations.update('locale', { domain: 'domain', body: 'body' });
+    const response = await client.translations.update('locale', {
+      domain: 'domain',
+      body: 'msgid "Hello"\nmsgstr "Hola"',
+    });
   });
 });

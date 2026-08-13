@@ -31,7 +31,7 @@ describe('resource subscriptions', () => {
   // Mock server tests are disabled
   test.skip('add: only required params', async () => {
     const responsePromise = client.lists.subscriptions.add('list_id', {
-      recipients: [{ recipientId: 'recipientId' }],
+      recipients: [{ recipientId: 'user_abc' }, { recipientId: 'user_def' }],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -47,7 +47,26 @@ describe('resource subscriptions', () => {
     const response = await client.lists.subscriptions.add('list_id', {
       recipients: [
         {
-          recipientId: 'recipientId',
+          recipientId: 'user_abc',
+          preferences: {
+            categories: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+              },
+            },
+            notifications: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+              },
+            },
+          },
+        },
+        {
+          recipientId: 'user_def',
           preferences: {
             categories: {
               foo: {
@@ -74,7 +93,7 @@ describe('resource subscriptions', () => {
   // Mock server tests are disabled
   test.skip('subscribe: only required params', async () => {
     const responsePromise = client.lists.subscriptions.subscribe('list_id', {
-      recipients: [{ recipientId: 'recipientId' }],
+      recipients: [{ recipientId: 'user_abc' }, { recipientId: 'user_def' }],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -90,7 +109,26 @@ describe('resource subscriptions', () => {
     const response = await client.lists.subscriptions.subscribe('list_id', {
       recipients: [
         {
-          recipientId: 'recipientId',
+          recipientId: 'user_abc',
+          preferences: {
+            categories: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+              },
+            },
+            notifications: {
+              foo: {
+                status: 'OPTED_IN',
+                channel_preferences: [{ channel: 'direct_message' }],
+                rules: [{ until: 'until', start: 'start' }],
+              },
+            },
+          },
+        },
+        {
+          recipientId: 'user_def',
           preferences: {
             categories: {
               foo: {
@@ -137,7 +175,7 @@ describe('resource subscriptions', () => {
           },
         },
         notifications: {
-          foo: {
+          nt_01kx4h2jdafq8bk9aftxak4b40: {
             status: 'OPTED_IN',
             channel_preferences: [{ channel: 'direct_message' }],
             rules: [{ until: 'until', start: 'start' }],

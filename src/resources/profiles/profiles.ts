@@ -29,7 +29,10 @@ export class Profiles extends APIResource {
    * @example
    * ```ts
    * const profile = await client.profiles.create('user_id', {
-   *   profile: { foo: 'bar' },
+   *   profile: {
+   *     email: 'jdoe@example.com',
+   *     phone_number: '+15558675309',
+   *   },
    * });
    * ```
    */
@@ -80,9 +83,9 @@ export class Profiles extends APIResource {
    * await client.profiles.update('user_id', {
    *   patch: [
    *     {
-   *       op: 'op',
-   *       path: 'path',
-   *       value: 'value',
+   *       op: 'replace',
+   *       path: '/email',
+   *       value: 'jdoe@example.com',
    *     },
    *   ],
    * });
@@ -119,7 +122,11 @@ export class Profiles extends APIResource {
    * @example
    * ```ts
    * const response = await client.profiles.replace('user_id', {
-   *   profile: { foo: 'bar' },
+   *   profile: {
+   *     email: 'jdoe@example.com',
+   *     phone_number: '+15558675309',
+   *     locale: 'en-US',
+   *   },
    * });
    * ```
    */

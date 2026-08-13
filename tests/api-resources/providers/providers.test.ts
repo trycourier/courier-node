@@ -10,7 +10,7 @@ const client = new Courier({
 describe('resource providers', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.providers.create({ provider: 'provider' });
+    const responsePromise = client.providers.create({ provider: 'sendgrid' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,10 +23,10 @@ describe('resource providers', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.providers.create({
-      provider: 'provider',
+      provider: 'sendgrid',
       alias: 'alias',
-      settings: { foo: 'bar' },
-      title: 'title',
+      settings: { api_key: 'bar' },
+      title: 'Production SendGrid',
       'Idempotency-Key': 'order-ORD-456-user-123',
       'x-idempotency-expiration': '1785312000',
     });
@@ -46,7 +46,7 @@ describe('resource providers', () => {
 
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.providers.update('id', { provider: 'provider' });
+    const responsePromise = client.providers.update('id', { provider: 'sendgrid' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -59,10 +59,10 @@ describe('resource providers', () => {
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.providers.update('id', {
-      provider: 'provider',
+      provider: 'sendgrid',
       alias: 'alias',
-      settings: { foo: 'bar' },
-      title: 'title',
+      settings: { api_key: 'bar' },
+      title: 'Production SendGrid',
     });
   });
 

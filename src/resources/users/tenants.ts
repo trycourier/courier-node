@@ -35,7 +35,10 @@ export class Tenants extends APIResource {
    * @example
    * ```ts
    * await client.users.tenants.addMultiple('user_id', {
-   *   tenants: [{ tenant_id: 'tenant_id' }],
+   *   tenants: [
+   *     { tenant_id: 'tenant_abc' },
+   *     { tenant_id: 'tenant_def' },
+   *   ],
    * });
    * ```
    */
@@ -55,6 +58,7 @@ export class Tenants extends APIResource {
    * ```ts
    * await client.users.tenants.addSingle('tenant_id', {
    *   user_id: 'user_id',
+   *   profile: { role: 'admin' },
    * });
    * ```
    */

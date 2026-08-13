@@ -44,7 +44,9 @@ export class Lists extends APIResource {
    *
    * @example
    * ```ts
-   * await client.lists.update('list_id', { name: 'name' });
+   * await client.lists.update('list_id', {
+   *   name: 'Product Updates',
+   * });
    * ```
    */
   update(listID: string, body: ListUpdateParams, options?: RequestOptions): APIPromise<void> {

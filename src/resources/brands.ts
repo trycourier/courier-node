@@ -67,7 +67,10 @@ export class Brands extends APIResource {
    * @example
    * ```ts
    * const brand = await client.brands.update('brand_id', {
-   *   name: 'name',
+   *   name: 'My Brand',
+   *   settings: {
+   *     colors: { primary: '#9D3789', secondary: '#FFFFFF' },
+   *   },
    * });
    * ```
    */

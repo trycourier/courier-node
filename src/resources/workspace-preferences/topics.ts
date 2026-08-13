@@ -122,8 +122,11 @@ export class Topics extends APIResource {
    *     'topic_id',
    *     {
    *       section_id: 'section_id',
-   *       default_status: 'OPTED_OUT',
-   *       name: 'name',
+   *       default_status: 'OPTED_IN',
+   *       name: 'Product Updates',
+   *       allowed_preferences: ['channel_preferences'],
+   *       include_unsubscribe_header: true,
+   *       routing_options: ['email', 'inbox'],
    *     },
    *   );
    * ```

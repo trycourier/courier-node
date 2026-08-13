@@ -42,7 +42,9 @@ describe('resource lists', () => {
 
   // Mock server tests are disabled
   test.skip('subscribe: only required params', async () => {
-    const responsePromise = client.profiles.lists.subscribe('user_id', { lists: [{ listId: 'listId' }] });
+    const responsePromise = client.profiles.lists.subscribe('user_id', {
+      lists: [{ listId: 'example.list.id' }],
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -57,7 +59,7 @@ describe('resource lists', () => {
     const response = await client.profiles.lists.subscribe('user_id', {
       lists: [
         {
-          listId: 'listId',
+          listId: 'example.list.id',
           preferences: {
             categories: {
               foo: {

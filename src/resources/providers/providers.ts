@@ -22,7 +22,9 @@ export class Providers extends APIResource {
    * @example
    * ```ts
    * const provider = await client.providers.create({
-   *   provider: 'provider',
+   *   provider: 'sendgrid',
+   *   settings: { api_key: 'SG.xxxxxxxx' },
+   *   title: 'Production SendGrid',
    * });
    * ```
    */
@@ -67,7 +69,9 @@ export class Providers extends APIResource {
    * @example
    * ```ts
    * const provider = await client.providers.update('id', {
-   *   provider: 'provider',
+   *   provider: 'sendgrid',
+   *   settings: { api_key: 'SG.xxxxxxxx' },
+   *   title: 'Production SendGrid',
    * });
    * ```
    */

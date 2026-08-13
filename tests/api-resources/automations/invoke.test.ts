@@ -56,7 +56,7 @@ describe('resource invoke', () => {
   // Mock server tests are disabled
   test.skip('invokeByTemplate: only required params', async () => {
     const responsePromise = client.automations.invoke.invokeByTemplate('templateId', {
-      recipient: 'recipient',
+      recipient: 'user_abc',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -70,10 +70,10 @@ describe('resource invoke', () => {
   // Mock server tests are disabled
   test.skip('invokeByTemplate: required and optional params', async () => {
     const response = await client.automations.invoke.invokeByTemplate('templateId', {
-      recipient: 'recipient',
+      recipient: 'user_abc',
       brand: 'brand',
-      data: { foo: 'bar' },
-      profile: { foo: 'bar' },
+      data: { orderId: 'bar' },
+      profile: { email: 'bar' },
       template: 'template',
       'Idempotency-Key': 'order-ORD-456-user-123',
       'x-idempotency-expiration': '1785312000',

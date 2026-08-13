@@ -10,7 +10,9 @@ const client = new Courier({
 describe('resource profiles', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.profiles.create('user_id', { profile: { foo: 'bar' } });
+    const responsePromise = client.profiles.create('user_id', {
+      profile: { email: 'bar', phone_number: 'bar' },
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,7 +25,7 @@ describe('resource profiles', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.profiles.create('user_id', {
-      profile: { foo: 'bar' },
+      profile: { email: 'bar', phone_number: 'bar' },
       'Idempotency-Key': 'order-ORD-456-user-123',
       'x-idempotency-expiration': '1785312000',
     });
@@ -46,9 +48,9 @@ describe('resource profiles', () => {
     const responsePromise = client.profiles.update('user_id', {
       patch: [
         {
-          op: 'op',
-          path: 'path',
-          value: 'value',
+          op: 'replace',
+          path: '/email',
+          value: 'jdoe@example.com',
         },
       ],
     });
@@ -66,9 +68,9 @@ describe('resource profiles', () => {
     const response = await client.profiles.update('user_id', {
       patch: [
         {
-          op: 'op',
-          path: 'path',
-          value: 'value',
+          op: 'replace',
+          path: '/email',
+          value: 'jdoe@example.com',
         },
       ],
     });
@@ -88,7 +90,13 @@ describe('resource profiles', () => {
 
   // Mock server tests are disabled
   test.skip('replace: only required params', async () => {
-    const responsePromise = client.profiles.replace('user_id', { profile: { foo: 'bar' } });
+    const responsePromise = client.profiles.replace('user_id', {
+      profile: {
+        email: 'bar',
+        phone_number: 'bar',
+        locale: 'bar',
+      },
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -100,6 +108,12 @@ describe('resource profiles', () => {
 
   // Mock server tests are disabled
   test.skip('replace: required and optional params', async () => {
-    const response = await client.profiles.replace('user_id', { profile: { foo: 'bar' } });
+    const response = await client.profiles.replace('user_id', {
+      profile: {
+        email: 'bar',
+        phone_number: 'bar',
+        locale: 'bar',
+      },
+    });
   });
 });

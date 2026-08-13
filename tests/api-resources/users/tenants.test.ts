@@ -35,7 +35,7 @@ describe('resource tenants', () => {
   // Mock server tests are disabled
   test.skip('addMultiple: only required params', async () => {
     const responsePromise = client.users.tenants.addMultiple('user_id', {
-      tenants: [{ tenant_id: 'tenant_id' }],
+      tenants: [{ tenant_id: 'tenant_abc' }, { tenant_id: 'tenant_def' }],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -51,7 +51,13 @@ describe('resource tenants', () => {
     const response = await client.users.tenants.addMultiple('user_id', {
       tenants: [
         {
-          tenant_id: 'tenant_id',
+          tenant_id: 'tenant_abc',
+          profile: { foo: 'bar' },
+          type: 'user',
+          user_id: 'user_id',
+        },
+        {
+          tenant_id: 'tenant_def',
           profile: { foo: 'bar' },
           type: 'user',
           user_id: 'user_id',
@@ -76,7 +82,7 @@ describe('resource tenants', () => {
   test.skip('addSingle: required and optional params', async () => {
     const response = await client.users.tenants.addSingle('tenant_id', {
       user_id: 'user_id',
-      profile: { foo: 'bar' },
+      profile: { role: 'bar' },
     });
   });
 

@@ -23,9 +23,9 @@ export class Checks extends APIResource {
    *     id: 'id',
    *     checks: [
    *       {
-   *         id: 'id',
-   *         status: 'RESOLVED',
+   *         id: 'abc-123',
    *         type: 'custom',
+   *         status: 'RESOLVED',
    *       },
    *     ],
    *   },

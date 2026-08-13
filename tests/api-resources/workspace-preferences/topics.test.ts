@@ -96,8 +96,8 @@ describe('resource topics', () => {
   test.skip('replace: only required params', async () => {
     const responsePromise = client.workspacePreferences.topics.replace('topic_id', {
       section_id: 'section_id',
-      default_status: 'OPTED_OUT',
-      name: 'name',
+      default_status: 'OPTED_IN',
+      name: 'Product Updates',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -112,12 +112,12 @@ describe('resource topics', () => {
   test.skip('replace: required and optional params', async () => {
     const response = await client.workspacePreferences.topics.replace('topic_id', {
       section_id: 'section_id',
-      default_status: 'OPTED_OUT',
-      name: 'name',
-      allowed_preferences: ['snooze'],
+      default_status: 'OPTED_IN',
+      name: 'Product Updates',
+      allowed_preferences: ['channel_preferences'],
       description: 'description',
       include_unsubscribe_header: true,
-      routing_options: ['direct_message'],
+      routing_options: ['email', 'inbox'],
       topic_data: { foo: 'bar' },
     });
   });

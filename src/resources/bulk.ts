@@ -15,6 +15,19 @@ export class Bulk extends APIResource {
    * **Important**: For email-based bulk jobs, each user must include `profile.email`
    * for provider routing to work correctly. The `to.email` field is not sufficient
    * for email provider routing.
+   *
+   * @example
+   * ```ts
+   * await client.bulk.addUsers('job_id', {
+   *   users: [
+   *     {
+   *       recipient: 'user_abc',
+   *       profile: { email: 'jdoe@example.com' },
+   *       data: { name: 'Jane' },
+   *     },
+   *   ],
+   * });
+   * ```
    */
   addUsers(jobID: string, body: BulkAddUsersParams, options?: RequestOptions): APIPromise<void> {
     return this._client.post(path`/bulk/${jobID}`, {
@@ -32,6 +45,17 @@ export class Bulk extends APIResource {
    * **Optional (V2 format)**: `message.template` (notification ID) or
    * `message.content` (Elemental content) can be provided to override the
    * notification associated with the event.
+   *
+   * @example
+   * ```ts
+   * const response = await client.bulk.createJob({
+   *   message: {
+   *     event: 'welcome-series',
+   *     brand: 'bnd_01kx4mrd0pfzw8wt7pn7p2fzag',
+   *     data: { campaign: 'spring-2024' },
+   *   },
+   * });
+   * ```
    */
   createJob(body: BulkCreateJobParams, options?: RequestOptions): APIPromise<BulkCreateJobResponse> {
     return this._client.post('/bulk', { body, ...options });
@@ -39,6 +63,11 @@ export class Bulk extends APIResource {
 
   /**
    * Get Bulk Job Users
+   *
+   * @example
+   * ```ts
+   * const response = await client.bulk.listUsers('job_id');
+   * ```
    */
   listUsers(
     jobID: string,
@@ -50,6 +79,11 @@ export class Bulk extends APIResource {
 
   /**
    * Get a bulk job
+   *
+   * @example
+   * ```ts
+   * const response = await client.bulk.retrieveJob('job_id');
+   * ```
    */
   retrieveJob(jobID: string, options?: RequestOptions): APIPromise<BulkRetrieveJobResponse> {
     return this._client.get(path`/bulk/${jobID}`, options);
@@ -57,6 +91,11 @@ export class Bulk extends APIResource {
 
   /**
    * Run a bulk job
+   *
+   * @example
+   * ```ts
+   * await client.bulk.runJob('job_id');
+   * ```
    */
   runJob(jobID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.post(path`/bulk/${jobID}/run`, {

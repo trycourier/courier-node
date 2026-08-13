@@ -68,7 +68,11 @@ export class Invoke extends APIResource {
    * const automationInvokeResponse =
    *   await client.automations.invoke.invokeByTemplate(
    *     'templateId',
-   *     { recipient: 'recipient' },
+   *     {
+   *       recipient: 'user_abc',
+   *       data: { orderId: '1234' },
+   *       profile: { email: 'jdoe@example.com' },
+   *     },
    *   );
    * ```
    */
