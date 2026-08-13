@@ -89,7 +89,7 @@ describe('resource brands', () => {
 
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.brands.update('brand_id', { name: 'name' });
+    const responsePromise = client.brands.update('brand_id', { name: 'My Brand' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -102,9 +102,9 @@ describe('resource brands', () => {
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.brands.update('brand_id', {
-      name: 'name',
+      name: 'My Brand',
       settings: {
-        colors: { primary: 'primary', secondary: 'secondary' },
+        colors: { primary: '#9D3789', secondary: '#FFFFFF' },
         email: {
           footer: { content: 'content', inheritDefault: true },
           head: { inheritDefault: true, content: 'content' },

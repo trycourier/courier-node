@@ -84,6 +84,7 @@ export class Templates extends APIResource {
    * const postTenantTemplatePublishResponse =
    *   await client.tenants.templates.publish('template_id', {
    *     tenant_id: 'tenant_id',
+   *     version: 'latest',
    *   });
    * ```
    */
@@ -109,8 +110,13 @@ export class Templates extends APIResource {
    *   await client.tenants.templates.replace('template_id', {
    *     tenant_id: 'tenant_id',
    *     template: {
-   *       content: { elements: [{}], version: 'version' },
+   *       content: {
+   *         version: '2022-01-01',
+   *         elements: [{ type: 'text' }],
+   *       },
+   *       routing: { method: 'single', channels: ['email'] },
    *     },
+   *     published: true,
    *   });
    * ```
    */

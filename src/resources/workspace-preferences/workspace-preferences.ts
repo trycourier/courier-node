@@ -108,7 +108,11 @@ export class WorkspacePreferences extends APIResource {
    * @example
    * ```ts
    * const publishPreferencesResponse =
-   *   await client.workspacePreferences.publish();
+   *   await client.workspacePreferences.publish({
+   *     brand_id: 'bnd_01kx4mrd0pfzw8wt7pn7p2fzag',
+   *     description: 'Choose what you hear from us about.',
+   *     heading: 'Notification Preferences',
+   *   });
    * ```
    */
   publish(
@@ -143,7 +147,9 @@ export class WorkspacePreferences extends APIResource {
    * ```ts
    * const workspacePreferenceGetResponse =
    *   await client.workspacePreferences.replace('section_id', {
-   *     name: 'name',
+   *     name: 'Account Notifications',
+   *     has_custom_routing: true,
+   *     routing_options: ['email', 'push'],
    *   });
    * ```
    */

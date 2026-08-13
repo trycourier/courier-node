@@ -47,7 +47,9 @@ export class Tenants extends APIResource {
    * @example
    * ```ts
    * const tenant = await client.tenants.update('tenant_id', {
-   *   name: 'name',
+   *   name: 'Acme Corp',
+   *   brand_id: 'bnd_01kx4mrd0pfzw8wt7pn7p2fzag',
+   *   properties: { plan: 'enterprise' },
    * });
    * ```
    */

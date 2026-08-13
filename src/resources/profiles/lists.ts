@@ -52,7 +52,7 @@ export class Lists extends APIResource {
    * ```ts
    * const response = await client.profiles.lists.subscribe(
    *   'user_id',
-   *   { lists: [{ listId: 'listId' }] },
+   *   { lists: [{ listId: 'example.list.id' }] },
    * );
    * ```
    */

@@ -14,6 +14,13 @@ export class Audiences extends APIResource {
   /**
    * Returns one audience with its name, description, and the filter and AND or OR
    * operator that decide which users belong to it.
+   *
+   * @example
+   * ```ts
+   * const audience = await client.audiences.retrieve(
+   *   'audience_id',
+   * );
+   * ```
    */
   retrieve(audienceID: string, options?: RequestOptions): APIPromise<Audience> {
     return this._client.get(path`/audiences/${audienceID}`, options);
@@ -22,6 +29,28 @@ export class Audiences extends APIResource {
   /**
    * Creates or replaces an audience from a filter and an AND or OR operator.
    * Membership recalculates automatically as profiles change.
+   *
+   * @example
+   * ```ts
+   * const audience = await client.audiences.update(
+   *   'audience_id',
+   *   {
+   *     description: 'Users located in the US',
+   *     filter: {
+   *       operator: 'AND',
+   *       filters: [
+   *         {
+   *           operator: 'EQ',
+   *           path: 'profile.location',
+   *           value: 'US',
+   *         },
+   *       ],
+   *     },
+   *     name: 'Engaged US Users',
+   *     operator: 'AND',
+   *   },
+   * );
+   * ```
    */
   update(
     audienceID: string,
@@ -34,6 +63,11 @@ export class Audiences extends APIResource {
   /**
    * Returns the audiences in the workspace with paging. Audiences are filter-based
    * groups that recalculate as user profiles change.
+   *
+   * @example
+   * ```ts
+   * const audiences = await client.audiences.list();
+   * ```
    */
   list(
     query: AudienceListParams | null | undefined = {},
@@ -45,6 +79,11 @@ export class Audiences extends APIResource {
   /**
    * Deletes an audience permanently, so update any caller sending to it by audience
    * id first. Those sends fail once the audience is gone.
+   *
+   * @example
+   * ```ts
+   * await client.audiences.delete('audience_id');
+   * ```
    */
   delete(audienceID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/audiences/${audienceID}`, {
@@ -56,6 +95,13 @@ export class Audiences extends APIResource {
   /**
    * Returns the users currently matching an audience filter, with paging. Membership
    * is recalculated, so results shift as profiles change.
+   *
+   * @example
+   * ```ts
+   * const response = await client.audiences.listMembers(
+   *   'audience_id',
+   * );
+   * ```
    */
   listMembers(
     audienceID: string,

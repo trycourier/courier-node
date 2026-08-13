@@ -22,7 +22,7 @@ describe('resource lists', () => {
 
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.lists.update('list_id', { name: 'name' });
+    const responsePromise = client.lists.update('list_id', { name: 'Product Updates' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -35,7 +35,7 @@ describe('resource lists', () => {
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.lists.update('list_id', {
-      name: 'name',
+      name: 'Product Updates',
       preferences: {
         categories: {
           foo: {

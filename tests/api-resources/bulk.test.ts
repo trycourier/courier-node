@@ -25,7 +25,7 @@ describe('resource bulk', () => {
     const response = await client.bulk.addUsers('job_id', {
       users: [
         {
-          data: {},
+          data: { name: 'Jane' },
           preferences: {
             categories: {
               foo: {
@@ -42,8 +42,8 @@ describe('resource bulk', () => {
               },
             },
           },
-          profile: { foo: 'bar' },
-          recipient: 'recipient',
+          profile: { email: 'bar' },
+          recipient: 'user_abc',
           to: {
             account_id: 'account_id',
             context: { tenant_id: 'tenant_id' },
@@ -81,7 +81,7 @@ describe('resource bulk', () => {
 
   // Mock server tests are disabled
   test.skip('createJob: only required params', async () => {
-    const responsePromise = client.bulk.createJob({ message: { event: 'event' } });
+    const responsePromise = client.bulk.createJob({ message: { event: 'welcome-series' } });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -95,10 +95,10 @@ describe('resource bulk', () => {
   test.skip('createJob: required and optional params', async () => {
     const response = await client.bulk.createJob({
       message: {
-        event: 'event',
-        brand: 'brand',
+        event: 'welcome-series',
+        brand: 'bnd_01kx4mrd0pfzw8wt7pn7p2fzag',
         content: { body: 'body', title: 'title' },
-        data: { foo: 'bar' },
+        data: { campaign: 'bar' },
         locale: { foo: { foo: 'bar' } },
         override: { foo: 'bar' },
         template: 'template',

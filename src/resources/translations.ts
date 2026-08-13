@@ -13,6 +13,14 @@ export class Translations extends APIResource {
   /**
    * Returns the translation strings stored for one domain and locale, for use in
    * localized notification content.
+   *
+   * @example
+   * ```ts
+   * const translation = await client.translations.retrieve(
+   *   'locale',
+   *   { domain: 'domain' },
+   * );
+   * ```
    */
   retrieve(locale: string, params: TranslationRetrieveParams, options?: RequestOptions): APIPromise<string> {
     const { domain } = params;
@@ -22,6 +30,14 @@ export class Translations extends APIResource {
   /**
    * Uploads the translation strings for one domain and locale. Courier uses them to
    * render localized content for recipients in that locale.
+   *
+   * @example
+   * ```ts
+   * await client.translations.update('locale', {
+   *   domain: 'domain',
+   *   body: 'msgid "Hello"\nmsgstr "Hola"',
+   * });
+   * ```
    */
   update(locale: string, params: TranslationUpdateParams, options?: RequestOptions): APIPromise<void> {
     const { domain, body } = params;

@@ -22,7 +22,7 @@ describe('resource tenants', () => {
 
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.tenants.update('tenant_id', { name: 'name' });
+    const responsePromise = client.tenants.update('tenant_id', { name: 'Acme Corp' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -35,8 +35,8 @@ describe('resource tenants', () => {
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.tenants.update('tenant_id', {
-      name: 'name',
-      brand_id: 'brand_id',
+      name: 'Acme Corp',
+      brand_id: 'bnd_01kx4mrd0pfzw8wt7pn7p2fzag',
       default_preferences: {
         items: [
           {
@@ -48,7 +48,7 @@ describe('resource tenants', () => {
         ],
       },
       parent_tenant_id: 'parent_tenant_id',
-      properties: { foo: 'bar' },
+      properties: { plan: 'bar' },
       user_profile: { foo: 'bar' },
     });
   });

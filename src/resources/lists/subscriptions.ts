@@ -38,7 +38,10 @@ export class Subscriptions extends APIResource {
    * @example
    * ```ts
    * await client.lists.subscriptions.add('list_id', {
-   *   recipients: [{ recipientId: 'recipientId' }],
+   *   recipients: [
+   *     { recipientId: 'user_abc' },
+   *     { recipientId: 'user_def' },
+   *   ],
    * });
    * ```
    */
@@ -71,7 +74,10 @@ export class Subscriptions extends APIResource {
    * @example
    * ```ts
    * await client.lists.subscriptions.subscribe('list_id', {
-   *   recipients: [{ recipientId: 'recipientId' }],
+   *   recipients: [
+   *     { recipientId: 'user_abc' },
+   *     { recipientId: 'user_def' },
+   *   ],
    * });
    * ```
    */
@@ -91,6 +97,11 @@ export class Subscriptions extends APIResource {
    * ```ts
    * await client.lists.subscriptions.subscribeUser('user_id', {
    *   list_id: 'list_id',
+   *   preferences: {
+   *     notifications: {
+   *       nt_01kx4h2jdafq8bk9aftxak4b40: { status: 'OPTED_IN' },
+   *     },
+   *   },
    * });
    * ```
    */
