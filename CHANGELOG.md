@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.25.1](https://github.com/trycourier/courier-node/compare/v7.25.0...v7.25.1) (2026-08-13)
+
+
+### Chores
+
+* **api:** regenerate SDK ([#265](https://github.com/trycourier/courier-node/issues/265)) ([f6bbd97](https://github.com/trycourier/courier-node/commit/f6bbd973b5e1a99a13e8a31d3feae6bc0c7de246))
+
+
+### Documentation
+
+* **api:** give every request body an example, and correct the archive status code ([#270](https://github.com/trycourier/courier-node/issues/270)) ([08bd781](https://github.com/trycourier/courier-node/commit/08bd781ef024278f1412920df0e186dda11937dc))
+* sync README from api-spec ([#261](https://github.com/trycourier/courier-node/issues/261)) ([2df6540](https://github.com/trycourier/courier-node/commit/2df6540cf3b895ce525ceaa5741dd8204ccea92a))
+
 ## 7.25.0 (2026-08-10)
 
 Full Changelog: [v7.24.0...v7.25.0](https://github.com/trycourier/courier-node/compare/v7.24.0...v7.25.0)
