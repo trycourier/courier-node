@@ -72,6 +72,17 @@ import {
   SendBroadcastRequest,
   UpdateBroadcastRequest,
 } from './resources/broadcasts';
+import {
+  Bulk,
+  BulkAddUsersParams,
+  BulkCreateJobParams,
+  BulkCreateJobResponse,
+  BulkListUsersParams,
+  BulkListUsersResponse,
+  BulkRetrieveJobResponse,
+  InboundBulkMessage,
+  InboundBulkMessageUser,
+} from './resources/bulk';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
   MessageContentResponse,
@@ -1012,6 +1023,7 @@ export class Courier {
    * Create a one-off send to a list or audience, author its content, then send it immediately or schedule it for later.
    */
   broadcasts: API.Broadcasts = new API.Broadcasts(this);
+  bulk: API.Bulk = new API.Bulk(this);
   /**
    * Manage the logos, colors, and layout that give the templates you send a consistent look.
    */
@@ -1068,6 +1080,7 @@ Courier.Auth = Auth;
 Courier.Automations = Automations;
 Courier.Journeys = Journeys;
 Courier.Broadcasts = Broadcasts;
+Courier.Bulk = Bulk;
 Courier.Brands = Brands;
 Courier.Digests = Digests;
 Courier.Inbound = Inbound;
@@ -1197,6 +1210,18 @@ export declare namespace Courier {
     type BroadcastRetrieveContentParams as BroadcastRetrieveContentParams,
     type BroadcastScheduleParams as BroadcastScheduleParams,
     type BroadcastSendParams as BroadcastSendParams,
+  };
+
+  export {
+    Bulk as Bulk,
+    type InboundBulkMessage as InboundBulkMessage,
+    type InboundBulkMessageUser as InboundBulkMessageUser,
+    type BulkCreateJobResponse as BulkCreateJobResponse,
+    type BulkListUsersResponse as BulkListUsersResponse,
+    type BulkRetrieveJobResponse as BulkRetrieveJobResponse,
+    type BulkAddUsersParams as BulkAddUsersParams,
+    type BulkCreateJobParams as BulkCreateJobParams,
+    type BulkListUsersParams as BulkListUsersParams,
   };
 
   export {
