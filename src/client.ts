@@ -1392,6 +1392,7 @@ export declare namespace Courier {
   export type AirshipProfile = API.AirshipProfile;
   export type AirshipProfileAudience = API.AirshipProfileAudience;
   export type Alignment = API.Alignment;
+  export type Apn = API.Apn;
   export type AudienceFilter = API.AudienceFilter;
   export type AudienceFilterConfig = API.AudienceFilterConfig;
   export type AudienceRecipient = API.AudienceRecipient;

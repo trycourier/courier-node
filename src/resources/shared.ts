@@ -14,6 +14,13 @@ export interface AirshipProfileAudience {
 
 export type Alignment = 'center' | 'left' | 'right' | 'full';
 
+/**
+ * Apple Push Notification device tokens. Supply either a single `token` or a
+ * `tokens` value. A bare string is rejected by the provider — the token must be
+ * wrapped in this object.
+ */
+export type Apn = Token | MultipleTokens;
+
 export interface AudienceFilter {
   /**
    * Send to users only if they are member of the account
@@ -259,6 +266,9 @@ export interface ElementalTextNodeWithType extends ElementalBaseNode {
   type?: 'text';
 }
 
+/**
+ * Expo push tokens. Supply either a single `token` or a `tokens` value.
+ */
 export type Expo = Token | MultipleTokens;
 
 /**
@@ -394,7 +404,11 @@ export interface MsTeamsRecipient {
 }
 
 export interface MultipleTokens {
-  tokens: Array<Token>;
+  /**
+   * One device token, or an array of them. The values are the token strings
+   * themselves — not objects.
+   */
+  tokens: string | Array<string>;
 }
 
 export interface NotificationPreferenceDetails {
@@ -550,7 +564,12 @@ export interface UserProfile {
 
   airship?: AirshipProfile | null;
 
-  apn?: string | null;
+  /**
+   * Apple Push Notification device tokens. Supply either a single `token` or a
+   * `tokens` value. A bare string is rejected by the provider — the token must be
+   * wrapped in this object.
+   */
+  apn?: Apn | null;
 
   /**
    * Routes a push notification through the AWS SNS provider. The target ARN must be
@@ -573,6 +592,9 @@ export interface UserProfile {
 
   email_verified?: boolean | null;
 
+  /**
+   * Expo push tokens. Supply either a single `token` or a `tokens` value.
+   */
   expo?: Expo | null;
 
   facebookPSID?: string | null;
