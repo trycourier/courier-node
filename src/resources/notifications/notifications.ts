@@ -125,21 +125,6 @@ export class Notifications extends APIResource {
   }
 
   /**
-   * Copies a notification template within the same workspace and environment,
-   * appending " COPY" to the title. The copy is standalone and independently
-   * editable.
-   *
-   * @example
-   * ```ts
-   * const notificationTemplateResponse =
-   *   await client.notifications.duplicate('id');
-   * ```
-   */
-  duplicate(id: string, options?: RequestOptions): APIPromise<NotificationTemplateResponse> {
-    return this._client.post(path`/notifications/${id}/duplicate`, options);
-  }
-
-  /**
    * Returns a notification template's published versions, most recent first, for
    * comparison or rollback. Paged.
    *
