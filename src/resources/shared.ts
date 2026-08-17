@@ -57,6 +57,18 @@ export interface AudienceRecipient {
   filters?: Array<AudienceFilter> | null;
 }
 
+/**
+ * Routes a push notification through the AWS SNS provider. The target ARN must be
+ * nested under `aws_sns` — a top-level `target_arn` on the profile is ignored by
+ * the provider.
+ */
+export interface AwsSns {
+  /**
+   * The ARN of the SNS platform endpoint, topic, or application to publish to.
+   */
+  target_arn: string;
+}
+
 export interface Channel {
   /**
    * Brand id used for rendering.
@@ -540,6 +552,13 @@ export interface UserProfile {
 
   apn?: string | null;
 
+  /**
+   * Routes a push notification through the AWS SNS provider. The target ARN must be
+   * nested under `aws_sns` — a top-level `target_arn` on the profile is ignored by
+   * the provider.
+   */
+  aws_sns?: AwsSns | null;
+
   birthdate?: string | null;
 
   /**
@@ -591,8 +610,6 @@ export interface UserProfile {
   slack?: Slack | null;
 
   sub?: string | null;
-
-  target_arn?: string | null;
 
   updated_at?: string | null;
 

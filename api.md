@@ -8,6 +8,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">AudienceFilter</a></code>
 - <code><a href="./src/resources/shared.ts">AudienceFilterConfig</a></code>
 - <code><a href="./src/resources/shared.ts">AudienceRecipient</a></code>
+- <code><a href="./src/resources/shared.ts">AwsSns</a></code>
 - <code><a href="./src/resources/shared.ts">Channel</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelClassification</a></code>
 - <code><a href="./src/resources/shared.ts">ChannelMetadata</a></code>

@@ -1395,6 +1395,7 @@ export declare namespace Courier {
   export type AudienceFilter = API.AudienceFilter;
   export type AudienceFilterConfig = API.AudienceFilterConfig;
   export type AudienceRecipient = API.AudienceRecipient;
+  export type AwsSns = API.AwsSns;
   export type Channel = API.Channel;
   export type ChannelClassification = API.ChannelClassification;
   export type ChannelMetadata = API.ChannelMetadata;
