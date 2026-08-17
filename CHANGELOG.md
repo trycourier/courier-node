@@ -1,5 +1,16 @@
 # Changelog
 
+## [8.0.0](https://github.com/trycourier/courier-node/compare/v7.25.2...v8.0.0) (2026-08-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** nest the AWS SNS target_arn under aws_sns on the user profile ([#274](https://github.com/trycourier/courier-node/issues/274))
+
+### Features
+
+* **api:** nest the AWS SNS target_arn under aws_sns on the user profile ([#274](https://github.com/trycourier/courier-node/issues/274)) ([de8a002](https://github.com/trycourier/courier-node/commit/de8a002e31591798b3d264f42c673bb07b345272))
+
 ## [7.25.2](https://github.com/trycourier/courier-node/compare/v7.25.1...v7.25.2) (2026-08-13)
 
 
