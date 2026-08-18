@@ -1,5 +1,16 @@
 # Changelog
 
+## [9.0.0](https://github.com/trycourier/courier-node/compare/v8.0.0...v9.0.0) (2026-08-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** match the spec to the backend — apn/expo token types and the phantom notifications.duplicate ([#276](https://github.com/trycourier/courier-node/issues/276))
+
+### Features
+
+* **api:** match the spec to the backend — apn/expo token types and the phantom notifications.duplicate ([#276](https://github.com/trycourier/courier-node/issues/276)) ([a05784a](https://github.com/trycourier/courier-node/commit/a05784a72d2e012c9613555634b8f3cfaeb20de2))
+
 ## [8.0.0](https://github.com/trycourier/courier-node/compare/v7.25.2...v8.0.0) (2026-08-17)
 
 
