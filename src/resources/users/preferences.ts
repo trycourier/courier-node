@@ -244,6 +244,20 @@ export interface TopicPreference {
    * custom_routing) rather than the topic's default routing.
    */
   has_custom_routing?: boolean | null;
+
+  /**
+   * The unique identifier of the section this topic belongs to. Always present when
+   * listing a user's preferences; omitted by the single-topic read when the topic
+   * has no resolvable section.
+   */
+  section_id?: string;
+
+  /**
+   * The display name of the section this topic belongs to. Always present when
+   * listing a user's preferences; omitted by the single-topic read when the topic
+   * has no resolvable section.
+   */
+  section_name?: string;
 }
 
 export interface PreferenceRetrieveResponse {
