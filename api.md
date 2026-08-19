@@ -162,6 +162,10 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/automations/automations.ts">AutomationInvokeResponse</a></code>
+- <code><a href="./src/resources/automations/automations.ts">AutomationRunListItem</a></code>
+- <code><a href="./src/resources/automations/automations.ts">AutomationRunListResponse</a></code>
+- <code><a href="./src/resources/automations/automations.ts">AutomationRunStep</a></code>
+- <code><a href="./src/resources/automations/automations.ts">AutomationRunStepsResponse</a></code>
 - <code><a href="./src/resources/automations/automations.ts">AutomationTemplate</a></code>
 - <code><a href="./src/resources/automations/automations.ts">AutomationTemplateListResponse</a></code>
 
@@ -176,6 +180,13 @@ Methods:
 - <code title="post /automations/invoke">client.automations.invoke.<a href="./src/resources/automations/invoke.ts">invokeAdHoc</a>({ ...params }) -> AutomationInvokeResponse</code>
 - <code title="post /automations/{templateId}/invoke">client.automations.invoke.<a href="./src/resources/automations/invoke.ts">invokeByTemplate</a>(templateID, { ...params }) -> AutomationInvokeResponse</code>
 
+## Runs
+
+Methods:
+
+- <code title="get /automations/runs">client.automations.runs.<a href="./src/resources/automations/runs.ts">list</a>({ ...params }) -> AutomationRunListResponse</code>
+- <code title="get /automations/runs/{id}/steps">client.automations.runs.<a href="./src/resources/automations/runs.ts">listSteps</a>(id) -> AutomationRunStepsResponse</code>
+
 # Journeys
 
 Types:
@@ -186,6 +197,7 @@ Types:
 - <code><a href="./src/resources/journeys/journeys.ts">Journey</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyAINode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyAPIInvokeTriggerNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyAudienceTriggerNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyConditionAtom</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyConditionGroup</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyConditionNestedGroup</a></code>
@@ -201,6 +213,12 @@ Types:
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyPublishRequest</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyResponse</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyRun</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyRunListItem</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyRunListResponse</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyRunResponse</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyRunStep</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyRunStepsResponse</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneySegmentTriggerNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneySendNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyState</a></code>
@@ -214,6 +232,7 @@ Types:
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyThrottleStaticNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyVersionItem</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyVersionsListResponse</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneyWebhookTriggerNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneysInvokeRequest</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneysInvokeResponse</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneysListResponse</a></code>
@@ -244,6 +263,14 @@ Methods:
 - <code title="put /journeys/{templateId}/templates/{notificationId}/locales/{localeId}">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">putLocale</a>(localeID, { ...params }) -> NotificationContentMutationResponse</code>
 - <code title="put /journeys/{templateId}/templates/{notificationId}">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">replace</a>(notificationID, { ...params }) -> JourneyTemplateGetResponse</code>
 - <code title="get /journeys/{templateId}/templates/{notificationId}/content">client.journeys.templates.<a href="./src/resources/journeys/templates.ts">retrieveContent</a>(notificationID, { ...params }) -> NotificationContentGetResponse</code>
+
+## Runs
+
+Methods:
+
+- <code title="get /journeys/runs/{run_id}">client.journeys.runs.<a href="./src/resources/journeys/runs.ts">retrieve</a>(runID) -> JourneyRunResponse</code>
+- <code title="get /journeys/runs">client.journeys.runs.<a href="./src/resources/journeys/runs.ts">list</a>({ ...params }) -> JourneyRunListResponse</code>
+- <code title="get /journeys/runs/{run_id}/steps">client.journeys.runs.<a href="./src/resources/journeys/runs.ts">listSteps</a>(runID) -> JourneyRunStepsResponse</code>
 
 # Broadcasts
 
