@@ -8,6 +8,7 @@ export {
   type Journey,
   type JourneyAINode,
   type JourneyAPIInvokeTriggerNode,
+  type JourneyAudienceTriggerNode,
   type JourneyConditionAtom,
   type JourneyConditionGroup,
   type JourneyConditionNestedGroup,
@@ -23,6 +24,12 @@ export {
   type JourneyNode,
   type JourneyPublishRequest,
   type JourneyResponse,
+  type JourneyRun,
+  type JourneyRunListItem,
+  type JourneyRunListResponse,
+  type JourneyRunResponse,
+  type JourneyRunStep,
+  type JourneyRunStepsResponse,
   type JourneySegmentTriggerNode,
   type JourneySendNode,
   type JourneyState,
@@ -36,6 +43,7 @@ export {
   type JourneyThrottleStaticNode,
   type JourneyVersionItem,
   type JourneyVersionsListResponse,
+  type JourneyWebhookTriggerNode,
   type JourneysInvokeRequest,
   type JourneysInvokeResponse,
   type JourneysListResponse,
@@ -47,6 +55,7 @@ export {
   type JourneyPublishParams,
   type JourneyReplaceParams,
 } from './journeys';
+export { Runs, type RunListParams } from './runs';
 export {
   Templates,
   type TemplateCreateParams,

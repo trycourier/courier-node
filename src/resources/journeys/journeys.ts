@@ -3,6 +3,8 @@
 import { APIResource } from '../../core/resource';
 import * as JourneysAPI from './journeys';
 import * as Shared from '../shared';
+import * as RunsAPI from './runs';
+import { RunListParams, Runs } from './runs';
 import * as TemplatesAPI from './templates';
 import {
   TemplateArchiveParams,
@@ -27,6 +29,7 @@ import { path } from '../../internal/utils/path';
  */
 export class Journeys extends APIResource {
   templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
+  runs: RunsAPI.Runs = new RunsAPI.Runs(this._client);
 
   /**
    * Creates a journey from a set of nodes, in draft state unless you pass a
@@ -410,6 +413,34 @@ export interface JourneyAPIInvokeTriggerNode {
 }
 
 /**
+ * Trigger fired when a user newly matches an Audience. Leaving and re-joining the
+ * Audience re-enters the Journey. Membership is new-members-only: users already in
+ * the Audience when the Journey is published do not enter. Unlike the v2
+ * Automations audience trigger, there is no member scope, event type, or frequency
+ * mode to configure, and `audience_id` must name one Audience — wildcards are not
+ * supported.
+ */
+export interface JourneyAudienceTriggerNode {
+  /**
+   * The Audience to watch. Must name a single Audience; wildcards are not supported.
+   */
+  audience_id: string;
+
+  trigger_type: 'audience';
+
+  type: 'trigger';
+
+  id?: string;
+
+  /**
+   * Condition spec for a journey node. Accepts a single condition atom, an AND/OR
+   * group, or an AND/OR nested group. Omit the `conditions` property entirely to
+   * express "no conditions".
+   */
+  conditions?: JourneyConditionsField;
+}
+
+/**
  * A single condition expressed as a positional tuple of strings.
  *
  * - Binary form (3 elements): `[path, operator, value]` where `operator` is one of
@@ -650,6 +681,8 @@ export type JourneyMergeStrategy = 'overwrite' | 'soft-merge' | 'replace' | 'non
 export type JourneyNode =
   | JourneyAPIInvokeTriggerNode
   | JourneySegmentTriggerNode
+  | JourneyAudienceTriggerNode
+  | JourneyWebhookTriggerNode
   | JourneySendNode
   | JourneyDelayDurationNode
   | JourneyDelayUntilNode
@@ -829,10 +862,157 @@ export interface JourneyResponse {
 }
 
 /**
- * Trigger fired by a segment event (`identify`, `group`, or `track`).
+ * One run of a Journey. `status` and `created_at` are absent on a small number of
+ * legacy runs stored without them.
+ */
+export interface JourneyRun {
+  /**
+   * A unique identifier representing the run.
+   */
+  run_id: string;
+
+  /**
+   * Internal provenance strings describing what started the run, e.g.
+   * `invoke/<journey_id>` or `segment/page/Pricing Page`. Diagnostic only — the
+   * format is unstable and should not be parsed.
+   */
+  source: Array<string>;
+
+  /**
+   * When the run started, as an ISO 8601 timestamp.
+   */
+  created_at?: string;
+
+  /**
+   * The state of the run: `PROCESSING`, `PROCESSED`, `WAITING`, `CANCELED`, `ERROR`,
+   * `THROTTLED`, or `NOT PROCESSED`. Not an enum — new values have been added
+   * before.
+   */
+  status?: string;
+
+  /**
+   * The id of the Journey this run belongs to.
+   */
+  template_id?: string;
+
+  /**
+   * When the run last changed state, as an ISO 8601 timestamp.
+   */
+  updated_at?: string;
+}
+
+/**
+ * A Journey run as it appears in a list response, without `updated_at`.
+ */
+export interface JourneyRunListItem {
+  /**
+   * A unique identifier representing the run.
+   */
+  run_id: string;
+
+  /**
+   * Internal provenance strings describing what started the run. Diagnostic only.
+   */
+  source: Array<string>;
+
+  /**
+   * When the run started, as an ISO 8601 timestamp.
+   */
+  created_at?: string;
+
+  /**
+   * The state of the run. See `JourneyRun.status` for the values it takes.
+   */
+  status?: string;
+
+  /**
+   * The id of the Journey this run belongs to.
+   */
+  template_id?: string;
+}
+
+/**
+ * A page of Journey runs.
+ */
+export interface JourneyRunListResponse {
+  runs: Array<JourneyRunListItem>;
+
+  /**
+   * Pass back as `cursor` to fetch the next page. Absent on the last page.
+   */
+  next_cursor?: string;
+
+  /**
+   * Pass back as `cursor` to fetch the previous page. Absent on the first page.
+   */
+  prev_cursor?: string;
+}
+
+/**
+ * A single Journey run.
+ */
+export interface JourneyRunResponse {
+  /**
+   * One run of a Journey. `status` and `created_at` are absent on a small number of
+   * legacy runs stored without them.
+   */
+  run: JourneyRun;
+}
+
+/**
+ * One executed node of a Journey run. `node_id` is the id of the node in the
+ * published Journey, so a step maps directly onto the Journey graph.
+ */
+export interface JourneyRunStep {
+  /**
+   * The kind of node that ran, e.g. `send`, `delay`, or `exit`.
+   */
+  action: string;
+
+  /**
+   * The state of the step: the seven run statuses, plus `SKIPPED` and `COMPUTING`.
+   * Not an enum — new values have been added before.
+   */
+  status: string;
+
+  /**
+   * When the step started, as an ISO 8601 timestamp.
+   */
+  created_at?: string;
+
+  /**
+   * The message this step produced, present on send steps. Pass it to
+   * `GET /messages/{message_id}` for delivery status. A send to a List or an
+   * Audience yields one id for the request, not one per recipient.
+   */
+  message_id?: string;
+
+  /**
+   * The id of the node in the published Journey that this step executed.
+   */
+  node_id?: string;
+
+  /**
+   * When the step last changed state, as an ISO 8601 timestamp.
+   */
+  updated_at?: string;
+}
+
+/**
+ * Every step of a Journey run. Not paginated.
+ */
+export interface JourneyRunStepsResponse {
+  steps: Array<JourneyRunStep>;
+}
+
+/**
+ * Trigger fired by a segment event (`identify`, `group`, `track`, or `page`). A
+ * trigger with no `event_id` fires on any event of its type — the only shape
+ * `identify` and `group` can take, and the one that catches a stock
+ * `analytics.page()` call.
  */
 export interface JourneySegmentTriggerNode {
-  request_type: 'identify' | 'group' | 'track';
+  request_type: 'identify' | 'group' | 'track' | 'page';
 
   trigger_type: 'segment';
 
@@ -1182,6 +1362,39 @@ export interface JourneyVersionsListResponse {
 }
 
 /**
+ * Trigger fired when an external system POSTs to the webhook URL minted for
+ * `event_source`. Narrow it to one event with `event_id`, or omit `event_id` to
+ * accept every event delivered to the URL.
+ */
+export interface JourneyWebhookTriggerNode {
+  /**
+   * The provider key the webhook URL is minted for. Required, and must not contain a
+   * forward slash.
+   */
+  event_source: string;
+
+  trigger_type: 'webhook';
+
+  type: 'trigger';
+
+  id?: string;
+
+  /**
+   * Condition spec for a journey node. Accepts a single condition atom, an AND/OR
+   * group, or an AND/OR nested group. Omit the `conditions` property entirely to
+   * express "no conditions".
+   */
+  conditions?: JourneyConditionsField;
+
+  /**
+   * An optional event filter, matched against the payload's `event` field. A sender
+   * that supplies no `event` matches the literal `custom`. Must not contain a
+   * forward slash. Omit to accept every event delivered to the URL.
+   */
+  event_id?: string;
+}
+
+/**
  * Request body for invoking a journey. Requires either a user identifier or a
  * profile with contact information. User identifiers can be provided via user_id
  * field, or resolved from profile/data objects (user_id, userId, or anonymousId
@@ -1427,6 +1640,7 @@ export interface JourneyReplaceParams {
 }
 
 Journeys.Templates = Templates;
+Journeys.Runs = Runs;
 
 export declare namespace Journeys {
   export {
@@ -1436,6 +1650,7 @@ export declare namespace Journeys {
     type Journey as Journey,
     type JourneyAINode as JourneyAINode,
     type JourneyAPIInvokeTriggerNode as JourneyAPIInvokeTriggerNode,
+    type JourneyAudienceTriggerNode as JourneyAudienceTriggerNode,
     type JourneyConditionAtom as JourneyConditionAtom,
     type JourneyConditionGroup as JourneyConditionGroup,
     type JourneyConditionNestedGroup as JourneyConditionNestedGroup,
@@ -1451,6 +1666,12 @@ export declare namespace Journeys {
     type JourneyNode as JourneyNode,
     type JourneyPublishRequest as JourneyPublishRequest,
     type JourneyResponse as JourneyResponse,
+    type JourneyRun as JourneyRun,
+    type JourneyRunListItem as JourneyRunListItem,
+    type JourneyRunListResponse as JourneyRunListResponse,
+    type JourneyRunResponse as JourneyRunResponse,
+    type JourneyRunStep as JourneyRunStep,
+    type JourneyRunStepsResponse as JourneyRunStepsResponse,
     type JourneySegmentTriggerNode as JourneySegmentTriggerNode,
     type JourneySendNode as JourneySendNode,
     type JourneyState as JourneyState,
@@ -1464,6 +1685,7 @@ export declare namespace Journeys {
     type JourneyThrottleStaticNode as JourneyThrottleStaticNode,
     type JourneyVersionItem as JourneyVersionItem,
     type JourneyVersionsListResponse as JourneyVersionsListResponse,
+    type JourneyWebhookTriggerNode as JourneyWebhookTriggerNode,
     type JourneysInvokeRequest as JourneysInvokeRequest,
     type JourneysInvokeResponse as JourneysInvokeResponse,
     type JourneysListResponse as JourneysListResponse,
@@ -1489,4 +1711,6 @@ export declare namespace Journeys {
     type TemplateReplaceParams as TemplateReplaceParams,
     type TemplateRetrieveContentParams as TemplateRetrieveContentParams,
   };
+
+  export { Runs as Runs, type RunListParams as RunListParams };
 }
