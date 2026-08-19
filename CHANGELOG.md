@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.1.0](https://github.com/trycourier/courier-node/compare/v9.0.0...v9.1.0) (2026-08-19)
+
+
+### Features
+
+* **api:** add automation and journey run log endpoints ([#280](https://github.com/trycourier/courier-node/issues/280)) ([0596a42](https://github.com/trycourier/courier-node/commit/0596a42ec1a57dbbfe025afaa1eb3a4c3851c6f3))
+* **api:** document section_id and section_name on a user's topic preference ([#278](https://github.com/trycourier/courier-node/issues/278)) ([13b4415](https://github.com/trycourier/courier-node/commit/13b4415e8561b795c96aad3bc2b2956aa68503e2))
+
 ## [9.0.0](https://github.com/trycourier/courier-node/compare/v8.0.0...v9.0.0) (2026-08-17)
 
 
