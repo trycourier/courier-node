@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.2.0](https://github.com/trycourier/courier-node/compare/v9.1.0...v9.2.0) (2026-08-26)
+
+
+### Features
+
+* **api:** document the template send metrics endpoint ([#281](https://github.com/trycourier/courier-node/issues/281)) ([fbbead5](https://github.com/trycourier/courier-node/commit/fbbead59843c56447efe119ea802f2117b9a74c0))
+
 ## [9.1.0](https://github.com/trycourier/courier-node/compare/v9.0.0...v9.1.0) (2026-08-19)
 
 
