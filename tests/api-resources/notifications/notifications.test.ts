@@ -107,6 +107,35 @@ describe('resource notifications', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('getMetrics', async () => {
+    const responsePromise = client.notifications.getMetrics('x');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('getMetrics: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.notifications.getMetrics(
+        'x',
+        {
+          end: '2019-12-27T18:11:19.117Z',
+          granularity: 'HOUR',
+          lookback: 'lookback',
+          start: '2019-12-27T18:11:19.117Z',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Courier.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('listVersions', async () => {
     const responsePromise = client.notifications.listVersions('id');
     const rawResponse = await responsePromise.asResponse();
