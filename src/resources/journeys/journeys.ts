@@ -1073,6 +1073,11 @@ export namespace JourneySendNode {
 
     template?: string;
 
+    /**
+     * Recipient override for this send. Provide exactly one of `email_override`,
+     * `phone_number_override`, `user_id_override`, `slack`, or `ms_teams` — not a
+     * combination.
+     */
     to?: Message.To;
   }
 
@@ -1104,14 +1109,141 @@ export namespace JourneySendNode {
       timezone?: string;
     }
 
+    /**
+     * Recipient override for this send. Provide exactly one of `email_override`,
+     * `phone_number_override`, `user_id_override`, `slack`, or `ms_teams` — not a
+     * combination.
+     */
     export interface To {
       email_override?: string;
 
+      /**
+       * Send to a Microsoft Teams address directly, bypassing the recipient's stored
+       * profile. Requires exactly one target: `channel_id`, `channel_name` (with
+       * `team_id`), `user_id`, or `email`. `channel_name`, `user_id`, and `email` also
+       * need at least one of `service_url` or `tenant_id` — if you provide both, they
+       * must agree. `channel_id` doesn't require tenant context to publish, but provide
+       * `service_url` or `tenant_id` anyway: sends without either have failed at
+       * delivery in testing. `conversation_id` and `reply_to_activity_id`, available on
+       * the send API's `MsTeams` profile, aren't supported here yet.
+       */
+      ms_teams?: JourneysAPI.JourneySendNodeToMsTeams;
+
       phone_number_override?: string;
+
+      /**
+       * Send to a Slack address directly, bypassing the recipient's stored profile.
+       * Requires exactly one of `channel`, `user_id`, or `email`.
+       */
+      slack?: JourneysAPI.JourneySendNodeToSlack;
 
       user_id_override?: string;
     }
   }
+}
+
+/**
+ * Send to a Microsoft Teams address directly, bypassing the recipient's stored
+ * profile. Requires exactly one target: `channel_id`, `channel_name` (with
+ * `team_id`), `user_id`, or `email`. `channel_name`, `user_id`, and `email` also
+ * need at least one of `service_url` or `tenant_id` — if you provide both, they
+ * must agree. `channel_id` doesn't require tenant context to publish, but provide
+ * `service_url` or `tenant_id` anyway: sends without either have failed at
+ * delivery in testing. `conversation_id` and `reply_to_activity_id`, available on
+ * the send API's `MsTeams` profile, aren't supported here yet.
+ */
+export interface JourneySendNodeToMsTeams {
+  /**
+   * Bot Framework channel ID to send to.
+   */
+  channel_id?: string;
+
+  /**
+   * Teams channel name to send to. Requires `team_id`.
+   */
+  channel_name?: string;
+
+  /**
+   * Email address of the Teams user to send to.
+   */
+  email?: string;
+
+  /**
+   * The regional Bot Framework host for this conversation, e.g.
+   * `https://smba.trafficmanager.net/amer`. A path segment naming the Microsoft
+   * tenant may follow it and is used to derive `tenant_id` when it is not supplied
+   * directly.
+   */
+  service_url?: string;
+
+  /**
+   * Microsoft Teams team ID. Required alongside `channel_name`.
+   */
+  team_id?: string;
+
+  /**
+   * The Microsoft (Azure AD) tenant this send targets or authenticates against.
+   * Unrelated to `message.context.tenant_id`, which is the Courier customer's own
+   * multi-tenant context.
+   */
+  tenant_id?: string;
+
+  /**
+   * Microsoft Teams user ID to send to.
+   */
+  user_id?: string;
+}
+
+/**
+ * Send to a Slack address directly, bypassing the recipient's stored profile.
+ * Requires exactly one of `channel`, `user_id`, or `email`.
+ */
+export type JourneySendNodeToSlack =
+  | JourneySendNodeToSlackChannel
+  | JourneySendNodeToSlackUserID
+  | JourneySendNodeToSlackEmail;
+
+export interface JourneySendNodeToSlackChannel {
+  /**
+   * Slack channel to send to, by name or ID.
+   */
+  channel: string;
+
+  /**
+   * A runtime reference to a Slack access token, such as `{{data.slack_token}}`.
+   * Literal values are rejected — they'd be stored permanently with no way to rotate
+   * them. Omit to use the token on the recipient's stored Slack profile.
+   */
+  access_token?: string;
+}
+
+export interface JourneySendNodeToSlackEmail {
+  /**
+   * Email address of the Slack user to send to, resolved via the workspace
+   * directory.
+   */
+  email: string;
+
+  /**
+   * A runtime reference to a Slack access token, such as `{{data.slack_token}}`.
+   * Literal values are rejected — they'd be stored permanently with no way to rotate
+   * them. Omit to use the token on the recipient's stored Slack profile.
+   */
+  access_token?: string;
+}
+
+export interface JourneySendNodeToSlackUserID {
+  /**
+   * Slack user ID to send to.
+   */
+  user_id: string;
+
+  /**
+   * A runtime reference to a Slack access token, such as `{{data.slack_token}}`.
+   * Literal values are rejected — they'd be stored permanently with no way to rotate
+   * them. Omit to use the token on the recipient's stored Slack profile.
+   */
+  access_token?: string;
 }
 
 /**
@@ -1674,6 +1806,11 @@ export declare namespace Journeys {
     type JourneyRunStepsResponse as JourneyRunStepsResponse,
     type JourneySegmentTriggerNode as JourneySegmentTriggerNode,
     type JourneySendNode as JourneySendNode,
+    type JourneySendNodeToMsTeams as JourneySendNodeToMsTeams,
+    type JourneySendNodeToSlack as JourneySendNodeToSlack,
+    type JourneySendNodeToSlackChannel as JourneySendNodeToSlackChannel,
+    type JourneySendNodeToSlackEmail as JourneySendNodeToSlackEmail,
+    type JourneySendNodeToSlackUserID as JourneySendNodeToSlackUserID,
     type JourneyState as JourneyState,
     type JourneyTemplateCreateRequest as JourneyTemplateCreateRequest,
     type JourneyTemplateGetResponse as JourneyTemplateGetResponse,

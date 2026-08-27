@@ -221,6 +221,11 @@ Types:
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyRunStepsResponse</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneySegmentTriggerNode</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneySendNode</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneySendNodeToMsTeams</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneySendNodeToSlack</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneySendNodeToSlackChannel</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneySendNodeToSlackEmail</a></code>
+- <code><a href="./src/resources/journeys/journeys.ts">JourneySendNodeToSlackUserID</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyState</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyTemplateCreateRequest</a></code>
 - <code><a href="./src/resources/journeys/journeys.ts">JourneyTemplateGetResponse</a></code>

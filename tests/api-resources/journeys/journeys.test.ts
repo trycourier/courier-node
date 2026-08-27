@@ -50,7 +50,17 @@ describe('resource journeys', () => {
             template: 'nt_01kx4h2jdafq8bk9aftxak4b40',
             to: {
               email_override: 'x',
+              ms_teams: {
+                channel_id: 'x',
+                channel_name: 'x',
+                email: 'x',
+                service_url: 'x',
+                team_id: 'x',
+                tenant_id: 'x',
+                user_id: 'x',
+              },
               phone_number_override: 'x',
+              slack: { channel: 'x', access_token: 'x' },
               user_id_override: 'x',
             },
           },
