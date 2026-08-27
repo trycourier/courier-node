@@ -383,6 +383,10 @@ export interface Metadata {
   utm?: Utm | null;
 }
 
+/**
+ * Provide at least one of `tenant_id` or `service_url`. If you provide both, they
+ * must agree.
+ */
 export type MsTeams =
   | SendToMsTeamsUserID
   | SendToMsTeamsEmail
@@ -390,16 +394,26 @@ export type MsTeams =
   | SendToMsTeamsConversationID
   | SendToMsTeamsChannelName;
 
+/**
+ * Tenant context shared by every MS Teams send variant. Provide at least one of
+ * `tenant_id` or `service_url`. If you provide both, they must agree — a
+ * `service_url` pointing at a different Microsoft tenant than `tenant_id` is
+ * rejected.
+ */
 export interface MsTeamsBaseProperties {
-  service_url: string;
+  service_url?: string;
 
-  tenant_id: string;
+  tenant_id?: string;
 }
 
 /**
  * Send via Microsoft Teams
  */
 export interface MsTeamsRecipient {
+  /**
+   * Provide at least one of `tenant_id` or `service_url`. If you provide both, they
+   * must agree.
+   */
   ms_teams: MsTeams;
 }
 
@@ -474,22 +488,31 @@ export interface SendToChannel {
   channel_id: string;
 }
 
+/**
+ * Sends directly to a Microsoft Teams channel by its Bot Framework ID. Still
+ * provide at least one of `tenant_id` or `service_url` — sends without either have
+ * failed Bot Framework authentication in testing.
+ */
 export interface SendToMsTeamsChannelID {
   channel_id: string;
 
-  service_url: string;
+  service_url?: string;
 
-  tenant_id: string;
+  tenant_id?: string;
 }
 
+/**
+ * `team_id` is required alongside `channel_name`. Also provide at least one of
+ * `tenant_id` or `service_url`; if you provide both, they must agree.
+ */
 export interface SendToMsTeamsChannelName {
   channel_name: string;
 
-  service_url: string;
-
   team_id: string;
 
-  tenant_id: string;
+  service_url?: string;
+
+  tenant_id?: string;
 }
 
 export interface SendToMsTeamsConversationID {
@@ -500,20 +523,28 @@ export interface SendToMsTeamsConversationID {
   tenant_id: string;
 }
 
+/**
+ * Provide at least one of `tenant_id` or `service_url`. If you provide both, they
+ * must agree.
+ */
 export interface SendToMsTeamsEmail {
   email: string;
 
-  service_url: string;
+  service_url?: string;
 
-  tenant_id: string;
+  tenant_id?: string;
 }
 
+/**
+ * Provide at least one of `tenant_id` or `service_url`. If you provide both, they
+ * must agree.
+ */
 export interface SendToMsTeamsUserID {
-  service_url: string;
-
-  tenant_id: string;
-
   user_id: string;
+
+  service_url?: string;
+
+  tenant_id?: string;
 }
 
 export interface SendToSlackChannel {
@@ -613,6 +644,10 @@ export interface UserProfile {
 
   middle_name?: string | null;
 
+  /**
+   * Provide at least one of `tenant_id` or `service_url`. If you provide both, they
+   * must agree.
+   */
   ms_teams?: MsTeams | null;
 
   name?: string | null;
