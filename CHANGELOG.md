@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.3.0](https://github.com/trycourier/courier-node/compare/v9.2.0...v9.3.0) (2026-08-27)
+
+
+### Features
+
+* **api:** document Slack and MS Teams on journey send nodes, and fix over-strict MsTeams tenant requirements [C-20302] ([#283](https://github.com/trycourier/courier-node/issues/283)) ([db4b250](https://github.com/trycourier/courier-node/commit/db4b250d416d9fadc8fff39d840c9d34d9ccc259))
+
 ## [9.2.0](https://github.com/trycourier/courier-node/compare/v9.1.0...v9.2.0) (2026-08-26)
 
 
