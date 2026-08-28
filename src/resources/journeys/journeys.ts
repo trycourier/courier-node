@@ -1045,6 +1045,14 @@ export interface JourneySendNode {
   id?: string;
 
   /**
+   * The channel this node sends through. Optional — when omitted, the field is
+   * absent from the node, including on `GET`; nodes created before this field
+   * existed have it unset. Setting it makes the node's channel explicit to any
+   * client reading the journey.
+   */
+  channel?: 'email' | 'sms' | 'push' | 'inbox' | 'slack' | 'msteams';
+
+  /**
    * Condition spec for a journey node. Accepts a single condition atom, an AND/OR
    * group, or an AND/OR nested group. Omit the `conditions` property entirely to
    * express "no conditions".
