@@ -121,7 +121,78 @@ export type DeviceType = string;
 
 export type Discord = SendToChannel | SendDirectMessage;
 
-export interface ElementalActionNodeWithType extends ElementalBaseNode {
+/**
+ * Allows the user to execute an action. Can be a button or a link.
+ */
+export interface ElementalActionNode extends ElementalBaseNode {
+  /**
+   * The text content of the action shown to the user.
+   */
+  content: string;
+
+  /**
+   * The target URL of the action.
+   */
+  href: string;
+
+  /**
+   * A unique id used to identify the action when it is executed.
+   */
+  action_id?: string | null;
+
+  /**
+   * The alignment of the action button. Defaults to "center".
+   */
+  align?: Alignment | null;
+
+  /**
+   * The background color of the action button.
+   */
+  background_color?: string | null;
+
+  /**
+   * CSS border-radius applied to the action button. For example, `4px`
+   */
+  border_radius?: string | null;
+
+  /**
+   * CSS border width applied to the action button. For example, `1px`
+   */
+  border_size?: string | null;
+
+  /**
+   * When true, the action's href is not rewritten for click-through tracking, even
+   * when click-through tracking is enabled for the workspace.
+   */
+  disable_tracking?: boolean | null;
+
+  /**
+   * CSS font-size applied to the action button label. For example, `14px`
+   */
+  font_size?: string | null;
+
+  /**
+   * Region specific content. See
+   * [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
+   * for more details.
+   */
+  locales?: Locales | null;
+
+  /**
+   * CSS padding applied to the action button. For example, `8px 16px`
+   */
+  padding?: string | null;
+
+  /**
+   * Defaults to `button`.
+   */
+  style?: 'button' | 'link' | null;
+}
+
+/**
+ * Allows the user to execute an action. Can be a button or a link.
+ */
+export interface ElementalActionNodeWithType extends ElementalActionNode {
   type?: 'action';
 }
 
@@ -220,33 +291,126 @@ export interface ElementalContentSugar {
   title: string;
 }
 
-export interface ElementalDividerNodeWithType extends ElementalBaseNode {
+/**
+ * Renders a dividing line between elements.
+ */
+export interface ElementalDividerNode extends ElementalBaseNode {
+  /**
+   * The CSS color to render the line with. For example, `#fff`
+   */
+  color?: string | null;
+}
+
+/**
+ * Renders a dividing line between elements.
+ */
+export interface ElementalDividerNodeWithType extends ElementalDividerNode {
   type?: 'divider';
 }
 
-export interface ElementalHTMLNodeWithType extends ElementalBaseNode {
+/**
+ * Raw HTML string inside an Elemental document. When rendering a message, this
+ * node is turned into output only for the email channel; for other channels it
+ * produces no blocks.
+ */
+export interface ElementalHTMLNode extends ElementalBaseNode {
+  /**
+   * Raw HTML string to render inside the notification.
+   */
+  content: string;
+
+  /**
+   * Region specific content. See
+   * [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
+   * for more details.
+   */
+  locales?: Locales | null;
+}
+
+/**
+ * Raw HTML string inside an Elemental document. When rendering a message, this
+ * node is turned into output only for the email channel; for other channels it
+ * produces no blocks.
+ */
+export interface ElementalHTMLNodeWithType extends ElementalHTMLNode {
   type?: 'html';
 }
 
-export interface ElementalImageNodeWithType extends ElementalBaseNode {
+/**
+ * Used to embed an image into the notification.
+ */
+export interface ElementalImageNode extends ElementalBaseNode {
+  /**
+   * The source of the image.
+   */
+  src: string;
+
+  /**
+   * The alignment of the image.
+   */
+  align?: Alignment | null;
+
+  /**
+   * Alternate text for the image.
+   */
+  altText?: string | null;
+
+  /**
+   * CSS border color applied to the image. For example, `#ccc`
+   */
+  border_color?: string | null;
+
+  /**
+   * CSS border width applied to the image. For example, `1px`
+   */
+  border_size?: string | null;
+
+  /**
+   * A URL to link to when the image is clicked.
+   */
+  href?: string | null;
+
+  /**
+   * CSS padding applied around the image. For example, `10px`
+   */
+  padding?: string | null;
+
+  /**
+   * CSS width properties to apply to the image. For example, 50px
+   */
+  width?: string | null;
+}
+
+/**
+ * Used to embed an image into the notification.
+ */
+export interface ElementalImageNodeWithType extends ElementalImageNode {
   type?: 'image';
 }
 
-export interface ElementalMetaNodeWithType extends ElementalBaseNode {
+/**
+ * The meta element contains information describing the notification that may be
+ * used by a particular channel or provider. One important field is the title field
+ * which will be used as the title for channels that support it.
+ */
+export interface ElementalMetaNode extends ElementalBaseNode {
+  /**
+   * The title to be displayed by supported channels. For example, the email subject.
+   */
+  title?: string | null;
+}
+
+/**
+ * The meta element contains information describing the notification that may be
+ * used by a particular channel or provider. One important field is the title field
+ * which will be used as the title for channels that support it.
+ */
+export interface ElementalMetaNodeWithType extends ElementalMetaNode {
   type?: 'meta';
 }
 
 /**
- * The channel element allows a notification to be customized based on which
- * channel it is sent through. For example, you may want to display a detailed
- * message when the notification is sent through email, and a more concise message
- * in a push notification. Channel elements are only valid as top-level elements;
- * you cannot nest channel elements. If there is a channel element specified at the
- * top-level of the document, all sibling elements must be channel elements. Note:
- * As an alternative, most elements support a `channel` property. Which allows you
- * to selectively display an individual element on a per channel basis. See the
- * [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
- * for more details.
+ * Represents a body of text to be rendered inside of the notification.
  */
 export type ElementalNode =
   | ElementalTextNodeWithType
@@ -258,11 +422,125 @@ export type ElementalNode =
   | ElementalQuoteNodeWithType
   | ElementalHTMLNodeWithType;
 
-export interface ElementalQuoteNodeWithType extends ElementalBaseNode {
+/**
+ * Renders a quote block.
+ */
+export interface ElementalQuoteNode extends ElementalBaseNode {
+  /**
+   * The text value of the quote.
+   */
+  content: string;
+
+  /**
+   * Alignment of the quote.
+   */
+  align?: Alignment | null;
+
+  /**
+   * CSS border color property. For example, `#fff`
+   */
+  borderColor?: string | null;
+
+  /**
+   * CSS px font size for this quote block, e.g. `16px`. Overrides the size of the
+   * `text_style` preset. Email only.
+   */
+  font_size?: string | null;
+
+  /**
+   * CSS line height for this quote block, as a px value or a unitless multiplier,
+   * e.g. `24px` or `1.5`. Email only.
+   */
+  line_height?: string | null;
+
+  /**
+   * Region specific content. See
+   * [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
+   * for more details.
+   */
+  locales?: Locales | null;
+
+  text_style?: TextStyle;
+}
+
+/**
+ * Renders a quote block.
+ */
+export interface ElementalQuoteNodeWithType extends ElementalQuoteNode {
   type?: 'quote';
 }
 
-export interface ElementalTextNodeWithType extends ElementalBaseNode {
+/**
+ * Represents a body of text to be rendered inside of the notification.
+ */
+export interface ElementalTextNode extends ElementalBaseNode {
+  /**
+   * The text content displayed in the notification. Either this field must be
+   * specified, or the elements field
+   */
+  content: string;
+
+  /**
+   * Text alignment.
+   */
+  align?: 'left' | 'center' | 'right';
+
+  /**
+   * Apply bold to the text
+   */
+  bold?: string | null;
+
+  /**
+   * Specifies the color of text. Can be any valid css color value
+   */
+  color?: string | null;
+
+  /**
+   * CSS px font size for this text block, e.g. `16px`. Overrides the size of the
+   * `text_style` preset. Email only.
+   */
+  font_size?: string | null;
+
+  format?: 'markdown' | null;
+
+  /**
+   * Apply italics to the text
+   */
+  italic?: string | null;
+
+  /**
+   * CSS line height for this text block, as a px value or a unitless multiplier,
+   * e.g. `24px` or `1.5`. Email only.
+   */
+  line_height?: string | null;
+
+  /**
+   * Region specific content. See
+   * [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
+   * for more details.
+   */
+  locales?: Locales | null;
+
+  /**
+   * Apply a strike through the text
+   */
+  strikethrough?: string | null;
+
+  /**
+   * Allows the text to be rendered as a heading level.
+   */
+  text_style?: TextStyle | null;
+
+  /**
+   * Apply an underline to the text
+   */
+  underline?: string | null;
+}
+
+/**
+ * Represents a body of text to be rendered inside of the notification.
+ */
+export interface ElementalTextNodeWithType extends ElementalTextNode {
   type?: 'text';
 }
 
@@ -342,6 +620,19 @@ export interface ListRecipient {
   filters?: Array<ListFilter> | null;
 
   list_id?: string | null;
+}
+
+/**
+ * Region specific content. See
+ * [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
+ * for more details.
+ */
+export type Locales = { [key: string]: Locales.item };
+
+export namespace Locales {
+  export interface item {
+    content: string;
+  }
 }
 
 export type MessageChannels = { [key: string]: Channel };
