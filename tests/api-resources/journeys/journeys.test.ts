@@ -66,6 +66,7 @@ describe('resource journeys', () => {
           },
           type: 'send',
           id: 'send-1',
+          channel: 'email',
           conditions: ['string', 'string'],
           experiment: {
             bucketingKey: 'x',
