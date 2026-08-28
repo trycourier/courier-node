@@ -127,25 +127,7 @@ describe('resource broadcasts', () => {
   // Mock server tests are disabled
   test.skip('putContent: required and optional params', async () => {
     const response = await client.broadcasts.putContent('broadcastId', {
-      content: {
-        elements: [
-          {
-            channels: ['string'],
-            if: 'if',
-            loop: 'loop',
-            ref: 'ref',
-            type: 'meta',
-          },
-          {
-            channels: ['string'],
-            if: 'if',
-            loop: 'loop',
-            ref: 'ref',
-            type: 'text',
-          },
-        ],
-        version: '2022-01-01',
-      },
+      content: { elements: [{ type: 'meta' }, { type: 'text' }], version: '2022-01-01' },
       state: 'DRAFT',
     });
   });

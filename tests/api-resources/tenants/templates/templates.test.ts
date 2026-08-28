@@ -106,18 +106,7 @@ describe('resource templates', () => {
     const response = await client.tenants.templates.replace('template_id', {
       tenant_id: 'tenant_id',
       template: {
-        content: {
-          elements: [
-            {
-              channels: ['string'],
-              if: 'if',
-              loop: 'loop',
-              ref: 'ref',
-              type: 'text',
-            },
-          ],
-          version: '2022-01-01',
-        },
+        content: { elements: [{ type: 'text' }], version: '2022-01-01' },
         channels: {
           foo: {
             brand_id: 'brand_id',
