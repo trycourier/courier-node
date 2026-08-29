@@ -475,12 +475,6 @@ export interface ElementalQuoteNodeWithType extends ElementalQuoteNode {
  */
 export interface ElementalTextNode extends ElementalBaseNode {
   /**
-   * The text content displayed in the notification. Either this field must be
-   * specified, or the elements field
-   */
-  content: string;
-
-  /**
    * Text alignment.
    */
   align?: 'left' | 'center' | 'right';
@@ -494,6 +488,12 @@ export interface ElementalTextNode extends ElementalBaseNode {
    * Specifies the color of text. Can be any valid css color value
    */
   color?: string | null;
+
+  /**
+   * The text content displayed in the notification. Either this field must be
+   * specified, or the elements field
+   */
+  content?: string;
 
   /**
    * CSS px font size for this text block, e.g. `16px`. Overrides the size of the
