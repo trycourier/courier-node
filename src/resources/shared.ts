@@ -353,7 +353,7 @@ export interface ElementalImageNode extends ElementalBaseNode {
   /**
    * Alternate text for the image.
    */
-  altText?: string | null;
+  alt_text?: string | null;
 
   /**
    * CSS border color applied to the image. For example, `#ccc`
@@ -439,7 +439,7 @@ export interface ElementalQuoteNode extends ElementalBaseNode {
   /**
    * CSS border color property. For example, `#fff`
    */
-  borderColor?: string | null;
+  border_color?: string | null;
 
   /**
    * CSS px font size for this quote block, e.g. `16px`. Overrides the size of the
