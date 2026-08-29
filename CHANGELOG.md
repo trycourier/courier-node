@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.4.3](https://github.com/trycourier/courier-node/compare/v9.4.2...v9.4.3) (2026-08-29)
+
+
+### Bug Fixes
+
+* **api:** text content is not required ([#291](https://github.com/trycourier/courier-node/issues/291)) ([a02e2c0](https://github.com/trycourier/courier-node/commit/a02e2c054afd037af72b276afbeb8b10506cf40c))
+
 ## [9.4.2](https://github.com/trycourier/courier-node/compare/v9.4.1...v9.4.2) (2026-08-29)
 
 
