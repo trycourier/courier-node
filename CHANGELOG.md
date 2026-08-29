@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.4.2](https://github.com/trycourier/courier-node/compare/v9.4.1...v9.4.2) (2026-08-29)
+
+
+### Bug Fixes
+
+* **api:** correct two Elemental field names the REST API rejects ([#289](https://github.com/trycourier/courier-node/issues/289)) ([53635e6](https://github.com/trycourier/courier-node/commit/53635e6d62c945dcd5e319bdb31c5a424eff5669))
+
 ## [9.4.1](https://github.com/trycourier/courier-node/compare/v9.4.0...v9.4.1) (2026-08-28)
 
 
