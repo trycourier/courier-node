@@ -226,6 +226,13 @@ export interface ElementalChannelNode extends ElementalBaseNode {
   channel?: string;
 
   /**
+   * An array of elements to apply to the channel. If `raw` has not been specified,
+   * `elements` is `required`. Channel elements cannot nest, so these are any node
+   * except another channel block.
+   */
+  elements?: Array<ElementalNodeNonChannel> | null;
+
+  /**
    * Email only. Document-level base font size (CSS px, e.g. `16px`) for body content
    * — text, quote, list and action button labels. Heading styles (`h1`/`h2`/`h3`)
    * and `subtext` keep their preset sizes.
@@ -421,6 +428,76 @@ export type ElementalNode =
   | ElementalDividerNodeWithType
   | ElementalQuoteNodeWithType
   | ElementalHTMLNodeWithType;
+
+/**
+ * Any Elemental node except a channel block. Channel elements are only valid as
+ * top-level elements, so the `elements` nested inside one can never be another
+ * channel. Keeping this union channel-free also keeps the schema acyclic; a
+ * recursive `$ref` here breaks the generated Python models.
+ */
+export type ElementalNodeNonChannel =
+  | ElementalNodeNonChannel.UnionMember0
+  | ElementalNodeNonChannel.UnionMember1
+  | ElementalNodeNonChannel.UnionMember2
+  | ElementalNodeNonChannel.UnionMember3
+  | ElementalNodeNonChannel.UnionMember4
+  | ElementalNodeNonChannel.UnionMember5
+  | ElementalNodeNonChannel.UnionMember6;
+
+export namespace ElementalNodeNonChannel {
+  /**
+   * Represents a body of text to be rendered inside of the notification.
+   */
+  export interface UnionMember0 extends Shared.ElementalTextNode {
+    type?: 'text';
+  }
+
+  /**
+   * The meta element contains information describing the notification that may be
+   * used by a particular channel or provider. One important field is the title field
+   * which will be used as the title for channels that support it.
+   */
+  export interface UnionMember1 extends Shared.ElementalMetaNode {
+    type?: 'meta';
+  }
+
+  /**
+   * Used to embed an image into the notification.
+   */
+  export interface UnionMember2 extends Shared.ElementalImageNode {
+    type?: 'image';
+  }
+
+  /**
+   * Allows the user to execute an action. Can be a button or a link.
+   */
+  export interface UnionMember3 extends Shared.ElementalActionNode {
+    type?: 'action';
+  }
+
+  /**
+   * Renders a dividing line between elements.
+   */
+  export interface UnionMember4 extends Shared.ElementalDividerNode {
+    type?: 'divider';
+  }
+
+  /**
+   * Renders a quote block.
+   */
+  export interface UnionMember5 extends Shared.ElementalQuoteNode {
+    type?: 'quote';
+  }
+
+  /**
+   * Raw HTML string inside an Elemental document. When rendering a message, this
+   * node is turned into output only for the email channel; for other channels it
+   * produces no blocks.
+   */
+  export interface UnionMember6 extends Shared.ElementalHTMLNode {
+    type?: 'html';
+  }
+}
 
 /**
  * Renders a quote block.

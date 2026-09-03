@@ -26,6 +26,16 @@ export class Notifications extends APIResource {
    * Create a notification template. Requires all fields in the notification object.
    * Templates are created in draft state by default.
    *
+   * Content must place its elements inside a channel block —
+   * `{ "type": "channel", "channel": "email", "elements": [...] }` — or the request
+   * returns `400`. The template designer renders only the channel block matching the
+   * tab it draws, so content stored without one cannot be opened. An empty
+   * `elements` array is accepted, and the requirement applies to creation only:
+   * `PUT /notifications/{id}` still accepts unwrapped content. Note this endpoint
+   * takes versioned content only — the `{ title, body }` shorthand accepted by
+   * `/send` is rejected here with an `invalid_request_error` on
+   * `notification.content.version`.
+   *
    * @example
    * ```ts
    * const notificationTemplateResponse =
@@ -864,9 +874,12 @@ export interface NotificationTemplateSummary {
 }
 
 /**
- * Request body for replacing a notification template. Same shape as create. All
- * fields required (PUT = full replacement), except `alias`, whose omission means
- * "leave the existing aliases alone".
+ * Request body for replacing a notification template. All fields are required,
+ * since `PUT` is a full replacement, except `alias`, whose omission leaves the
+ * existing aliases in place. Unlike `NotificationTemplateCreateRequest`,
+ * `notification.content` is not required to place its elements inside a channel
+ * block: the requirement applies to creation only, so templates already stored
+ * without one stay editable.
  */
 export interface NotificationTemplateUpdateRequest {
   /**
