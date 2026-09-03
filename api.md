@@ -32,6 +32,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">ElementalMetaNode</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalMetaNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalNode</a></code>
+- <code><a href="./src/resources/shared.ts">ElementalNodeNonChannel</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalQuoteNode</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalQuoteNodeWithType</a></code>
 - <code><a href="./src/resources/shared.ts">ElementalTextNode</a></code>

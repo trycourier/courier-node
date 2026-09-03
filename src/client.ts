@@ -1457,6 +1457,7 @@ export declare namespace Courier {
   export type ElementalMetaNode = API.ElementalMetaNode;
   export type ElementalMetaNodeWithType = API.ElementalMetaNodeWithType;
   export type ElementalNode = API.ElementalNode;
+  export type ElementalNodeNonChannel = API.ElementalNodeNonChannel;
   export type ElementalQuoteNode = API.ElementalQuoteNode;
   export type ElementalQuoteNodeWithType = API.ElementalQuoteNodeWithType;
   export type ElementalTextNode = API.ElementalTextNode;
