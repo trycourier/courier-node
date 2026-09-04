@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.5.0](https://github.com/trycourier/courier-node/compare/v9.4.4...v9.5.0) (2026-09-04)
+
+
+### Features
+
+* **api:** document the expiry_date contract and allow boolean patch values ([#295](https://github.com/trycourier/courier-node/issues/295)) ([382e122](https://github.com/trycourier/courier-node/commit/382e1229c1c8db4a993163f83b5fa420a92a532f))
+
 ## [9.4.4](https://github.com/trycourier/courier-node/compare/v9.4.3...v9.4.4) (2026-09-03)
 
 
