@@ -142,8 +142,12 @@ export interface UserToken {
   device?: UserToken.Device | null;
 
   /**
-   * ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false to
-   * disable expiration.
+   * When the token expires. Accepts a date, or the boolean `false` to disable
+   * expiration entirely. ISO 8601 is recommended (for example
+   * `2026-10-25T00:00:00.000Z`). A value that cannot be parsed as a date is
+   * rejected; it is not treated as "no expiration" and does not fall back to the
+   * default. `true` is not a supported value. Omit the field to use the default,
+   * which expires a token that has not been re-registered for 60 days.
    */
   expiry_date?: string | boolean | null;
 
@@ -268,9 +272,11 @@ export namespace TokenUpdateParams {
     path: string;
 
     /**
-     * The value for the operation.
+     * The value for the operation. A string for most fields; boolean `false` when
+     * disabling token expiration via `expiry_date`, which cannot be expressed as a
+     * string.
      */
-    value?: string | null;
+    value?: string | boolean | { [key: string]: unknown } | null;
   }
 }
 
@@ -298,8 +304,12 @@ export interface TokenAddSingleParams {
   device?: TokenAddSingleParams.Device | null;
 
   /**
-   * Body param: ISO 8601 formatted date the token expires. Defaults to 2 months. Set
-   * to false to disable expiration.
+   * Body param: When the token expires. Accepts a date, or the boolean `false` to
+   * disable expiration entirely. ISO 8601 is recommended (for example
+   * `2026-10-25T00:00:00.000Z`). A value that cannot be parsed as a date is
+   * rejected; it is not treated as "no expiration" and does not fall back to the
+   * default. `true` is not a supported value. Omit the field to use the default,
+   * which expires a token that has not been re-registered for 60 days.
    */
   expiry_date?: string | boolean | null;
 

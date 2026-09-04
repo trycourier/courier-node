@@ -208,9 +208,58 @@ export interface BrandTemplate {
 }
 
 export interface EmailFooter {
-  content?: string | null;
-
   inheritDefault?: boolean | null;
+
+  /**
+   * The footer body, as markdown. This is the field the API returns and accepts; it
+   * is omitted entirely when no footer body is set. Sending null is accepted and
+   * treated as no footer body.
+   */
+  markdown?: string | null;
+
+  /**
+   * Social links rendered in the email footer.
+   */
+  social?: EmailFooter.Social | null;
+}
+
+export namespace EmailFooter {
+  /**
+   * Social links rendered in the email footer.
+   */
+  export interface Social {
+    facebook?: Social.Facebook | null;
+
+    instagram?: Social.Instagram | null;
+
+    linkedin?: Social.Linkedin | null;
+
+    medium?: Social.Medium | null;
+
+    twitter?: Social.Twitter | null;
+  }
+
+  export namespace Social {
+    export interface Facebook {
+      url?: string | null;
+    }
+
+    export interface Instagram {
+      url?: string | null;
+    }
+
+    export interface Linkedin {
+      url?: string | null;
+    }
+
+    export interface Medium {
+      url?: string | null;
+    }
+
+    export interface Twitter {
+      url?: string | null;
+    }
+  }
 }
 
 export interface EmailHead {
