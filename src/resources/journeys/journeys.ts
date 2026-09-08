@@ -446,9 +446,17 @@ export interface JourneyAudienceTriggerNode {
  * - Binary form (3 elements): `[path, operator, value]` where `operator` is one of
  *   `is equal`, `is not equal`, `contains`, `does not contain`, `starts with`,
  *   `ends with`, `greater than`, `greater than or equal`, `less than`,
- *   `less than or equal`.
+ *   `less than or equal`, `was`, `was not`.
  *
  *   Example: `["user.tier", "is equal", "gold"]`.
+ *
+ *   `was` / `was not` compare a `send_status.<nodeId>` path (referencing an
+ *   earlier send node's node id) against one of `SENT`, `DELIVERED`, `OPENED`,
+ *   `CLICKED`, `UNDELIVERABLE`. The first four are cumulative and ordered
+ *   `SENT < DELIVERED < OPENED < CLICKED`, so `was DELIVERED` is true once the
+ *   message has reached DELIVERED, OPENED, or CLICKED. `UNDELIVERABLE` is an exact
+ *   match only and is never part of that ordering, in either direction. Example:
+ *   `["send_status.P9Z3VCRJG647M7QNJZR3548HW741", "was", "DELIVERED"]`.
  *
  * - Unary form (2 elements): `[path, operator]` where `operator` is one of
  *   `exists`, `does not exist`.
@@ -769,7 +777,17 @@ export namespace JourneyNode {
   /**
    * Add the current event to a digest keyed by the given subscription topic. The
    * digest accumulates events and releases them on the schedule configured for the
-   * topic.
+   * topic, using the notification template configured on that topic.
+   *
+   * **The topic must have a template configured.** If the topic has no template when
+   * the first event reaches this node, the journey run fails immediately: the run is
+   * marked `ERROR`, no digest instance is created, and the journey does not continue
+   * past this node. Configure the topic's template before using the topic in a
+   * journey.
+   *
+   * If the journey run is scoped to a tenant, digests are kept separate per tenant:
+   * two runs for the same user under different tenants accumulate and release as
+   * separate digests, even on the same topic.
    */
   export interface JourneyAddToDigestNode {
     /**
