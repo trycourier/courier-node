@@ -173,7 +173,7 @@ export class Broadcasts extends APIResource {
    * const broadcast = await client.broadcasts.schedule(
    *   'broadcastId',
    *   {
-   *     recipient_id: 'aud_01kx4h2jdafq8bk9amzvy6hbv0',
+   *     recipient_id: 'active-business-users',
    *     recipient_type: 'audience',
    *     scheduled_to: '2026-08-01T15:00:00',
    *     timezone: 'America/New_York',
