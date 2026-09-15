@@ -1,5 +1,18 @@
 # Changelog
 
+## [9.6.0](https://github.com/trycourier/courier-node/compare/v9.5.0...v9.6.0) (2026-09-15)
+
+
+### Features
+
+* **api:** digest configuration, per-recipient schedules, and release ([#301](https://github.com/trycourier/courier-node/issues/301)) ([4c7a16c](https://github.com/trycourier/courier-node/commit/4c7a16c6a7c36a393263fbc6c2fd360a16a7bdfe))
+
+
+### Documentation
+
+* **api:** group the topic digest endpoints under Digests, and match the docs voice ([#302](https://github.com/trycourier/courier-node/issues/302)) ([88cf78d](https://github.com/trycourier/courier-node/commit/88cf78d7ccd0f9fc9e9710fa7e749cdc1e46bdf1))
+* **api:** stop teaching an aud_ prefix that Courier does not issue ([#299](https://github.com/trycourier/courier-node/issues/299)) ([38e4cae](https://github.com/trycourier/courier-node/commit/38e4caeb028307e2f12f233293c5a4393f62cfa6))
+
 ## [9.5.0](https://github.com/trycourier/courier-node/compare/v9.4.4...v9.5.0) (2026-09-04)
 
 
