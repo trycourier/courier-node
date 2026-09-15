@@ -2,10 +2,13 @@
 
 import { APIResource } from '../../core/resource';
 import * as Shared from '../shared';
+import * as DigestsAPI from '../digests/digests';
 import * as TopicsAPI from './topics';
 import {
   TopicArchiveParams,
   TopicCreateParams,
+  TopicDeleteDigestParams,
+  TopicReleaseDigestParams,
   TopicReplaceParams,
   TopicRetrieveParams,
   Topics,
@@ -216,6 +219,198 @@ export interface PublishPreferencesResponse {
 }
 
 /**
+ * How events collected under a category key are retained when a digest holds more
+ * than it will render.
+ */
+export interface TopicDigestCategory {
+  /**
+   * The key that identifies the category within the digest.
+   */
+  category_key: string;
+
+  /**
+   * How many collected events are carried into the rendered digest. Defaults to 10.
+   *
+   * Events beyond the limit are discarded, not held back for the next digest: the
+   * release consumes everything collected so far and only `limit` of them appear.
+   * `retain` decides which ones those are.
+   */
+  limit?: number;
+
+  /**
+   * Which collected events survive the `limit`. `FIRST` and `LOWEST` keep the
+   * earliest or smallest; `LAST` and `HIGHEST` keep the latest or largest. Accepted
+   * case-insensitively, returned uppercase.
+   */
+  retain?: 'FIRST' | 'LAST' | 'HIGHEST' | 'LOWEST' | 'NONE';
+
+  /**
+   * The data key used to rank events. Required when `retain` is `HIGHEST` or
+   * `LOWEST`.
+   */
+  sort_key?: string;
+}
+
+/**
+ * Which recipient's held digest to release.
+ */
+export interface TopicDigestReleaseRequest {
+  /**
+   * The recipient whose digest to release. Required: there is no "release everyone
+   * on this topic" form, because a whole-schedule flush already has its own endpoint
+   * and a body-shaped difference between one recipient and all of them is too easy
+   * to get wrong.
+   */
+  user_id: string;
+
+  /**
+   * The recipient's tenant, when they were sent to as part of one -- the same value
+   * returned as `tenant_id` on a digest instance and sent as
+   * `message.context.tenant_id`. It is part of the held digest's key, so a tenanted
+   * recipient cannot be found without it. Omit for an ordinary recipient.
+   */
+  tenant_id?: string;
+}
+
+/**
+ * A topic's digest configuration: the template that renders it, the cadences it
+ * delivers on, and how collected events are retained.
+ *
+ * Send `null` for the whole object to turn a digest off, which unlinks the
+ * template and removes its schedules. There is no `enabled` flag, and
+ * `schedules: []` is rejected -- both states are un-deliverable rather than merely
+ * off.
+ */
+export interface TopicDigestRequest {
+  /**
+   * The cadences this digest delivers on. At least one is required: a digest with no
+   * schedule collects events into an instance that can never fire. Omitting the key
+   * on a replace leaves stored schedules untouched; sending `[]` is a `400`.
+   */
+  schedules: Array<TopicDigestScheduleRequest>;
+
+  /**
+   * The notification template that renders the digest. A digest with no template
+   * collects nothing, so this is required.
+   */
+  template_id: string;
+
+  /**
+   * Optional audience the digest is scoped to.
+   */
+  audience_id?: string;
+
+  /**
+   * Retention rules per category key. Defaults to a single `digest` category
+   * retaining `FIRST`.
+   */
+  categories?: Array<TopicDigestCategory>;
+
+  /**
+   * Whether to deliver the digest even when nothing was collected.
+   */
+  trigger_empty?: boolean;
+}
+
+/**
+ * A topic's digest configuration.
+ */
+export interface TopicDigestResponse {
+  /**
+   * Retention rules per category key.
+   */
+  categories: Array<TopicDigestCategory>;
+
+  /**
+   * The digest's delivery cadences, each with its server-assigned `schedule_id`.
+   */
+  schedules: Array<DigestsAPI.TopicDigestScheduleResponse>;
+
+  /**
+   * The notification template that renders the digest.
+   */
+  template_id: string;
+
+  /**
+   * The audience the digest is scoped to, when set.
+   */
+  audience_id?: string;
+
+  /**
+   * ISO-8601 timestamp of when the digest was configured.
+   */
+  created?: string;
+
+  /**
+   * Whether the digest is delivered even when nothing was collected.
+   */
+  trigger_empty?: boolean;
+
+  /**
+   * ISO-8601 timestamp of the last update.
+   */
+  updated?: string;
+}
+
+/**
+ * One delivery cadence for a topic's digest. Supply `schedule_id` to update an
+ * existing schedule in place; omit it and one is assigned and returned. The
+ * `schedules` array is a full replacement, so a stored schedule absent from it is
+ * deleted along with its delivery rule.
+ */
+export interface TopicDigestScheduleRequest {
+  /**
+   * How often a digest is delivered. `instant` delivers immediately without
+   * batching, and is the one value that takes no `time`.
+   */
+  frequency: DigestsAPI.DigestFrequency;
+
+  /**
+   * Required when `frequency` is `monthly`.
+   */
+  day_of_month?: number;
+
+  /**
+   * Required when `frequency` is `weekly`.
+   */
+  day_of_week?: DigestsAPI.DigestDayOfWeek;
+
+  /**
+   * Required when `frequency` is `custom_days`.
+   */
+  days_of_week?: Array<DigestsAPI.DigestDayOfWeek>;
+
+  /**
+   * Whether the schedule is disabled.
+   */
+  disabled?: boolean;
+
+  /**
+   * The schedule recipients are placed on when they have not chosen one. Set this
+   * explicitly rather than relying on array position.
+   */
+  is_default?: boolean;
+
+  /**
+   * Identifier of an existing schedule to update. Omit when creating a new one.
+   */
+  schedule_id?: string;
+
+  /**
+   * 24-hour local delivery time, `HH:MM`. Required for every frequency except
+   * `instant`.
+   */
+  time?: string;
+
+  /**
+   * IANA timezone the `time` and day fields are expressed in, e.g.
+   * `America/New_York`. Absent means UTC. Delivery follows the same local wall-clock
+   * across daylight-saving changes.
+   */
+  timezone?: string;
+}
+
+/**
  * Request body for creating a workspace preference.
  */
 export interface WorkspacePreferenceCreateRequest {
@@ -355,6 +550,17 @@ export interface WorkspacePreferenceTopicCreateRequest {
   description?: string | null;
 
   /**
+   * A topic's digest configuration: the template that renders it, the cadences it
+   * delivers on, and how collected events are retained.
+   *
+   * Send `null` for the whole object to turn a digest off, which unlinks the
+   * template and removes its schedules. There is no `enabled` flag, and
+   * `schedules: []` is rejected -- both states are un-deliverable rather than merely
+   * off.
+   */
+  digest?: TopicDigestRequest | null;
+
+  /**
    * Whether to include a list-unsubscribe header on emails for this topic.
    */
   include_unsubscribe_header?: boolean | null;
@@ -430,6 +636,11 @@ export interface WorkspacePreferenceTopicGetResponse {
   description?: string | null;
 
   /**
+   * A topic's digest configuration.
+   */
+  digest?: TopicDigestResponse | null;
+
+  /**
    * Id of the last updater.
    */
   updater?: string | null;
@@ -467,6 +678,17 @@ export interface WorkspacePreferenceTopicReplaceRequest {
    * to clear.
    */
   description?: string | null;
+
+  /**
+   * A topic's digest configuration: the template that renders it, the cadences it
+   * delivers on, and how collected events are retained.
+   *
+   * Send `null` for the whole object to turn a digest off, which unlinks the
+   * template and removes its schedules. There is no `enabled` flag, and
+   * `schedules: []` is rejected -- both states are un-deliverable rather than merely
+   * off.
+   */
+  digest?: TopicDigestRequest | null;
 
   /**
    * Whether to include a list-unsubscribe header on emails for this topic.
@@ -592,6 +814,11 @@ export declare namespace WorkspacePreferences {
   export {
     type PublishPreferencesRequest as PublishPreferencesRequest,
     type PublishPreferencesResponse as PublishPreferencesResponse,
+    type TopicDigestCategory as TopicDigestCategory,
+    type TopicDigestReleaseRequest as TopicDigestReleaseRequest,
+    type TopicDigestRequest as TopicDigestRequest,
+    type TopicDigestResponse as TopicDigestResponse,
+    type TopicDigestScheduleRequest as TopicDigestScheduleRequest,
     type WorkspacePreferenceCreateRequest as WorkspacePreferenceCreateRequest,
     type WorkspacePreferenceGetResponse as WorkspacePreferenceGetResponse,
     type WorkspacePreferenceListResponse as WorkspacePreferenceListResponse,
@@ -610,6 +837,8 @@ export declare namespace WorkspacePreferences {
     type TopicCreateParams as TopicCreateParams,
     type TopicRetrieveParams as TopicRetrieveParams,
     type TopicArchiveParams as TopicArchiveParams,
+    type TopicDeleteDigestParams as TopicDeleteDigestParams,
+    type TopicReleaseDigestParams as TopicReleaseDigestParams,
     type TopicReplaceParams as TopicReplaceParams,
   };
 }

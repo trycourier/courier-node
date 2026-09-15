@@ -30,6 +30,32 @@ describe('resource topics', () => {
       name: 'Marketing',
       allowed_preferences: ['snooze'],
       description: 'description',
+      digest: {
+        schedules: [
+          {
+            frequency: 'instant',
+            day_of_month: 1,
+            day_of_week: 'sunday',
+            days_of_week: ['sunday'],
+            disabled: true,
+            is_default: true,
+            schedule_id: 'schedule_id',
+            time: 'time',
+            timezone: 'timezone',
+          },
+        ],
+        template_id: 'template_id',
+        audience_id: 'audience_id',
+        categories: [
+          {
+            category_key: 'category_key',
+            limit: 1,
+            retain: 'FIRST',
+            sort_key: 'sort_key',
+          },
+        ],
+        trigger_empty: true,
+      },
       include_unsubscribe_header: true,
       routing_options: ['direct_message'],
       topic_data: { foo: 'bar' },
@@ -93,6 +119,51 @@ describe('resource topics', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('deleteDigest: only required params', async () => {
+    const responsePromise = client.workspacePreferences.topics.deleteDigest('topic_id', {
+      section_id: 'section_id',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('deleteDigest: required and optional params', async () => {
+    const response = await client.workspacePreferences.topics.deleteDigest('topic_id', {
+      section_id: 'section_id',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('releaseDigest: only required params', async () => {
+    const responsePromise = client.workspacePreferences.topics.releaseDigest('topic_id', {
+      section_id: 'section_id',
+      user_id: 'user_01h1p2c3d4e5f6g7h8',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('releaseDigest: required and optional params', async () => {
+    const response = await client.workspacePreferences.topics.releaseDigest('topic_id', {
+      section_id: 'section_id',
+      user_id: 'user_01h1p2c3d4e5f6g7h8',
+      tenant_id: 'x',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('replace: only required params', async () => {
     const responsePromise = client.workspacePreferences.topics.replace('topic_id', {
       section_id: 'section_id',
@@ -116,6 +187,32 @@ describe('resource topics', () => {
       name: 'Product Updates',
       allowed_preferences: ['channel_preferences'],
       description: 'description',
+      digest: {
+        schedules: [
+          {
+            frequency: 'instant',
+            day_of_month: 1,
+            day_of_week: 'sunday',
+            days_of_week: ['sunday'],
+            disabled: true,
+            is_default: true,
+            schedule_id: 'schedule_id',
+            time: 'time',
+            timezone: 'timezone',
+          },
+        ],
+        template_id: 'template_id',
+        audience_id: 'audience_id',
+        categories: [
+          {
+            category_key: 'category_key',
+            limit: 1,
+            retain: 'FIRST',
+            sort_key: 'sort_key',
+          },
+        ],
+        trigger_empty: true,
+      },
       include_unsubscribe_header: true,
       routing_options: ['email', 'inbox'],
       topic_data: { foo: 'bar' },

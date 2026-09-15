@@ -8,9 +8,6 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-/**
- * Manage the workspace catalog of subscription topics, the sections that group them, and publishing the preference page.
- */
 export class Topics extends APIResource {
   /**
    * Creates a subscription topic inside a workspace preference. The default status
@@ -112,6 +109,60 @@ export class Topics extends APIResource {
   }
 
   /**
+   * Turn off a topic's digest, leaving the topic itself in place. The template is
+   * unlinked and the digest's schedules are removed along with their delivery rules.
+   * Equivalent to sending `digest: null` on a topic replace.
+   *
+   * @example
+   * ```ts
+   * await client.workspacePreferences.topics.deleteDigest(
+   *   'topic_id',
+   *   { section_id: 'section_id' },
+   * );
+   * ```
+   */
+  deleteDigest(topicID: string, params: TopicDeleteDigestParams, options?: RequestOptions): APIPromise<void> {
+    const { section_id } = params;
+    return this._client.delete(path`/preferences/sections/${section_id}/topics/${topicID}/digest`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Send one recipient's held digest now, instead of waiting for its schedule. Use
+   * it to preview what a digest will look like, or to let someone flush their own.
+   *
+   * Keyed on the topic because that is how a held digest is stored: one per
+   * recipient per topic, with the schedule recorded on it rather than part of its
+   * identity. To flush every recipient on a schedule instead, use
+   * `POST /digests/schedules/{schedule_id}/trigger`.
+   *
+   * @example
+   * ```ts
+   * await client.workspacePreferences.topics.releaseDigest(
+   *   'topic_id',
+   *   {
+   *     section_id: 'section_id',
+   *     user_id: 'user_01h1p2c3d4e5f6g7h8',
+   *   },
+   * );
+   * ```
+   */
+  releaseDigest(
+    topicID: string,
+    params: TopicReleaseDigestParams,
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { section_id, ...body } = params;
+    return this._client.post(path`/preferences/sections/${section_id}/topics/${topicID}/digest/release`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
    * Replace a topic within a workspace preference. Full document replacement;
    * missing optional fields are cleared. Same 404 rules as GET.
    *
@@ -169,6 +220,17 @@ export interface TopicCreateParams {
   description?: string | null;
 
   /**
+   * Body param: A topic's digest configuration: the template that renders it, the
+   * cadences it delivers on, and how collected events are retained.
+   *
+   * Send `null` for the whole object to turn a digest off, which unlinks the
+   * template and removes its schedules. There is no `enabled` flag, and
+   * `schedules: []` is rejected -- both states are un-deliverable rather than merely
+   * off.
+   */
+  digest?: WorkspacePreferencesAPI.TopicDigestRequest | null;
+
+  /**
    * Body param: Whether to include a list-unsubscribe header on emails for this
    * topic.
    */
@@ -218,6 +280,36 @@ export interface TopicArchiveParams {
   section_id: string;
 }
 
+export interface TopicDeleteDigestParams {
+  /**
+   * The preference section containing the topic.
+   */
+  section_id: string;
+}
+
+export interface TopicReleaseDigestParams {
+  /**
+   * Path param: The preference section containing the topic.
+   */
+  section_id: string;
+
+  /**
+   * Body param: The recipient whose digest to release. Required: there is no
+   * "release everyone on this topic" form, because a whole-schedule flush already
+   * has its own endpoint and a body-shaped difference between one recipient and all
+   * of them is too easy to get wrong.
+   */
+  user_id: string;
+
+  /**
+   * Body param: The recipient's tenant, when they were sent to as part of one -- the
+   * same value returned as `tenant_id` on a digest instance and sent as
+   * `message.context.tenant_id`. It is part of the held digest's key, so a tenanted
+   * recipient cannot be found without it. Omit for an ordinary recipient.
+   */
+  tenant_id?: string;
+}
+
 export interface TopicReplaceParams {
   /**
    * Path param: Id of the workspace preference.
@@ -247,6 +339,17 @@ export interface TopicReplaceParams {
   description?: string | null;
 
   /**
+   * Body param: A topic's digest configuration: the template that renders it, the
+   * cadences it delivers on, and how collected events are retained.
+   *
+   * Send `null` for the whole object to turn a digest off, which unlinks the
+   * template and removes its schedules. There is no `enabled` flag, and
+   * `schedules: []` is rejected -- both states are un-deliverable rather than merely
+   * off.
+   */
+  digest?: WorkspacePreferencesAPI.TopicDigestRequest | null;
+
+  /**
    * Body param: Whether to include a list-unsubscribe header on emails for this
    * topic.
    */
@@ -268,6 +371,8 @@ export declare namespace Topics {
     type TopicCreateParams as TopicCreateParams,
     type TopicRetrieveParams as TopicRetrieveParams,
     type TopicArchiveParams as TopicArchiveParams,
+    type TopicDeleteDigestParams as TopicDeleteDigestParams,
+    type TopicReleaseDigestParams as TopicReleaseDigestParams,
     type TopicReplaceParams as TopicReplaceParams,
   };
 }
