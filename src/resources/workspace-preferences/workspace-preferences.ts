@@ -278,8 +278,8 @@ export interface TopicDigestReleaseRequest {
  *
  * Send `null` for the whole object to turn a digest off, which unlinks the
  * template and removes its schedules. There is no `enabled` flag, and
- * `schedules: []` is rejected -- both states are un-deliverable rather than merely
- * off.
+ * `schedules: []` is rejected, because both states are un-deliverable rather than
+ * merely off.
  */
 export interface TopicDigestRequest {
   /**
@@ -555,8 +555,8 @@ export interface WorkspacePreferenceTopicCreateRequest {
    *
    * Send `null` for the whole object to turn a digest off, which unlinks the
    * template and removes its schedules. There is no `enabled` flag, and
-   * `schedules: []` is rejected -- both states are un-deliverable rather than merely
-   * off.
+   * `schedules: []` is rejected, because both states are un-deliverable rather than
+   * merely off.
    */
   digest?: TopicDigestRequest | null;
 
@@ -685,8 +685,8 @@ export interface WorkspacePreferenceTopicReplaceRequest {
    *
    * Send `null` for the whole object to turn a digest off, which unlinks the
    * template and removes its schedules. There is no `enabled` flag, and
-   * `schedules: []` is rejected -- both states are un-deliverable rather than merely
-   * off.
+   * `schedules: []` is rejected, because both states are un-deliverable rather than
+   * merely off.
    */
   digest?: TopicDigestRequest | null;
 
