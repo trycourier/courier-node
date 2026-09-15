@@ -163,6 +163,7 @@ describe('resource preferences', () => {
       topic: {
         status: 'OPTED_IN',
         custom_routing: ['inbox', 'email'],
+        digest_schedule_id: 'x',
         has_custom_routing: true,
       },
       tenant_id: 'tenant_id',

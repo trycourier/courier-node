@@ -240,6 +240,14 @@ export interface TopicPreference {
   custom_routing?: Array<Shared.ChannelClassification> | null;
 
   /**
+   * The digest schedule this recipient is on for the topic. Omitted -- not null --
+   * when they have not chosen one, in which case the topic's default schedule
+   * applies. Ids come from the topic's digest configuration or from
+   * `GET /digests/schedules`.
+   */
+  digest_schedule_id?: string;
+
+  /**
    * Whether the user has chosen specific delivery channels for this topic (listed in
    * custom_routing) rather than the topic's default routing.
    */
@@ -476,6 +484,15 @@ export namespace PreferenceUpdateOrCreateTopicParams {
      * more of: direct_message, email, push, sms, webhook, inbox.
      */
     custom_routing?: Array<Shared.ChannelClassification> | null;
+
+    /**
+     * Put this recipient on one of the topic's digest schedules. Send `null` to clear
+     * the choice and return them to the topic's default. Omit to leave an existing
+     * choice alone -- unlike the routing fields, which this endpoint replaces. An id
+     * that is not an active schedule on the topic is rejected with a `400` before
+     * anything is written.
+     */
+    digest_schedule_id?: string | null;
 
     /**
      * Set to true to route this topic to the channels in custom_routing instead of the

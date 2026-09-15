@@ -81,8 +81,11 @@ export {
 export {
   Digests,
   type DigestCategory,
+  type DigestDayOfWeek,
+  type DigestFrequency,
   type DigestInstance,
   type DigestInstanceListResponse,
+  type TopicDigestScheduleResponse,
 } from './digests/digests';
 export { Inbound, type InboundTrackEventResponse, type InboundTrackEventParams } from './inbound';
 export {
@@ -265,6 +268,11 @@ export {
   WorkspacePreferences,
   type PublishPreferencesRequest,
   type PublishPreferencesResponse,
+  type TopicDigestCategory,
+  type TopicDigestReleaseRequest,
+  type TopicDigestRequest,
+  type TopicDigestResponse,
+  type TopicDigestScheduleRequest,
   type WorkspacePreferenceCreateRequest,
   type WorkspacePreferenceGetResponse,
   type WorkspacePreferenceListResponse,

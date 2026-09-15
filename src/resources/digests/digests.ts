@@ -26,6 +26,24 @@ export interface DigestCategory {
   sort_key?: string;
 }
 
+/**
+ * A day of the week. Accepted case-insensitively, returned lowercase.
+ */
+export type DigestDayOfWeek =
+  | 'sunday'
+  | 'monday'
+  | 'tuesday'
+  | 'wednesday'
+  | 'thursday'
+  | 'friday'
+  | 'saturday';
+
+/**
+ * How often a digest is delivered. `instant` delivers immediately without
+ * batching, and is the one value that takes no `time`.
+ */
+export type DigestFrequency = 'instant' | 'daily' | 'weekdays' | 'weekly' | 'custom_days' | 'monthly';
+
 export interface DigestInstance {
   /**
    * A unique identifier for the digest instance.
@@ -107,13 +125,76 @@ export interface DigestInstanceListResponse {
   url?: string;
 }
 
+/**
+ * A delivery cadence for a topic's digest, with its assigned id.
+ */
+export interface TopicDigestScheduleResponse {
+  /**
+   * The schedule's identifier, assigned by the server. This is the value the
+   * `/digests/schedules/{schedule_id}` endpoints are keyed by.
+   */
+  schedule_id: string;
+
+  /**
+   * ISO-8601 timestamp of when the schedule was created.
+   */
+  created?: string;
+
+  /**
+   * Day of the month, 1-31.
+   */
+  day_of_month?: number;
+
+  /**
+   * A day of the week. Accepted case-insensitively, returned lowercase.
+   */
+  day_of_week?: DigestDayOfWeek;
+
+  days_of_week?: Array<DigestDayOfWeek>;
+
+  /**
+   * Whether the schedule is disabled.
+   */
+  disabled?: boolean;
+
+  /**
+   * Omitted for a stored schedule this enum cannot express. Those schedules never
+   * fire, but their `schedule_id` is still returned so the `/digests/*` endpoints
+   * remain reachable for them.
+   */
+  frequency?: DigestFrequency;
+
+  /**
+   * Whether this is the schedule recipients are placed on by default.
+   */
+  is_default?: boolean;
+
+  /**
+   * 24-hour local delivery time, `HH:MM`.
+   */
+  time?: string;
+
+  /**
+   * IANA timezone the schedule is expressed in. Absent means UTC.
+   */
+  timezone?: string;
+
+  /**
+   * ISO-8601 timestamp of the last update.
+   */
+  updated?: string;
+}
+
 Digests.Schedules = Schedules;
 
 export declare namespace Digests {
   export {
     type DigestCategory as DigestCategory,
+    type DigestDayOfWeek as DigestDayOfWeek,
+    type DigestFrequency as DigestFrequency,
     type DigestInstance as DigestInstance,
     type DigestInstanceListResponse as DigestInstanceListResponse,
+    type TopicDigestScheduleResponse as TopicDigestScheduleResponse,
   };
 
   export { Schedules as Schedules, type ScheduleListInstancesParams as ScheduleListInstancesParams };

@@ -3,7 +3,10 @@
 export {
   Digests,
   type DigestCategory,
+  type DigestDayOfWeek,
+  type DigestFrequency,
   type DigestInstance,
   type DigestInstanceListResponse,
+  type TopicDigestScheduleResponse,
 } from './digests';
 export { Schedules, type ScheduleListInstancesParams } from './schedules';

@@ -363,8 +363,11 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/digests/digests.ts">DigestCategory</a></code>
+- <code><a href="./src/resources/digests/digests.ts">DigestDayOfWeek</a></code>
+- <code><a href="./src/resources/digests/digests.ts">DigestFrequency</a></code>
 - <code><a href="./src/resources/digests/digests.ts">DigestInstance</a></code>
 - <code><a href="./src/resources/digests/digests.ts">DigestInstanceListResponse</a></code>
+- <code><a href="./src/resources/digests/digests.ts">TopicDigestScheduleResponse</a></code>
 
 ## Schedules
 
@@ -521,6 +524,11 @@ Types:
 
 - <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">PublishPreferencesRequest</a></code>
 - <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">PublishPreferencesResponse</a></code>
+- <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">TopicDigestCategory</a></code>
+- <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">TopicDigestReleaseRequest</a></code>
+- <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">TopicDigestRequest</a></code>
+- <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">TopicDigestResponse</a></code>
+- <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">TopicDigestScheduleRequest</a></code>
 - <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">WorkspacePreferenceCreateRequest</a></code>
 - <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">WorkspacePreferenceGetResponse</a></code>
 - <code><a href="./src/resources/workspace-preferences/workspace-preferences.ts">WorkspacePreferenceListResponse</a></code>
@@ -547,6 +555,8 @@ Methods:
 - <code title="get /preferences/sections/{section_id}/topics/{topic_id}">client.workspacePreferences.topics.<a href="./src/resources/workspace-preferences/topics.ts">retrieve</a>(topicID, { ...params }) -> WorkspacePreferenceTopicGetResponse</code>
 - <code title="get /preferences/sections/{section_id}/topics">client.workspacePreferences.topics.<a href="./src/resources/workspace-preferences/topics.ts">list</a>(sectionID) -> WorkspacePreferenceTopicListResponse</code>
 - <code title="delete /preferences/sections/{section_id}/topics/{topic_id}">client.workspacePreferences.topics.<a href="./src/resources/workspace-preferences/topics.ts">archive</a>(topicID, { ...params }) -> void</code>
+- <code title="delete /preferences/sections/{section_id}/topics/{topic_id}/digest">client.workspacePreferences.topics.<a href="./src/resources/workspace-preferences/topics.ts">deleteDigest</a>(topicID, { ...params }) -> void</code>
+- <code title="post /preferences/sections/{section_id}/topics/{topic_id}/digest/release">client.workspacePreferences.topics.<a href="./src/resources/workspace-preferences/topics.ts">releaseDigest</a>(topicID, { ...params }) -> void</code>
 - <code title="put /preferences/sections/{section_id}/topics/{topic_id}">client.workspacePreferences.topics.<a href="./src/resources/workspace-preferences/topics.ts">replace</a>(topicID, { ...params }) -> WorkspacePreferenceTopicGetResponse</code>
 
 # Profiles

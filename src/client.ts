@@ -129,9 +129,12 @@ import {
 } from './resources/automations/automations';
 import {
   DigestCategory,
+  DigestDayOfWeek,
+  DigestFrequency,
   DigestInstance,
   DigestInstanceListResponse,
   Digests,
+  TopicDigestScheduleResponse,
 } from './resources/digests/digests';
 import {
   CancelJourneyRequest,
@@ -280,6 +283,11 @@ import { Users } from './resources/users/users';
 import {
   PublishPreferencesRequest,
   PublishPreferencesResponse,
+  TopicDigestCategory,
+  TopicDigestReleaseRequest,
+  TopicDigestRequest,
+  TopicDigestResponse,
+  TopicDigestScheduleRequest,
   WorkspacePreferenceCreateParams,
   WorkspacePreferenceCreateRequest,
   WorkspacePreferenceGetResponse,
@@ -1285,8 +1293,11 @@ export declare namespace Courier {
   export {
     Digests as Digests,
     type DigestCategory as DigestCategory,
+    type DigestDayOfWeek as DigestDayOfWeek,
+    type DigestFrequency as DigestFrequency,
     type DigestInstance as DigestInstance,
     type DigestInstanceListResponse as DigestInstanceListResponse,
+    type TopicDigestScheduleResponse as TopicDigestScheduleResponse,
   };
 
   export {
@@ -1375,6 +1386,11 @@ export declare namespace Courier {
     WorkspacePreferences as WorkspacePreferences,
     type PublishPreferencesRequest as PublishPreferencesRequest,
     type PublishPreferencesResponse as PublishPreferencesResponse,
+    type TopicDigestCategory as TopicDigestCategory,
+    type TopicDigestReleaseRequest as TopicDigestReleaseRequest,
+    type TopicDigestRequest as TopicDigestRequest,
+    type TopicDigestResponse as TopicDigestResponse,
+    type TopicDigestScheduleRequest as TopicDigestScheduleRequest,
     type WorkspacePreferenceCreateRequest as WorkspacePreferenceCreateRequest,
     type WorkspacePreferenceGetResponse as WorkspacePreferenceGetResponse,
     type WorkspacePreferenceListResponse as WorkspacePreferenceListResponse,
