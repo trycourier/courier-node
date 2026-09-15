@@ -240,7 +240,7 @@ export interface TopicPreference {
   custom_routing?: Array<Shared.ChannelClassification> | null;
 
   /**
-   * The digest schedule this recipient is on for the topic. Omitted -- not null --
+   * The digest schedule this recipient is on for the topic. Omitted rather than null
    * when they have not chosen one, in which case the topic's default schedule
    * applies. Ids come from the topic's digest configuration or from
    * `GET /digests/schedules`.
@@ -488,7 +488,7 @@ export namespace PreferenceUpdateOrCreateTopicParams {
     /**
      * Put this recipient on one of the topic's digest schedules. Send `null` to clear
      * the choice and return them to the topic's default. Omit to leave an existing
-     * choice alone -- unlike the routing fields, which this endpoint replaces. An id
+     * choice alone, unlike the routing fields, which this endpoint replaces. An id
      * that is not an active schedule on the topic is rejected with a `400` before
      * anything is written.
      */
