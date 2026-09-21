@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as WorkspacePreferencesAPI from './workspace-preferences';
 import * as Shared from '../shared';
 import * as DigestsAPI from '../digests/digests';
 import * as TopicsAPI from './topics';
@@ -283,13 +284,6 @@ export interface TopicDigestReleaseRequest {
  */
 export interface TopicDigestRequest {
   /**
-   * The cadences this digest delivers on. At least one is required: a digest with no
-   * schedule collects events into an instance that can never fire. Omitting the key
-   * on a replace leaves stored schedules untouched; sending `[]` is a `400`.
-   */
-  schedules: Array<TopicDigestScheduleRequest>;
-
-  /**
    * The notification template that renders the digest. A digest with no template
    * collects nothing, so this is required.
    */
@@ -305,6 +299,25 @@ export interface TopicDigestRequest {
    * retaining `FIRST`.
    */
   categories?: Array<TopicDigestCategory>;
+
+  /**
+   * The cadences this digest delivers on.
+   *
+   * The array replaces the stored schedules wholesale, so a schedule you leave out
+   * of it is deleted along with its delivery rule. Omit the key entirely to leave
+   * the stored schedules untouched — useful for changing `template_id` or
+   * `categories` without restating every schedule.
+   *
+   * A digest must end up with at least one schedule, because one with none collects
+   * events into an instance that can never fire. So sending `[]` is always a `400`,
+   * and so is omitting the key on a topic that has no schedules stored yet.
+   *
+   * On **create** the key is required outright: a topic being created has nothing
+   * stored to leave alone, and the topic row is written before its digest, so
+   * rejecting it any later would leave the topic behind and let a retry duplicate
+   * it.
+   */
+  schedules?: Array<TopicDigestScheduleRequest>;
 
   /**
    * Whether to deliver the digest even when nothing was collected.
@@ -357,6 +370,12 @@ export interface TopicDigestResponse {
  * existing schedule in place; omit it and one is assigned and returned. The
  * `schedules` array is a full replacement, so a stored schedule absent from it is
  * deleted along with its delivery rule.
+ *
+ * Updating by `schedule_id` replaces that schedule rather than merging into it:
+ * any field you leave out is cleared. Two of those change delivery silently — an
+ * omitted `timezone` reverts the schedule to UTC, and an omitted `is_default` can
+ * leave the topic with no default schedule, which is what recipients who have not
+ * chosen one fall back to. Restate every field you want to keep.
  */
 export interface TopicDigestScheduleRequest {
   /**
@@ -550,15 +569,20 @@ export interface WorkspacePreferenceTopicCreateRequest {
   description?: string | null;
 
   /**
-   * A topic's digest configuration: the template that renders it, the cadences it
-   * delivers on, and how collected events are retained.
+   * A topic's digest, as supplied when the topic itself is created: the template
+   * that renders it, the cadences it delivers on, and how collected events are
+   * retained.
+   *
+   * Identical to `TopicDigestRequest`, which a replace uses, except that `schedules`
+   * is required — a topic being created has no stored schedules for an absent key to
+   * leave alone.
    *
    * Send `null` for the whole object to turn a digest off, which unlinks the
    * template and removes its schedules. There is no `enabled` flag, and
    * `schedules: []` is rejected, because both states are un-deliverable rather than
    * merely off.
    */
-  digest?: TopicDigestRequest | null;
+  digest?: WorkspacePreferenceTopicCreateRequest.Digest | null;
 
   /**
    * Whether to include a list-unsubscribe header on emails for this topic.
@@ -574,6 +598,65 @@ export interface WorkspacePreferenceTopicCreateRequest {
    * Arbitrary metadata associated with the topic.
    */
   topic_data?: { [key: string]: unknown } | null;
+}
+
+export namespace WorkspacePreferenceTopicCreateRequest {
+  /**
+   * A topic's digest, as supplied when the topic itself is created: the template
+   * that renders it, the cadences it delivers on, and how collected events are
+   * retained.
+   *
+   * Identical to `TopicDigestRequest`, which a replace uses, except that `schedules`
+   * is required — a topic being created has no stored schedules for an absent key to
+   * leave alone.
+   *
+   * Send `null` for the whole object to turn a digest off, which unlinks the
+   * template and removes its schedules. There is no `enabled` flag, and
+   * `schedules: []` is rejected, because both states are un-deliverable rather than
+   * merely off.
+   */
+  export interface Digest {
+    /**
+     * The cadences this digest delivers on.
+     *
+     * The array replaces the stored schedules wholesale, so a schedule you leave out
+     * of it is deleted along with its delivery rule. Omit the key entirely to leave
+     * the stored schedules untouched — useful for changing `template_id` or
+     * `categories` without restating every schedule.
+     *
+     * A digest must end up with at least one schedule, because one with none collects
+     * events into an instance that can never fire. So sending `[]` is always a `400`,
+     * and so is omitting the key on a topic that has no schedules stored yet.
+     *
+     * On **create** the key is required outright: a topic being created has nothing
+     * stored to leave alone, and the topic row is written before its digest, so
+     * rejecting it any later would leave the topic behind and let a retry duplicate
+     * it.
+     */
+    schedules: Array<WorkspacePreferencesAPI.TopicDigestScheduleRequest>;
+
+    /**
+     * The notification template that renders the digest. A digest with no template
+     * collects nothing, so this is required.
+     */
+    template_id: string;
+
+    /**
+     * Optional audience the digest is scoped to.
+     */
+    audience_id?: string;
+
+    /**
+     * Retention rules per category key. Defaults to a single `digest` category
+     * retaining `FIRST`.
+     */
+    categories?: Array<WorkspacePreferencesAPI.TopicDigestCategory>;
+
+    /**
+     * Whether to deliver the digest even when nothing was collected.
+     */
+    trigger_empty?: boolean;
+  }
 }
 
 /**
