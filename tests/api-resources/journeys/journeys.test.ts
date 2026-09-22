@@ -90,6 +90,7 @@ describe('resource journeys', () => {
         },
         { type: 'exit', id: 'exit-1' },
       ],
+      cancelation_token: 'order-{{data.order_id}}',
       enabled: true,
       state: 'DRAFT',
       'Idempotency-Key': 'order-ORD-456-user-123',
@@ -250,6 +251,7 @@ describe('resource journeys', () => {
           schema: { foo: 'bar' },
         },
       ],
+      cancelation_token: 'order-{{data.order_id}}',
       enabled: true,
       state: 'DRAFT',
     });

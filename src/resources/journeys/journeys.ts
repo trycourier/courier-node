@@ -322,6 +322,15 @@ export interface CreateJourneyRequest {
 
   nodes: Array<JourneyNode>;
 
+  /**
+   * Cancelation token stored on the journey definition. It tags every run the
+   * journey creates so that `POST /journeys/cancel` can later cancel those runs by
+   * token. Accepts a templated string such as `order-{{data.order_id}}`, which is
+   * resolved per run when the journey is invoked. On a replace, omitting this field
+   * preserves any existing token and sending a value replaces it.
+   */
+  cancelation_token?: string;
+
   enabled?: boolean;
 
   /**
@@ -857,6 +866,13 @@ export interface JourneyPublishRequest {
  */
 export interface JourneyResponse {
   id: string;
+
+  /**
+   * The journey cancelation token, or null when none is set. A token authored in the
+   * dashboard is returned in its raw templated form, such as
+   * `order-{{data.order_id}}`, so it can be read back and asserted.
+   */
+  cancelation_token: string | null;
 
   created: number | null;
 
@@ -1613,6 +1629,15 @@ export interface JourneyCreateParams {
   nodes: Array<JourneyNode>;
 
   /**
+   * Body param: Cancelation token stored on the journey definition. It tags every
+   * run the journey creates so that `POST /journeys/cancel` can later cancel those
+   * runs by token. Accepts a templated string such as `order-{{data.order_id}}`,
+   * which is resolved per run when the journey is invoked. On a replace, omitting
+   * this field preserves any existing token and sending a value replaces it.
+   */
+  cancelation_token?: string;
+
+  /**
    * Body param
    */
   enabled?: boolean;
@@ -1789,6 +1814,15 @@ export interface JourneyReplaceParams {
   name: string;
 
   nodes: Array<JourneyNode>;
+
+  /**
+   * Cancelation token stored on the journey definition. It tags every run the
+   * journey creates so that `POST /journeys/cancel` can later cancel those runs by
+   * token. Accepts a templated string such as `order-{{data.order_id}}`, which is
+   * resolved per run when the journey is invoked. On a replace, omitting this field
+   * preserves any existing token and sending a value replaces it.
+   */
+  cancelation_token?: string;
 
   enabled?: boolean;
 
