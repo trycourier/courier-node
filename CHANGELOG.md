@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.7.0](https://github.com/trycourier/courier-node/compare/v9.6.0...v9.7.0) (2026-09-22)
+
+
+### Features
+
+* **api:** add cancelation_token to journey create, replace, and get ([#306](https://github.com/trycourier/courier-node/issues/306)) ([65e6c2d](https://github.com/trycourier/courier-node/commit/65e6c2d496065dfbf0a756222edb1a7357769859))
+
+
+### Documentation
+
+* **api:** correct the digest schedule contract, and make `schedules` optional ([#303](https://github.com/trycourier/courier-node/issues/303)) ([e0a29dc](https://github.com/trycourier/courier-node/commit/e0a29dc4f0f72aa724f1771034e7b676b12d2740))
+
 ## [9.6.0](https://github.com/trycourier/courier-node/compare/v9.5.0...v9.6.0) (2026-09-15)
 
 
