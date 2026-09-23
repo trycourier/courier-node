@@ -1053,6 +1053,13 @@ export interface NotificationListParams {
    * Include template notes in the response. Only applies to legacy templates.
    */
   notes?: boolean | null;
+
+  /**
+   * Comma-delimited list of tag names. Only templates carrying all of the listed
+   * tags are returned. Matching is case-insensitive. Filtering is applied before
+   * pagination.
+   */
+  tags?: string;
 }
 
 export interface NotificationGetMetricsParams {
