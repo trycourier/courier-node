@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.8.0](https://github.com/trycourier/courier-node/compare/v9.7.0...v9.8.0) (2026-09-23)
+
+
+### Features
+
+* **api:** publish the secondary and tertiary action styles [C-19961] ([#307](https://github.com/trycourier/courier-node/issues/307)) ([f7d8f60](https://github.com/trycourier/courier-node/commit/f7d8f606d37bb7e674c80a52fd1b06ce13d4665f))
+
 ## [9.7.0](https://github.com/trycourier/courier-node/compare/v9.6.0...v9.7.0) (2026-09-22)
 
 
