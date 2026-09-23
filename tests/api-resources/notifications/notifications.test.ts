@@ -88,6 +88,7 @@ describe('resource notifications', () => {
           cursor: 'cursor',
           event_id: 'event_id',
           notes: true,
+          tags: 'tags',
         },
         { path: '/_stainless_unknown_path' },
       ),
