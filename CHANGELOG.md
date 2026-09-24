@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.10.0](https://github.com/trycourier/courier-node/compare/v9.9.0...v9.10.0) (2026-09-24)
+
+
+### Features
+
+* **api:** add GET /preferences/logs [C-21018] ([de3e23f](https://github.com/trycourier/courier-node/commit/de3e23fe1de19f4ed4554ef554a0ca75c69c5604))
+
 ## [9.9.0](https://github.com/trycourier/courier-node/compare/v9.8.0...v9.9.0) (2026-09-23)
 
 
