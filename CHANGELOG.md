@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.11.0](https://github.com/trycourier/courier-node/compare/v9.10.0...v9.11.0) (2026-09-24)
+
+
+### Features
+
+* **api:** cross-client previews endpoints ([#313](https://github.com/trycourier/courier-node/issues/313)) ([53fafce](https://github.com/trycourier/courier-node/commit/53fafce9fc18508284096f7523c197799d984f76))
+
 ## [9.10.0](https://github.com/trycourier/courier-node/compare/v9.9.0...v9.10.0) (2026-09-24)
 
 
