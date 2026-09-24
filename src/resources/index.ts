@@ -206,6 +206,16 @@ export {
   type NotificationRetrieveContentParams,
 } from './notifications/notifications';
 export {
+  Previews,
+  type CreateDeviceSetRequest,
+  type DeviceSet,
+  type DeviceSetListResponse,
+  type PreviewDevice,
+  type PreviewDeviceListResponse,
+  type PreviewCreateDeviceSetParams,
+  type PreviewUpdateDeviceSetParams,
+} from './previews';
+export {
   Profiles,
   type SubscribeToListsRequestItem,
   type ProfileCreateResponse,
