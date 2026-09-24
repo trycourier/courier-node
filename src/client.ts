@@ -95,6 +95,16 @@ import {
   MessageRetrieveResponse,
   Messages,
 } from './resources/messages';
+import {
+  CreateDeviceSetRequest,
+  DeviceSet,
+  DeviceSetListResponse,
+  PreviewCreateDeviceSetParams,
+  PreviewDevice,
+  PreviewDeviceListResponse,
+  PreviewUpdateDeviceSetParams,
+  Previews,
+} from './resources/previews';
 import { Requests } from './resources/requests';
 import {
   AssociatedNotificationListResponse,
@@ -1054,6 +1064,10 @@ export class Courier {
    * Create a one-off send to a list or audience, author its content, then send it immediately or schedule it for later.
    */
   broadcasts: API.Broadcasts = new API.Broadcasts(this);
+  /**
+   * Render a template's email content on real email clients and read back the screenshots, so you can check how it looks before you send it.
+   */
+  previews: API.Previews = new API.Previews(this);
   bulk: API.Bulk = new API.Bulk(this);
   /**
    * Manage the logos, colors, and layout that give the templates you send a consistent look.
@@ -1111,6 +1125,7 @@ Courier.Auth = Auth;
 Courier.Automations = Automations;
 Courier.Journeys = Journeys;
 Courier.Broadcasts = Broadcasts;
+Courier.Previews = Previews;
 Courier.Bulk = Bulk;
 Courier.Brands = Brands;
 Courier.Digests = Digests;
@@ -1258,6 +1273,17 @@ export declare namespace Courier {
     type BroadcastRetrieveContentParams as BroadcastRetrieveContentParams,
     type BroadcastScheduleParams as BroadcastScheduleParams,
     type BroadcastSendParams as BroadcastSendParams,
+  };
+
+  export {
+    Previews as Previews,
+    type CreateDeviceSetRequest as CreateDeviceSetRequest,
+    type DeviceSet as DeviceSet,
+    type DeviceSetListResponse as DeviceSetListResponse,
+    type PreviewDevice as PreviewDevice,
+    type PreviewDeviceListResponse as PreviewDeviceListResponse,
+    type PreviewCreateDeviceSetParams as PreviewCreateDeviceSetParams,
+    type PreviewUpdateDeviceSetParams as PreviewUpdateDeviceSetParams,
   };
 
   export {

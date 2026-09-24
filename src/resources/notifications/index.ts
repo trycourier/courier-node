@@ -45,3 +45,4 @@ export {
   type NotificationReplaceParams,
   type NotificationRetrieveContentParams,
 } from './notifications';
+export { Previews } from './previews/index';

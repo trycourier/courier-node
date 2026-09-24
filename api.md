@@ -312,6 +312,25 @@ Methods:
 - <code title="post /broadcasts/{broadcastId}/schedule">client.broadcasts.<a href="./src/resources/broadcasts.ts">schedule</a>(broadcastID, { ...params }) -> Broadcast</code>
 - <code title="post /broadcasts/{broadcastId}/send">client.broadcasts.<a href="./src/resources/broadcasts.ts">send</a>(broadcastID, { ...params }) -> Broadcast</code>
 
+# Previews
+
+Types:
+
+- <code><a href="./src/resources/previews.ts">CreateDeviceSetRequest</a></code>
+- <code><a href="./src/resources/previews.ts">DeviceSet</a></code>
+- <code><a href="./src/resources/previews.ts">DeviceSetListResponse</a></code>
+- <code><a href="./src/resources/previews.ts">PreviewDevice</a></code>
+- <code><a href="./src/resources/previews.ts">PreviewDeviceListResponse</a></code>
+
+Methods:
+
+- <code title="delete /previews/device-sets/{deviceSetId}">client.previews.<a href="./src/resources/previews.ts">archiveDeviceSet</a>(deviceSetID) -> DeviceSet</code>
+- <code title="post /previews/device-sets">client.previews.<a href="./src/resources/previews.ts">createDeviceSet</a>({ ...params }) -> DeviceSet</code>
+- <code title="get /previews/device-sets">client.previews.<a href="./src/resources/previews.ts">listDeviceSets</a>() -> DeviceSetListResponse</code>
+- <code title="get /previews/devices">client.previews.<a href="./src/resources/previews.ts">listDevices</a>() -> PreviewDeviceListResponse</code>
+- <code title="get /previews/device-sets/{deviceSetId}">client.previews.<a href="./src/resources/previews.ts">retrieveDeviceSet</a>(deviceSetID) -> DeviceSet</code>
+- <code title="put /previews/device-sets/{deviceSetId}">client.previews.<a href="./src/resources/previews.ts">updateDeviceSet</a>(deviceSetID, { ...params }) -> DeviceSet</code>
+
 # Bulk
 
 Types:
@@ -497,6 +516,28 @@ Methods:
 - <code title="put /notifications/{id}/{submissionId}/checks">client.notifications.checks.<a href="./src/resources/notifications/checks.ts">update</a>(submissionID, { ...params }) -> CheckUpdateResponse</code>
 - <code title="get /notifications/{id}/{submissionId}/checks">client.notifications.checks.<a href="./src/resources/notifications/checks.ts">list</a>(submissionID, { ...params }) -> CheckListResponse</code>
 - <code title="delete /notifications/{id}/{submissionId}/checks">client.notifications.checks.<a href="./src/resources/notifications/checks.ts">delete</a>(submissionID, { ...params }) -> void</code>
+
+## Previews
+
+### Runs
+
+Types:
+
+- <code><a href="./src/resources/notifications/previews/runs.ts">CreatePreviewRunRequest</a></code>
+- <code><a href="./src/resources/notifications/previews/runs.ts">PreviewResult</a></code>
+- <code><a href="./src/resources/notifications/previews/runs.ts">PreviewResultFailureReason</a></code>
+- <code><a href="./src/resources/notifications/previews/runs.ts">PreviewResultStatus</a></code>
+- <code><a href="./src/resources/notifications/previews/runs.ts">PreviewRun</a></code>
+- <code><a href="./src/resources/notifications/previews/runs.ts">PreviewRunDetail</a></code>
+- <code><a href="./src/resources/notifications/previews/runs.ts">PreviewRunFailureReason</a></code>
+- <code><a href="./src/resources/notifications/previews/runs.ts">PreviewRunListResponse</a></code>
+- <code><a href="./src/resources/notifications/previews/runs.ts">PreviewRunStatus</a></code>
+
+Methods:
+
+- <code title="post /notifications/{id}/previews/runs">client.notifications.previews.runs.<a href="./src/resources/notifications/previews/runs.ts">create</a>(id, { ...params }) -> PreviewRun</code>
+- <code title="get /notifications/{id}/previews/runs/{previewRunId}">client.notifications.previews.runs.<a href="./src/resources/notifications/previews/runs.ts">retrieve</a>(previewRunID, { ...params }) -> PreviewRunDetail</code>
+- <code title="get /notifications/{id}/previews/runs">client.notifications.previews.runs.<a href="./src/resources/notifications/previews/runs.ts">list</a>(id, { ...params }) -> PreviewRunListResponse</code>
 
 # RoutingStrategies
 

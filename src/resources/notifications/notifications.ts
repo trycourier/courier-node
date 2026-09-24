@@ -11,6 +11,8 @@ import {
   CheckUpdateResponse,
   Checks,
 } from './checks';
+import * as PreviewsAPI from './previews/previews';
+import { Previews } from './previews/previews';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -21,6 +23,7 @@ import { path } from '../../internal/utils/path';
  */
 export class Notifications extends APIResource {
   checks: ChecksAPI.Checks = new ChecksAPI.Checks(this._client);
+  previews: PreviewsAPI.Previews = new PreviewsAPI.Previews(this._client);
 
   /**
    * Create a notification template. Requires all fields in the notification object.
@@ -1254,6 +1257,7 @@ export interface NotificationRetrieveContentParams {
 }
 
 Notifications.Checks = Checks;
+Notifications.Previews = Previews;
 
 export declare namespace Notifications {
   export {
@@ -1301,4 +1305,6 @@ export declare namespace Notifications {
     type CheckListParams as CheckListParams,
     type CheckDeleteParams as CheckDeleteParams,
   };
+
+  export { Previews as Previews };
 }
