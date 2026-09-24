@@ -281,6 +281,9 @@ import {
 } from './resources/tenants/tenants';
 import { Users } from './resources/users/users';
 import {
+  PreferenceChangeLogEntry,
+  PreferenceChangeLogValue,
+  PreferenceLogsListResponse,
   PublishPreferencesRequest,
   PublishPreferencesResponse,
   TopicDigestCategory,
@@ -291,6 +294,7 @@ import {
   WorkspacePreferenceCreateParams,
   WorkspacePreferenceCreateRequest,
   WorkspacePreferenceGetResponse,
+  WorkspacePreferenceListLogsParams,
   WorkspacePreferenceListResponse,
   WorkspacePreferencePublishParams,
   WorkspacePreferenceReplaceParams,
@@ -1384,6 +1388,9 @@ export declare namespace Courier {
 
   export {
     WorkspacePreferences as WorkspacePreferences,
+    type PreferenceChangeLogEntry as PreferenceChangeLogEntry,
+    type PreferenceChangeLogValue as PreferenceChangeLogValue,
+    type PreferenceLogsListResponse as PreferenceLogsListResponse,
     type PublishPreferencesRequest as PublishPreferencesRequest,
     type PublishPreferencesResponse as PublishPreferencesResponse,
     type TopicDigestCategory as TopicDigestCategory,
@@ -1400,6 +1407,7 @@ export declare namespace Courier {
     type WorkspacePreferenceTopicListResponse as WorkspacePreferenceTopicListResponse,
     type WorkspacePreferenceTopicReplaceRequest as WorkspacePreferenceTopicReplaceRequest,
     type WorkspacePreferenceCreateParams as WorkspacePreferenceCreateParams,
+    type WorkspacePreferenceListLogsParams as WorkspacePreferenceListLogsParams,
     type WorkspacePreferencePublishParams as WorkspacePreferencePublishParams,
     type WorkspacePreferenceReplaceParams as WorkspacePreferenceReplaceParams,
   };
