@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.9.0](https://github.com/trycourier/courier-node/compare/v9.8.0...v9.9.0) (2026-09-23)
+
+
+### Features
+
+* **api:** filter notification templates by tag [C-21172] ([#309](https://github.com/trycourier/courier-node/issues/309)) ([9a06877](https://github.com/trycourier/courier-node/commit/9a06877b7f02389fb99f455b1c289e44a4c0d62d))
+
 ## [9.8.0](https://github.com/trycourier/courier-node/compare/v9.7.0...v9.8.0) (2026-09-23)
 
 
