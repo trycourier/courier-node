@@ -106,6 +106,25 @@ export class WorkspacePreferences extends APIResource {
   }
 
   /**
+   * Returns the history of preference changes in this environment, newest first.
+   * Each entry records one change a user made to one subscription topic, and carries
+   * the value before it where there was one. Supply user_id to read a single user's
+   * history instead of the whole environment.
+   *
+   * @example
+   * ```ts
+   * const preferenceLogsListResponse =
+   *   await client.workspacePreferences.listLogs();
+   * ```
+   */
+  listLogs(
+    query: WorkspacePreferenceListLogsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PreferenceLogsListResponse> {
+    return this._client.get('/preferences/logs', { query, ...options });
+  }
+
+  /**
    * Publishes the workspace preference page, snapshotting every preference and
    * topic, and returns the page id and a preview URL.
    *
@@ -164,6 +183,87 @@ export class WorkspacePreferences extends APIResource {
   ): APIPromise<WorkspacePreferenceGetResponse> {
     return this._client.put(path`/preferences/sections/${sectionID}`, { body, ...options });
   }
+}
+
+export interface PreferenceChangeLogEntry {
+  /**
+   * Unique identifier for this change.
+   */
+  id: string;
+
+  /**
+   * The channels chosen for this topic, present only when has_custom_routing is
+   * true. Empty otherwise.
+   */
+  custom_routing: Array<Shared.ChannelClassification>;
+
+  /**
+   * Whether specific delivery channels were chosen for this topic rather than the
+   * topic's default routing.
+   */
+  has_custom_routing: boolean;
+
+  /**
+   * The subscription status the change set.
+   */
+  status: Shared.PreferenceStatus;
+
+  /**
+   * When the change was made, as an ISO-8601 date-time in UTC.
+   */
+  timestamp: string;
+
+  /**
+   * The subscription topic the change applies to.
+   */
+  topic_id: string;
+
+  /**
+   * The display name of that topic when the change was made.
+   */
+  topic_name: string;
+
+  /**
+   * The user whose preference changed.
+   */
+  user_id: string;
+
+  /**
+   * The value before this change, where it was recorded.
+   */
+  previous?: PreferenceChangeLogValue;
+
+  /**
+   * The tenant context the change was made in. Absent when the user set the
+   * preference outside any tenant.
+   */
+  tenant_id?: string;
+}
+
+export interface PreferenceChangeLogValue {
+  /**
+   * The channels chosen before the change.
+   */
+  custom_routing: Array<Shared.ChannelClassification>;
+
+  /**
+   * Whether custom routing was in effect before the change.
+   */
+  has_custom_routing: boolean;
+
+  /**
+   * The subscription status before the change.
+   */
+  status: Shared.PreferenceStatus;
+}
+
+export interface PreferenceLogsListResponse {
+  /**
+   * One entry per preference change, newest first.
+   */
+  items: Array<PreferenceChangeLogEntry>;
+
+  paging: Shared.Paging;
 }
 
 /**
@@ -832,6 +932,37 @@ export interface WorkspacePreferenceCreateParams {
   'x-idempotency-expiration'?: string;
 }
 
+export interface WorkspacePreferenceListLogsParams {
+  /**
+   * A cursor from a previous response's paging.cursor. Continue only while
+   * paging.more is true; the cursor is omitted on the last page.
+   */
+  cursor?: string;
+
+  /**
+   * How many entries to return. Defaults to 25.
+   */
+  limit?: number;
+
+  /**
+   * Return only changes at or after this time, as an ISO-8601 date or date-time. A
+   * date alone is read as the start of that day in UTC.
+   */
+  since?: string;
+
+  /**
+   * Narrow to the changes this user made in one tenant context. Only valid together
+   * with user_id.
+   */
+  tenant_id?: string;
+
+  /**
+   * Return only this user's changes. Omit it to read every change in the
+   * environment.
+   */
+  user_id?: string;
+}
+
 export interface WorkspacePreferencePublishParams {
   /**
    * Body param: Brand for the hosted page - "default" (workspace default brand),
@@ -895,6 +1026,9 @@ WorkspacePreferences.Topics = Topics;
 
 export declare namespace WorkspacePreferences {
   export {
+    type PreferenceChangeLogEntry as PreferenceChangeLogEntry,
+    type PreferenceChangeLogValue as PreferenceChangeLogValue,
+    type PreferenceLogsListResponse as PreferenceLogsListResponse,
     type PublishPreferencesRequest as PublishPreferencesRequest,
     type PublishPreferencesResponse as PublishPreferencesResponse,
     type TopicDigestCategory as TopicDigestCategory,
@@ -911,6 +1045,7 @@ export declare namespace WorkspacePreferences {
     type WorkspacePreferenceTopicListResponse as WorkspacePreferenceTopicListResponse,
     type WorkspacePreferenceTopicReplaceRequest as WorkspacePreferenceTopicReplaceRequest,
     type WorkspacePreferenceCreateParams as WorkspacePreferenceCreateParams,
+    type WorkspacePreferenceListLogsParams as WorkspacePreferenceListLogsParams,
     type WorkspacePreferencePublishParams as WorkspacePreferencePublishParams,
     type WorkspacePreferenceReplaceParams as WorkspacePreferenceReplaceParams,
   };

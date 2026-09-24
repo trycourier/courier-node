@@ -11,6 +11,9 @@ export {
 } from './topics';
 export {
   WorkspacePreferences,
+  type PreferenceChangeLogEntry,
+  type PreferenceChangeLogValue,
+  type PreferenceLogsListResponse,
   type PublishPreferencesRequest,
   type PublishPreferencesResponse,
   type TopicDigestCategory,
@@ -27,6 +30,7 @@ export {
   type WorkspacePreferenceTopicListResponse,
   type WorkspacePreferenceTopicReplaceRequest,
   type WorkspacePreferenceCreateParams,
+  type WorkspacePreferenceListLogsParams,
   type WorkspacePreferencePublishParams,
   type WorkspacePreferenceReplaceParams,
 } from './workspace-preferences';
