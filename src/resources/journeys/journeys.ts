@@ -390,6 +390,13 @@ export interface JourneyAINode {
    */
   conditions?: JourneyConditionsField;
 
+  /**
+   * A supported AI model id. Requests with an unknown id may be rejected with a 400
+   * that lists the supported ids. Supported ids: `claude-fable-5-1`,
+   * `claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-5-5`, `gpt-6-astra`,
+   * `gpt-5.5`, `gpt-5.4`, `gpt-6.1-sol`, `gpt-5.4-mini`, `gpt-5.4-nano`,
+   * `gpt-6-luna`.
+   */
   model?: string;
 
   user_prompt?: string;
