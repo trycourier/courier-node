@@ -131,7 +131,13 @@ export class Broadcasts extends APIResource {
    *   await client.broadcasts.putContent('broadcastId', {
    *     content: {
    *       version: '2022-01-01',
-   *       elements: [{ type: 'meta' }, { type: 'text' }],
+   *       elements: [
+   *         { type: 'meta', title: 'Spring Sale is here' },
+   *         {
+   *           type: 'text',
+   *           content: 'Hello! Check out our spring sale.',
+   *         },
+   *       ],
    *     },
    *   });
    * ```

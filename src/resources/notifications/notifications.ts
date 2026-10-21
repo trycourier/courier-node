@@ -41,26 +41,18 @@ export class Notifications extends APIResource {
    *
    * @example
    * ```ts
-   * const notificationTemplateResponse =
-   *   await client.notifications.create({
-   *     notification: {
-   *       name: 'Welcome Email',
-   *       tags: ['onboarding', 'welcome'],
-   *       brand: { id: 'bnd_01kx4mrd0pfzw8wt7pn7p2fzag' },
-   *       subscription: {
-   *         topic_id: 'pt_01kx4h2jdafq8bk9a26x0kvd1t',
-   *       },
-   *       routing: {
-   *         strategy_id: 'rs_01kx4h2jdafq8bk9amzvy6hbv0',
-   *       },
-   *       content: {
-   *         version: '2022-01-01',
-   *         elements: [{ type: 'channel' }],
-   *       },
-   *       alias: 'welcome',
-   *     },
-   *     state: 'DRAFT',
-   *   });
+   * const notificationTemplateResponse = await client.notifications.create({
+   *   notification: {
+   *     name: 'Welcome Email',
+   *     tags: ['onboarding', 'welcome'],
+   *     brand: { ... },
+   *     subscription: { ... },
+   *     routing: { ... },
+   *     content: { ... },
+   *     alias: 'welcome',
+   *   },
+   *   state: 'DRAFT',
+   * });
    * ```
    */
   create(
@@ -236,7 +228,19 @@ export class Notifications extends APIResource {
    *   await client.notifications.putContent('id', {
    *     content: {
    *       version: '2022-01-01',
-   *       elements: [{ type: 'channel' }],
+   *       elements: [
+   *         {
+   *           type: 'channel',
+   *           channel: 'email',
+   *           elements: [
+   *             { type: 'meta', title: 'Welcome!' },
+   *             {
+   *               type: 'text',
+   *               content: 'Hello {{data.name}}.',
+   *             },
+   *           ],
+   *         },
+   *       ],
    *     },
    *     state: 'DRAFT',
    *   });
@@ -316,7 +320,16 @@ export class Notifications extends APIResource {
    *       routing: null,
    *       content: {
    *         version: '2022-01-01',
-   *         elements: [{ type: 'channel' }],
+   *         elements: [
+   *           {
+   *             type: 'channel',
+   *             channel: 'email',
+   *             elements: [
+   *               { type: 'meta', title: 'Updated' },
+   *               { type: 'text', content: 'Updated content.' },
+   *             ],
+   *           },
+   *         ],
    *       },
    *     },
    *     state: 'PUBLISHED',
