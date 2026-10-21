@@ -182,6 +182,7 @@ export {
   type NotificationMetricsResponse,
   type NotificationTemplateAlias,
   type NotificationTemplateCreateRequest,
+  type NotificationTemplateEmail,
   type NotificationTemplatePayload,
   type NotificationTemplatePublishRequest,
   type NotificationTemplateResponse,
