@@ -268,6 +268,7 @@ import {
   ProviderCreateParams,
   ProviderListParams,
   ProviderListResponse,
+  ProviderPatchParams,
   ProviderUpdateParams,
   Providers,
   ProvidersCatalogEntry,
@@ -1170,6 +1171,7 @@ export declare namespace Courier {
     type ProviderCreateParams as ProviderCreateParams,
     type ProviderUpdateParams as ProviderUpdateParams,
     type ProviderListParams as ProviderListParams,
+    type ProviderPatchParams as ProviderPatchParams,
   };
 
   export {

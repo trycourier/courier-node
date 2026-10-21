@@ -133,6 +133,7 @@ Methods:
 - <code title="put /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">update</a>(id, { ...params }) -> Provider</code>
 - <code title="get /providers">client.providers.<a href="./src/resources/providers/providers.ts">list</a>({ ...params }) -> ProviderListResponse</code>
 - <code title="delete /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">delete</a>(id) -> void</code>
+- <code title="patch /providers/{id}">client.providers.<a href="./src/resources/providers/providers.ts">patch</a>(id, { ...params }) -> Provider</code>
 
 ## Catalog
 
