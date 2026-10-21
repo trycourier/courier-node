@@ -9,4 +9,5 @@ export {
   type ProviderCreateParams,
   type ProviderUpdateParams,
   type ProviderListParams,
+  type ProviderPatchParams,
 } from './providers';

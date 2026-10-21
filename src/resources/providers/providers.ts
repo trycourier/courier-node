@@ -110,6 +110,23 @@ export class Providers extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Updates part of a provider's configuration and keeps every field you omit.
+   * Settings merge into the stored settings key by key, and a setting sent as null
+   * is removed.
+   *
+   * @example
+   * ```ts
+   * const provider = await client.providers.patch('id', {
+   *   settings: { api_key: 'SG.xxxxxxxx' },
+   *   title: 'Production SendGrid',
+   * });
+   * ```
+   */
+  patch(id: string, body: ProviderPatchParams, options?: RequestOptions): APIPromise<Provider> {
+    return this._client.patch(path`/providers/${id}`, { body, ...options });
+  }
 }
 
 /**
@@ -314,6 +331,33 @@ export interface ProviderListParams {
   cursor?: string;
 }
 
+export interface ProviderPatchParams {
+  /**
+   * Updated alias. Set to null to clear it.
+   */
+  alias?: string | null;
+
+  /**
+   * The provider key identifying the type. Optional. When sent, it must match the
+   * stored provider, otherwise the request returns a 400.
+   */
+  provider?: string;
+
+  /**
+   * Provider-specific settings (snake_case keys) to merge into the stored settings,
+   * using JSON Merge Patch (RFC 7396). Each key you send replaces the stored value,
+   * a key set to null is removed, nested objects merge recursively, and arrays
+   * replace the stored value. Keys you omit keep their stored values. Set
+   * `rate_limit` to null to remove this configuration's send rate limit.
+   */
+  settings?: { [key: string]: unknown };
+
+  /**
+   * Updated display title.
+   */
+  title?: string;
+}
+
 Providers.Catalog = Catalog;
 
 export declare namespace Providers {
@@ -324,6 +368,7 @@ export declare namespace Providers {
     type ProviderCreateParams as ProviderCreateParams,
     type ProviderUpdateParams as ProviderUpdateParams,
     type ProviderListParams as ProviderListParams,
+    type ProviderPatchParams as ProviderPatchParams,
   };
 
   export {

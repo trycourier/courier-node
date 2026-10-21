@@ -234,6 +234,7 @@ export {
   type ProviderCreateParams,
   type ProviderUpdateParams,
   type ProviderListParams,
+  type ProviderPatchParams,
 } from './providers/providers';
 export { Requests } from './requests';
 export {
