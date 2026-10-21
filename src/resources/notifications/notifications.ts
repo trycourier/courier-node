@@ -712,6 +712,39 @@ export interface NotificationTemplateCreateRequest {
 }
 
 /**
+ * Email header fields for the template's email channel: the From, Reply-to, CC and
+ * BCC values set in the Studio email channel settings. Each value may use template
+ * variables, such as `{{data.cc}}`, which are resolved at send time. Reads omit
+ * `email` when no header is set, and omit each unset field. Writes treat it as
+ * optional, with three meanings. Omit it to keep the stored headers. Send null to
+ * clear all four. Send an object to replace all four: a field the object leaves
+ * out is cleared. Other email channel settings, such as the subject, are kept
+ * either way. Headers only apply while `content` has an email channel; with no
+ * email channel they are not stored.
+ */
+export interface NotificationTemplateEmail {
+  /**
+   * BCC addresses.
+   */
+  bcc?: Array<string>;
+
+  /**
+   * CC addresses.
+   */
+  cc?: Array<string>;
+
+  /**
+   * The From address.
+   */
+  from?: string;
+
+  /**
+   * The Reply-to address.
+   */
+  reply_to?: string;
+}
+
+/**
  * Core template fields used in POST and PUT request bodies (nested under a
  * `notification` key) and returned at the top level in responses.
  */
@@ -745,6 +778,19 @@ export interface NotificationTemplatePayload {
    * Tags for categorization. Send empty array for none.
    */
   tags: Array<string>;
+
+  /**
+   * Email header fields for the template's email channel: the From, Reply-to, CC and
+   * BCC values set in the Studio email channel settings. Each value may use template
+   * variables, such as `{{data.cc}}`, which are resolved at send time. Reads omit
+   * `email` when no header is set, and omit each unset field. Writes treat it as
+   * optional, with three meanings. Omit it to keep the stored headers. Send null to
+   * clear all four. Send an object to replace all four: a field the object leaves
+   * out is cleared. Other email channel settings, such as the subject, are kept
+   * either way. Headers only apply while `content` has an email channel; with no
+   * email channel they are not stored.
+   */
+  email?: NotificationTemplateEmail | null;
 }
 
 export namespace NotificationTemplatePayload {
@@ -1273,6 +1319,7 @@ export declare namespace Notifications {
     type NotificationMetricsResponse as NotificationMetricsResponse,
     type NotificationTemplateAlias as NotificationTemplateAlias,
     type NotificationTemplateCreateRequest as NotificationTemplateCreateRequest,
+    type NotificationTemplateEmail as NotificationTemplateEmail,
     type NotificationTemplatePayload as NotificationTemplatePayload,
     type NotificationTemplatePublishRequest as NotificationTemplatePublishRequest,
     type NotificationTemplateResponse as NotificationTemplateResponse,

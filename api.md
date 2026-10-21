@@ -477,6 +477,7 @@ Types:
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationMetricsResponse</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateAlias</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateCreateRequest</a></code>
+- <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateEmail</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplatePayload</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplatePublishRequest</a></code>
 - <code><a href="./src/resources/notifications/notifications.ts">NotificationTemplateResponse</a></code>
