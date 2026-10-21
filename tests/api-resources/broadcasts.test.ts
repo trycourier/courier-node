@@ -127,7 +127,38 @@ describe('resource broadcasts', () => {
   // Mock server tests are disabled
   test.skip('putContent: required and optional params', async () => {
     const response = await client.broadcasts.putContent('broadcastId', {
-      content: { elements: [{ type: 'meta' }, { type: 'text' }], version: '2022-01-01' },
+      content: {
+        elements: [
+          {
+            channels: ['string'],
+            if: 'if',
+            loop: 'loop',
+            ref: 'ref',
+            title: 'Spring Sale is here',
+            type: 'meta',
+          },
+          {
+            channels: ['string'],
+            if: 'if',
+            loop: 'loop',
+            ref: 'ref',
+            align: 'left',
+            bold: 'bold',
+            color: 'color',
+            content: 'Hello! Check out our spring sale.',
+            font_size: 'font_size',
+            format: 'markdown',
+            italic: 'italic',
+            line_height: 'line_height',
+            locales: { foo: { content: 'content' } },
+            strikethrough: 'strikethrough',
+            text_style: 'text',
+            underline: 'underline',
+            type: 'text',
+          },
+        ],
+        version: '2022-01-01',
+      },
       state: 'DRAFT',
     });
   });

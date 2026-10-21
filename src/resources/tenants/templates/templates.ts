@@ -122,7 +122,15 @@ export class Templates extends APIResource {
    *     template: {
    *       content: {
    *         version: '2022-01-01',
-   *         elements: [{ type: 'channel' }],
+   *         elements: [
+   *           {
+   *             type: 'channel',
+   *             channel: 'email',
+   *             elements: [
+   *               { type: 'text', content: 'Hello {{name}}' },
+   *             ],
+   *           },
+   *         ],
    *       },
    *       routing: { method: 'single', channels: ['email'] },
    *     },

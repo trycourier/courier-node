@@ -36,7 +36,15 @@ export class Templates extends APIResource {
    *       subscription: null,
    *       content: {
    *         version: '2022-01-01',
-   *         elements: [{ type: 'channel' }],
+   *         elements: [
+   *           {
+   *             type: 'channel',
+   *             channel: 'email',
+   *             elements: [
+   *               { type: 'text', content: 'Welcome!' },
+   *             ],
+   *           },
+   *         ],
    *       },
    *     },
    *   });
@@ -191,7 +199,19 @@ export class Templates extends APIResource {
    *     templateId: 'x',
    *     content: {
    *       version: '2022-01-01',
-   *       elements: [{ type: 'channel' }],
+   *       elements: [
+   *         {
+   *           type: 'channel',
+   *           channel: 'email',
+   *           elements: [
+   *             { type: 'meta', title: 'Welcome!' },
+   *             {
+   *               type: 'text',
+   *               content: 'Hello {{data.name}}.',
+   *             },
+   *           ],
+   *         },
+   *       ],
    *     },
    *     state: 'DRAFT',
    *   });
