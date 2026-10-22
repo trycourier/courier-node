@@ -464,7 +464,7 @@ export interface JourneyAudienceTriggerNode {
  *   `ends with`, `greater than`, `greater than or equal`, `less than`,
  *   `less than or equal`, `was`, `was not`.
  *
- *   Example: `["user.tier", "is equal", "gold"]`.
+ *   Example: `["profile.tier", "is equal", "gold"]`.
  *
  *   `was` / `was not` compare a `send_status.<nodeId>` path (referencing an
  *   earlier send node's node id) against one of `SENT`, `DELIVERED`, `OPENED`,
@@ -477,13 +477,14 @@ export interface JourneyAudienceTriggerNode {
  * - Unary form (2 elements): `[path, operator]` where `operator` is one of
  *   `exists`, `does not exist`.
  *
- *   Example: `["user.email", "exists"]`.
+ *   Example: `["profile.email", "exists"]`.
  *
- * The first element is a non-empty dot-path. The second element is the operator
- * (must come from one of the two operator sets above). For the binary form, the
- * third element is the comparison value (string). Runtime validation of the
- * operator value and arity is performed by the backend; SDKs surface this as a
- * string list.
+ * The first element is a non-empty dot-path that starts with `data.`, `profile.`,
+ * `tenant.` (only when the trigger sets a tenant), or `send_status.<nodeId>`. The
+ * second element is the operator (must come from one of the two operator sets
+ * above). For the binary form, the third element is the comparison value (string).
+ * Runtime validation of the operator value and arity is performed by the backend;
+ * SDKs surface this as a string list.
  */
 export type JourneyConditionAtom = Array<string>;
 
@@ -1012,6 +1013,17 @@ export interface JourneyRunStep {
   action: string;
 
   /**
+   * Why the step failed. Set when `status` is `ERROR`, `null` otherwise.
+   */
+  error: JourneyRunStep.Error | null;
+
+  /**
+   * Why the step was skipped, e.g. `Node conditions not met`. Set when `status` is
+   * `SKIPPED`, `null` otherwise.
+   */
+  skip_reason: string | null;
+
+  /**
    * The state of the step: the seven run statuses, plus `SKIPPED` and `COMPUTING`.
    * Not an enum — new values have been added before.
    */
@@ -1038,6 +1050,19 @@ export interface JourneyRunStep {
    * When the step last changed state, as an ISO 8601 timestamp.
    */
   updated_at?: string;
+}
+
+export namespace JourneyRunStep {
+  /**
+   * Why the step failed. Set when `status` is `ERROR`, `null` otherwise.
+   */
+  export interface Error {
+    /**
+     * The reason, e.g. `Fetch failed: GET api.example.com returned 404` or
+     * `AI step timed out after 15 minutes`.
+     */
+    message: string;
+  }
 }
 
 /**
