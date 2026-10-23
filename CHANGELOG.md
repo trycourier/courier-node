@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.13.0](https://github.com/trycourier/courier-node/compare/v9.12.0...v9.13.0) (2026-10-23)
+
+
+### Features
+
+* **api:** journey run steps return error and skip_reason ([#321](https://github.com/trycourier/courier-node/issues/321)) ([c4fab44](https://github.com/trycourier/courier-node/commit/c4fab446d79b8f7729e14ab9d82db96e26a1e503))
+
+
+### Chores
+
+* **api:** regenerate SDK ([#323](https://github.com/trycourier/courier-node/issues/323)) ([9fe7784](https://github.com/trycourier/courier-node/commit/9fe7784d3ed17740f9fa3a5c92ff79c7172d0a14))
+
 ## [9.12.0](https://github.com/trycourier/courier-node/compare/v9.11.0...v9.12.0) (2026-10-21)
 
 
