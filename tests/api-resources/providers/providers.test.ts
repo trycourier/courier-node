@@ -99,8 +99,13 @@ describe('resource providers', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('patch', async () => {
-    const responsePromise = client.providers.patch('id', {});
+  test.skip('patch: only required params', async () => {
+    const responsePromise = client.providers.patch('id', {
+      patch: [
+        { op: 'replace', path: '/title' },
+        { op: 'replace', path: '/settings/api_key' },
+      ],
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -108,5 +113,25 @@ describe('resource providers', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('patch: required and optional params', async () => {
+    const response = await client.providers.patch('id', {
+      patch: [
+        {
+          op: 'replace',
+          path: '/title',
+          from: 'from',
+          value: 'Production SendGrid',
+        },
+        {
+          op: 'replace',
+          path: '/settings/api_key',
+          from: 'from',
+          value: 'SG.xxxxxxxx',
+        },
+      ],
+    });
   });
 });
