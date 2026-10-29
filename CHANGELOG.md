@@ -1,5 +1,16 @@
 # Changelog
 
+## [10.0.0](https://github.com/trycourier/courier-node/compare/v9.13.0...v10.0.0) (2026-10-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** PATCH /providers/{id} takes JSON Patch operations [C-22022] ([#324](https://github.com/trycourier/courier-node/issues/324))
+
+### Features
+
+* **api:** PATCH /providers/{id} takes JSON Patch operations [C-22022] ([#324](https://github.com/trycourier/courier-node/issues/324)) ([f8c731e](https://github.com/trycourier/courier-node/commit/f8c731ef9f81b82203e82612107ced02958e8a78))
+
 ## [9.13.0](https://github.com/trycourier/courier-node/compare/v9.12.0...v9.13.0) (2026-10-23)
 
 
