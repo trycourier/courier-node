@@ -1,5 +1,19 @@
 # Changelog
 
+## [10.0.1](https://github.com/trycourier/courier-node/compare/v10.0.0...v10.0.1) (2026-11-17)
+
+
+### Chores
+
+* add context7.json to claim the Context7 library ([#328](https://github.com/trycourier/courier-node/issues/328)) ([ade9d1a](https://github.com/trycourier/courier-node/commit/ade9d1a2f1838d14de1e4333afb2a25bfa152c48))
+* **api:** regenerate SDK ([#329](https://github.com/trycourier/courier-node/issues/329)) ([3b0eddc](https://github.com/trycourier/courier-node/commit/3b0eddc709996c1ed34b7b9ef212a834f2373e6a))
+
+
+### Documentation
+
+* **api:** add gpt-6.1-terra to AI node model ids [C-22053] ([#326](https://github.com/trycourier/courier-node/issues/326)) ([6a6eb5d](https://github.com/trycourier/courier-node/commit/6a6eb5d8dfc902d450d9165867d52d9b3d92eccd))
+* **api:** list Claude Fable 5.2 as a JourneyAINode model [C-22567] ([#330](https://github.com/trycourier/courier-node/issues/330)) ([a7628af](https://github.com/trycourier/courier-node/commit/a7628af8bd117971ab5ae89955ecbfecbc7c3c17))
+
 ## [10.0.0](https://github.com/trycourier/courier-node/compare/v9.13.0...v10.0.0) (2026-10-29)
 
 
