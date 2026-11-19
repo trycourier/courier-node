@@ -83,6 +83,7 @@ import {
   InboundBulkMessage,
   InboundBulkMessageUser,
 } from './resources/bulk';
+import { Feedback, FeedbackCreateParams, FeedbackCreateResponse } from './resources/feedback';
 import { Inbound, InboundTrackEventParams, InboundTrackEventResponse } from './resources/inbound';
 import {
   MessageContentResponse,
@@ -1077,6 +1078,10 @@ export class Courier {
   brands: API.Brands = new API.Brands(this);
   digests: API.Digests = new API.Digests(this);
   /**
+   * Report suspected bugs, confusing behavior and missing features in Courier, from an AI agent, a developer tool or by hand.
+   */
+  feedback: API.Feedback = new API.Feedback(this);
+  /**
    * Record an inbound event that triggers the journeys and automations mapped to it.
    */
   inbound: API.Inbound = new API.Inbound(this);
@@ -1131,6 +1136,7 @@ Courier.Previews = Previews;
 Courier.Bulk = Bulk;
 Courier.Brands = Brands;
 Courier.Digests = Digests;
+Courier.Feedback = Feedback;
 Courier.Inbound = Inbound;
 Courier.Lists = Lists;
 Courier.Messages = Messages;
@@ -1331,6 +1337,12 @@ export declare namespace Courier {
     type DigestInstance as DigestInstance,
     type DigestInstanceListResponse as DigestInstanceListResponse,
     type TopicDigestScheduleResponse as TopicDigestScheduleResponse,
+  };
+
+  export {
+    Feedback as Feedback,
+    type FeedbackCreateResponse as FeedbackCreateResponse,
+    type FeedbackCreateParams as FeedbackCreateParams,
   };
 
   export {

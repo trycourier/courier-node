@@ -87,6 +87,7 @@ export {
   type DigestInstanceListResponse,
   type TopicDigestScheduleResponse,
 } from './digests/digests';
+export { Feedback, type FeedbackCreateResponse, type FeedbackCreateParams } from './feedback';
 export { Inbound, type InboundTrackEventResponse, type InboundTrackEventParams } from './inbound';
 export {
   Journeys,

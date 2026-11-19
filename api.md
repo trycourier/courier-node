@@ -396,6 +396,16 @@ Methods:
 - <code title="get /digests/schedules/{schedule_id}/instances">client.digests.schedules.<a href="./src/resources/digests/schedules.ts">listInstances</a>(scheduleID, { ...params }) -> DigestInstanceListResponse</code>
 - <code title="post /digests/schedules/{schedule_id}/trigger">client.digests.schedules.<a href="./src/resources/digests/schedules.ts">release</a>(scheduleID) -> void</code>
 
+# Feedback
+
+Types:
+
+- <code><a href="./src/resources/feedback.ts">FeedbackCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /feedback">client.feedback.<a href="./src/resources/feedback.ts">create</a>({ ...params }) -> FeedbackCreateResponse</code>
+
 # Inbound
 
 Types:
