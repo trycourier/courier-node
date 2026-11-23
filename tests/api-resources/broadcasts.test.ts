@@ -157,6 +157,7 @@ describe('resource broadcasts', () => {
             type: 'text',
           },
         ],
+        scope: 'default',
         version: '2022-01-01',
       },
       state: 'DRAFT',
