@@ -143,6 +143,7 @@ describe('resource templates', () => {
             },
           ],
           version: '2022-01-01',
+          scope: 'default',
         },
         channels: {
           foo: {

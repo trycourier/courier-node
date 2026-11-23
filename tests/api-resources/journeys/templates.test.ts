@@ -245,6 +245,7 @@ describe('resource templates', () => {
             type: 'channel',
           },
         ],
+        scope: 'default',
         version: '2022-01-01',
       },
       state: 'DRAFT',
