@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.2.0](https://github.com/trycourier/courier-node/compare/v10.1.0...v10.2.0) (2026-11-23)
+
+
+### Features
+
+* **api:** document `scope` on Elemental content [C-23066] ([#335](https://github.com/trycourier/courier-node/issues/335)) ([b033f81](https://github.com/trycourier/courier-node/commit/b033f81b8d239b8b3447efd6aad9fc1f2afd0f87))
+
 ## [10.1.0](https://github.com/trycourier/courier-node/compare/v10.0.1...v10.1.0) (2026-11-19)
 
 
