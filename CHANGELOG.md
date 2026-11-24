@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.3.0](https://github.com/trycourier/courier-node/compare/v10.2.0...v10.3.0) (2026-11-24)
+
+
+### Features
+
+* **api:** remove `scope` from v2 notification, journey and broadcast template content ([#337](https://github.com/trycourier/courier-node/issues/337)) ([0ab5127](https://github.com/trycourier/courier-node/commit/0ab5127a567d66e9aa477b32187aa82b12f388ea))
+
 ## [10.2.0](https://github.com/trycourier/courier-node/compare/v10.1.0...v10.2.0) (2026-11-23)
 
 
