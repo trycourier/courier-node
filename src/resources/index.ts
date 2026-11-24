@@ -182,6 +182,7 @@ export {
   type NotificationLocalePutRequest,
   type NotificationMetricsResponse,
   type NotificationTemplateAlias,
+  type NotificationTemplateContent,
   type NotificationTemplateCreateRequest,
   type NotificationTemplateEmail,
   type NotificationTemplatePayload,

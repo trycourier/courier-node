@@ -480,15 +480,6 @@ export namespace NotificationContentPutRequest {
     elements: Array<Shared.ElementalNode>;
 
     /**
-     * How template variables read the data sent with the message. Under `strict`, data
-     * fields are read only through the `data.` prefix, as in `{{data.name}}`. Under
-     * `default`, `data` is spread onto the root, so `{{name}}` resolves and
-     * `{{data.name}}` renders as an empty string. This request replaces the stored
-     * content, so omitting `scope` resets it to `default`.
-     */
-    scope?: 'default' | 'strict';
-
-    /**
      * Content version identifier (e.g., `2022-01-01`). Optional; server defaults when
      * omitted.
      */
@@ -717,6 +708,20 @@ export namespace NotificationMetricsResponse {
 export type NotificationTemplateAlias = string | Array<string>;
 
 /**
+ * Elemental content of a notification template. Template variables read the data
+ * sent with the message through the `data.` prefix, as in `{{data.name}}`, and the
+ * recipient's profile through `profile.`.
+ */
+export interface NotificationTemplateContent {
+  elements: Array<Shared.ElementalNode>;
+
+  /**
+   * For example, "2022-01-01"
+   */
+  version: string;
+}
+
+/**
  * Request body for creating a notification template.
  */
 export interface NotificationTemplateCreateRequest {
@@ -779,7 +784,7 @@ export interface NotificationTemplatePayload {
   /**
    * Elemental content definition.
    */
-  content: Shared.ElementalContent;
+  content: NotificationTemplateContent;
 
   /**
    * Display name for the template.
@@ -1223,15 +1228,6 @@ export namespace NotificationPutContentParams {
     elements: Array<Shared.ElementalNode>;
 
     /**
-     * How template variables read the data sent with the message. Under `strict`, data
-     * fields are read only through the `data.` prefix, as in `{{data.name}}`. Under
-     * `default`, `data` is spread onto the root, so `{{name}}` resolves and
-     * `{{data.name}}` renders as an empty string. This request replaces the stored
-     * content, so omitting `scope` resets it to `default`.
-     */
-    scope?: 'default' | 'strict';
-
-    /**
      * Content version identifier (e.g., `2022-01-01`). Optional; server defaults when
      * omitted.
      */
@@ -1349,6 +1345,7 @@ export declare namespace Notifications {
     type NotificationLocalePutRequest as NotificationLocalePutRequest,
     type NotificationMetricsResponse as NotificationMetricsResponse,
     type NotificationTemplateAlias as NotificationTemplateAlias,
+    type NotificationTemplateContent as NotificationTemplateContent,
     type NotificationTemplateCreateRequest as NotificationTemplateCreateRequest,
     type NotificationTemplateEmail as NotificationTemplateEmail,
     type NotificationTemplatePayload as NotificationTemplatePayload,

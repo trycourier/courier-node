@@ -1361,8 +1361,6 @@ export namespace JourneyTemplateCreateRequest {
       elements: Array<Shared.ElementalNode>;
 
       version: '2022-01-01';
-
-      scope?: 'default' | 'strict';
     }
 
     export interface Subscription {
@@ -1407,8 +1405,6 @@ export namespace JourneyTemplateGetResponse {
     elements: Array<Shared.ElementalNode>;
 
     version: '2022-01-01';
-
-    scope?: 'default' | 'strict';
   }
 
   export interface Subscription {
@@ -1464,8 +1460,6 @@ export namespace JourneyTemplateReplaceRequest {
       elements: Array<Shared.ElementalNode>;
 
       version: '2022-01-01';
-
-      scope?: 'default' | 'strict';
     }
 
     export interface Subscription {
